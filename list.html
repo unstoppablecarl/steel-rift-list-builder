@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List Builder</title>
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+
+</head>
+<body>
+
+<form id="size_form" class="noprint" >
+  <p id="game_size_par" >Select game size :
+    <label><input type="radio" name="game_size" value="Recon"> Recon </label>
+    <label><input type="radio" name="game_size" value="Strike"> Strike </label>
+    <label><input type="radio" name="game_size" value="Battle"> Battle </label>
+    <!-- <label><input type="radio" name="game_size" value="Custom"> Custom</label> -->
+  </p>
+
+  <p id="tonnage_par" class="noprint" >
+    <label for="total_tonnage">Total Tonnage : </label>
+    <input type="text" disabled="" id="total_tonnage" value="0" maxlength="3" size="3" class="list-hev-text">
+    <input type="text" disabled="" id="max_tonnage" name="max_tonnage" value="0" maxlength="4" size="4" class="list-hev-text">
+  </p>
+
+  <p id="faction_par" class="noprint" >Select Faction :
+    <label><input type="radio" id="faction" name="faction" value="N/A"> N/A </label>
+    <label><input type="radio" name="faction" value="Authorities"> Authorities </label>
+    <label><input type="radio" name="faction" value="Corporations"> Corporations </label>
+    <label><input type="radio" name="faction" value="Freelancers"> Freelancers </label>
+  </p>
+  </div>
+
+  <div id="faction_authorities_div" class="noprint" style="display:none">
+    <div class="columnhevHeader noprint" >
+      <p id="faction_par_authorities_mt">Military Training :
+        <label><input type="checkbox" class="faction_authorities_mt" name="faction_authorities" id="CAS" onclick="checkPerkOnClick(this);" value="Coordinated Assaults"> Coordinated Assaults </label>
+        <label><input type="checkbox" class="faction_authorities_mt" name="faction_authorities" id="CAD" onclick="checkPerkOnClick(this);" value="Covered Advances"> Covered Advances </label>
+        <label><input type="checkbox" class="faction_authorities_mt" name="faction_authorities" id="EPP" onclick="checkPerkOnClick(this);" value="Elite Pilot Program"> Elite Pilot Program </label>
+      </p>
+    </div>
+
+    <div class="columnhevHeader noprint" >
+      <p id="faction_par_authorities_pp" >Political Priority :
+        <label><input type="checkbox" class="faction_authorities_pp" name="faction_authorities" id="PPE" onclick="checkPerkOnClick(this);" value="Expansionist"> Expansionist </label>
+        <label><input type="checkbox" class="faction_authorities_pp" name="faction_authorities" id="PPP" onclick="checkPerkOnClick(this);" value="Protectivist"> Protectivist </label>
+        <label><input type="checkbox" class="faction_authorities_pp" name="faction_authorities" id="PPI" onclick="checkPerkOnClick(this);" value="Ideological"> Ideological </label>
+      </p>
+    </div>
+
+    <div class="columnhevHeader noprint" >
+      <p id="faction_par_authorities_oi" >Old Infrastructure :
+        <label><input type="checkbox" class="faction_authorities_oi" name="faction_authorities" id="OS" onclick="checkPerkOnClick(this);" value="Orbital Stockpiles"> Orbital Stockpiles </label>
+        <label><input type="checkbox" class="faction_authorities_oi" name="faction_authorities" id="SE" onclick="checkPerkOnClick(this);" value="Strategic Energy Reserves"> Strategic Energy Reserves </label>
+        <label><input type="checkbox" class="faction_authorities_oi" name="faction_authorities" id="MS" onclick="checkPerkOnClick(this);" value="Materiel Stockpiles"> Materiel Stockpiles </label>
+      </p>
+    </div>
+  </div>
+
+  <div id="faction_corporations_div" class="noprint" style="display:none">
+    <div class="columnhevHeader noprint" >
+      <p id="faction_par_corporations_e">Espionage :
+        <label><input type="checkbox" class="faction_corporations_e" name="faction_corporations" id="EI" onclick="checkPerkOnClick(this);" value="Embedded Informants"> Embedded Informants </label>
+        <label><input type="checkbox" class="faction_corporations_e" name="faction_corporations" id="PS" onclick="checkPerkOnClick(this);" value="Paid Saboteurs"> Paid Saboteurs </label>
+        <label><input type="checkbox" class="faction_corporations_e" name="faction_corporations" id="EIG" onclick="checkPerkOnClick(this);" value="Exhaustive Intel Gathering"> Exhaustive Intel Gathering </label>
+      </p>
+    </div>
+
+    <div class="columnhevHeader noprint" >
+      <p id="faction_par_corporations_rnd" >Research And Development :
+        <label><input type="checkbox" class="faction_corporations_rnd" name="faction_corporations" id="AHD" onclick="checkPerkOnClick(this);" value="Advanced Hardpoint Design"> Advanced Hardpoint Design </label>
+        <label><input type="checkbox" class="faction_corporations_rnd" name="faction_corporations" id="AEMS" onclick="checkPerkOnClick(this);" value="Advanced Energy Management Systems"> Advanced Energy Management Systems </label>
+        <label><input type="checkbox" class="faction_corporations_rnd" name="faction_corporations" id="ASC" onclick="checkPerkOnClick(this);" value="Advanced Structural Components"> Advanced Structural Components </label>
+      </p>
+    </div>
+
+    <div class="columnhevHeader noprint" >
+      <p id="faction_par_corporations_dwc" >Deep War Chest :
+        <label><input type="checkbox" class="faction_corporations_dwc" name="faction_corporations" id="TEH" onclick="checkPerkOnClick(this);" value="Top End Hardware"> Top End Hardware </label>
+        <label><input type="checkbox" class="faction_corporations_dwc" name="faction_corporations" id="OSB" onclick="checkPerkOnClick(this);" value="Outrageous Support Budget"> Outrageous Support Budget </label>
+        <label><input type="checkbox" class="faction_corporations_dwc" name="faction_corporations" id="PO" onclick="checkPerkOnClick(this);" value="Purchased Outcomes"> Purchased Outcomes </label>
+      </p>
+    </div>
+  </div>
+
+  <div id="faction_freelancers_div" class="noprint" style="display:none">
+    <div class="columnhevHeader noprint" >
+      <p id="faction_par_freelancers_ra">Rogue Agency :
+        <label><input type="checkbox" class="faction_freelancers_ra" name="faction_freelancers" id="UG" onclick="checkPerkOnClick(this);" value="Unpredictable Gambits"> Unpredictable Gambits </label>
+        <label><input type="checkbox" class="faction_freelancers_ra" name="faction_freelancers" id="RP" onclick="checkPerkOnClick(this);" value="Reckless Piloting"> Reckless Piloting </label>
+        <label><input type="checkbox" class="faction_freelancers_ra" name="faction_freelancers" id="BS" onclick="checkPerkOnClick(this);" value="Bait & Switch"> Bait & Switch </label>
+      </p>
+    </div>
+
+    <div class="columnhevHeader noprint" >
+      <p id="faction_par_freelancers_ua" >Underworld Affiliations :
+        <label><input type="checkbox" class="faction_freelancers_ua" name="faction_freelancers" id="NH" onclick="checkPerkOnClick(this);" value="Network Hackers"> Network Hackers </label>
+        <label><input type="checkbox" class="faction_freelancers_ua" name="faction_freelancers" id="TP" onclick="checkPerkOnClick(this);" value="Tech Pirates"> Tech Pirates </label>
+        <label><input type="checkbox" class="faction_freelancers_ua" name="faction_freelancers" id="IT" onclick="checkPerkOnClick(this);" value="Intimidation Tatics"> Intimidation Tatics </label>
+      </p>
+    </div>
+
+    <div class="columnhevHeader noprint" >
+      <p id="faction_par_stolen_corporations_rnd" style="display:none">Stolen Research And Development :
+        <label><input type="checkbox" class="faction_stolen_corporations_rnd" name="faction_corporations" id="SAHD" onclick="checkPerkOnClick(this);" value="Advanced Hardpoint Design"> Advanced Hardpoint Design </label>
+        <label><input type="checkbox" class="faction_stolen_corporations_rnd" name="faction_corporations" id="SAEMS" onclick="checkPerkOnClick(this);" value="Advanced Energy Management Systems"> Advanced Energy Management Systems </label>
+        <label><input type="checkbox" class="faction_stolen_corporations_rnd" name="faction_corporations" id="SASC" onclick="checkPerkOnClick(this);" value="Advanced Structural Components"> Advanced Structural Components </label>
+      </p>
+    </div>
+
+    <div class="columnhevHeader noprint" >
+      <p id="faction_par_freelancers_blo" >Big League Origins :
+        <label><input type="checkbox" class="faction_freelancers_blo" name="faction_freelancers" id="EMV" onclick="checkPerkOnClick(this);" value="Ex-Military Veterans"> Ex-Military Veterans </label>
+        <label><input type="checkbox" class="faction_freelancers_blo" name="faction_freelancers" id="PE" onclick="checkPerkOnClick(this);" value="Political Extremists"> Political Extremists </label>
+        <label><input type="checkbox" class="faction_freelancers_blo" name="faction_freelancers" id="DT" onclick="checkPerkOnClick(this);" value="Disgraced Trillionaire"> Disgraced Trillionaire </label>
+      </p>
+    </div>
+
+    <div class="columnhevHeader noprint" >
+      <p id="faction_par_stolen_authorities_mt" class="noprint" style="display:none">Stolen Military Training :
+        <label><input type="checkbox" class="faction_stolen_authorities_mt" name="faction_authorities" id="SCAS" onclick="checkPerkOnClick(this);" value="Coordinated Assaults"> Coordinated Assaults </label>
+        <label><input type="checkbox" class="faction_stolen_authorities_mt" name="faction_authorities" id="SCAD" onclick="checkPerkOnClick(this);" value="Covered Advances"> Covered Advances </label>
+        <label><input type="checkbox" class="faction_stolen_authorities_mt" name="faction_authorities" id="SEPP" onclick="checkPerkOnClick(this);" value="Elite Pilot Program"> Elite Pilot Program </label>
+      </p>
+    </div>
+
+    <div class="columnhevHeader noprint" >
+      <p id="faction_par_stolen_authorities_pp" class="noprint" style="display:none" >Stolen Political Priority :
+        <label><input type="checkbox" class="faction_stolen_authorities_pp" name="faction_authorities" id="SPPE" onclick="checkPerkOnClick(this);" value="Expansionist"> Expansionist </label>
+        <label><input type="checkbox" class="faction_stolen_authorities_pp" name="faction_authorities" id="SPPP" onclick="checkPerkOnClick(this);" value="Protectivist"> Protectivist </label>
+        <label><input type="checkbox" class="faction_stolen_authorities_pp" name="faction_authorities" id="SPPI" onclick="checkPerkOnClick(this);" value="Ideological"> Ideological </label>
+      </p>
+    </div>
+
+    <div class="columnhevHeader noprint" >
+      <p id="faction_par_stolen_corporations_dwc" class="noprint" style="display:none" >Stolen Deep War Chest :
+        <label><input type="checkbox" class="faction_stolen_corporations_dwc" name="faction_corporations" id="STEH" onclick="checkPerkOnClick(this);" value="Top End Hardware"> Top End Hardware </label>
+        <label><input type="checkbox" class="faction_stolen_corporations_dwc" name="faction_corporations" id="SOSB" onclick="checkPerkOnClick(this);" value="Outrageous Support Budget"> Outrageous Support Budget </label>
+        <label><input type="checkbox" class="faction_stolen_corporations_dwc" name="faction_corporations" id="SPO" onclick="checkPerkOnClick(this);" value="Purchased Outcomes"> Purchased Outcomes </label>
+      </p>
+    </div>
+</form>
+</div>
+
+<div class="add_buttons noprint">
+  <label for="hevTeamSelect" style="white-space: pre;" class="">Select Team : </label>
+  <select id="hevTeamSelect" disabled onchange="addTeam(this)">
+    <option selected value="none"> -- select -- </option>
+    <option value="Fire Support Team">Fire Support Team</option>
+    <option value="Reconnaissance Team">Reconnaissance Team</option>
+    <option value="Security Team">Security Team</option>
+    <option value="Tactical Team">Tactical Team</option>
+    <option value="Berserker Team">Berserker Team</option>
+    <option value="Gunslinger Team">Gunslinger Team</option>
+    <option value="Assasination Team">Assasination Team</option>
+  </select>
+  <button id="addHEV" onclick="addHEV()" disabled class="button-space-left"> Add HE-V </button>
+  <button id="addOffTableSupport" onclick="AddOffTableSupport()" disabled class="button-space-right"> Add Off Table Support </button>
+  <label for="onTableSupportSelect" style="white-space: pre;" class="">Select On Table Support : </label>
+  <select id="onTableSupportSelect" disabled onchange="addOnTableSupport(this)">
+    <option selected value="none"> -- select -- </option>
+    <option value="Ultra Light HE-V">Ultra Light HE-V</option>
+    <option value="Vehicle">Vehicle</option>
+    <option value="Infantry">Infantry</option>
+  </select>
+</div>
+
+<div id="game_summary_print" class="game-summary" hidden >
+  <p id="game_size_print"  class="par_table_margin" ></p>
+  <div class="flex"> <p style="white-space: pre;" class="par_table_margin" >Total Tonnage : </p><p id="total_tonnage_print" class="par_table_margin" ></p><p style="white-space: pre;" class="par_table_margin" > out of </p><p id="max_tonnage_print" class="par_table_margin" ></p> </div>
+  <div class="flex"> <p style="white-space: pre;"class="par_table_margin" >Faction Selected : </p><p id="faction_name_print" class="par_table_margin" ></p> </div>
+  <p class="par_table_margin" class="par_table_margin" >Faction Traits : </p>
+  <p id="faction_perk_rowone_print" class="par_table_margin" ></p>
+  <p id="faction_perk_rowtwo_print" class="par_table_margin" ></p>
+  <p id="faction_perk_rowtwo_stolen_print" class="par_table_margin" ></p>
+  <p id="faction_perk_rowthree_print" class="par_table_margin" ></p>
+  <p id="faction_perk_rowthree_stolen_print" class="par_table_margin" ></p>
+  <p class="par_table_margin" >Secondary Agendas : </p>
+  <p id="faction_secondary_print" class="par_table_margin" ></p>
+  <p id="fs_team_secondary_print" class="par_table_margin" ></p>
+  <p id="rt_team_secondary_print" class="par_table_margin" ></p>
+  <p id="st_team_secondary_print" class="par_table_margin" ></p>
+  <p id="tt_team_secondary_print" class="par_table_margin" ></p>
+  <p id="bt_team_secondary_print" class="par_table_margin" ></p>
+  <p id="gt_team_secondary_print" class="par_table_margin" ></p>
+  <p id="at_team_secondary_print" class="par_table_margin" ></p>
+</div>
+
+<div class="hevList-div-center">
+  <div id="OffTableSupportList" class="page-break" ></div>
+</div>
+<div class="hevList-div-center">
+  <div id="OnTableSupportList" class="" ></div>
+</div>
+<div class="hevList-div-center">
+  <div id="hevList" class="hevList-div"></div>
+  <div id="teamList" class=""></div>
+</div>
+
+<script src="data.js"></script>
+</body>
+</html>
