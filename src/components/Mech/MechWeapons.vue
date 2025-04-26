@@ -3,15 +3,16 @@ import {mapStores} from 'pinia';
 import {useMechStore} from '../../store.js';
 import MechWeaponItem from './MechWeapons/MechWeaponItem.vue';
 import MechWeaponAdd from './MechWeapons/MechWeaponAdd.vue';
+import draggable from 'vuedraggable';
 
 export default {
-  components: {MechWeaponAdd, MechWeaponItem},
+  components: {draggable, MechWeaponAdd, MechWeaponItem},
   props: {
     mechId: Number,
   },
   data() {
     return {
-      visible: true,
+      dragging: false,
     };
   },
   computed: {
@@ -20,7 +21,16 @@ export default {
       return this.mechStore.getMech(this.mechId);
     },
   },
-  methods: {},
+  methods: {
+    onSortableChange(event) {
+      let moved = event.moved;
+      if (!moved) {
+        return;
+      }
+
+      this.mechStore.moveMechWeaponAttachment(this.mechId, moved.element, moved.newIndex);
+    },
+  },
 };
 </script>
 <template>
@@ -36,17 +46,34 @@ export default {
       <th>Traits</th>
     </tr>
     </thead>
-    <tbody>
 
-    <MechWeaponItem
-        v-for="(weaponId, index) in mech.weapon_ids"
-        :mech-id="mechId"
-        :weapon-id="weaponId"
-        :index="index"
-    />
-    <MechWeaponAdd :mech-id="mechId"/>
-    </tbody>
+    <draggable
+        :list="mech.weapons"
+        draggable=".list-item-sortable"
+        tag="tbody"
+        item-key="id"
+        :group="'mech-' + mechId +'-weapons'"
+        handle=".btn-grab"
+        ghost-class="ghost"
+        @start="dragging = true"
+        @end="dragging = false"
+        @change="onSortableChange"
+        :animation="200"
+        :preventOnFilter="false"
+    >
+      <template #item="{ element, index }">
+        <MechWeaponItem
+            :mech-id="mechId"
+            :mech-weapon-attachment-id="element.id"
+            :index="index"
+        />
+      </template>
+
+    </draggable>
+
   </table>
+  <MechWeaponAdd :mech-id="mechId"/>
+
 
 </template>
 

@@ -28,7 +28,7 @@ export default {
       if (!weaponId) {
         return;
       }
-      this.mechStore.addMechWeapon(this.mechId, weaponId);
+      this.mechStore.addMechWeaponAttachment(this.mechId, weaponId);
       this.weaponId = null;
     },
   },

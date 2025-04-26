@@ -14,12 +14,12 @@ export const useMechStore = defineStore('mech', {
     state() {
         return {
             mechs: [],
-            idIncrement: 1,
+            mechs_id_increment: 1,
         };
     },
     actions: {
         addMech() {
-            let id = this.idIncrement++;
+            let id = this.mechs_id_increment++;
             let mech = {
                 id,
                 name: null,
@@ -27,7 +27,8 @@ export const useMechStore = defineStore('mech', {
                 structure_mod_id: MOD_STANDARD,
                 armor_mod_id: MOD_STANDARD,
                 armor_upgrade_id: NO_ARMOR_UPGRADE,
-                weapon_ids: [],
+                weapons: [],
+                weapons_id_increment: 1,
                 upgrade_ids: [],
                 display_order: null,
             };
@@ -46,21 +47,26 @@ export const useMechStore = defineStore('mech', {
             ]);
         },
         moveMech(mech, toIndex) {
-            console.log('zxc', mech, toIndex);
             moveItem(this.mechs, mech, toIndex);
         },
-        addMechWeapon(mechId, weaponId) {
+        addMechWeaponAttachment(mechId, weaponId) {
             let existing = findById(this.mechs, mechId);
-            existing.weapon_ids.push(weaponId);
+            let id = existing.weapons_id_increment++;
+            let weapon = {
+                id,
+                weapon_id: weaponId,
+                display_order: null,
+            };
+            existing.weapons.push(weapon);
+            weapon.display_order = findItemIndex(existing.weapons, weapon);
         },
-        removeMechWeapon(mechId, weaponIndex) {
+        removeMechWeaponAttachment(mechId, weaponIndex) {
             let existing = findById(this.mechs, mechId);
-            existing.weapon_ids.splice(weaponIndex, 1);
+            existing.weapons.splice(weaponIndex, 1);
         },
-        moveMechWeapon(mechId, weaponIndex, toIndex) {
+        moveMechWeaponAttachment(mechId, weapon, toIndex) {
             let existing = findById(this.mechs, mechId);
-            let item = existing.weapon_ids.splice(weaponIndex, 1)[0];
-            existing.weapon_ids.splice(toIndex, 0, item);
+            moveItem(existing.weapons, weapon, toIndex)
         },
         addMechUpgrade(mechId, weaponId) {
             let existing = findById(this.mechs, mechId);
@@ -70,6 +76,12 @@ export const useMechStore = defineStore('mech', {
     getters: {
         getMech(state) {
             return (mechId) => findById(state.mechs, mechId);
+        },
+        getMechWeaponAttachment(state){
+            return (mechId, mechWeaponAttachmentId) => {
+                const mech = findById(state.mechs, mechId);
+                return findById(mech.weapons, mechWeaponAttachmentId)
+            }
         },
         getMechName(state) {
             return (mechId) => this.getMech(mechId).name;
@@ -82,11 +94,11 @@ export const useMechStore = defineStore('mech', {
                     structure_mod_id,
                     armor_mod_id,
                     armor_upgrade_id,
-                    weapon_ids,
+                    weapons,
                     upgrade_ids,
                 } = this.getMech(mechId);
 
-                const weapons = weapon_ids.map((weaponId) => this.getWeaponInfo(mechId, weaponId));
+                const weaponsInfo = weapons.map((item) => this.getWeaponInfo(mechId, item.weapon_id));
                 const upgrades = upgrade_ids.map((upgradeId) => this.getUpgradeInfo(mechId, upgradeId));
 
                 const size = HEV_SIZES[size_id];
@@ -101,8 +113,8 @@ export const useMechStore = defineStore('mech', {
 
                 const maxSlots = size.slots - armorUpgrade.slots;
 
-                const usedSlots = sumBy(weapons, 'slots') + sumBy(upgrades, 'slots');
-                const usedTons = sumBy(weapons, 'cost') + sumBy(upgrades, 'cost');
+                const usedSlots = sumBy(weaponsInfo, 'slots') + sumBy(upgrades, 'slots');
+                const usedTons = sumBy(weaponsInfo, 'cost') + sumBy(upgrades, 'cost');
 
                 let displayName = name || placeholderName;
 
