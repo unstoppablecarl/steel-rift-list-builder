@@ -8,7 +8,7 @@ import {WEAPON_TRAITS} from './data/weapon-traits.js';
 import {HEV_WEAPONS} from './data/mech-weapons.js';
 import {readonly} from 'vue';
 import {HEV_UPGRADES} from './data/mech-upgrades.js';
-import {findItemIndex, moveItem} from './helpers/collection-helper.js';
+import {findItemIndex, findItemIndexById, findItemIndexByIdOrFail, moveItem} from './helpers/collection-helper.js';
 
 export const useMechStore = defineStore('mech', {
     state() {
@@ -60,9 +60,10 @@ export const useMechStore = defineStore('mech', {
             existing.weapons.push(weapon);
             weapon.display_order = findItemIndex(existing.weapons, weapon);
         },
-        removeMechWeaponAttachment(mechId, weaponIndex) {
+        removeMechWeaponAttachment(mechId, mechWeaponAttachmentId) {
             let existing = findById(this.mechs, mechId);
-            existing.weapons.splice(weaponIndex, 1);
+            let index = findItemIndexById(existing.weapons, mechWeaponAttachmentId)
+            existing.weapons.splice(index, 1);
         },
         moveMechWeaponAttachment(mechId, weapon, toIndex) {
             let existing = findById(this.mechs, mechId);

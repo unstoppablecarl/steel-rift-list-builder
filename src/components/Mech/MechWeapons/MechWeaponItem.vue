@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     remove() {
-      this.mechStore.removeMechWeaponAttachment(this.mechId, this.index);
+      this.mechStore.removeMechWeaponAttachment(this.mechId, this.mechWeaponAttachmentId);
     },
   },
 };
