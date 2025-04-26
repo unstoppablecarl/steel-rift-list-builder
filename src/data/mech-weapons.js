@@ -281,7 +281,7 @@ function makeWeapon({
             [[SIZE_ULTRA]]: damage,
         };
     }
-    let range = '-';
+    let range = null;
     if (traits) {
         if (traits.includes(TRAIT_SHORT_6)) {
             range = 6;

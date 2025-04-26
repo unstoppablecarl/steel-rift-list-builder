@@ -18,41 +18,8 @@ export default {
     mech() {
       return this.mechStore.getMech(this.mechId);
     },
-    placeholderName() {
-      return 'Mech-' + this.mechId;
-    },
-    displayName() {
-      if (this.mech.name) {
-        return this.mech.name;
-      }
-      return this.placeholderName;
-    },
-    sizeId() {
-      return this.mech.sizeId;
-    },
-    size() {
-      return HEV_SIZES[this.mech.sizeId];
-    },
-    armorMod() {
-      return HEV_BODY_MODS[this.mech.armorModId];
-    },
-    structureMod() {
-      return HEV_BODY_MODS[this.mech.structureModId];
-    },
-    armorUpgrade() {
-      return HEV_ARMOR_UPGRADES[this.mech.armorUpgradeId];
-    },
-    maxTons() {
-      return this.size.max_tons + this.armorMod.max_tons + this.structureMod.max_tons;
-    },
-    armorStat() {
-      return this.size.armor + this.armorMod.modifier;
-    },
-    structureStat() {
-      return this.size.structure + this.armorMod.modifier;
-    },
-    maxSlots() {
-      return this.size.slots - this.armorUpgrade.slots;
+    info() {
+      return this.mechStore.getMechInfo(this.mechId);
     },
   },
 };
@@ -64,7 +31,7 @@ export default {
       <label :for="'mech-input-name-' + mechId">Name</label>
     </div>
     <div class="col-sm-4">
-      <BFormInput :id="'mech-input-name-' + mechId" v-model="mech.name" :placeholder="placeholderName"/>
+      <BFormInput :id="'mech-input-name-' + mechId" v-model="mech.name" :placeholder="info.placeholderName"/>
     </div>
 
     <div class="col-sm-1 number-cell">
@@ -86,21 +53,21 @@ export default {
   <MechBodyMods
       label="Armor Type"
       modifier-label="Armor"
-      v-model="mech.armorModId"
-      :tonnage="armorMod.max_tons"
-      :armor="armorMod.modifier"
+      v-model="mech.armor_mod_id"
+      :tonnage="info.armorMod.max_tons"
+      :armor="info.armorMod.modifier"
   />
   <MechBodyMods
       label="Structure Type"
       modifier-label="Structure"
-      v-model="mech.structureModId"
-      :tonnage="structureMod.max_tons"
-      :structure="structureMod.modifier"
+      v-model="mech.structure_mod_id"
+      :tonnage="info.structureMod.max_tons"
+      :structure="info.structureMod.modifier"
   />
   <MechArmorUpgrades
       label="Armor Upgrades"
-      v-model="mech.armorUpgradeId"
-      :size="sizeId"
+      v-model="mech.armor_upgrade_id"
+      :size="mech.size_id"
   />
   <div class="tab-content-divider-bottom"></div>
   <div class="row">
@@ -110,22 +77,22 @@ export default {
     </div>
     <div class="col-sm-1 number-cell">
       <strong>
-        {{ armorStat }}
+        {{ info.armorStat }}
       </strong>
     </div>
     <div class="col-sm-1 number-cell">
       <strong>
-        {{ structureStat }}
+        {{ info.structureStat }}
       </strong>
     </div>
     <div class="col-sm-1 number-cell">
       <strong>
-        {{ maxSlots }}
+        {{ info.maxSlots }}
       </strong>
     </div>
     <div class="col-sm-1 number-cell">
       <strong>
-        {{ maxTons }}
+        {{ info.maxTons }}
       </strong>
     </div>
   </div>

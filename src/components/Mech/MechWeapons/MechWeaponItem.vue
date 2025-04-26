@@ -1,7 +1,6 @@
 <script>
 import {mapStores} from 'pinia';
 import {useMechStore} from '../../../store.js';
-import {WEAPON_TRAITS} from '../../../data/weapon-traits.js';
 
 export default {
   props: {
@@ -13,23 +12,28 @@ export default {
   },
   computed: {
     ...mapStores(useMechStore),
-    mech() {
-      return this.mechStore.getMech(this.mechId);
-    },
     weapon() {
       return this.mechStore.getWeaponInfo(this.mechId, this.weaponId);
     },
+    rangeFormatted(){
+      let range = this.weapon.range
+      if(range){
+        return range + '"'
+      }
+
+      return '-'
+    }
   },
 };
 </script>
 <template>
   <tr>
-    <th>{{ weapon.display_name }}</th>
+    <td>{{ weapon.displayName }}</td>
     <td>{{ weapon.slots }}</td>
     <td>{{ weapon.cost }}</td>
     <td>{{ weapon.damage }}</td>
-    <td>{{ weapon.range }}</td>
-    <td>{{ weapon.trait_display_names }}</td>
+    <td>{{ rangeFormatted }}</td>
+    <td>{{ weapon.traitDisplayNames }}</td>
   </tr>
 
 </template>

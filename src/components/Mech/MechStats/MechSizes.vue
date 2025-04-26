@@ -19,13 +19,13 @@ export default {
     mech() {
       return this.mechStore.getMech(this.mechId);
     },
-    size() {
-      return HEV_SIZES[this.mech.sizeId];
+    info() {
+      return this.mechStore.getMechInfo(this.mechId);
     },
   },
   methods: {
-    selectOption(sizeId) {
-      this.mechStore.updateMech(this.mechId, {sizeId});
+    selectOption(size_id) {
+      this.mechStore.updateMech(this.mechId, {size_id});
     },
   },
 };
@@ -38,7 +38,7 @@ export default {
       <label>Size</label>
     </BCol>
     <BCol sm="4">
-      <BDropdown variant="light" :text="size.display_name" class="dropdown-block">
+      <BDropdown variant="light" :text="info.size.display_name" class="dropdown-block">
         <BDropdown-header class="w-100">
           <BRow class="my-1">
             <BCol sm="4">
@@ -62,7 +62,7 @@ export default {
         <BDropdown-item
             v-for="item in options" :key="item.value"
             @click="selectOption(item.value)"
-            :active="item.value == mech.sizeId"
+            :active="item.value == mech.size_id"
         >
           <BRow class="my-1">
             <BCol sm="4">
@@ -85,16 +85,16 @@ export default {
       </BDropdown>
     </BCol>
     <BCol sm="1" class="number-cell">
-      {{ size.armor }}
+      {{ info.size.armor }}
     </BCol>
     <BCol sm="1" class="number-cell">
-      {{ size.structure }}
+      {{ info.size.structure }}
     </BCol>
     <BCol sm="1" class="number-cell">
-      {{ size.max_slots }}
+      {{ info.size.max_slots }}
     </BCol>
     <BCol sm="1" class="number-cell">
-      {{ size.max_tons }}
+      {{ info.size.max_tons }}
     </BCol>
   </BRow>
 </template>

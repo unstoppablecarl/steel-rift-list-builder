@@ -3,7 +3,7 @@ import {HEV_SIZES, SIZE_MEDIUM} from './data/mech-sizes.js';
 import {HEV_BODY_MODS, MOD_STANDARD} from './data/mech-body.js';
 import {HEV_ARMOR_UPGRADES, NO_ARMOR_UPGRADE} from './data/mech-armor-upgrades.js';
 import {updateObject} from './data/data-helpers.js';
-import {find} from 'lodash';
+import {find, sumBy} from 'lodash';
 import {WEAPON_TRAITS} from './data/weapon-traits.js';
 import {HEV_WEAPONS} from './data/mech-weapons.js';
 import {readonly} from 'vue';
@@ -21,93 +21,101 @@ export const useMechStore = defineStore('mech', {
             this.mechs.push({
                 id,
                 name: null,
-                sizeId: SIZE_MEDIUM,
-                structureModId: MOD_STANDARD,
-                armorModId: MOD_STANDARD,
-                armorUpgradeId: NO_ARMOR_UPGRADE,
-                weapons: [],
+                size_id: SIZE_MEDIUM,
+                structure_mod_id: MOD_STANDARD,
+                armor_mod_id: MOD_STANDARD,
+                armor_upgrade_id: NO_ARMOR_UPGRADE,
+                weapon_ids: [],
             });
         },
-        updateMechName(mechId, name){
+        updateMechName(mechId, name) {
             let existing = find(this.mechs, (mech) => mechId == mech.id);
-            existing.name = name
+            existing.name = name;
         },
         updateMech(mechId, data) {
             let existing = find(this.mechs, (mech) => mechId == mech.id);
             updateObject(existing, data, [
                 'name',
-                'sizeId',
-                'structureModId',
-                'armorModId',
-                'armorUpgradeId',
+                'size_id',
+                'structure_mod_id',
+                'armor_mod_id',
+                'armor_upgrade_id',
             ]);
+
         },
         addMechWeapon(mechId, weaponId) {
             let existing = find(this.mechs, (mech) => mechId == mech.id);
-            existing.weapons.push(weaponId);
+            existing.weapon_ids.push(weaponId);
         },
     },
     getters: {
         getMech(state) {
             return (mechId) => find(state.mechs, (mech) => mechId == mech.id);
         },
-        getMechName(state){
-            return (mechId) => this.getMech(mechId).name
+        getMechName(state) {
+            return (mechId) => this.getMech(mechId).name;
         },
         getMechInfo(state) {
             return function (mechId) {
                 let {
                     name,
-                    sizeId,
-                    structureModId,
-                    armorModId,
-                    armorUpgradeId,
+                    size_id,
+                    structure_mod_id,
+                    armor_mod_id,
+                    armor_upgrade_id,
+                    weapon_ids,
                 } = this.getMech(mechId);
 
-                const size = HEV_SIZES[sizeId];
-                const structureMod = HEV_BODY_MODS[structureModId];
-                const armorMod = HEV_BODY_MODS[armorModId];
-                const armorUpgrade = HEV_ARMOR_UPGRADES[armorUpgradeId];
+                const weapons = weapon_ids.map((weaponId) => this.getWeaponInfo(mechId, weaponId));
+
+                const size = HEV_SIZES[size_id];
+                const structureMod = HEV_BODY_MODS[structure_mod_id];
+                const armorMod = HEV_BODY_MODS[armor_mod_id];
+                const armorUpgrade = HEV_ARMOR_UPGRADES[armor_upgrade_id];
                 const maxTons = size.max_tons + armorMod.max_tons + structureMod.max_tons;
                 const placeholderName = ('Mech-' + mechId).padStart(1);
+
+                const armorStat = size.armor + armorMod.modifier;
+                const structureStat = size.structure + armorMod.modifier;
+
                 const maxSlots = size.slots - armorUpgrade.slots;
+
+                const usedSlots = sumBy(weapons, 'slots');
+                const usedTons = sumBy(weapons, 'cost');
 
                 let displayName = name || placeholderName;
 
                 return {
-                    name,
                     displayName,
                     placeholderName,
-                    sizeId,
-                    structureModId,
                     structureMod,
-                    armorModId,
                     armorMod,
                     maxTons,
-                    armorUpgradeId,
+                    usedTons,
                     armorUpgrade,
                     size,
                     maxSlots,
+                    usedSlots,
+                    armorStat,
+                    structureStat,
                 };
             };
-        },
-        getWeapon(state) {
-            return (weaponId) => HEV_WEAPONS[this.weaponId];
         },
         getWeaponInfo(state) {
             return (mechId, weaponId) => {
 
-                let sizeId = this.getMech(mechId).sizeId;
+                let mech = this.getMech(mechId);
+                let size_id = mech.size_id;
                 let weapon = HEV_WEAPONS[weaponId];
 
                 return readonly({
-                    display_name: weapon.display_name,
-                    damage: weapon.damage_by_size[sizeId],
+                    displayName: weapon.display_name,
+                    damage: weapon.damage_by_size[size_id],
                     slots: 1,
-                    cost: weapon.cost_by_size[sizeId],
+                    cost: weapon.cost_by_size[size_id],
                     range: weapon.range,
-                    traits: weapon.traits_by_size[sizeId],
-                    trait_display_names: weapon.traits_by_size[sizeId]
+                    traits: weapon.traits_by_size[size_id],
+                    traitDisplayNames: weapon.traits_by_size[size_id]
                         .map((traitId) => {
                             return WEAPON_TRAITS[traitId].display_name;
                         })

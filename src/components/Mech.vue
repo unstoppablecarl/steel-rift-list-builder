@@ -1,10 +1,6 @@
 <script>
-import {BFormInput} from 'bootstrap-vue-next';
 import {mapStores} from 'pinia';
 import {useMechStore} from '../store.js';
-import {HEV_SIZES} from '../data/mech-sizes.js';
-import {HEV_BODY_MODS} from '../data/mech-body.js';
-import {HEV_ARMOR_UPGRADES} from '../data/mech-armor-upgrades.js';
 import MechWeapons from './Mech/MechWeapons.vue';
 
 export default {
@@ -22,46 +18,8 @@ export default {
     mech() {
       return this.mechStore.getMech(this.mechId);
     },
-    placeholderName() {
-      return 'Mech-' + this.mechId;
-    },
-    displayName() {
-      if (this.mech.name) {
-        return this.mech.name;
-      }
-      return this.placeholderName;
-    },
-    sizeId() {
-      return this.mech.sizeId;
-    },
-    size() {
-      return HEV_SIZES[this.mech.sizeId];
-    },
-    armorMod() {
-      return HEV_BODY_MODS[this.mech.armorModId];
-    },
-    structureMod() {
-      return HEV_BODY_MODS[this.mech.structureModId];
-    },
-    armorUpgrade() {
-      return HEV_ARMOR_UPGRADES[this.mech.armorUpgradeId];
-    },
-    maxTons() {
-      return this.size.max_tons + this.armorMod.max_tons + this.structureMod.max_tons;
-    },
-    armorStat() {
-      return this.size.armor + this.armorMod.modifier;
-    },
-    structureStat() {
-      return this.size.structure + this.armorMod.modifier;
-    },
-    maxSlots() {
-      return this.size.slots - this.armorUpgrade.slots;
-    },
-  },
-  methods: {
-    updateName(name) {
-      this.mechStore.updateMech(this.mechId, {name});
+    info() {
+      return this.mechStore.getMechInfo(this.mechId);
     },
   },
 };
@@ -70,27 +28,27 @@ export default {
   <BCard>
     <BRow>
       <BCol sm="2" class="collapse-header">
-        HE-V {{ size.display_name }}
+        HE-V {{ info.size.display_name }}
       </BCol>
       <BCol sm="4" class="collapse-header">
-        <strong>{{ displayName }}</strong>
+        <strong>{{ info.displayName }}</strong>
       </BCol>
 
       <div class="col-sm-1 number-cell collapse-header">
         <strong>Arm:</strong>
-        {{ armorStat }}
+        {{ info.armorStat }}
       </div>
       <div class="col-sm-1 number-cell collapse-header">
         <strong>Str:</strong>
-        {{ structureStat }}
+        {{ info.structureStat }}
       </div>
       <div class="col-sm-1 number-cell collapse-header">
         <strong>Slots:</strong>
-        {{ maxSlots }}
+        {{ info.usedSlots }}/{{ info.maxSlots }}
       </div>
       <div class="col-sm-1 number-cell collapse-header">
         <strong>Tons:</strong>
-        {{ maxTons }}
+        {{ info.usedTons}}/{{ info.maxTons }}
       </div>
 
       <BCol sm="2">
