@@ -1,9 +1,11 @@
+import {makeStaticListIds} from './data-helpers.js';
+
 export const ARTILLERY_BARRAGE = 'ARTILLERY_BARRAGE';
 export const MASS_DRIVER = 'MASS_DRIVER';
 export const MINE_DRONE_BARRAGE = 'MINE_DRONE_BARRAGE';
 export const ORBITAL_LASER = 'ORBITAL_LASER';
 
-export const SUPPORT_ASSETS = Object.freeze({
+export const SUPPORT_ASSETS = makeStaticListIds({
     [[ARTILLERY_BARRAGE]]: {
         display_name: 'Artillery Barrage',
     },

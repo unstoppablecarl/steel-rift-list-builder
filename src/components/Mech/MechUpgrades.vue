@@ -4,8 +4,11 @@ import {useMechStore} from '../../store.js';
 import MechUpgradeItem from './MechUpgrades/MechUpgradeItem.vue';
 import MechUpgradeAdd from './MechUpgrades/MechUpgradeAdd.vue';
 
+import draggable from 'vuedraggable';
+import MechWeaponItem from './MechWeapons/MechWeaponItem.vue';
+
 export default {
-  components: {MechUpgradeItem, MechUpgradeAdd},
+  components: {MechWeaponItem, draggable, MechUpgradeItem, MechUpgradeAdd},
   props: {
     mechId: Number,
   },
@@ -15,28 +18,64 @@ export default {
       return this.mechStore.getMech(this.mechId);
     },
   },
-  methods: {},
+  methods: {
+    onSortableChange(event) {
+      let moved = event.moved;
+      if (!moved) {
+        return;
+      }
+
+      this.mechStore.moveMechUpgradeAttachment(this.mechId, moved.element, moved.newIndex);
+    },
+  },
 };
 </script>
 <template>
 
   <table class="table">
-    <thead>
+    <thead class="table-light">
     <tr>
-      <th>Name</th>
-      <th>Slots</th>
-      <th>Cost</th>
+      <th scope="col">Name</th>
+      <th scope="col" class="text-right">Slots</th>
+      <th scope="col" class="text-right">Cost</th>
+      <th scope="col"></th>
+
     </tr>
     </thead>
-    <tbody>
 
-    <MechUpgradeItem
-        v-for="upgradeId in mech.upgrade_ids"
-        :mech-id="mechId"
-        :upgrade-id="upgradeId"
-    />
-    <MechUpgradeAdd :mech-id="mechId"/>
-    </tbody>
+    <draggable
+        :list="mech.upgrades"
+        draggable=".list-item-sortable"
+        tag="tbody"
+        item-key="id"
+        :group="'mech-' + mechId +'-weapons'"
+        handle=".btn-grab"
+        ghost-class="ghost"
+        @start="dragging = true"
+        @end="dragging = false"
+        @change="onSortableChange"
+        :animation="200"
+        :preventOnFilter="false"
+    >
+      <template #item="{ element, index }">
+
+        <MechUpgradeItem
+            :mech-id="mechId"
+            :mech-upgrade-attachment-id="element.id"
+            :index="index"
+        />
+      </template>
+
+    </draggable>
+
+    <tfoot>
+    <tr>
+      <td colspan="4">
+        <MechUpgradeAdd :mech-id="mechId"/>
+      </td>
+    </tr>
+    </tfoot>
+
   </table>
 
 </template>

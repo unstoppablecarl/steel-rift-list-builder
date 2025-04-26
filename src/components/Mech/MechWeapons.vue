@@ -36,14 +36,16 @@ export default {
 <template>
 
   <table class="table">
-    <thead>
+    <thead class="table-light">
     <tr>
-      <th>Name</th>
-      <th>Slots</th>
-      <th>Cost</th>
-      <th>Damage</th>
-      <th>Range</th>
-      <th>Traits</th>
+      <th scope="col">Name</th>
+      <th scope="col" class="text-right">Slots</th>
+      <th scope="col" class="text-right">Cost</th>
+      <th scope="col" class="text-right">Damage</th>
+      <th scope="col" class="text-right">Range</th>
+      <th scope="col">Traits</th>
+      <th scope="col"></th>
+
     </tr>
     </thead>
 

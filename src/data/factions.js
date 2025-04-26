@@ -1,8 +1,10 @@
+import {makeStaticListIds} from './data-helpers.js';
+
 export const FACTION_NONE = 'FACTION_NONE';
 export const FACTION_AUTHORITIES = 'FACTION_AUTHORITIES';
 export const FACTION_CORPORATIONS = 'FACTION_CORPORATIONS';
 export const FACTION_FREELANCERS = 'FACTION_FREELANCERS';
-export const FACTIONS = Object.freeze({
+export const FACTIONS = makeStaticListIds({
     [[FACTION_NONE]]: {
         display_name: 'None',
     },

@@ -29,7 +29,8 @@ export const useMechStore = defineStore('mech', {
                 armor_upgrade_id: NO_ARMOR_UPGRADE,
                 weapons: [],
                 weapons_id_increment: 1,
-                upgrade_ids: [],
+                upgrades: [],
+                upgrades_id_increment: 1,
                 display_order: null,
             };
 
@@ -65,13 +66,31 @@ export const useMechStore = defineStore('mech', {
             let index = findItemIndexById(existing.weapons, mechWeaponAttachmentId);
             existing.weapons.splice(index, 1);
         },
-        moveMechWeaponAttachment(mechId, weapon, toIndex) {
+        moveMechWeaponAttachment(mechId, weaponAttachment, toIndex) {
             let existing = findById(this.mechs, mechId);
-            moveItem(existing.weapons, weapon, toIndex);
+            moveItem(existing.weapons, weaponAttachment, toIndex);
         },
-        addMechUpgrade(mechId, weaponId) {
+        addMechUpgradeAttachment(mechId, upgradeId) {
             let existing = findById(this.mechs, mechId);
-            existing.upgrade_ids.push(weaponId);
+            let id = existing.upgrades_id_increment++;
+            let upgrade = {
+                id,
+                upgrade_id: upgradeId,
+                display_order: null,
+            };
+            console.log(upgrade);
+            existing.upgrades.push(upgrade);
+            upgrade.display_order = findItemIndex(existing.upgrades, upgrade);
+            console.log(upgrade);
+        },
+        removeMechUpgradeAttachment(mechId, mechUpgradeAttachmentId) {
+            let existing = findById(this.mechs, mechId);
+            let index = findItemIndexById(existing.upgrades, mechUpgradeAttachmentId);
+            existing.upgrades.splice(index, 1);
+        },
+        moveMechUpgradeAttachment(mechId, upgradeAttachment, toIndex) {
+            let existing = findById(this.mechs, mechId);
+            moveItem(existing.upgrades, upgradeAttachment, toIndex);
         },
     },
     getters: {
@@ -84,9 +103,34 @@ export const useMechStore = defineStore('mech', {
                 return findById(mech.weapons, mechWeaponAttachmentId);
             };
         },
-        getMechAvailableWeapons(state) {
+        getMechWeaponAttachmentInfo(state) {
+            return (mechId, mechWeaponAttachmentId) => {
+                const weaponAttachment = this.getMechWeaponAttachment(mechId, mechWeaponAttachmentId);
+                return this.getWeaponInfo(mechId, weaponAttachment.weapon_id);
+            };
+        },
+        getMechAvailableWeaponsInfo(state) {
             return (mechId) => {
-                return HEV_WEAPONS;
+                return Object.keys(HEV_WEAPONS)
+                    .map((weaponId) => this.getWeaponInfo(mechId, weaponId));
+            };
+        },
+        getMechAvailableUpgradesInfo(state) {
+            return (mechId) => {
+                return Object.keys(HEV_UPGRADES)
+                    .map((upgradeId) => this.getUpgradeInfo(mechId, upgradeId));
+            };
+        },
+        getMechUpgradeAttachment(state) {
+            return (mechId, mechUpgradeAttachmentId) => {
+                const mech = findById(state.mechs, mechId);
+                return findById(mech.upgrades, mechUpgradeAttachmentId);
+            };
+        },
+        getMechUpgradeAttachmentInfo(state) {
+            return (mechId, mechUpgradeAttachmentId) => {
+                const upgradeAttachment = this.getMechUpgradeAttachment(mechId, mechUpgradeAttachmentId);
+                return this.getUpgradeInfo(mechId, upgradeAttachment.upgrade_id);
             };
         },
         getMechInfo(state) {
@@ -98,11 +142,11 @@ export const useMechStore = defineStore('mech', {
                     armor_mod_id,
                     armor_upgrade_id,
                     weapons,
-                    upgrade_ids,
+                    upgrades,
                 } = this.getMech(mechId);
 
                 const weaponsInfo = weapons.map((item) => this.getWeaponInfo(mechId, item.weapon_id));
-                const upgrades = upgrade_ids.map((upgradeId) => this.getUpgradeInfo(mechId, upgradeId));
+                const upgradesInfo = upgrades.map((item) => this.getUpgradeInfo(mechId, item.upgrade_id));
 
                 const size = HEV_SIZES[size_id];
                 const structureMod = HEV_BODY_MODS[structure_mod_id];
@@ -116,8 +160,8 @@ export const useMechStore = defineStore('mech', {
 
                 const maxSlots = size.slots - armorUpgrade.slots;
 
-                const usedSlots = sumBy(weaponsInfo, 'slots') + sumBy(upgrades, 'slots');
-                const usedTons = sumBy(weaponsInfo, 'cost') + sumBy(upgrades, 'cost');
+                const usedSlots = sumBy(weaponsInfo, 'slots') + sumBy(upgradesInfo, 'slots');
+                const usedTons = sumBy(weaponsInfo, 'cost') + sumBy(upgradesInfo, 'cost');
 
                 let displayName = name || placeholderName;
 
@@ -150,14 +194,15 @@ export const useMechStore = defineStore('mech', {
                 }
 
                 return readonly({
-                    displayName: weapon.display_name,
+                    weapon_id: weaponId,
+                    display_name: weapon.display_name,
                     damage: weapon.damage_by_size[size_id],
                     slots: 1,
                     cost: weapon.cost_by_size[size_id],
                     range: weapon.range,
                     range_formatted,
                     traits: weapon.traits_by_size[size_id],
-                    traitDisplayNames: weapon.traits_by_size[size_id]
+                    trait_display_names: weapon.traits_by_size[size_id]
                         .map((traitId) => {
                             return WEAPON_TRAITS[traitId].display_name;
                         })
@@ -173,7 +218,8 @@ export const useMechStore = defineStore('mech', {
                 let upgrade = HEV_UPGRADES[upgradeId];
 
                 return readonly({
-                    displayName: upgrade.display_name,
+                    upgrade_id: upgradeId,
+                    display_name: upgrade.display_name,
                     slots: 1,
                     cost: upgrade.cost_by_size[size_id],
                 });

@@ -11,9 +11,7 @@ export default {
   computed: {
     ...mapStores(useMechStore),
     weapon() {
-      const weaponAttachment = this.mechStore.getMechWeaponAttachment(this.mechId, this.mechWeaponAttachmentId);
-
-      return this.mechStore.getWeaponInfo(this.mechId, weaponAttachment.weapon_id);
+      return this.mechStore.getMechWeaponAttachmentInfo(this.mechId, this.mechWeaponAttachmentId);
     },
   },
   methods: {
@@ -25,12 +23,20 @@ export default {
 </script>
 <template>
   <tr class="list-item-sortable">
-    <td><span class="btn btn-light btn-grab">:::</span> {{ weapon.displayName }}</td>
-    <td>{{ weapon.slots }}</td>
-    <td>{{ weapon.cost }}</td>
-    <td>{{ weapon.damage }}</td>
-    <td>{{ weapon.range_formatted }}</td>
-    <td>{{ weapon.traitDisplayNames }}</td>
+    <td><span class="btn btn-light btn-grab">:::</span> {{ weapon.display_name }}</td>
+    <td class="text-right">
+      <number :val="weapon.slots" :positive-signed="false" :invert-color="true"/>
+    </td>
+    <td class="text-right">
+      <number :val="weapon.cost" :positive-signed="false" :invert-color="true"/>
+    </td>
+    <td class="text-right">
+      {{ weapon.damage }}
+    </td>
+    <td class="text-right">
+      {{ weapon.range_formatted }}
+    </td>
+    <td>{{ weapon.trait_display_names }}</td>
     <td>
       <BButton @click="remove()">Delete</BButton>
     </td>

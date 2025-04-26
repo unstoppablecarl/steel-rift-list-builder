@@ -19,7 +19,7 @@ import {
     TRAIT_SHORT_6,
     TRAIT_SMART,
 } from './weapon-traits.js';
-import {listToDropDown} from './data-helpers.js';
+import {listToDropDown, makeStaticListIds} from './data-helpers.js';
 
 export const AUTO_CANNON = 'AUTO_CANNON';
 export const HOWITZER = 'HOWITZER';
@@ -33,7 +33,7 @@ export const ROTARY_CANNON = 'ROTARY_CANNON';
 export const SHOT_CANNON = 'SHOT_CANNON';
 export const SUBMUNITIONS = 'SUBMUNITIONS';
 
-export const HEV_WEAPONS = Object.freeze({
+export const HEV_WEAPONS = makeStaticListIds({
     [[AUTO_CANNON]]: makeWeapon({
         display_name: 'Auto-Cannon',
         damage_by_size: {

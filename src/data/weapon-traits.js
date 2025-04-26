@@ -1,3 +1,5 @@
+import {makeStaticListIds} from './data-helpers.js';
+
 export const TRAIT_AP_1 = 'AP_1';
 export const TRAIT_AP_2 = 'AP_2';
 export const TRAIT_AP_3 = 'AP_3';
@@ -17,7 +19,7 @@ export const TRAIT_SHORT_6 = 'Short_6';
 export const TRAIT_SHORT_12 = 'Short_12';
 export const TRAIT_SHORT_18 = 'Short_18';
 export const TRAIT_SMART = 'Smart';
-export const WEAPON_TRAITS = Object.freeze({
+export const WEAPON_TRAITS = makeStaticListIds({
     [[TRAIT_AP_1]]: {
         display_name: 'AP (1)',
     },
