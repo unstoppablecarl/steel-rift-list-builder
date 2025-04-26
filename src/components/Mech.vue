@@ -33,22 +33,23 @@ export default {
       <BCol sm="4" class="collapse-header">
         <strong>{{ info.displayName }}</strong>
       </BCol>
-
-      <div class="col-sm-1 number-cell collapse-header">
-        <strong>Arm:</strong>
-        {{ info.armorStat }}
-      </div>
-      <div class="col-sm-1 number-cell collapse-header">
-        <strong>Str:</strong>
-        {{ info.structureStat }}
-      </div>
-      <div class="col-sm-1 number-cell collapse-header">
-        <strong>Slots:</strong>
-        {{ info.usedSlots }}/{{ info.maxSlots }}
-      </div>
-      <div class="col-sm-1 number-cell collapse-header">
-        <strong>Tons:</strong>
-        {{ info.usedTons}}/{{ info.maxTons }}
+      <div class="col-sm-4 collapse-header">
+        <span class="px-2">
+          <strong>Arm:</strong>
+          {{ info.armorStat }}
+        </span>
+        <span class="px-2">
+          <strong>Str:</strong>
+          {{ info.structureStat }}
+        </span>
+        <span class="px-2">
+          <strong>Slots:</strong>
+          {{ info.usedSlots }}/{{ info.maxSlots }}
+        </span>
+        <span class="px-2">
+          <strong>Tons:</strong>
+          {{ info.usedTons }}/{{ info.maxTons }}
+        </span>
       </div>
 
       <BCol sm="2">

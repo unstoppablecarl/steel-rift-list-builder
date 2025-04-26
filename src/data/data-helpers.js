@@ -1,4 +1,4 @@
-import {pick} from 'lodash';
+import {find, pick} from 'lodash';
 
 export function listToDropDown(list) {
     return Object.keys(list)
@@ -10,6 +10,10 @@ export function listToDropDown(list) {
         });
 }
 
-export  function updateObject(existing, data, validKeys) {
+export function updateObject(existing, data, validKeys) {
     return Object.assign(existing, pick(data, validKeys));
+}
+
+export function findById(collection, id) {
+    return find(collection, (item) => id == item.id);
 }

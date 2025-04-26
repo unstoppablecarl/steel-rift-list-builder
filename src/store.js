@@ -2,7 +2,7 @@ import {defineStore} from 'pinia';
 import {HEV_SIZES, SIZE_MEDIUM} from './data/mech-sizes.js';
 import {HEV_BODY_MODS, MOD_STANDARD} from './data/mech-body.js';
 import {HEV_ARMOR_UPGRADES, NO_ARMOR_UPGRADE} from './data/mech-armor-upgrades.js';
-import {updateObject} from './data/data-helpers.js';
+import {findById, updateObject} from './data/data-helpers.js';
 import {find, sumBy} from 'lodash';
 import {WEAPON_TRAITS} from './data/weapon-traits.js';
 import {HEV_WEAPONS} from './data/mech-weapons.js';
@@ -26,14 +26,11 @@ export const useMechStore = defineStore('mech', {
                 armor_mod_id: MOD_STANDARD,
                 armor_upgrade_id: NO_ARMOR_UPGRADE,
                 weapon_ids: [],
+                upgrade_ids: [],
             });
         },
-        updateMechName(mechId, name) {
-            let existing = find(this.mechs, (mech) => mechId == mech.id);
-            existing.name = name;
-        },
         updateMech(mechId, data) {
-            let existing = find(this.mechs, (mech) => mechId == mech.id);
+            let existing = findById(this.mechs, mechId)
             updateObject(existing, data, [
                 'name',
                 'size_id',
@@ -41,16 +38,19 @@ export const useMechStore = defineStore('mech', {
                 'armor_mod_id',
                 'armor_upgrade_id',
             ]);
-
         },
         addMechWeapon(mechId, weaponId) {
-            let existing = find(this.mechs, (mech) => mechId == mech.id);
+            let existing = findById(this.mechs, mechId)
             existing.weapon_ids.push(weaponId);
+        },
+        addMechUpgrade(mechId, weaponId) {
+            let existing = findById(this.mechs, mechId)
+            existing.upgrade_ids.push(weaponId);
         },
     },
     getters: {
         getMech(state) {
-            return (mechId) => find(state.mechs, (mech) => mechId == mech.id);
+            return (mechId) => findById(state.mechs, mechId)
         },
         getMechName(state) {
             return (mechId) => this.getMech(mechId).name;
