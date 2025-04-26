@@ -2,9 +2,10 @@
 import {mapStores} from 'pinia';
 import {useMechStore} from '../store.js';
 import MechWeapons from './Mech/MechWeapons.vue';
+import MechUpgrades from './Mech/MechUpgrades.vue';
 
 export default {
-  components: {MechWeapons},
+  components: {MechUpgrades, MechWeapons},
   props: {
     mechId: Number,
   },
@@ -27,8 +28,11 @@ export default {
 <template>
   <BCard>
     <BRow>
-      <BCol sm="2" class="collapse-header">
-        HE-V {{ info.size.display_name }}
+      <BCol sm="2">
+        <span class="btn btn-light btn-grab">:::</span>
+        <span class="collapse-header">
+          HE-V {{ info.size.display_name }}
+        </span>
       </BCol>
       <BCol sm="4" class="collapse-header">
         <strong>{{ info.displayName }}</strong>
@@ -75,6 +79,9 @@ export default {
         </BTab>
         <BTab title="Weapons">
           <MechWeapons :mech-id="mechId"/>
+        </BTab>
+        <BTab title="Upgrades">
+          <MechUpgrades :mech-id="mechId"/>
         </BTab>
       </BTabs>
     </BCollapse>

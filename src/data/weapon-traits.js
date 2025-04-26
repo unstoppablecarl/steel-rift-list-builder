@@ -64,13 +64,13 @@ export const WEAPON_TRAITS = Object.freeze({
         display_name: 'Melee (2)',
     },
     [[TRAIT_SHORT_6]]: {
-        display_name: 'Short (6)',
+        display_name: 'Short',
     },
     [[TRAIT_SHORT_12]]: {
-        display_name: 'Short (12)',
+        display_name: 'Short',
     },
     [[TRAIT_SHORT_18]]: {
-        display_name: 'Short (18)',
+        display_name: 'Short',
     },
     [[TRAIT_SMART]]: {
         display_name: 'Smart',

@@ -25,10 +25,13 @@ export default {
   },
   methods: {
     addWeapon(weaponId) {
-
+      if (!weaponId) {
+        return;
+      }
       this.mechStore.addMechWeapon(this.mechId, weaponId);
+      this.weaponId = null;
     },
-  }
+  },
 };
 </script>
 <template>

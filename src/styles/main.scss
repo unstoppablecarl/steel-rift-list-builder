@@ -43,6 +43,10 @@ $cyan: #6cb2eb;
 }
 
 
+.btn-grab:hover {
+  cursor: ns-resize;
+}
+
 .number-cell {
   text-align: right;
   font-size: 12pt;

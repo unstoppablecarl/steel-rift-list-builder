@@ -3,7 +3,7 @@
 import Mech from './Mech.vue';
 import {mapStores} from 'pinia';
 import {useMechStore} from '../store.js';
-import draggable from 'vuedraggable'
+import draggable from 'vuedraggable';
 
 export default {
   name: 'mech-list',
@@ -27,26 +27,39 @@ export default {
     addMech() {
       this.mechStore.addMech();
     },
+    onSortableChange(event) {
+      let moved = event.moved;
+      if (!moved) {
+        return;
+      }
+      console.log(moved.element, moved.newIndex)
+
+      this.mechStore.moveMech(moved.element, moved.newIndex);
+
+    },
   },
 };
 
 </script>
 
 <template>
-
   <div>
     <draggable
         :list="mechs"
         item-key="id"
         group="mechs"
+        handle=".btn-grab"
         ghost-class="ghost"
         @start="dragging = true"
         @end="dragging = false"
+        @change="onSortableChange"
+        :animation="200"
+        :preventOnFilter="false"
     >
       <template #item="{ element }">
-      <mech
-          :mech-id="element.id"
-      />
+        <mech
+            :mech-id="element.id"
+        />
       </template>
 
     </draggable>

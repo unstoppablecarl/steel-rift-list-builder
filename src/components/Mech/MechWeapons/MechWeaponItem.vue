@@ -6,9 +6,7 @@ export default {
   props: {
     mechId: Number,
     weaponId: String,
-  },
-  data() {
-    return {};
+    index: Number,
   },
   computed: {
     ...mapStores(useMechStore),
@@ -20,10 +18,14 @@ export default {
       if(range){
         return range + '"'
       }
-
       return '-'
-    }
+    },
   },
+  methods: {
+    remove(){
+      this.mechStore.removeMechWeapon(this.mechId, this.index);
+    }
+  }
 };
 </script>
 <template>
@@ -34,6 +36,9 @@ export default {
     <td>{{ weapon.damage }}</td>
     <td>{{ rangeFormatted }}</td>
     <td>{{ weapon.traitDisplayNames }}</td>
+    <td>
+      <BButton @click="remove()">Delete</BButton>
+    </td>
   </tr>
 
 </template>

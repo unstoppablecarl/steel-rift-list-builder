@@ -39,9 +39,10 @@ export default {
     <tbody>
 
     <MechWeaponItem
-        v-for="weaponId in mech.weapon_ids"
+        v-for="(weaponId, index) in mech.weapon_ids"
         :mech-id="mechId"
         :weapon-id="weaponId"
+        :index="index"
     />
     <MechWeaponAdd :mech-id="mechId"/>
     </tbody>
