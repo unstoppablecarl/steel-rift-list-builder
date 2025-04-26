@@ -15,13 +15,6 @@ export default {
 
       return this.mechStore.getWeaponInfo(this.mechId, weaponAttachment.weapon_id);
     },
-    rangeFormatted() {
-      let range = this.weapon.range;
-      if (range) {
-        return range + '"';
-      }
-      return '-';
-    },
   },
   methods: {
     remove() {
@@ -36,15 +29,13 @@ export default {
     <td>{{ weapon.slots }}</td>
     <td>{{ weapon.cost }}</td>
     <td>{{ weapon.damage }}</td>
-    <td>{{ rangeFormatted }}</td>
+    <td>{{ weapon.range_formatted }}</td>
     <td>{{ weapon.traitDisplayNames }}</td>
     <td>
       <BButton @click="remove()">Delete</BButton>
     </td>
   </tr>
-
 </template>
-
 <style scoped>
 
 </style>

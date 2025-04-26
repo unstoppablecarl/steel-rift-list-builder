@@ -8,7 +8,7 @@ import {WEAPON_TRAITS} from './data/weapon-traits.js';
 import {HEV_WEAPONS} from './data/mech-weapons.js';
 import {readonly} from 'vue';
 import {HEV_UPGRADES} from './data/mech-upgrades.js';
-import {findItemIndex, findItemIndexById, findItemIndexByIdOrFail, moveItem} from './helpers/collection-helper.js';
+import {findItemIndex, findItemIndexById, moveItem} from './helpers/collection-helper.js';
 
 export const useMechStore = defineStore('mech', {
     state() {
@@ -62,12 +62,12 @@ export const useMechStore = defineStore('mech', {
         },
         removeMechWeaponAttachment(mechId, mechWeaponAttachmentId) {
             let existing = findById(this.mechs, mechId);
-            let index = findItemIndexById(existing.weapons, mechWeaponAttachmentId)
+            let index = findItemIndexById(existing.weapons, mechWeaponAttachmentId);
             existing.weapons.splice(index, 1);
         },
         moveMechWeaponAttachment(mechId, weapon, toIndex) {
             let existing = findById(this.mechs, mechId);
-            moveItem(existing.weapons, weapon, toIndex)
+            moveItem(existing.weapons, weapon, toIndex);
         },
         addMechUpgrade(mechId, weaponId) {
             let existing = findById(this.mechs, mechId);
@@ -78,14 +78,16 @@ export const useMechStore = defineStore('mech', {
         getMech(state) {
             return (mechId) => findById(state.mechs, mechId);
         },
-        getMechWeaponAttachment(state){
+        getMechWeaponAttachment(state) {
             return (mechId, mechWeaponAttachmentId) => {
                 const mech = findById(state.mechs, mechId);
-                return findById(mech.weapons, mechWeaponAttachmentId)
-            }
+                return findById(mech.weapons, mechWeaponAttachmentId);
+            };
         },
-        getMechName(state) {
-            return (mechId) => this.getMech(mechId).name;
+        getMechAvailableWeapons(state) {
+            return (mechId) => {
+                return HEV_WEAPONS;
+            };
         },
         getMechInfo(state) {
             return function (mechId) {
@@ -142,12 +144,18 @@ export const useMechStore = defineStore('mech', {
                 let size_id = mech.size_id;
                 let weapon = HEV_WEAPONS[weaponId];
 
+                let range_formatted = '-';
+                if (weapon.range) {
+                    range_formatted = weapon.range + '"';
+                }
+
                 return readonly({
                     displayName: weapon.display_name,
                     damage: weapon.damage_by_size[size_id],
                     slots: 1,
                     cost: weapon.cost_by_size[size_id],
                     range: weapon.range,
+                    range_formatted,
                     traits: weapon.traits_by_size[size_id],
                     traitDisplayNames: weapon.traits_by_size[size_id]
                         .map((traitId) => {
