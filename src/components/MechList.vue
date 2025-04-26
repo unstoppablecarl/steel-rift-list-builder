@@ -37,7 +37,7 @@ export default {
   <div>
     <draggable
         :list="mechs"
-        item-key="name"
+        item-key="id"
         group="mechs"
         ghost-class="ghost"
         @start="dragging = true"

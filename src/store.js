@@ -115,19 +115,5 @@ export const useMechStore = defineStore('mech', {
                 });
             };
         },
-        damage() {
-            return this.weapon.damage_by_size[this.mech.sizeId];
-        },
-        slots() {
-
-        },
-        cost() {
-            return this.weapon.cost_by_size[this.mech.sizeId];
-        },
-        traits() {
-            return this.weapon.traits_by_size[this.mech.sizeId].map((traitId) => {
-                return WEAPON_TRAITS[traitId].display_name;
-            }).join(', ');
-        },
     },
 });

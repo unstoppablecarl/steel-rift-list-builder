@@ -11,9 +11,7 @@ export default {
     mechId: Number,
   },
   data() {
-    return {
-
-    };
+    return {};
   },
   computed: {
     ...mapStores(useMechStore),
@@ -57,11 +55,6 @@ export default {
       return this.size.slots - this.armorUpgrade.slots;
     },
   },
-  methods: {
-    updateName(name) {
-      this.mechStore.updateMechName(this.mechId, name);
-    },
-  },
 };
 </script>
 <template>
@@ -71,8 +64,7 @@ export default {
       <label :for="'mech-input-name-' + mechId">Name</label>
     </div>
     <div class="col-sm-4">
-      <BFormInput :id="'mech-input-name-' + mechId" :model-value="mech.name" @update:model-value="updateName($event)"
-                  :placeholder="placeholderName"/>
+      <BFormInput :id="'mech-input-name-' + mechId" v-model="mech.name" :placeholder="placeholderName"/>
     </div>
 
     <div class="col-sm-1 number-cell">
