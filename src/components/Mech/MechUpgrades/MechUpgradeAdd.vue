@@ -21,7 +21,6 @@ export default {
   },
 };
 </script>
-
 <template>
   <BDropdown variant="light" text="Add Upgrade" class="dropdown-block">
     <BDropdown-header>
@@ -44,6 +43,7 @@ export default {
     <BDropdown-item
         v-for="item in options" :key="item.upgrade_id"
         @click="addUpgrade(item.upgrade_id)"
+        :disabled="!item.valid"
     >
       <BRow class="my-1">
         <BCol sm="3">
@@ -56,11 +56,11 @@ export default {
           <number :val="item.cost" :positive-signed="false" :invert-color="true"/>
         </BCol>
         <BCol sm="3">
+          {{ item.notes.join(', ')}}
         </BCol>
       </BRow>
     </BDropdown-item>
   </BDropdown>
-
 </template>
 <style scoped>
 

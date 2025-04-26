@@ -14,6 +14,11 @@ export default {
       return this.mechStore.getMechUpgradeAttachmentInfo(this.mechId, this.mechUpgradeAttachmentId);
     },
   },
+  methods: {
+    remove() {
+      this.mechStore.removeMechUpgradeAttachment(this.mechId, this.mechUpgradeAttachmentId);
+    },
+  },
 };
 </script>
 <template>
@@ -28,6 +33,9 @@ export default {
 
     </td>
     <td></td>
+    <td>
+      <BButton @click="remove()">Delete</BButton>
+    </td>
   </tr>
 
 </template>

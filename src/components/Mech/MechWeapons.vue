@@ -72,11 +72,8 @@ export default {
       </template>
 
     </draggable>
-
   </table>
   <MechWeaponAdd :mech-id="mechId"/>
-
-
 </template>
 
 <style scoped>

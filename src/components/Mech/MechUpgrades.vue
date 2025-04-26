@@ -32,14 +32,15 @@ export default {
 </script>
 <template>
 
+
   <table class="table">
     <thead class="table-light">
     <tr>
       <th scope="col">Name</th>
       <th scope="col" class="text-right">Slots</th>
       <th scope="col" class="text-right">Cost</th>
+      <th scope="col">Notes</th>
       <th scope="col"></th>
-
     </tr>
     </thead>
 
@@ -67,16 +68,8 @@ export default {
       </template>
 
     </draggable>
-
-    <tfoot>
-    <tr>
-      <td colspan="4">
-        <MechUpgradeAdd :mech-id="mechId"/>
-      </td>
-    </tr>
-    </tfoot>
-
   </table>
+  <MechUpgradeAdd :mech-id="mechId"/>
 
 </template>
 
