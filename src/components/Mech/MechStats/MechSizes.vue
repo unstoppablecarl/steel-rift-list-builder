@@ -1,33 +1,44 @@
-<script setup>
-import {computed} from 'vue';
-import {HEV_SIZES, HEV_SIZES_DROP_DOWN} from '../data/mech-sizes.js';
+<script>
+import {HEV_SIZES, HEV_SIZES_DROP_DOWN} from '../../../data/mech-sizes.js';
 import {BDropdownDivider} from 'bootstrap-vue-next';
+import {mapStores} from 'pinia';
+import {useMechStore} from '../../../store.js';
 
-const options = HEV_SIZES_DROP_DOWN;
+export default {
+  props: {
+    mechId: Number,
+  },
 
-const model = defineModel();
+  data() {
+    return {
+      options: HEV_SIZES_DROP_DOWN,
+    };
+  },
+  computed: {
+    ...mapStores(useMechStore),
+    mech() {
+      return this.mechStore.getMech(this.mechId);
+    },
+    size() {
+      return HEV_SIZES[this.mech.sizeId];
+    },
+  },
+  methods: {
+    selectOption(sizeId) {
+      this.mechStore.updateMech(this.mechId, {sizeId});
+    },
+  },
+};
 
-const sizeTonnage = computed(() => HEV_SIZES[model.value].max_tons);
-const sizeArmor = computed(() => HEV_SIZES[model.value].armor);
-const sizeStructure = computed(() => HEV_SIZES[model.value].structure);
-const sizeSlots = computed(() => HEV_SIZES[model.value].slots);
-
-const selectedValueLabel = computed(() => {
-  return HEV_SIZES[model.value].display_name;
-});
-
-function selectOption(value) {
-  model.value = value;
-}
 </script>
 
 <template>
   <BRow class="my-1">
     <BCol sm="2">
-      <label for="input-armor-mod">Size</label>
+      <label>Size</label>
     </BCol>
     <BCol sm="4">
-      <BDropdown variant="light" :text="selectedValueLabel" class="dropdown-block">
+      <BDropdown variant="light" :text="size.display_name" class="dropdown-block">
         <BDropdown-header class="w-100">
           <BRow class="my-1">
             <BCol sm="4">
@@ -43,9 +54,6 @@ function selectOption(value) {
               Structure
             </BCol>
             <BCol sm="2" class="text-right">
-              Slots
-            </BCol>
-            <BCol sm="2" class="text-right">
               Tons
             </BCol>
           </BRow>
@@ -54,39 +62,39 @@ function selectOption(value) {
         <BDropdown-item
             v-for="item in options" :key="item.value"
             @click="selectOption(item.value)"
-            :active="item.value == model"
+            :active="item.value == mech.sizeId"
         >
           <BRow class="my-1">
             <BCol sm="4">
               {{ item.text }}
             </BCol>
             <BCol sm="2" class="text-right">
-              {{item.slots}}
+              {{ item.slots }}
             </BCol>
             <BCol sm="2" class="text-right">
-              {{item.armor}}
+              {{ item.armor }}
             </BCol>
             <BCol sm="2" class="text-right">
-              {{item.structure}}
+              {{ item.structure }}
             </BCol>
             <BCol sm="2" class="text-right">
-              {{item.max_tons}}
+              {{ item.max_tons }}
             </BCol>
           </BRow>
         </BDropdown-item>
       </BDropdown>
     </BCol>
     <BCol sm="1" class="number-cell">
-      {{ sizeArmor }}
+      {{ size.armor }}
     </BCol>
     <BCol sm="1" class="number-cell">
-      {{ sizeStructure }}
+      {{ size.structure }}
     </BCol>
     <BCol sm="1" class="number-cell">
-      {{sizeSlots}}
+      {{ size.max_slots }}
     </BCol>
     <BCol sm="1" class="number-cell">
-      {{ sizeTonnage }}
+      {{ size.max_tons }}
     </BCol>
   </BRow>
 </template>

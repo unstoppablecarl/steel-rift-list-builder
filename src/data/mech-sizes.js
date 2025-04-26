@@ -5,7 +5,7 @@ export const SIZE_MEDIUM = 'SIZE_MEDIUM';
 export const SIZE_HEAVY = 'SIZE_HEAVY';
 export const SIZE_ULTRA = 'SIZE_ULTRA';
 
-export const HEV_SIZES = {
+export const HEV_SIZES = Object.freeze({
     [[SIZE_LIGHT]]: {
         display_name: 'Light',
         armor: 6,
@@ -42,6 +42,6 @@ export const HEV_SIZES = {
         speed: 6,
         jump: 4,
     },
-};
+});
 
 export const HEV_SIZES_DROP_DOWN = listToDropDown(HEV_SIZES);

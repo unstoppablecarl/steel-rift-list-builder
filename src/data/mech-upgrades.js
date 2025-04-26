@@ -10,7 +10,7 @@ export const MINEFIELD_DRONE_TRACKING_SYSTEM = 'Minefield Drone Tracking Submuni
 export const OPTIC_CAMO = 'OPTIC_CAMO';
 export const TARGET_DESIGNATOR = 'TARGET_DESIGNATOR';
 
-export const HEV_UPGRADES = {
+export const HEV_UPGRADES = Object.freeze({
     [[ANTI_MISSILE_SYSTEM]]: makeArmorUpgrade({
         display_name: 'Anti-Missile System',
         cost_by_size: {
@@ -79,7 +79,7 @@ export const HEV_UPGRADES = {
         display_name: 'Target Designator',
         cost: 1
     }),
-};
+});
 
 function makeArmorUpgrade(item) {
     if (!item.cost_by_size) {

@@ -4,7 +4,7 @@ export const MOBILITY_BI_PEDAL = 'MOBILITY_BI_PEDAL';
 export const MOBILITY_TRACKED = 'MOBILITY_TRACKED';
 export const MOBILITY_MULTI_LIMB = 'MOBILITY_MULTI_LIMB';
 
-export const HEV_MOBILITIES = {
+export const HEV_MOBILITIES = Object.freeze({
     [[MOBILITY_BI_PEDAL]]: {
         display_name: 'Bi-Pedal',
     },
@@ -14,6 +14,6 @@ export const HEV_MOBILITIES = {
     [[MOBILITY_MULTI_LIMB]]: {
         display_name: 'Multi-Limb',
     },
-};
+});
 
 export const HEV_MOBILITIES_DROP_DOWN = listToDropDown(HEV_MOBILITIES)

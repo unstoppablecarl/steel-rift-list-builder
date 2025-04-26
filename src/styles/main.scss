@@ -21,8 +21,10 @@ $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
 
-@import "../node_modules/bootstrap/scss/bootstrap";
-@import '../node_modules/bootstrap-vue-next/src/styles/styles.scss';
+@import "../../node_modules/bootstrap/scss/bootstrap";
+@import '../../node_modules/bootstrap-vue-next/src/styles/styles';
+@import "./collapse";
+
 
 .dropdown .btn {
   border: 1px solid $input-border-color;

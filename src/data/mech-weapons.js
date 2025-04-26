@@ -10,7 +10,8 @@ import {
     TRAIT_FRAG,
     TRAIT_KINETIC,
     TRAIT_LIGHT,
-    TRAIT_LIMITED_2, TRAIT_LIMITED_3,
+    TRAIT_LIMITED_2,
+    TRAIT_LIMITED_3,
     TRAIT_MELEE_1,
     TRAIT_MELEE_2,
     TRAIT_SHORT_12,
@@ -18,6 +19,7 @@ import {
     TRAIT_SHORT_6,
     TRAIT_SMART,
 } from './weapon-traits.js';
+import {listToDropDown} from './data-helpers.js';
 
 export const AUTO_CANNON = 'AUTO_CANNON';
 export const HOWITZER = 'HOWITZER';
@@ -31,7 +33,7 @@ export const ROTARY_CANNON = 'ROTARY_CANNON';
 export const SHOT_CANNON = 'SHOT_CANNON';
 export const SUBMUNITIONS = 'SUBMUNITIONS';
 
-export const HEV_WEAPONS = {
+export const HEV_WEAPONS = Object.freeze({
     [[AUTO_CANNON]]: makeWeapon({
         display_name: 'Auto-Cannon',
         damage_by_size: {
@@ -242,36 +244,64 @@ export const HEV_WEAPONS = {
             [[SIZE_ULTRA]]: 4,
         },
     }),
-};
+});
 
-function makeWeapon(item) {
-    if (!item.cost_by_size) {
-        item.cost_by_size = {
-            [[SIZE_LIGHT]]: item.cost,
-            [[SIZE_MEDIUM]]: item.cost,
-            [[SIZE_HEAVY]]: item.cost,
-            [[SIZE_ULTRA]]: item.cost,
+function makeWeapon({
+                        display_name,
+                        damage,
+                        damage_by_size,
+                        traits,
+                        traits_by_size,
+                        cost,
+                        cost_by_size,
+                    }) {
+    if (!cost_by_size) {
+        cost_by_size = {
+            [[SIZE_LIGHT]]: cost,
+            [[SIZE_MEDIUM]]: cost,
+            [[SIZE_HEAVY]]: cost,
+            [[SIZE_ULTRA]]: cost,
         };
     }
 
-    if (!item.traits_by_size) {
-        item.traits_by_size = {
-            [[SIZE_LIGHT]]: item.traits,
-            [[SIZE_MEDIUM]]: item.traits,
-            [[SIZE_HEAVY]]: item.traits,
-            [[SIZE_ULTRA]]: item.traits,
+    if (!traits_by_size) {
+        traits_by_size = {
+            [[SIZE_LIGHT]]: traits,
+            [[SIZE_MEDIUM]]: traits,
+            [[SIZE_HEAVY]]: traits,
+            [[SIZE_ULTRA]]: traits,
         };
     }
 
-    if (!item.damage_by_size) {
-        item.damage_by_size = {
-            [[SIZE_LIGHT]]: item.damage,
-            [[SIZE_MEDIUM]]: item.damage,
-            [[SIZE_HEAVY]]: item.damage,
-            [[SIZE_ULTRA]]: item.damage,
+    if (!damage_by_size) {
+        damage_by_size = {
+            [[SIZE_LIGHT]]: damage,
+            [[SIZE_MEDIUM]]: damage,
+            [[SIZE_HEAVY]]: damage,
+            [[SIZE_ULTRA]]: damage,
         };
     }
+    let range = '-';
+    if (traits) {
+        if (traits.includes(TRAIT_SHORT_6)) {
+            range = 6;
+        }
+        if (traits.includes(TRAIT_SHORT_12)) {
+            range = 12;
+        }
+        if (traits.includes(TRAIT_SHORT_18)) {
+            range = 18;
+        }
+    }
 
-    return item;
+    return {
+        display_name,
+        damage_by_size,
+        traits_by_size,
+        cost_by_size,
+        range,
+    };
 
 }
+
+export const HEV_WEAPONS_DROP_DOWN = listToDropDown(HEV_WEAPONS);

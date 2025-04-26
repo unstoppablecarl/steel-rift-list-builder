@@ -1,3 +1,5 @@
+import {pick} from 'lodash';
+
 export function listToDropDown(list) {
     return Object.keys(list)
         .map((key) => {
@@ -6,4 +8,8 @@ export function listToDropDown(list) {
                 text: list[key].display_name,
             });
         });
+}
+
+export  function updateObject(existing, data, validKeys) {
+    return Object.assign(existing, pick(data, validKeys));
 }

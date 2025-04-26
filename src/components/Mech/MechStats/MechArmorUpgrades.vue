@@ -1,36 +1,30 @@
 <script setup>
-import {HEV_BODY_MODS, HEV_BODY_MODS_DROP_DOWN} from '../data/mech-body.js';
 import {computed} from 'vue';
 import {BDropdownDivider} from 'bootstrap-vue-next';
+import {HEV_ARMOR_UPGRADES, HEV_ARMOR_UPGRADES_DROP_DOWN} from '../../../data/mech-armor-upgrades.js';
+import Number from '../../functional/number.vue';
 
-const options = HEV_BODY_MODS_DROP_DOWN;
+const options = HEV_ARMOR_UPGRADES_DROP_DOWN;
 const {
   label,
-  tonnage,
-  armor,
-  structure,
+  size,
 } = defineProps({
   label: {
     type: String,
   },
-  modifierLabel: {
+  size: {
     type: String,
-  },
-  tonnage: {
-    default: 0,
-  },
-  armor: {
-    default: 0,
-  },
-  structure: {
-    default: 0,
   },
 });
 
 const model = defineModel();
 
 const selectedValueLabel = computed(() => {
-  return HEV_BODY_MODS[model.value].display_name;
+  return HEV_ARMOR_UPGRADES[model.value].display_name;
+});
+
+const selectedValue = computed(() => {
+  return HEV_ARMOR_UPGRADES[model.value];
 });
 
 function selectOption(value) {
@@ -51,10 +45,10 @@ function selectOption(value) {
               Type
             </BCol>
             <BCol sm="4" class="text-right">
-              {{modifierLabel}}
+              Slots
             </BCol>
             <BCol sm="4" class="text-right">
-              Tons
+              Cost
             </BCol>
           </BRow>
         </BDropdown-header>
@@ -69,10 +63,12 @@ function selectOption(value) {
               {{ item.text }}
             </BCol>
             <BCol sm="4" class="text-right">
-              <number :val="item.modifier"/>
+              <number :val="item.slots" :invert-color="true" :positive-signed="false"/>
             </BCol>
             <BCol sm="4" class="text-right">
-              <number :val="item.max_tons"/>
+
+              <number :val="item.cost_by_size[size]" :invert-color="true" :positive-signed="false"/>
+
             </BCol>
           </BRow>
         </BDropdown-item>
@@ -80,15 +76,16 @@ function selectOption(value) {
     </BCol>
 
     <BCol sm="1" class="number-cell">
-      <number :val="armor"/>
+
     </BCol>
     <BCol sm="1" class="number-cell">
-      <number :val="structure"/>
+
     </BCol>
     <BCol sm="1" class="number-cell">
+      <number :val="selectedValue.slots" :invert="true"/>
     </BCol>
     <BCol sm="1" class="number-cell">
-      <number :val="tonnage"/>
+      <number :val="selectedValue.cost_by_size[size]" :invert="true"/>
     </BCol>
   </BRow>
 </template>

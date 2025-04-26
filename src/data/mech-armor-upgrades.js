@@ -7,7 +7,7 @@ export const ABLATIVE_ARMOR_UPGRADE = 'ABLATIVE_ARMOR_UPGRADE';
 export const REACTIVE_ARMOR_UPGRADE = 'REACTIVE_ARMOR_UPGRADE';
 export const CERAMIC_ARMOR_UPGRADE = 'CERAMIC_ARMOR_UPGRADE';
 
-export const HEV_ARMOR_UPGRADES = {
+export const HEV_ARMOR_UPGRADES = Object.freeze({
     [[NO_ARMOR_UPGRADE]]: makeArmorUpgrade({
         display_name: 'Standard Armour',
         cost: 0,
@@ -38,7 +38,7 @@ export const HEV_ARMOR_UPGRADES = {
         },
         slots: 1,
     }),
-};
+});
 
 export const HEV_ARMOR_UPGRADES_DROP_DOWN = listToDropDown(HEV_ARMOR_UPGRADES)
 

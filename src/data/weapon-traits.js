@@ -13,24 +13,22 @@ export const TRAIT_LIMITED_2 = 'LIMITED_2';
 export const TRAIT_LIMITED_3 = 'LIMITED_3';
 export const TRAIT_MELEE_1 = 'MELEE_1';
 export const TRAIT_MELEE_2 = 'MELEE_2';
-
 export const TRAIT_SHORT_6 = 'Short_6';
 export const TRAIT_SHORT_12 = 'Short_12';
 export const TRAIT_SHORT_18 = 'Short_18';
 export const TRAIT_SMART = 'Smart';
-
-export const WEAPON_TRAITS = {
+export const WEAPON_TRAITS = Object.freeze({
     [[TRAIT_AP_1]]: {
-        display_name: 'AP 1',
+        display_name: 'AP (1)',
     },
     [[TRAIT_AP_2]]: {
-        display_name: 'AP 2',
+        display_name: 'AP (2)',
     },
     [[TRAIT_AP_3]]: {
-        display_name: 'AP 3',
+        display_name: 'AP (3)',
     },
     [[TRAIT_AP_4]]: {
-        display_name: 'AP 4',
+        display_name: 'AP (4)',
     },
     [[TRAIT_BLAST_3]]: {
         display_name: 'Blast (3")',
@@ -77,4 +75,4 @@ export const WEAPON_TRAITS = {
     [[TRAIT_SMART]]: {
         display_name: 'Smart',
     },
-};
+});
