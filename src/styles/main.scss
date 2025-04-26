@@ -1,5 +1,5 @@
 // Body
-$body-bg: #f8fafc;
+//$body-bg: #f8fafc;
 
 //$dropdown-border-color: #000;
 $dropdown-border-width: 1px;
@@ -20,6 +20,8 @@ $yellow: #ffed4a;
 $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
+
+$body-tertiary-bg: #e9ecef;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import '../../node_modules/bootstrap-vue-next/src/styles/styles';
