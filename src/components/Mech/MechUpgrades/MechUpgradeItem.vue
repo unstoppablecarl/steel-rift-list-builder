@@ -5,7 +5,7 @@ import {useMechStore} from '../../../store.js';
 export default {
   props: {
     mechId: Number,
-    mechUpgradeAttachmentId: String,
+    mechUpgradeAttachmentId: Number,
   },
   computed: {
     ...mapStores(useMechStore),

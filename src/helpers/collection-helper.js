@@ -29,25 +29,22 @@ export function findItemIndexByIdOrFail(items, item) {
     return index;
 }
 
-//
+
 // export function replaceItem(items, item) {
 //     let index = findItemIndexByIdOrFail(items, item);
 //
 //     items.splice(index, 1, item);
 // }
 //
-// export function updateItem(items, item) {
-//
-//     let index = findItemIndexByIdOrFail(items, item);
-//     let current = items[index];
-//     let updated = extend({}, current, item);
-//
-//     items.splice(index, 1, updated);
-// }
-
 export function deleteItem(items, item) {
     let index = findItemIndexByIdOrFail(items, item);
 
+    items.splice(index, 1);
+    setDisplayOrders(items);
+}
+
+export function deleteItemById(items, id) {
+    let index = findItemIndexById(items, id);
     items.splice(index, 1);
     setDisplayOrders(items);
 }
@@ -62,7 +59,8 @@ export function move(items, fromIndex, toIndex) {
     items.splice(toIndex, 0, item);
     setDisplayOrders(items);
 }
-//
+
+
 // export function copyItem(items, item) {
 //     let index = findItemIndex(items, item);
 //     let toIndex = index + 1;
@@ -75,17 +73,3 @@ export function setDisplayOrders(items) {
     });
 }
 
-let newId = 1;
-
-// export function createItem(items, item, newIndex) {
-//
-//     item.id = 'new-' + newId++;
-//
-//     if (newIndex) {
-//         items.splice(newIndex, 0, item);
-//         setDisplayOrders(items);
-//     } else {
-//         items.push(item);
-//         item.display_order = findItemIndex(items, item);
-//     }
-// }

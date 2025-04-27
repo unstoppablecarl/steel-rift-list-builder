@@ -8,13 +8,15 @@ import {WEAPON_TRAITS} from './data/weapon-traits.js';
 import {HEV_WEAPONS} from './data/mech-weapons.js';
 import {readonly} from 'vue';
 import {HEV_UPGRADES} from './data/mech-upgrades.js';
-import {findItemIndex, findItemIndexById, moveItem} from './helpers/collection-helper.js';
+import {deleteItemById, findItemIndex, moveItem} from './helpers/collection-helper.js';
+import {useToastController} from 'bootstrap-vue-next';
 
 export const useMechStore = defineStore('mech', {
     state() {
         return {
             mechs: [],
             mechs_id_increment: 1,
+            toast_messages: [],
         };
     },
     actions: {
@@ -38,59 +40,75 @@ export const useMechStore = defineStore('mech', {
             mech.display_order = findItemIndex(this.mechs, mech);
         },
         updateMech(mechId, data) {
-            let existing = findById(this.mechs, mechId);
-            updateObject(existing, data, [
+            let mech = findById(this.mechs, mechId);
+            updateObject(mech, data, [
                 'name',
                 'size_id',
                 'structure_mod_id',
                 'armor_mod_id',
                 'armor_upgrade_id',
             ]);
+
+            if (data.size_id) {
+                this.removeInvalidMechAttachments(mechId);
+            }
         },
         moveMech(mech, toIndex) {
             moveItem(this.mechs, mech, toIndex);
         },
         addMechWeaponAttachment(mechId, weaponId) {
-            let existing = findById(this.mechs, mechId);
-            let id = existing.weapons_id_increment++;
+            let mech = findById(this.mechs, mechId);
+            let id = mech.weapons_id_increment++;
             let weapon = {
                 id,
                 weapon_id: weaponId,
                 display_order: null,
             };
-            existing.weapons.push(weapon);
-            weapon.display_order = findItemIndex(existing.weapons, weapon);
+            mech.weapons.push(weapon);
+            weapon.display_order = findItemIndex(mech.weapons, weapon);
         },
         removeMechWeaponAttachment(mechId, mechWeaponAttachmentId) {
-            let existing = findById(this.mechs, mechId);
-            let index = findItemIndexById(existing.weapons, mechWeaponAttachmentId);
-            existing.weapons.splice(index, 1);
+            let mech = findById(this.mechs, mechId);
+            deleteItemById(mech.weapons, mechWeaponAttachmentId);
         },
         moveMechWeaponAttachment(mechId, weaponAttachment, toIndex) {
-            let existing = findById(this.mechs, mechId);
-            moveItem(existing.weapons, weaponAttachment, toIndex);
+            let mech = findById(this.mechs, mechId);
+            moveItem(mech.weapons, weaponAttachment, toIndex);
         },
         addMechUpgradeAttachment(mechId, upgradeId) {
-            let existing = findById(this.mechs, mechId);
-            let id = existing.upgrades_id_increment++;
+            let mech = findById(this.mechs, mechId);
+            let id = mech.upgrades_id_increment++;
             let upgrade = {
                 id,
                 upgrade_id: upgradeId,
                 display_order: null,
             };
-            console.log(upgrade);
-            existing.upgrades.push(upgrade);
-            upgrade.display_order = findItemIndex(existing.upgrades, upgrade);
-            console.log(upgrade);
+            mech.upgrades.push(upgrade);
+            upgrade.display_order = findItemIndex(mech.upgrades, upgrade);
         },
         removeMechUpgradeAttachment(mechId, mechUpgradeAttachmentId) {
-            let existing = findById(this.mechs, mechId);
-            let index = findItemIndexById(existing.upgrades, mechUpgradeAttachmentId);
-            existing.upgrades.splice(index, 1);
+            let mech = findById(this.mechs, mechId);
+            deleteItemById(mech.upgrades, mechUpgradeAttachmentId);
         },
         moveMechUpgradeAttachment(mechId, upgradeAttachment, toIndex) {
-            let existing = findById(this.mechs, mechId);
-            moveItem(existing.upgrades, upgradeAttachment, toIndex);
+            let mech = findById(this.mechs, mechId);
+            moveItem(mech.upgrades, upgradeAttachment, toIndex);
+        },
+        removeInvalidMechAttachments(mechId) {
+            let mech = findById(this.mechs, mechId);
+            mech.upgrades.forEach((upgradeAttachment) => {
+                const info = this.getMechUpgradeAttachmentInfo(mechId, upgradeAttachment.id);
+                if (!info.valid) {
+                    console.log('vv')
+                    const {show} = useToastController()
+                    show({
+                        props: {
+                            value: 'foo'
+                        }
+                    })
+                    this.removeMechUpgradeAttachment(mechId, upgradeAttachment.id);
+                }
+            });
         },
     },
     getters: {
@@ -213,13 +231,25 @@ export const useMechStore = defineStore('mech', {
         getUpgradeInfo(state) {
             return (mechId, upgradeId) => {
 
-                let mech = this.getMech(mechId);
-                let size_id = mech.size_id;
-                let upgrade = HEV_UPGRADES[upgradeId];
+                const mech = this.getMech(mechId);
+                const size_id = mech.size_id;
+                const upgrade = HEV_UPGRADES[upgradeId];
+                const notes = [];
+
+                let valid = true;
+
+                if (upgrade.prohibited_by_sizes) {
+                    valid = !upgrade.prohibited_by_sizes.includes(size_id);
+                    if (!valid) {
+                        notes.push('Not available for Light HE-V');
+                    }
+                }
 
                 return readonly({
                     upgrade_id: upgradeId,
                     display_name: upgrade.display_name,
+                    valid,
+                    notes,
                     slots: 1,
                     cost: upgrade.cost_by_size[size_id],
                 });

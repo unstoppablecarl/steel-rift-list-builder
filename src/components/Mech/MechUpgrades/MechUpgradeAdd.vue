@@ -15,7 +15,6 @@ export default {
   },
   methods: {
     addUpgrade(upgradeId) {
-      console.log(upgradeId);
       this.mechStore.addMechUpgradeAttachment(this.mechId, upgradeId);
     },
   },
