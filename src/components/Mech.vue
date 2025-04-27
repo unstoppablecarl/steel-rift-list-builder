@@ -1,6 +1,6 @@
 <script>
 import {mapStores} from 'pinia';
-import {useMechStore} from '../store.js';
+import {useMechStore} from '../store/mech-store.js';
 import MechWeapons from './Mech/MechWeapons.vue';
 import MechUpgrades from './Mech/MechUpgrades.vue';
 

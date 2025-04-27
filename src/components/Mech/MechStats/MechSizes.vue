@@ -2,7 +2,7 @@
 import {HEV_SIZES_DROP_DOWN} from '../../../data/mech-sizes.js';
 import {BDropdownDivider} from 'bootstrap-vue-next';
 import {mapStores} from 'pinia';
-import {useMechStore} from '../../../store.js';
+import {useMechStore} from '../../../store/mech-store.js';
 
 export default {
   props: {

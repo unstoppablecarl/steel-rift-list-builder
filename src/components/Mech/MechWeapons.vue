@@ -1,6 +1,6 @@
 <script>
 import {mapStores} from 'pinia';
-import {useMechStore} from '../../store.js';
+import {useMechStore} from '../../store/mech-store.js';
 import MechWeaponItem from './MechWeapons/MechWeaponItem.vue';
 import MechWeaponAdd from './MechWeapons/MechWeaponAdd.vue';
 import draggable from 'vuedraggable';

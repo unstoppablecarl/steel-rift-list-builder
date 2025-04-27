@@ -1,7 +1,7 @@
 <script>
 import {BFormInput, BInput} from 'bootstrap-vue-next';
 import {mapStores} from 'pinia';
-import {useMechStore} from '../../store.js';
+import {useMechStore} from '../../store/mech-store.js';
 import {useFactionStore} from '../../store/faction-store.js';
 import {
   CORPORATIONS, DEEP_WAR_CHEST,

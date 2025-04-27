@@ -2,7 +2,7 @@
 
 import Mech from './Mech.vue';
 import {mapStores} from 'pinia';
-import {useMechStore} from '../store.js';
+import {useMechStore} from '../store/mech-store.js';
 import draggable from 'vuedraggable';
 
 export default {

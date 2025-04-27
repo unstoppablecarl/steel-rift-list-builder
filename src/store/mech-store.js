@@ -1,23 +1,23 @@
 import {defineStore} from 'pinia';
-import {HEV_SIZES, SIZE_MEDIUM} from './data/mech-sizes.js';
-import {HEV_BODY_MODS, MOD_STANDARD} from './data/mech-body.js';
-import {HEV_ARMOR_UPGRADES, NO_ARMOR_UPGRADE} from './data/mech-armor-upgrades.js';
-import {findById, updateObject} from './data/data-helpers.js';
+import {HEV_SIZES, SIZE_MEDIUM} from '../data/mech-sizes.js';
+import {HEV_BODY_MODS, MOD_STANDARD} from '../data/mech-body.js';
+import {HEV_ARMOR_UPGRADES, NO_ARMOR_UPGRADE} from '../data/mech-armor-upgrades.js';
+import {findById, updateObject} from '../data/data-helpers.js';
 import {sumBy} from 'lodash';
-import {WEAPON_TRAITS} from './data/weapon-traits.js';
-import {HEV_WEAPONS} from './data/mech-weapons.js';
+import {WEAPON_TRAITS} from '../data/weapon-traits.js';
+import {HEV_WEAPONS} from '../data/mech-weapons.js';
 import {readonly} from 'vue';
-import {HEV_UPGRADES} from './data/mech-upgrades.js';
-import {deleteItemById, findItemIndex, moveItem} from './helpers/collection-helper.js';
-import {useToastStore} from './store/toast-store.js';
-import {useFactionStore} from './store/faction-store.js';
+import {HEV_UPGRADES} from '../data/mech-upgrades.js';
+import {deleteItemById, findItemIndex, moveItem} from '../helpers/collection-helper.js';
+import {useToastStore} from './toast-store.js';
+import {useFactionStore} from './faction-store.js';
 import {
     DWC_TOP_END_HARDWARE,
     DWC_TOP_END_HARDWARE_BONUS_TONS,
     RD_ADVANCED_HARDPOINT_DESIGN,
     RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS,
     UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN,
-} from './data/factions.js';
+} from '../data/factions.js';
 
 export const useMechStore = defineStore('mech', {
     state() {

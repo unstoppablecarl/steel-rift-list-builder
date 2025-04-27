@@ -1,6 +1,6 @@
 <script>
 import {BDropdownDivider} from 'bootstrap-vue-next';
-import {useMechStore} from '../../../store.js';
+import {useMechStore} from '../../../store/mech-store.js';
 import {mapStores} from 'pinia';
 
 export default {

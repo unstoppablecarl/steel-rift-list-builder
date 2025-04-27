@@ -1,6 +1,6 @@
 <script>
 import {mapStores} from 'pinia';
-import {useMechStore} from '../../../store.js';
+import {useMechStore} from '../../../store/mech-store.js';
 
 export default {
   props: {
