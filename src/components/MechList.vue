@@ -32,41 +32,39 @@ export default {
       if (!moved) {
         return;
       }
-      console.log(moved.element, moved.newIndex)
 
       this.mechStore.moveMech(moved.element, moved.newIndex);
-
     },
   },
 };
-
 </script>
-
 <template>
-    <draggable
-        :list="mechs"
-        item-key="id"
-        group="mechs"
-        handle=".btn-grab"
-        ghost-class="ghost"
-        @start="dragging = true"
-        @end="dragging = false"
-        @change="onSortableChange"
-        :animation="200"
-        :preventOnFilter="false"
-    >
-      <template #item="{ element }">
-        <mech
-            :mech-id="element.id"
-        />
-      </template>
-
-    </draggable>
-
-
-    <BButton @click="addMech">Add Mech</BButton>
+  <div class="card text-bg-light">
+    <div class="card-header">
+      Mechs
+    </div>
+    <div class="card-body">
+      <draggable
+          :list="mechs"
+          item-key="id"
+          group="mechs"
+          handle=".btn-grab"
+          ghost-class="ghost"
+          @start="dragging = true"
+          @end="dragging = false"
+          @change="onSortableChange"
+          :animation="200"
+          :preventOnFilter="false"
+      >
+        <template #item="{ element }">
+          <mech
+              :mech-id="element.id"
+          />
+        </template>
+      </draggable>
+    </div>
+    <div class="card-footer">
+      <BButton @click="addMech">Add Mech</BButton>
+    </div>
+  </div>
 </template>
-
-<style scoped>
-
-</style>

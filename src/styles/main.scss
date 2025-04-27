@@ -26,6 +26,26 @@ $body-tertiary-bg: #e9ecef;
 @import "./bootstrap-vue-component-styles";
 @import "./collapse";
 
+
+.card {
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.faction-label {
+  padding: 0 $btn-padding-x;
+  margin-bottom: .25rem;
+  font-weight: bold;
+}
+
 .dropdown .btn {
   border: 1px solid $input-border-color;
 }
@@ -33,18 +53,25 @@ $body-tertiary-bg: #e9ecef;
 .dropdown {
   &.dropdown-block {
     display: grid;
+
     .dropdown-menu {
       width: 100%;
     }
+
     .btn {
       text-align: left;
     }
   }
 }
 
-.btn-grab:hover {
-  cursor: ns-resize;
+.btn-grab {
+  border: 1px solid $gray-300;
+
+  &:hover {
+    cursor: ns-resize;
+  }
 }
+
 
 .number-cell {
   text-align: right;
