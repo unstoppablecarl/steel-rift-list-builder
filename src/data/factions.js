@@ -34,7 +34,10 @@ export const RA_RECKLESS_PILOTING = 'RA_RECKLESS_PILOTING';
 export const RA_BAIT_AND_SWITCH = 'RA_BAIT_AND_SWITCH';
 export const UNDERWORLD_AFFILIATIONS = 'UNDERWORLD_AFFILIATIONS';
 export const UA_NETWORK_HACKERS = 'UA_NETWORK_HACKERS';
-export const UA_TECH_PIRATES = 'UA_TECH_PIRATES';
+export const UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN = 'UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN';
+export const UA_TECH_PIRATES_ADVANCED_ENERGY_MANAGEMENT_SYSTEM = 'UA_TECH_PIRATES_ADVANCED_ENERGY_MANAGEMENT_SYSTEM';
+export const UA_TECH_PIRATES_ADVANCED_STRUCTURAL_COMPONENTS = 'UA_TECH_PIRATES_ADVANCED_STRUCTURAL_COMPONENTS';
+
 export const UA_INTIMIDATION_TACTICS = 'UA_INTIMIDATION_TACTICS';
 export const BIG_LEAGUE_ORIGINS = 'BIG_LEAGUE_ORIGINS';
 export const BLO_EX_MILITARY_VETERANS = 'BLO_EX_MILITARY_VETERANS';
@@ -164,8 +167,14 @@ export const FACTIONS = makeStaticListIds({
                     [[UA_NETWORK_HACKERS]]: {
                         display_name: 'Network Hackers',
                     },
-                    [[UA_TECH_PIRATES]]: {
-                        display_name: 'Tech Pirates',
+                    [[UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN]]: {
+                        display_name: 'Tech Pirates: Advanced Hardpoint Design',
+                    },
+                    [[UA_TECH_PIRATES_ADVANCED_ENERGY_MANAGEMENT_SYSTEM]]: {
+                        display_name: 'Tech Pirates: Advanced Energy Management System Design',
+                    },
+                    [[UA_TECH_PIRATES_ADVANCED_STRUCTURAL_COMPONENTS]]: {
+                        display_name: 'Tech Pirates: Advanced Structural Components',
                     },
                     [[UA_INTIMIDATION_TACTICS]]: {
                         display_name: 'Intimidation Tactics',

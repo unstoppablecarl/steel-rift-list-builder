@@ -16,6 +16,7 @@ import {
     DWC_TOP_END_HARDWARE_BONUS_TONS,
     RD_ADVANCED_HARDPOINT_DESIGN,
     RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS,
+    UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN,
 } from './data/factions.js';
 
 export const useMechStore = defineStore('mech', {
@@ -188,7 +189,8 @@ export const useMechStore = defineStore('mech', {
                 const structureStat = size.structure + armorMod.modifier;
 
                 let maxSlots = size.max_slots - armorUpgrade.slots;
-                if (factionStore.hasPerk(RD_ADVANCED_HARDPOINT_DESIGN)) {
+                if (factionStore.hasPerk(RD_ADVANCED_HARDPOINT_DESIGN) ||
+                    factionStore.hasPerk(UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN)) {
                     maxSlots += RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS;
                 }
 

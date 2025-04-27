@@ -12,8 +12,9 @@ export const useFactionStore = defineStore('faction', () => {
         let perkGroups = FACTIONS[faction_id.value].faction_perk_groups;
 
         let result = Object.values(perkGroups);
-        result.forEach((perkGroup) => {
-            perkGroup.perks = Object.values(perkGroup.perks);
+        result = result.map((perkGroup) => {
+            return Object.assign({}, perkGroup, {perks: Object.values(perkGroup.perks)});
+
         });
 
         return result;
@@ -21,16 +22,16 @@ export const useFactionStore = defineStore('faction', () => {
 
     watch(faction_id, (newValue) => {
         perk_groups.value.forEach((perkGroup, index) => {
-            perk_ids[index] = Object.values(perkGroup.perks)[0].id
-        })
-    })
+            perk_ids[index] = Object.values(perkGroup.perks)[0].id;
+        });
+    });
 
     function setPerkId(index, perkId) {
         perk_ids[index] = perkId;
     }
 
-    function hasPerk(perkId){
-       return Object.values(perk_ids).includes(perkId)
+    function hasPerk(perkId) {
+        return Object.values(perk_ids).includes(perkId);
     }
 
     return {
@@ -39,6 +40,6 @@ export const useFactionStore = defineStore('faction', () => {
         perk_groups,
         perk_ids,
         hasPerk,
-        setPerkId
+        setPerkId,
     };
 });

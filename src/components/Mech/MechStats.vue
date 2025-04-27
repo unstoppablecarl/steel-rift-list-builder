@@ -4,10 +4,14 @@ import {mapStores} from 'pinia';
 import {useMechStore} from '../../store.js';
 import {useFactionStore} from '../../store/faction-store.js';
 import {
+  CORPORATIONS, DEEP_WAR_CHEST,
   DWC_TOP_END_HARDWARE,
   DWC_TOP_END_HARDWARE_BONUS_TONS,
+  FACTIONS, FREELANCERS,
   RD_ADVANCED_HARDPOINT_DESIGN,
   RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS,
+  RESEARCH_AND_DEVELOPMENT,
+  UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN, UNDERWORLD_AFFILIATIONS,
 } from '../../data/factions.js';
 import Number from '../functional/number.vue';
 
@@ -28,11 +32,32 @@ export default {
     info() {
       return this.mechStore.getMechInfo(this.mechId);
     },
-    hasTopEndHardwarePerk() {
+    hasTopEndHardware() {
       return this.factionStore.hasPerk(DWC_TOP_END_HARDWARE);
     },
+    topEndHardwareLabel(){
+      return FACTIONS[CORPORATIONS]
+          .faction_perk_groups[DEEP_WAR_CHEST]
+          .perks[DWC_TOP_END_HARDWARE]
+          .display_name;
+    },
     hasAdvancedHardPoints() {
-      return this.factionStore.hasPerk(RD_ADVANCED_HARDPOINT_DESIGN);
+      return this.factionStore.hasPerk(RD_ADVANCED_HARDPOINT_DESIGN) ||
+          this.factionStore.hasPerk(UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN);
+    },
+    advancedHardPointsLabel() {
+      if (this.factionStore.hasPerk(RD_ADVANCED_HARDPOINT_DESIGN)) {
+        return FACTIONS[CORPORATIONS]
+            .faction_perk_groups[RESEARCH_AND_DEVELOPMENT]
+            .perks[RD_ADVANCED_HARDPOINT_DESIGN]
+            .display_name;
+      }
+      if (this.factionStore.hasPerk(UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN)) {
+        return FACTIONS[FREELANCERS]
+            .faction_perk_groups[UNDERWORLD_AFFILIATIONS]
+            .perks[UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN]
+            .display_name;
+      }
     },
     advancedHardPointsBonusSlots() {
       return RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS;
@@ -94,12 +119,12 @@ export default {
     />
     <div class="tab-content-divider-bottom"></div>
 
-    <div v-if="hasTopEndHardwarePerk" class="row my-1">
+    <div v-if="hasTopEndHardware" class="row my-1">
       <div class="col-sm-2">
         <label class="form-label">Perk</label>
       </div>
       <div class="col-sm-4">
-        <BInput model-value="Top End Hardware"/>
+        <BInput :model-value="topEndHardwareLabel" disabled/>
       </div>
       <div class="col-sm-1 number-cell">
 
@@ -120,7 +145,7 @@ export default {
         <label>Perk</label>
       </div>
       <div class="col-sm-4">
-        <BInput model-value="Top End Hardware"/>
+        <BInput :model-value="advancedHardPointsLabel" disabled/>
       </div>
       <div class="col-sm-1 number-cell">
 
