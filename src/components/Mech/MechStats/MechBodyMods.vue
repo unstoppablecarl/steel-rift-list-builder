@@ -9,6 +9,7 @@ const {
   tonnage,
   armor,
   structure,
+  bgColor,
 } = defineProps({
   label: {
     type: String,
@@ -25,6 +26,9 @@ const {
   structure: {
     default: 0,
   },
+  bgColor: {
+    default: null,
+  },
 });
 
 const model = defineModel();
@@ -39,10 +43,8 @@ function selectOption(value) {
 </script>
 
 <template>
-  <BRow class="my-1">
-    <BCol sm="2">
-      <label>{{ label }}</label>
-    </BCol>
+  <div :class="'row my-1 ' + bgColor">
+    <label class="col-sm-2 col-form-label">{{ label }}</label>
     <BCol sm="4">
       <BDropdown variant="light" :text="selectedValueLabel" class="dropdown-block">
         <BDropdown-header>
@@ -51,7 +53,7 @@ function selectOption(value) {
               Type
             </BCol>
             <BCol sm="4" class="text-right">
-              {{modifierLabel}}
+              {{ modifierLabel }}
             </BCol>
             <BCol sm="4" class="text-right">
               Tons
@@ -78,19 +80,17 @@ function selectOption(value) {
         </BDropdown-item>
       </BDropdown>
     </BCol>
-
-    <BCol sm="1" class="number-cell">
-      <number :val="armor"/>
-    </BCol>
-    <BCol sm="1" class="number-cell">
-      <number :val="structure"/>
-    </BCol>
-    <BCol sm="1" class="number-cell">
-    </BCol>
-    <BCol sm="1" class="number-cell">
+    <div class="col-sm-1 col-form-label text-right">
+      <number :val="armor" v-if="armor !== null"/>
+    </div>
+    <div class="col-sm-1 col-form-label text-right">
+      <number :val="structure" v-if="structure !== null"/>
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-1 col-form-label text-right">
       <number :val="tonnage"/>
-    </BCol>
-  </BRow>
+    </div>
+  </div>
 </template>
 <style scoped>
 

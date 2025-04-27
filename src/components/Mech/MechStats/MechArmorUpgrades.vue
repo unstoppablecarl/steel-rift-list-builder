@@ -33,10 +33,8 @@ function selectOption(value) {
 </script>
 
 <template>
-  <BRow class="my-1">
-    <BCol sm="2">
-      <label>{{ label }}</label>
-    </BCol>
+  <div class="row my-1 bg-light-subtle">
+    <label class="col-sm-2 col-form-label">{{ label }}</label>
     <BCol sm="4">
       <BDropdown variant="light" :text="selectedValueLabel" class="dropdown-block">
         <BDropdown-header>
@@ -66,28 +64,23 @@ function selectOption(value) {
               <number :val="item.slots" :invert-color="true" :positive-signed="false"/>
             </BCol>
             <BCol sm="4" class="text-right">
-
               <number :val="item.cost_by_size[size]" :invert-color="true" :positive-signed="false"/>
-
             </BCol>
           </BRow>
         </BDropdown-item>
       </BDropdown>
     </BCol>
-
-    <BCol sm="1" class="number-cell">
-
-    </BCol>
-    <BCol sm="1" class="number-cell">
-
-    </BCol>
-    <BCol sm="1" class="number-cell">
+    <div class="col-sm-1">
+    </div>
+    <div class="col-sm-1 col-form-label text-right">
+    </div>
+    <div class="col-sm-1 col-form-label text-right">
       <number :val="selectedValue.slots" :invert="true"/>
-    </BCol>
-    <BCol sm="1" class="number-cell">
+    </div>
+    <div class="col-sm-1 col-form-label text-right">
       <number :val="selectedValue.cost_by_size[size]" :invert="true"/>
-    </BCol>
-  </BRow>
+    </div>
+  </div>
 </template>
 <style scoped>
 

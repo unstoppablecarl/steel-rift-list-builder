@@ -21,6 +21,9 @@ $cyan: #6cb2eb;
 
 $body-tertiary-bg: #e9ecef;
 
+$dropdown-header-padding-y: .2rem;
+$dropdown-divider-margin-y: .2rem;
+
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import '../../node_modules/bootstrap-vue-next/src/styles/styles';
 @import "./bootstrap-vue-component-styles";

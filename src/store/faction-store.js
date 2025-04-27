@@ -30,7 +30,7 @@ export const useFactionStore = defineStore('faction', () => {
     }
 
     function hasPerk(perkId){
-        perk_ids.value.includes(perkId)
+       return Object.values(perk_ids).includes(perkId)
     }
 
     return {

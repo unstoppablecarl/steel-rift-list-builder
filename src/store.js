@@ -10,6 +10,13 @@ import {readonly} from 'vue';
 import {HEV_UPGRADES} from './data/mech-upgrades.js';
 import {deleteItemById, findItemIndex, moveItem} from './helpers/collection-helper.js';
 import {useToastStore} from './store/toast-store.js';
+import {useFactionStore} from './store/faction-store.js';
+import {
+    DWC_TOP_END_HARDWARE,
+    DWC_TOP_END_HARDWARE_BONUS_TONS,
+    RD_ADVANCED_HARDPOINT_DESIGN,
+    RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS,
+} from './data/factions.js';
 
 export const useMechStore = defineStore('mech', {
     state() {
@@ -152,6 +159,8 @@ export const useMechStore = defineStore('mech', {
         },
         getMechInfo(state) {
             return function (mechId) {
+                const factionStore = useFactionStore();
+
                 let {
                     name,
                     size_id,
@@ -169,13 +178,19 @@ export const useMechStore = defineStore('mech', {
                 const structureMod = HEV_BODY_MODS[structure_mod_id];
                 const armorMod = HEV_BODY_MODS[armor_mod_id];
                 const armorUpgrade = HEV_ARMOR_UPGRADES[armor_upgrade_id];
-                const maxTons = size.max_tons + armorMod.max_tons + structureMod.max_tons;
+                let maxTons = size.max_tons + armorMod.max_tons + structureMod.max_tons;
+                if (factionStore.hasPerk(DWC_TOP_END_HARDWARE)) {
+                    maxTons += DWC_TOP_END_HARDWARE_BONUS_TONS;
+                }
                 const placeholderName = ('Mech-' + mechId).padStart(1);
 
                 const armorStat = size.armor + armorMod.modifier;
                 const structureStat = size.structure + armorMod.modifier;
 
-                const maxSlots = size.slots - armorUpgrade.slots;
+                let maxSlots = size.max_slots - armorUpgrade.slots;
+                if (factionStore.hasPerk(RD_ADVANCED_HARDPOINT_DESIGN)) {
+                    maxSlots += RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS;
+                }
 
                 const usedSlots = sumBy(weaponsInfo, 'slots') + sumBy(upgradesInfo, 'slots');
                 const usedTons = sumBy(weaponsInfo, 'cost') + sumBy(upgradesInfo, 'cost');

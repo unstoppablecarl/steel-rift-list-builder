@@ -68,8 +68,6 @@ export default {
         </div>
       </BCol>
     </BRow>
-
-
     <BCollapse :id="'collapse-' + mechId" v-model="visible">
       <hr>
 
