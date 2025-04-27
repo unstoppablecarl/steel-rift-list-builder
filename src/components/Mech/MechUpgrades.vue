@@ -33,12 +33,13 @@ export default {
 <template>
 
 
-  <table class="table">
+  <table class="table w-auto">
     <thead class="table-light">
     <tr>
+      <th scope="col"></th>
       <th scope="col">Name</th>
-      <th scope="col" class="text-right">Slots</th>
-      <th scope="col" class="text-right">Cost</th>
+      <th scope="col" class="text-right pe-1">Slots</th>
+      <th scope="col" class="text-right pe-1">Cost</th>
       <th scope="col">Notes</th>
       <th scope="col"></th>
     </tr>
@@ -70,9 +71,4 @@ export default {
     </draggable>
   </table>
   <MechUpgradeAdd :mech-id="mechId"/>
-
 </template>
-
-<style scoped>
-
-</style>

@@ -35,14 +35,16 @@ export default {
 </script>
 <template>
 
-  <table class="table">
+  <div class="table-responsive">
+  <table class="table w-auto">
     <thead class="table-light">
     <tr>
+      <th scope="col"></th>
       <th scope="col">Name</th>
-      <th scope="col" class="text-right">Slots</th>
-      <th scope="col" class="text-right">Cost</th>
-      <th scope="col" class="text-right">Damage</th>
-      <th scope="col" class="text-right">Range</th>
+      <th scope="col" class="text-right pe-1">Slots</th>
+      <th scope="col" class="text-right pe-1">Cost</th>
+      <th scope="col" class="text-right pe-1">Damage</th>
+      <th scope="col" class="text-right pe-1">Range</th>
       <th scope="col">Traits</th>
       <th scope="col"></th>
 
@@ -73,6 +75,7 @@ export default {
 
     </draggable>
   </table>
+  </div>
   <MechWeaponAdd :mech-id="mechId"/>
 </template>
 

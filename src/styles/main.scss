@@ -74,8 +74,9 @@ $dropdown-divider-margin-y: .2rem;
     cursor: ns-resize;
   }
 }
-
-
+th.cell-pad-top, td.cell-pad-top {
+  padding-top: $btn-padding-y + $table-cell-padding-y !important;
+}
 .number-cell {
   text-align: right;
 }

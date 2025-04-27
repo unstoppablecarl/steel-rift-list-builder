@@ -23,14 +23,16 @@ export default {
 </script>
 <template>
   <tr class="list-item-sortable">
-    <td><span class="btn btn-light btn-grab">:::</span> {{ upgrade.display_name }}</td>
-    <td class="text-right">
+    <td>
+      <span class="btn btn-light btn-grab">:::</span>
+    </td>
+    <td>{{ upgrade.display_name }}</td>
+    <td class="cell-pad-top text-right">
       <number :val="upgrade.slots" :positive-signed="false" :invert-color="true"/>
 
     </td>
-    <td class="text-right">
+    <td class="cell-pad-top text-right">
       <number :val="upgrade.cost" :positive-signed="false" :invert-color="true"/>
-
     </td>
     <td></td>
     <td>
