@@ -9,14 +9,13 @@ import {HEV_WEAPONS} from './data/mech-weapons.js';
 import {readonly} from 'vue';
 import {HEV_UPGRADES} from './data/mech-upgrades.js';
 import {deleteItemById, findItemIndex, moveItem} from './helpers/collection-helper.js';
-import {useToastController} from 'bootstrap-vue-next';
+import {useToastStore} from './store/toast-store.js';
 
 export const useMechStore = defineStore('mech', {
     state() {
         return {
             mechs: [],
             mechs_id_increment: 1,
-            toast_messages: [],
         };
     },
     actions: {
@@ -96,16 +95,16 @@ export const useMechStore = defineStore('mech', {
         },
         removeInvalidMechAttachments(mechId) {
             let mech = findById(this.mechs, mechId);
+            let mechInfo = this.getMechInfo(mechId);
             mech.upgrades.forEach((upgradeAttachment) => {
                 const info = this.getMechUpgradeAttachmentInfo(mechId, upgradeAttachment.id);
                 if (!info.valid) {
-                    console.log('vv')
-                    const {show} = useToastController()
-                    show({
-                        props: {
-                            value: 'foo'
-                        }
-                    })
+                    const {toast} = useToastStore();
+
+                    toast({
+                        title: `${mechInfo.size.display_name} HE-V (${mechInfo.displayName})`,
+                        body: `${info.display_name} removed: (${info.validation_messages.join(', ')})`,
+                    });
                     this.removeMechUpgradeAttachment(mechId, upgradeAttachment.id);
                 }
             });
@@ -235,13 +234,16 @@ export const useMechStore = defineStore('mech', {
                 const size_id = mech.size_id;
                 const upgrade = HEV_UPGRADES[upgradeId];
                 const notes = [];
+                const validation_messages = [];
 
                 let valid = true;
 
                 if (upgrade.prohibited_by_sizes) {
                     valid = !upgrade.prohibited_by_sizes.includes(size_id);
                     if (!valid) {
-                        notes.push('Not available for Light HE-V');
+                        const message = 'Not available for Light HE-V';
+                        notes.push(message);
+                        validation_messages.push(message);
                     }
                 }
 
@@ -249,6 +251,7 @@ export const useMechStore = defineStore('mech', {
                     upgrade_id: upgradeId,
                     display_name: upgrade.display_name,
                     valid,
+                    validation_messages,
                     notes,
                     slots: 1,
                     cost: upgrade.cost_by_size[size_id],

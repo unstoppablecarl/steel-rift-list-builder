@@ -1,28 +1,12 @@
-<script>
+<script setup>
 import MechList from './components/MechList.vue';
-import {BToastOrchestrator} from 'bootstrap-vue-next';
-import {mapStores} from 'pinia';
-import {useMechStore} from './store.js';
-
-export default {
-  components: {MechList, BToastOrchestrator},
-
-  computed: {
-    ...mapStores(useMechStore),
-
-    toastMessages(){
-      return this.mechStore.toast_messages
-    }
-  },
-  watch: {},
-};
+import Toaster from './components/Toaster.vue';
 
 </script>
-
 <template>
+  <Toaster/>
   <div class="container">
-    <BToastOrchestrator/>
-    <mech-list/>
+    <MechList/>
   </div>
 </template>
 

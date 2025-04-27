@@ -43,7 +43,6 @@ export default {
 </script>
 
 <template>
-  <div>
     <draggable
         :list="mechs"
         item-key="id"
@@ -66,7 +65,6 @@ export default {
 
 
     <BButton @click="addMech">Add Mech</BButton>
-  </div>
 </template>
 
 <style scoped>
