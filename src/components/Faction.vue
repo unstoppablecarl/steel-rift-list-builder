@@ -16,7 +16,7 @@ function setPerk($event, index) {
     <div class="card-body">
       <BRow>
         <div class="col-sm-2">
-          <div class="faction-label">Faction</div>
+          <div class="form-label-top">Faction</div>
           <BFormSelect
               v-model="faction_id"
           >
@@ -32,7 +32,7 @@ function setPerk($event, index) {
             class="col"
             v-for="(perk_group, index) in perk_groups"
         >
-          <div class="faction-label">{{ perk_group.display_name }}</div>
+          <div class="form-label-top">{{ perk_group.display_name }}</div>
           <BFormSelect
               :options="perk_group.perks"
               :model-value="perk_ids[index]"

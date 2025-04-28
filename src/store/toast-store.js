@@ -1,15 +1,16 @@
 import {defineStore} from 'pinia';
-import {ref} from 'vue';
+import {reactive} from 'vue';
 
 export const useToastStore = defineStore('toast', () => {
 
-    let increment = 0;
+    let messageIdIncrement = 0;
 
-    const message = ref({});
+    const messages = reactive([]);
 
-    function $reset(){
-        message.value = {}
+    function $reset() {
+        messages.value = [];
     }
+
     function toastMessage({
                               title,
                               body = null,
@@ -19,8 +20,8 @@ export const useToastStore = defineStore('toast', () => {
                               textVariant = null,
                               progressVariant = 'info',
                           }) {
-        message.value = {
-            increment: increment++,
+        messages.push({
+            id: messageIdIncrement++,
             title,
             body,
             pos,
@@ -30,7 +31,7 @@ export const useToastStore = defineStore('toast', () => {
             progressProps: {
                 variant: progressVariant,
             },
-        };
+        });
     }
 
     function toastInfo(text) {
@@ -52,8 +53,9 @@ export const useToastStore = defineStore('toast', () => {
 
     return {
         toastMessage,
+        toastInfo,
         toastError,
-        message,
+        messages,
         $reset,
     };
 });

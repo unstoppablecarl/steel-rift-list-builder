@@ -6,16 +6,14 @@ import {useFactionStore} from '../../store/faction-store.js';
 import {useTemplateRef} from 'vue';
 import {useToastStore} from '../../store/toast-store.js';
 
+const toastStore = useToastStore();
 const mechStore = useMechStore();
 const factionStore = useFactionStore();
-
-const toastStore = useToastStore()
 
 function loadToStore(store, data) {
   store.$reset();
   store.$patch(data);
 }
-
 
 const fileUpload = useTemplateRef('file-upload');
 
@@ -35,9 +33,11 @@ function fileChange(event) {
         loadToStore(mechStore, mech);
 
       } catch (error) {
-        toastStore.toastError('Invalid Save File', error)
+        toastStore.toastError('Invalid Save File', error);
         console.error('Error parsing JSON:', error);
       }
+
+      fileUpload.value.value = null;
     };
     reader.readAsText(file);
   }
