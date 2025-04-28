@@ -2,7 +2,7 @@
 import {computed} from 'vue';
 import {BDropdownDivider} from 'bootstrap-vue-next';
 import {HEV_ARMOR_UPGRADES, HEV_ARMOR_UPGRADES_DROP_DOWN} from '../../../data/mech-armor-upgrades.js';
-import Number from '../../functional/number.vue';
+import NumberVal from '../../functional/number.vue';
 
 const options = HEV_ARMOR_UPGRADES_DROP_DOWN;
 const {
@@ -70,10 +70,10 @@ function selectOption(value) {
               {{ item.text }}
             </BCol>
             <BCol sm="4" class="text-right">
-              <number :val="item.slots" :invert-color="true" :positive-signed="false"/>
+              <number-val :val="item.slots" :invert-color="true" :positive-signed="false"/>
             </BCol>
             <BCol sm="4" class="text-right">
-              <number :val="item.cost_by_size[sizeId]" :invert-color="true" :positive-signed="false"/>
+              <number-val :val="item.cost_by_size[sizeId]" :invert-color="true" :positive-signed="false"/>
             </BCol>
           </BRow>
         </BDropdown-item>
@@ -84,10 +84,10 @@ function selectOption(value) {
     <div class="col-sm-1 col-form-label text-right">
     </div>
     <div class="col-sm-1 col-form-label text-right">
-      <number :val="selectedValue.slots" invert-color/>
+      <number-val :val="selectedValue.slots" invert-color/>
     </div>
     <div class="col-sm-1 col-form-label text-right">
-      <number :val="selectedValue.cost_by_size[sizeId]" invert-color/>
+      <number-val :val="selectedValue.cost_by_size[sizeId]" invert-color/>
     </div>
   </div>
 </template>

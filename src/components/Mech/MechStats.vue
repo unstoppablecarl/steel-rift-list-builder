@@ -17,9 +17,10 @@ import {
   UNDERWORLD_AFFILIATIONS,
 } from '../../data/factions.js';
 import Number from '../functional/number.vue';
+import MechStatRow from './MechStats/MechStatRow.vue';
 
 export default {
-  components: {BInput, Number},
+  components: {MechStatRow, BInput, Number},
   props: {
     mechId: Number,
   },
@@ -127,51 +128,22 @@ export default {
         label="Armor Upgrades"
         v-model="mech.armor_upgrade_id"
         :size-id="mech.size_id"
-        :mech-id="mechId"
+        :mech-id="mech.id"
     />
-    <div class="tab-content-divider-bottom"></div>
 
-    <div v-if="hasTopEndHardware" class="row my-1">
-      <div class="col-sm-2">
-        <label class="form-label">Perk</label>
-      </div>
-      <div class="col-sm-4">
-        <BInput :model-value="topEndHardwareLabel" disabled/>
-      </div>
-      <div class="col-sm-1 number-cell">
+    <MechStatRow
+        v-if="hasTopEndHardware"
+        label="Perk"
+        :text="topEndHardwareLabel"
+        :usedSlots="topEndHardwareBonusTons"
+    />
 
-      </div>
-      <div class="col-sm-1 number-cell">
-
-      </div>
-      <div class="col-sm-1 number-cell">
-
-      </div>
-      <div class="col-sm-1 number-cell">
-        <number :val="topEndHardwareBonusTons"/>
-      </div>
-    </div>
-
-    <div v-if="hasAdvancedHardPoints" class="row my-1">
-      <div class="col-sm-2">
-        <label>Perk</label>
-      </div>
-      <div class="col-sm-4">
-        <BInput :model-value="advancedHardPointsLabel" disabled/>
-      </div>
-      <div class="col-sm-1 number-cell">
-
-      </div>
-      <div class="col-sm-1 number-cell">
-
-      </div>
-      <div class="col-sm-1 number-cell">
-        <number :val="advancedHardPointsBonusSlots"/>
-      </div>
-      <div class="col-sm-1 number-cell">
-
-      </div>
-    </div>
+    <MechStatRow
+        v-if="hasAdvancedHardPoints"
+        label="Perk"
+        :text="advancedHardPointsLabel"
+        :usedSlots="advancedHardPointsBonusSlots"
+    />
 
     <div class="row">
       <div class="col-sm-2"></div>
@@ -195,7 +167,7 @@ export default {
       </div>
       <div class="col-sm-1 number-cell">
         <strong>
-          {{info.used_tons }}/{{ info.max_tons}}
+          {{ info.used_tons }}/{{ info.max_tons }}
         </strong>
       </div>
     </div>
