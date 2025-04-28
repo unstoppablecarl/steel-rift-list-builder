@@ -3,39 +3,57 @@ import {ref} from 'vue';
 
 export const useToastStore = defineStore('toast', () => {
 
-    const message = ref({
-        title: null,
-        body: null,
-        pos: null,
-        value: null,
-        progressProps: {
-            variant: 'info',
-        },
-    });
+    let increment = 0;
 
-    function toast({title, body}){
+    const message = ref({});
+
+    function $reset(){
+        message.value = {}
+    }
+    function toastMessage({
+                              title,
+                              body = null,
+                              pos = 'top-end',
+                              value = 10000,
+                              variant = null,
+                              textVariant = null,
+                              progressVariant = 'info',
+                          }) {
         message.value = {
+            increment: increment++,
             title,
             body,
-            pos: 'top-end',
-            value: 10000,
+            pos,
+            value,
+            variant,
+            textVariant,
             progressProps: {
-                variant: 'info',
+                variant: progressVariant,
             },
         };
     }
 
-    function toastMessage(text) {
-        toast({
+    function toastInfo(text) {
+        toastMessage({
             title: text,
             body: null,
         });
     }
 
+    function toastError(text, body = null) {
+        toastMessage({
+            title: text,
+            body,
+            textVariant: 'danger',
+            progressVariant: 'danger',
+
+        });
+    }
 
     return {
-        toast,
         toastMessage,
+        toastError,
         message,
+        $reset,
     };
 });

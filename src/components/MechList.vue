@@ -22,6 +22,9 @@ export default {
     name() {
       return this.mechStore.name;
     },
+    totalTons(){
+      return this.mechStore.totalTons;
+    }
   },
   methods: {
     addMech() {
@@ -42,6 +45,9 @@ export default {
   <div class="card text-bg-light">
     <div class="card-header">
       Mechs
+      <div class="float-end">
+        <strong>Tonnage: </strong>{{totalTons}}
+      </div>
     </div>
     <div class="card-body">
       <draggable
