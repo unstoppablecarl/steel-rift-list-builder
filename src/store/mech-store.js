@@ -110,7 +110,7 @@ export const useMechStore = defineStore('mech', {
                         const {toastInfo} = useToastStore();
 
                         toastInfo(`${mechInfo.size.display_name} HE-V (${mechInfo.displayName})`,
-                            `${info.display_name} removed: (${info.validation_messages.join(', ')})`)
+                            `${info.display_name} removed: (${info.validation_messages.join(', ')})`);
                         this.removeMechUpgradeAttachment(mechId, upgradeAttachment.id);
                     }
                 });
@@ -185,14 +185,14 @@ export const useMechStore = defineStore('mech', {
                     const structureMod = HEV_BODY_MODS[structure_mod_id];
                     const armorMod = HEV_BODY_MODS[armor_mod_id];
                     const armorUpgrade = HEV_ARMOR_UPGRADES[armor_upgrade_id];
-                    let maxTons = size.max_tons + armorMod.max_tons + structureMod.max_tons;
+                    let maxTons = size.max_tons;
                     if (factionStore.hasPerk(DWC_TOP_END_HARDWARE)) {
                         maxTons += DWC_TOP_END_HARDWARE_BONUS_TONS;
                     }
                     const placeholderName = ('Mech-' + mechId).padStart(1);
 
                     const armorStat = size.armor + armorMod.modifier;
-                    const structureStat = size.structure + armorMod.modifier;
+                    const structureStat = size.structure + structureMod.modifier;
 
                     let maxSlots = size.max_slots - armorUpgrade.slots;
                     if (factionStore.hasPerk(RD_ADVANCED_HARDPOINT_DESIGN) ||
@@ -201,7 +201,7 @@ export const useMechStore = defineStore('mech', {
                     }
 
                     const usedSlots = sumBy(weaponsInfo, 'slots') + sumBy(upgradesInfo, 'slots');
-                    const usedTons = sumBy(weaponsInfo, 'cost') + sumBy(upgradesInfo, 'cost');
+                    const usedTons = sumBy(weaponsInfo, 'cost') + sumBy(upgradesInfo, 'cost') + armorStat + structureStat;
 
                     let displayName = name || placeholderName;
 
