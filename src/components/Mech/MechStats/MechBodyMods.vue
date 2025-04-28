@@ -65,7 +65,7 @@ function selectOption(value) {
               {{ modifierLabel }}
             </BCol>
             <BCol sm="4" class="text-right">
-              Tons Available
+              Tons Used
             </BCol>
           </BRow>
         </BDropdown-header>
@@ -83,7 +83,7 @@ function selectOption(value) {
               <number :val="item.modifier"/>
             </BCol>
             <BCol sm="4" class="text-right">
-              <number :val="item.max_tons"/>
+              <number :val="item.max_tons" invert invert-color/>
             </BCol>
           </BRow>
         </BDropdown-item>
@@ -99,7 +99,7 @@ function selectOption(value) {
     </div>
     <div class="col-sm-1"></div>
     <div class="col-sm-1 col-form-label text-right">
-      <number :val="tonnage"/>
+      <number :val="tonnage" :invert-color="true"/>
     </div>
   </div>
 </template>

@@ -96,10 +96,10 @@ export default {
       {{ info.size.structure }}
     </div>
     <div class="col-sm-1 col-form-label text-right">
-      {{ info.size.max_slots }}
+
     </div>
     <div class="col-sm-1 col-form-label text-right">
-      <number :val="info.size.armor + info.size.structure" :invert="true"/>
+      <number :val="info.size.armor + info.size.structure" :invert-color="true"/>
     </div>
   </div>
 </template>

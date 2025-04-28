@@ -90,11 +90,11 @@ export default {
       <div class="col-sm-1 text-right pe-1 border-bottom">
 
         <div class="fw-bold">Slots</div>
-        <small>Available</small>
+        <small>Used</small>
       </div>
       <div class="col-sm-1 text-right pe-1 border-bottom">
         <div class="fw-bold">Tons</div>
-        <small>Available</small>
+        <small>Used</small>
       </div>
       <div class="col-sm-2 text-right pe-1 border-bottom">
 
@@ -105,7 +105,7 @@ export default {
     />
     <MechBodyMods
         label="Armor Type"
-        modifier-label="Armor"
+        modifier-label="Armor Stat"
         v-model="mech.armor_mod_id"
         :form-id="'mech-input-armor-mod-' + mechId"
         :tonnage="info.armor_mod.modifier"
@@ -115,7 +115,7 @@ export default {
     />
     <MechBodyMods
         label="Structure Type"
-        modifier-label="Structure"
+        modifier-label="Structure Stat"
         v-model="mech.structure_mod_id"
         :form-id="'mech-input-structure-mod-' + mechId"
         :tonnage="info.structure_mod.modifier"
@@ -195,7 +195,7 @@ export default {
       </div>
       <div class="col-sm-1 number-cell">
         <strong>
-          {{ info.max_tons - info.used_tons }}
+          {{info.used_tons }}/{{ info.max_tons}}
         </strong>
       </div>
     </div>

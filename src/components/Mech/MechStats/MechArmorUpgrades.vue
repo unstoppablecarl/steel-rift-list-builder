@@ -8,7 +8,7 @@ const options = HEV_ARMOR_UPGRADES_DROP_DOWN;
 const {
   label,
   sizeId,
-    mechId,
+  mechId,
 } = defineProps({
   label: {
     type: String,
@@ -45,17 +45,17 @@ function selectOption(value) {
           class="dropdown-block"
           :text="selectedValueLabel"
           variant="light"
-        >
+      >
         <BDropdown-header>
           <BRow class="my-1">
             <BCol sm="4">
               Type
             </BCol>
             <BCol sm="4" class="text-right">
-              Slots
+              Slots Used
             </BCol>
             <BCol sm="4" class="text-right">
-              Cost
+              Tons Used
             </BCol>
           </BRow>
         </BDropdown-header>
@@ -84,10 +84,10 @@ function selectOption(value) {
     <div class="col-sm-1 col-form-label text-right">
     </div>
     <div class="col-sm-1 col-form-label text-right">
-      <number :val="selectedValue.slots" :invert="true"/>
+      <number :val="selectedValue.slots" invert-color/>
     </div>
     <div class="col-sm-1 col-form-label text-right">
-      <number :val="selectedValue.cost_by_size[sizeId]" :invert="true"/>
+      <number :val="selectedValue.cost_by_size[sizeId]" invert-color/>
     </div>
   </div>
 </template>
