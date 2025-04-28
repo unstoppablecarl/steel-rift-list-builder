@@ -22,7 +22,7 @@ export default {
     name() {
       return this.mechStore.name;
     },
-    totalTons(){
+    totalTons() {
       return this.mechStore.totalTons;
     }
   },
@@ -46,7 +46,7 @@ export default {
     <div class="card-header">
       Mechs
       <div class="float-end">
-        <strong>Tonnage: </strong>{{totalTons}}
+        <strong>Tonnage: </strong>{{ totalTons }}
       </div>
     </div>
     <div class="card-body">

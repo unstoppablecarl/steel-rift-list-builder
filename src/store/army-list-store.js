@@ -4,6 +4,8 @@ import {useMechStore} from './mech-store.js';
 
 export const useArmyListStore = defineStore('army-list', () => {
 
+        const name = ref('');
+
         const mechStore = useMechStore();
 
         const total_tons = computed(() => {
@@ -11,21 +13,10 @@ export const useArmyListStore = defineStore('army-list', () => {
         });
         const max_tons = ref(20);
 
-        function setPerkId(index, perkId) {
-            perk_ids[index] = perkId;
-        }
-
-        function hasPerk(perkId) {
-            return Object.values(perk_ids).includes(perkId);
-        }
-
         return {
-            faction_id,
-            faction_display_name,
-            perk_groups,
-            perk_ids,
-            hasPerk,
-            setPerkId,
+            name,
+            total_tons,
+            max_tons,
         };
     },
     {

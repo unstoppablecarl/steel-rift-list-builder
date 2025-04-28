@@ -34,10 +34,10 @@ export const useToastStore = defineStore('toast', () => {
         });
     }
 
-    function toastInfo(text) {
+    function toastInfo(title, body = null) {
         toastMessage({
-            title: text,
-            body: null,
+            title,
+            body,
         });
     }
 

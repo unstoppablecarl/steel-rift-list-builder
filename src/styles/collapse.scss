@@ -2,8 +2,9 @@
 .collapse-header {
   padding: $btn-padding-y $btn-padding-x;
 }
-
+$accordion-button-bg: $accordion-button-active-bg;
 .btn-collapse {
+//$accordion-border-width: 0;
 
   --#{$prefix}accordion-color: #{$accordion-color};
   --#{$prefix}accordion-bg: #{$accordion-bg};
@@ -27,13 +28,12 @@
   --#{$prefix}accordion-active-color: #{$accordion-button-active-color};
   --#{$prefix}accordion-active-bg: #{$accordion-button-active-bg};
 
-
   position: relative;
   display: flex;
   align-items: center;
-  background-color: $cyan-100;
   text-align: left; // Reset button style
-
+  background-color: var(--#{$prefix}accordion-btn-bg);
+  border:0;
   overflow-anchor: none;
   @include transition(var(--#{$prefix}accordion-transition));
 

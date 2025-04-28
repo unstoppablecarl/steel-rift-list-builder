@@ -107,12 +107,10 @@ export const useMechStore = defineStore('mech', {
                 mech.upgrades.forEach((upgradeAttachment) => {
                     const info = this.getMechUpgradeAttachmentInfo(mechId, upgradeAttachment.id);
                     if (!info.valid) {
-                        const {toast} = useToastStore();
+                        const {toastInfo} = useToastStore();
 
-                        toast({
-                            title: `${mechInfo.size.display_name} HE-V (${mechInfo.displayName})`,
-                            body: `${info.display_name} removed: (${info.validation_messages.join(', ')})`,
-                        });
+                        toastInfo(`${mechInfo.size.display_name} HE-V (${mechInfo.displayName})`,
+                            `${info.display_name} removed: (${info.validation_messages.join(', ')})`)
                         this.removeMechUpgradeAttachment(mechId, upgradeAttachment.id);
                     }
                 });

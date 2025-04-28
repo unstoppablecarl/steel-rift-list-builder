@@ -5,15 +5,15 @@ $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
 // Colors
-//$blue: #3490dc;
-//$indigo: #6574cd;
-//$purple: #9561e2;
-//$pink: #f66D9b;
-////$red: #e3342f;
-//$orange: #f6993f;
-//$yellow: #ffed4a;
-//$green: #38c172;
-//$teal: #4dc0b5;
+$blue: #3490dc;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66D9b;
+//$red: #e3342f;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
 $cyan: #6cb2eb;
 
 $body-tertiary-bg: #e9ecef;
@@ -21,9 +21,13 @@ $body-tertiary-bg: #e9ecef;
 $dropdown-header-padding-y: .2rem;
 $dropdown-divider-margin-y: .2rem;
 
+$btn-focus-box-shadow: 0;
+
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import '../../node_modules/bootstrap-vue-next/src/styles/styles';
 @import "./bootstrap-vue-component-styles";
+
+
 @import "./collapse";
 
 
