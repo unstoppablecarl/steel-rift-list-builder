@@ -1,15 +1,12 @@
 <script setup>
 import {useFactionStore} from '../store/faction-store.js';
-import {FACTIONS_DROP_DOWN} from '../data/factions.js';
 import {storeToRefs} from 'pinia';
+import {FACTIONS_DROP_DOWN} from '../data/factions.js';
 
 let store = useFactionStore();
-const {setPerkId} = store;
-const {faction_id, perk_groups, perk_ids} = storeToRefs(store);
+const {perk_1_id, perk_2_id, faction_id, perks_drop_down} = storeToRefs(store);
 
-function setPerk($event, index) {
-  setPerkId(index, $event);
-}
+const factionsDropDown = FACTIONS_DROP_DOWN;
 </script>
 <template>
   <div class="card text-bg-light">
@@ -19,26 +16,31 @@ function setPerk($event, index) {
           <div class="form-label-top">Faction</div>
           <BFormSelect
               v-model="faction_id"
-          >
-            <BFormSelectOption
-                v-for="faction in FACTIONS_DROP_DOWN"
-                :value="faction.id"
-            >
-              {{ faction.display_name }}
-            </BFormSelectOption>
-          </BFormSelect>
-        </div>
-        <div
-            class="col"
-            v-for="(perk_group, index) in perk_groups"
-        >
-          <div class="form-label-top">{{ perk_group.display_name }}</div>
-          <BFormSelect
-              :options="perk_group.perks"
-              :model-value="perk_ids[index]"
+              :options="factionsDropDown"
               value-field="id"
               text-field="display_name"
-              @update:model-value="setPerk($event, index)"
+          >
+          </BFormSelect>
+        </div>
+
+        <div class="col">
+          <div class="form-label-top">Perk 1</div>
+          <BFormSelect
+              :options="perks_drop_down"
+              options-field="perks"
+              v-model="perk_1_id"
+              value-field="id"
+              text-field="display_name"
+          />
+        </div>
+        <div class="col">
+          <div class="form-label-top">Perk 2</div>
+          <BFormSelect
+              :options="perks_drop_down"
+              options-field="perks"
+              v-model="perk_2_id"
+              value-field="id"
+              text-field="display_name"
           />
         </div>
       </BRow>
