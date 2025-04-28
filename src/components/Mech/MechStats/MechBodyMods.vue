@@ -5,12 +5,16 @@ import {BDropdownDivider} from 'bootstrap-vue-next';
 
 const options = HEV_BODY_MODS_DROP_DOWN;
 const {
+  formId,
   label,
   tonnage,
   armor,
   structure,
   bgColor,
 } = defineProps({
+  formId: {
+    type: String,
+  },
   label: {
     type: String,
   },
@@ -44,9 +48,14 @@ function selectOption(value) {
 
 <template>
   <div :class="'row my-1 ' + bgColor">
-    <label class="col-sm-2 col-form-label">{{ label }}</label>
+    <label class="col-sm-2 col-form-label" :for="formId">{{ label }}</label>
     <BCol sm="4">
-      <BDropdown variant="light" :text="selectedValueLabel" class="dropdown-block">
+      <BDropdown
+          :id="formId"
+          class="dropdown-block"
+          variant="light"
+          :text="selectedValueLabel"
+      >
         <BDropdown-header>
           <BRow class="my-1">
             <BCol sm="4">
@@ -56,7 +65,7 @@ function selectOption(value) {
               {{ modifierLabel }}
             </BCol>
             <BCol sm="4" class="text-right">
-              Tons
+              Tons Available
             </BCol>
           </BRow>
         </BDropdown-header>
@@ -80,9 +89,11 @@ function selectOption(value) {
         </BDropdown-item>
       </BDropdown>
     </BCol>
+
     <div class="col-sm-1 col-form-label text-right">
       <number :val="armor" v-if="armor !== null"/>
     </div>
+
     <div class="col-sm-1 col-form-label text-right">
       <number :val="structure" v-if="structure !== null"/>
     </div>

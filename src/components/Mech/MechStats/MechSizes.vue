@@ -3,8 +3,10 @@ import {HEV_SIZES_DROP_DOWN} from '../../../data/mech-sizes.js';
 import {BDropdownDivider} from 'bootstrap-vue-next';
 import {mapStores} from 'pinia';
 import {useMechStore} from '../../../store/mech-store.js';
+import Number from '../../functional/number.vue';
 
 export default {
+  components: {Number},
   props: {
     mechId: Number,
   },
@@ -34,9 +36,14 @@ export default {
 
 <template>
   <div class="row my-1">
-    <label class="col-sm-2 col-form-label">Size</label>
+    <label class="col-sm-2 col-form-label" :for="'mech-input-size-' + mechId">Size</label>
     <BCol sm="4">
-      <BDropdown variant="light" :text="info.size.display_name" class="dropdown-block">
+      <BDropdown
+          :id="'mech-input-size-' + mechId"
+          class="dropdown-block"
+          :text="info.size.display_name"
+          variant="light"
+      >
         <BDropdown-header class="w-100">
           <BRow class="my-1">
             <BCol sm="4">
@@ -92,7 +99,7 @@ export default {
       {{ info.size.max_slots }}
     </div>
     <div class="col-sm-1 col-form-label text-right">
-      {{ info.size.max_tons }}
+      <number :val="info.size.armor + info.size.structure" :invert="true"/>
     </div>
   </div>
 </template>

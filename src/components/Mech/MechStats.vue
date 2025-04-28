@@ -4,14 +4,17 @@ import {mapStores} from 'pinia';
 import {useMechStore} from '../../store/mech-store.js';
 import {useFactionStore} from '../../store/faction-store.js';
 import {
-  CORPORATIONS, DEEP_WAR_CHEST,
+  CORPORATIONS,
+  DEEP_WAR_CHEST,
   DWC_TOP_END_HARDWARE,
   DWC_TOP_END_HARDWARE_BONUS_TONS,
-  FACTIONS, FREELANCERS,
+  FACTIONS,
+  FREELANCERS,
   RD_ADVANCED_HARDPOINT_DESIGN,
   RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS,
   RESEARCH_AND_DEVELOPMENT,
-  UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN, UNDERWORLD_AFFILIATIONS,
+  UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN,
+  UNDERWORLD_AFFILIATIONS,
 } from '../../data/factions.js';
 import Number from '../functional/number.vue';
 
@@ -35,7 +38,7 @@ export default {
     hasTopEndHardware() {
       return this.factionStore.hasPerk(DWC_TOP_END_HARDWARE);
     },
-    topEndHardwareLabel(){
+    topEndHardwareLabel() {
       return FACTIONS[CORPORATIONS]
           .faction_perk_groups[DEEP_WAR_CHEST]
           .perks[DWC_TOP_END_HARDWARE]
@@ -71,23 +74,29 @@ export default {
 <template>
   <div class="px-2">
     <div class="row header-row">
-      <label class="col-sm-2 col-form-label" :for="'mech-input-name-' + mechId">Name</label>
-      <div class="col-sm-4">
-        <BFormInput :id="'mech-input-name-' + mechId" v-model="mech.name" :placeholder="info.placeholderName"/>
+      <label class="col-sm-2 col-form-label border-bottom" :for="'mech-input-name-' + mechId">Name</label>
+      <div class="col-sm-4 border-bottom">
+        <BFormInput :id="'mech-input-name-' + mechId" v-model="mech.name" :placeholder="info.placeholder_name"/>
       </div>
-      <div class="col-sm-1 col-form-label text-right pe-1 fw-medium border-bottom">
-        Armor
+      <div class="col-sm-1 text-right pe-1 border-bottom">
+        <div class="fw-bold">Armor</div>
+        <small>Stat</small>
       </div>
-      <div class="col-sm-1 col-form-label text-right pe-1 fw-medium border-bottom">
-        Structure
+      <div class="col-sm-1 text-right pe-1 border-bottom">
+
+        <div class="fw-bold">Structure</div>
+        <small>Stat</small>
       </div>
-      <div class="col-sm-1 col-form-label text-right pe-1 fw-medium border-bottom">
-        Slots
+      <div class="col-sm-1 text-right pe-1 border-bottom">
+
+        <div class="fw-bold">Slots</div>
+        <small>Available</small>
       </div>
-      <div class="col-sm-1 col-form-label text-right pe-1 fw-medium border-bottom">
-        Tons
+      <div class="col-sm-1 text-right pe-1 border-bottom">
+        <div class="fw-bold">Tons</div>
+        <small>Available</small>
       </div>
-      <div class="col-sm-2 col-form-label text-right pe-1 fw-medium border-bottom">
+      <div class="col-sm-2 text-right pe-1 border-bottom">
 
       </div>
     </div>
@@ -98,8 +107,9 @@ export default {
         label="Armor Type"
         modifier-label="Armor"
         v-model="mech.armor_mod_id"
-        :tonnage="info.armorMod.max_tons"
-        :armor="info.armorMod.modifier"
+        :form-id="'mech-input-armor-mod-' + mechId"
+        :tonnage="info.armor_mod.modifier"
+        :armor="info.armor_mod.modifier"
         :structure="null"
         bg-color="bg-light-subtle"
     />
@@ -107,15 +117,17 @@ export default {
         label="Structure Type"
         modifier-label="Structure"
         v-model="mech.structure_mod_id"
-        :tonnage="info.structureMod.max_tons"
+        :form-id="'mech-input-structure-mod-' + mechId"
+        :tonnage="info.structure_mod.modifier"
         :armor="null"
-        :structure="info.structureMod.modifier"
+        :structure="info.structure_mod.modifier"
 
     />
     <MechArmorUpgrades
         label="Armor Upgrades"
         v-model="mech.armor_upgrade_id"
-        :size="mech.size_id"
+        :size-id="mech.size_id"
+        :mech-id="mechId"
     />
     <div class="tab-content-divider-bottom"></div>
 
@@ -168,22 +180,22 @@ export default {
       </div>
       <div class="col-sm-1 number-cell">
         <strong>
-          {{ info.armorStat }}
+          {{ info.armor_stat }}
         </strong>
       </div>
       <div class="col-sm-1 number-cell">
         <strong>
-          {{ info.structureStat }}
+          {{ info.structure_stat }}
         </strong>
       </div>
       <div class="col-sm-1 number-cell">
         <strong>
-          {{ info.maxSlots }}
+          {{ info.max_slots - info.used_slots }}
         </strong>
       </div>
       <div class="col-sm-1 number-cell">
         <strong>
-          {{ info.maxTons }}
+          {{ info.max_tons - info.used_tons }}
         </strong>
       </div>
     </div>

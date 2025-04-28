@@ -35,24 +35,24 @@ export default {
         </span>
       </BCol>
       <BCol sm="4" class="collapse-header">
-        <strong>{{ info.displayName }}</strong>
+        <strong>{{ info.display_name }}</strong>
       </BCol>
       <div class="col-sm-4 collapse-header">
         <span class="px-2">
           <strong>Arm:</strong>
-          {{ info.armorStat }}
+          {{ info.armor_stat }}
         </span>
         <span class="px-2">
           <strong>Str:</strong>
-          {{ info.structureStat }}
+          {{ info.structure_stat }}
         </span>
         <span class="px-2">
           <strong>Slots:</strong>
-          {{ info.usedSlots }}/{{ info.maxSlots }}
+          {{ info.used_slots }}/{{ info.max_slots }}
         </span>
         <span class="px-2">
           <strong>Tons:</strong>
-          {{ info.usedTons }}/{{ info.maxTons }}
+          {{ info.used_tons }}/{{ info.max_tons }}
         </span>
       </div>
 

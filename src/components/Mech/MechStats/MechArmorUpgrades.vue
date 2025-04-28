@@ -7,13 +7,17 @@ import Number from '../../functional/number.vue';
 const options = HEV_ARMOR_UPGRADES_DROP_DOWN;
 const {
   label,
-  size,
+  sizeId,
+    mechId,
 } = defineProps({
   label: {
     type: String,
   },
-  size: {
+  sizeId: {
     type: String,
+  },
+  mechId: {
+    type: Number,
   },
 });
 
@@ -34,9 +38,14 @@ function selectOption(value) {
 
 <template>
   <div class="row my-1 bg-light-subtle">
-    <label class="col-sm-2 col-form-label">{{ label }}</label>
+    <label class="col-sm-2 col-form-label" :for="'mech-input-armor-upgrade-' + mechId">{{ label }}</label>
     <BCol sm="4">
-      <BDropdown variant="light" :text="selectedValueLabel" class="dropdown-block">
+      <BDropdown
+          :id="'mech-input-armor-upgrade-' + mechId"
+          class="dropdown-block"
+          :text="selectedValueLabel"
+          variant="light"
+        >
         <BDropdown-header>
           <BRow class="my-1">
             <BCol sm="4">
@@ -64,7 +73,7 @@ function selectOption(value) {
               <number :val="item.slots" :invert-color="true" :positive-signed="false"/>
             </BCol>
             <BCol sm="4" class="text-right">
-              <number :val="item.cost_by_size[size]" :invert-color="true" :positive-signed="false"/>
+              <number :val="item.cost_by_size[sizeId]" :invert-color="true" :positive-signed="false"/>
             </BCol>
           </BRow>
         </BDropdown-item>
@@ -78,7 +87,7 @@ function selectOption(value) {
       <number :val="selectedValue.slots" :invert="true"/>
     </div>
     <div class="col-sm-1 col-form-label text-right">
-      <number :val="selectedValue.cost_by_size[size]" :invert="true"/>
+      <number :val="selectedValue.cost_by_size[sizeId]" :invert="true"/>
     </div>
   </div>
 </template>

@@ -109,7 +109,7 @@ export const useMechStore = defineStore('mech', {
                     if (!info.valid) {
                         const {toastInfo} = useToastStore();
 
-                        toastInfo(`${mechInfo.size.display_name} HE-V (${mechInfo.displayName})`,
+                        toastInfo(`${mechInfo.size.display_name} HE-V (${mechInfo.display_name})`,
                             `${info.display_name} removed: (${info.validation_messages.join(', ')})`);
                         this.removeMechUpgradeAttachment(mechId, upgradeAttachment.id);
                     }
@@ -178,46 +178,55 @@ export const useMechStore = defineStore('mech', {
                         upgrades,
                     } = this.getMech(mechId);
 
+                    const placeholder_name = ('Mech-' + mechId).padStart(1);
+
                     const weaponsInfo = weapons.map((item) => this.getWeaponInfo(mechId, item.weapon_id));
                     const upgradesInfo = upgrades.map((item) => this.getUpgradeInfo(mechId, item.upgrade_id));
 
                     const size = HEV_SIZES[size_id];
-                    const structureMod = HEV_BODY_MODS[structure_mod_id];
-                    const armorMod = HEV_BODY_MODS[armor_mod_id];
+                    const structure_mod = HEV_BODY_MODS[structure_mod_id];
+                    const armor_mod = HEV_BODY_MODS[armor_mod_id];
                     const armorUpgrade = HEV_ARMOR_UPGRADES[armor_upgrade_id];
-                    let maxTons = size.max_tons;
+
+                    const armor_stat = size.armor + armor_mod.modifier;
+                    const structure_stat = size.structure + structure_mod.modifier;
+                    
+                    let max_tons = size.max_tons;
                     if (factionStore.hasPerk(DWC_TOP_END_HARDWARE)) {
-                        maxTons += DWC_TOP_END_HARDWARE_BONUS_TONS;
+                        max_tons += DWC_TOP_END_HARDWARE_BONUS_TONS;
                     }
-                    const placeholderName = ('Mech-' + mechId).padStart(1);
 
-                    const armorStat = size.armor + armorMod.modifier;
-                    const structureStat = size.structure + structureMod.modifier;
 
-                    let maxSlots = size.max_slots - armorUpgrade.slots;
+                    let max_slots = size.max_slots;
                     if (factionStore.hasPerk(RD_ADVANCED_HARDPOINT_DESIGN) ||
                         factionStore.hasPerk(UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN)) {
-                        maxSlots += RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS;
+                        max_slots += RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS;
                     }
 
-                    const usedSlots = sumBy(weaponsInfo, 'slots') + sumBy(upgradesInfo, 'slots');
-                    const usedTons = sumBy(weaponsInfo, 'cost') + sumBy(upgradesInfo, 'cost') + armorStat + structureStat;
+                    const used_slots = sumBy(weaponsInfo, 'slots') +
+                        sumBy(upgradesInfo, 'slots') +
+                        armorUpgrade.slots;
 
-                    let displayName = name || placeholderName;
+                    const used_tons = sumBy(weaponsInfo, 'cost') +
+                        sumBy(upgradesInfo, 'cost') +
+                        armor_stat +
+                        structure_stat +
+                        armorUpgrade.cost_by_size[size_id];
+
+                    let display_name = name || placeholder_name;
 
                     return {
-                        displayName,
-                        placeholderName,
-                        structureMod,
-                        armorMod,
-                        maxTons,
-                        usedTons,
-                        armorUpgrade,
+                        display_name,
+                        placeholder_name,
                         size,
-                        maxSlots,
-                        usedSlots,
-                        armorStat,
-                        structureStat,
+                        structure_mod,
+                        armor_mod,
+                        max_tons,
+                        used_tons,
+                        max_slots,
+                        used_slots,
+                        armor_stat,
+                        structure_stat,
                     };
                 };
             },
