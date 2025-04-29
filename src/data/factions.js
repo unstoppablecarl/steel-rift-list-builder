@@ -1,4 +1,4 @@
-import {listToDropDown, makeStaticListIds} from './data-helpers.js';
+import {listToDropDown, makeFrozenStaticListIds} from './data-helpers.js';
 
 export const NO_FACTION = 'NO_FACTION';
 export const AUTHORITIES = 'AUTHORITIES';
@@ -45,17 +45,17 @@ export const BLO_POLITICAL_EXTREMISTS = 'BLO_POLITICAL_EXTREMISTS';
 export const BLO_DISGRACED_TRILLIONAIRE = 'BLO_DISGRACED_TRILLIONAIRE';
 export const DWC_TOP_END_HARDWARE_BONUS_TONS = 2
 export const RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS = 1
-export const FACTIONS = makeStaticListIds({
+export const FACTIONS = makeFrozenStaticListIds({
     [[NO_FACTION]]: {
         display_name: 'None',
-        faction_perk_groups: makeStaticListIds({}),
+        faction_perk_groups: makeFrozenStaticListIds({}),
     },
     [[AUTHORITIES]]: {
         display_name: 'Authorities',
-        faction_perk_groups: makeStaticListIds({
+        faction_perk_groups: makeFrozenStaticListIds({
             [[MILITARY_TRAINING]]: {
                 display_name: 'Military Training',
-                perks: makeStaticListIds({
+                perks: makeFrozenStaticListIds({
                     [[MT_COORDINATED_ASSAULTS]]: {
                         display_name: 'Coordinated Assaults',
                     },
@@ -69,7 +69,7 @@ export const FACTIONS = makeStaticListIds({
             },
             [[POLITICAL_PRIORITY]]: {
                 display_name: 'Political Priority',
-                perks: makeStaticListIds({
+                perks: makeFrozenStaticListIds({
                     [[PP_EXPANSIONIST]]: {
                         display_name: 'Expansionist',
                     },
@@ -83,7 +83,7 @@ export const FACTIONS = makeStaticListIds({
             },
             [[OLD_INFRASTRUCTURE]]: {
                 display_name: 'Old Infrastructure',
-                perks: makeStaticListIds({
+                perks: makeFrozenStaticListIds({
                     [[OI_ORBITAL_STOCKPILES]]: {
                         display_name: 'Orbital Stockpiles',
                     },
@@ -99,10 +99,10 @@ export const FACTIONS = makeStaticListIds({
     },
     [[CORPORATIONS]]: {
         display_name: 'Corporations',
-        faction_perk_groups: makeStaticListIds({
+        faction_perk_groups: makeFrozenStaticListIds({
             [[ESPIONAGE]]: {
                 display_name: 'Espionage',
-                perks: makeStaticListIds({
+                perks: makeFrozenStaticListIds({
                     [[E_EMBEDDED_INFORMANTS]]: {
                         display_name: 'Embedded Informants',
                     },
@@ -116,7 +116,7 @@ export const FACTIONS = makeStaticListIds({
             },
             [[RESEARCH_AND_DEVELOPMENT]]: {
                 display_name: 'Research and Development',
-                perks: makeStaticListIds({
+                perks: makeFrozenStaticListIds({
                     [[RD_ADVANCED_HARDPOINT_DESIGN]]: {
                         display_name: 'Advanced Hardpoint Design',
                     },
@@ -130,7 +130,7 @@ export const FACTIONS = makeStaticListIds({
             },
             [[DEEP_WAR_CHEST]]: {
                 display_name: 'Deep War Chest',
-                perks: makeStaticListIds({
+                perks: makeFrozenStaticListIds({
                     [[DWC_TOP_END_HARDWARE]]: {
                         display_name: 'Top End Hardware',
                     },
@@ -146,10 +146,10 @@ export const FACTIONS = makeStaticListIds({
     },
     [[FREELANCERS]]: {
         display_name: 'Freelancers',
-        faction_perk_groups: makeStaticListIds({
+        faction_perk_groups: makeFrozenStaticListIds({
             [[ROGUE_AGENCY]]: {
                 display_name: 'Rogue Agency',
-                perks: makeStaticListIds({
+                perks: makeFrozenStaticListIds({
                     [[RA_UNPREDICTABLE_GAMBITS]]: {
                         display_name: 'Unpredictable Gambits',
                     },
@@ -163,7 +163,7 @@ export const FACTIONS = makeStaticListIds({
             },
             [[UNDERWORLD_AFFILIATIONS]]: {
                 display_name: 'Underworld Affiliations',
-                perks: makeStaticListIds({
+                perks: makeFrozenStaticListIds({
                     [[UA_NETWORK_HACKERS]]: {
                         display_name: 'Network Hackers',
                     },
@@ -183,7 +183,7 @@ export const FACTIONS = makeStaticListIds({
             },
             [[BIG_LEAGUE_ORIGINS]]: {
                 display_name: 'Big League Origins',
-                perks: makeStaticListIds({
+                perks: makeFrozenStaticListIds({
                     [[BLO_EX_MILITARY_VETERANS]]: {
                         display_name: 'Ex-Military Veterans',
                     },

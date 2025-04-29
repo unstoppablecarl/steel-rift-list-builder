@@ -2,7 +2,7 @@
 import {BFormInput} from 'bootstrap-vue-next';
 import {useArmyListStore} from '../../store/army-list-store.js';
 import {storeToRefs} from 'pinia';
-import {ref, watch} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import {find} from 'lodash';
 
 const store = useArmyListStore();
@@ -48,7 +48,9 @@ function syncArmyType() {
   }
 }
 
-syncArmyType();
+onMounted(() => {
+  syncArmyType();
+});
 </script>
 <template>
   <div class="form-floating mb-1">
@@ -65,6 +67,7 @@ syncArmyType();
   <BFormRadioGroup
       v-model="armyTypeMaxTons"
       :options="options"
+      id="list-max-tons"
       name="radios-btn-default"
       buttons
       button-variant="secondary"

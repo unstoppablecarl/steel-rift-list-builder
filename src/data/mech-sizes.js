@@ -1,11 +1,11 @@
-import {listToDropDown, makeStaticListIds} from './data-helpers.js';
+import {listToDropDown, makeFrozenStaticListIds} from './data-helpers.js';
 
 export const SIZE_LIGHT = 'SIZE_LIGHT';
 export const SIZE_MEDIUM = 'SIZE_MEDIUM';
 export const SIZE_HEAVY = 'SIZE_HEAVY';
 export const SIZE_ULTRA = 'SIZE_ULTRA';
 
-export const HEV_SIZES = makeStaticListIds({
+export const HEV_SIZES = makeFrozenStaticListIds({
     [[SIZE_LIGHT]]: {
         display_name: 'Light',
         armor: 6,

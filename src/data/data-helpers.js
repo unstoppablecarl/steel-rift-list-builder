@@ -23,7 +23,12 @@ export function makeStaticListIds(obj) {
         .forEach((key) => {
             obj[key].id = key;
         });
-    return deepFreeze(obj);
+
+    return obj;
+}
+
+export function makeFrozenStaticListIds(obj) {
+    return deepFreeze(makeStaticListIds(obj));
 }
 
 export function deepFreeze(object) {

@@ -11,6 +11,7 @@ export const useArmyListStore = defineStore('army-list', () => {
         const used_tons = computed(() => {
             return mechStore.totalTons;
         });
+
         const max_tons = ref(100);
 
         return {

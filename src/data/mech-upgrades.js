@@ -1,6 +1,6 @@
 import {SIZE_HEAVY, SIZE_LIGHT, SIZE_MEDIUM, SIZE_ULTRA} from './mech-sizes.js';
 import {SUBMUNITIONS} from './mech-weapons.js';
-import {listToDropDown, makeStaticListIds} from './data-helpers.js';
+import {listToDropDown, makeFrozenStaticListIds} from './data-helpers.js';
 
 export const ANTI_MISSILE_SYSTEM = 'ANTI_MISSILE_SYSTEM';
 export const ELECTRONIC_COUNTERMEASURES = 'ELECTRONIC_COUNTERMEASURES';
@@ -11,7 +11,7 @@ export const MINEFIELD_DRONE_TRACKING_SYSTEM = 'Minefield Drone Tracking Submuni
 export const OPTIC_CAMO = 'OPTIC_CAMO';
 export const TARGET_DESIGNATOR = 'TARGET_DESIGNATOR';
 
-export const HEV_UPGRADES = makeStaticListIds({
+export const HEV_UPGRADES = makeFrozenStaticListIds({
     [[ANTI_MISSILE_SYSTEM]]: makeArmorUpgrade({
         display_name: 'Anti-Missile System',
         cost_by_size: {

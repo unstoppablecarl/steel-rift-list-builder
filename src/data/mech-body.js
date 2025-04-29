@@ -1,10 +1,10 @@
-import {listToDropDown, makeStaticListIds} from './data-helpers.js';
+import {listToDropDown, makeFrozenStaticListIds} from './data-helpers.js';
 
 export const MOD_STRIPPED = 'MOD_STRIPPED';
 export const MOD_STANDARD = 'MOD_STANDARD';
 export const MOD_REINFORCED = 'MOD_REINFORCED';
 
-export const HEV_BODY_MODS = makeStaticListIds({
+export const HEV_BODY_MODS = makeFrozenStaticListIds({
     [[MOD_STRIPPED]]: {
         display_name: 'Stripped',
         modifier: -2,

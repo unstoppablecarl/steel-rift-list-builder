@@ -1,25 +1,21 @@
 import {SIZE_HEAVY, SIZE_LIGHT, SIZE_MEDIUM, SIZE_ULTRA} from './mech-sizes.js';
 import {
-    TRAIT_AP_1,
-    TRAIT_AP_2,
-    TRAIT_AP_3,
-    TRAIT_BLAST_3,
+    makeTrait,
+    TRAIT_AP,
+    TRAIT_BLAST,
     TRAIT_DISRUPTIVE,
     TRAIT_DRAINING,
     TRAIT_FLAK,
     TRAIT_FRAG,
     TRAIT_KINETIC,
     TRAIT_LIGHT,
-    TRAIT_LIMITED_2,
-    TRAIT_LIMITED_3,
-    TRAIT_MELEE_1,
-    TRAIT_MELEE_2,
-    TRAIT_SHORT_12,
-    TRAIT_SHORT_18,
-    TRAIT_SHORT_6,
+    TRAIT_LIMITED,
+    TRAIT_MELEE,
+    TRAIT_SHORT,
     TRAIT_SMART,
 } from './weapon-traits.js';
-import {listToDropDown, makeStaticListIds} from './data-helpers.js';
+import {listToDropDown, makeFrozenStaticListIds} from './data-helpers.js';
+import {find} from 'lodash';
 
 export const AUTO_CANNON = 'AUTO_CANNON';
 export const HOWITZER = 'HOWITZER';
@@ -33,7 +29,7 @@ export const ROTARY_CANNON = 'ROTARY_CANNON';
 export const SHOT_CANNON = 'SHOT_CANNON';
 export const SUBMUNITIONS = 'SUBMUNITIONS';
 
-export const HEV_WEAPONS = makeStaticListIds({
+export const HEV_WEAPONS = makeFrozenStaticListIds({
     [[AUTO_CANNON]]: makeWeapon({
         display_name: 'Auto-Cannon',
         damage_by_size: {
@@ -43,7 +39,7 @@ export const HEV_WEAPONS = makeStaticListIds({
             [[SIZE_ULTRA]]: 6,
         },
         traits: [
-            TRAIT_KINETIC,
+            makeTrait(TRAIT_KINETIC),
         ],
         cost_by_size: {
             [[SIZE_LIGHT]]: 3,
@@ -61,8 +57,8 @@ export const HEV_WEAPONS = makeStaticListIds({
             [[SIZE_ULTRA]]: 4,
         },
         traits: [
-            TRAIT_BLAST_3,
-            TRAIT_KINETIC,
+            makeTrait(TRAIT_BLAST, 3),
+            makeTrait(TRAIT_KINETIC),
         ],
         cost_by_size: {
             [[SIZE_LIGHT]]: 2,
@@ -78,10 +74,10 @@ export const HEV_WEAPONS = makeStaticListIds({
             TRAIT_DRAINING,
         ],
         traits_by_size: {
-            [[SIZE_LIGHT]]: [TRAIT_AP_1],
-            [[SIZE_MEDIUM]]: [TRAIT_AP_1],
-            [[SIZE_HEAVY]]: [TRAIT_AP_2],
-            [[SIZE_ULTRA]]: [TRAIT_AP_3],
+            [[SIZE_LIGHT]]: [makeTrait(TRAIT_AP, 1)],
+            [[SIZE_MEDIUM]]: [makeTrait(TRAIT_AP, 1)],
+            [[SIZE_HEAVY]]: [makeTrait(TRAIT_AP, 2)],
+            [[SIZE_ULTRA]]: [makeTrait(TRAIT_AP, 3)],
         },
         cost_by_size: {
             [[SIZE_LIGHT]]: 3,
@@ -94,10 +90,10 @@ export const HEV_WEAPONS = makeStaticListIds({
         display_name: 'Melee Weapon',
         damage: 0,
         traits_by_size: {
-            [[SIZE_LIGHT]]: [TRAIT_MELEE_1],
-            [[SIZE_MEDIUM]]: [TRAIT_MELEE_1],
-            [[SIZE_HEAVY]]: [TRAIT_MELEE_2],
-            [[SIZE_ULTRA]]: [TRAIT_MELEE_2],
+            [[SIZE_LIGHT]]: [makeTrait(TRAIT_MELEE, 1)],
+            [[SIZE_MEDIUM]]: [makeTrait(TRAIT_MELEE, 1)],
+            [[SIZE_HEAVY]]: [makeTrait(TRAIT_MELEE, 2)],
+            [[SIZE_ULTRA]]: [makeTrait(TRAIT_MELEE, 2)],
         },
         cost_by_size: {
             [[SIZE_LIGHT]]: 1,
@@ -116,8 +112,8 @@ export const HEV_WEAPONS = makeStaticListIds({
             [[SIZE_ULTRA]]: 8,
         },
         traits: [
-            TRAIT_SMART,
-            TRAIT_LIMITED_3,
+            makeTrait(TRAIT_SMART),
+            makeTrait(TRAIT_LIMITED, 3),
         ],
         cost_by_size: {
             [[SIZE_LIGHT]]: 2,
@@ -136,9 +132,9 @@ export const HEV_WEAPONS = makeStaticListIds({
             [[SIZE_ULTRA]]: 8,
         },
         traits: [
-            TRAIT_SHORT_18,
-            TRAIT_DRAINING,
-            TRAIT_DISRUPTIVE,
+            makeTrait(TRAIT_SHORT, 18),
+            makeTrait(TRAIT_DRAINING),
+            makeTrait(TRAIT_DISRUPTIVE),
         ],
         cost_by_size: {
             [[SIZE_LIGHT]]: 2,
@@ -157,13 +153,13 @@ export const HEV_WEAPONS = makeStaticListIds({
             [[SIZE_ULTRA]]: 5,
         },
         traits: [
-            TRAIT_KINETIC,
+            makeTrait(TRAIT_KINETIC),
         ],
         traits_by_size: {
-            [[SIZE_LIGHT]]: [TRAIT_AP_1],
-            [[SIZE_MEDIUM]]: [TRAIT_AP_1],
-            [[SIZE_HEAVY]]: [TRAIT_AP_2],
-            [[SIZE_ULTRA]]: [TRAIT_AP_3],
+            [[SIZE_LIGHT]]: [makeTrait(TRAIT_AP, 1)],
+            [[SIZE_MEDIUM]]: [makeTrait(TRAIT_AP, 1)],
+            [[SIZE_HEAVY]]: [makeTrait(TRAIT_AP, 2)],
+            [[SIZE_ULTRA]]: [makeTrait(TRAIT_AP, 3)],
         },
     }),
     [[ROCKET_PACK]]: makeWeapon({
@@ -181,9 +177,9 @@ export const HEV_WEAPONS = makeStaticListIds({
             [[SIZE_ULTRA]]: 5,
         },
         traits: [
-            TRAIT_SMART,
-            TRAIT_BLAST_3,
-            TRAIT_LIMITED_2,
+            makeTrait(TRAIT_SMART),
+            makeTrait(TRAIT_BLAST, 3),
+            makeTrait(TRAIT_LIMITED, 2),
         ],
     }),
     [[ROTARY_CANNON]]: makeWeapon({
@@ -195,8 +191,8 @@ export const HEV_WEAPONS = makeStaticListIds({
             [[SIZE_ULTRA]]: 13,
         },
         traits: [
-            TRAIT_SHORT_12,
-            TRAIT_LIGHT,
+            makeTrait(TRAIT_SHORT, 12),
+            makeTrait(TRAIT_LIGHT),
         ],
         cost_by_size: {
             [[SIZE_LIGHT]]: 2,
@@ -214,9 +210,9 @@ export const HEV_WEAPONS = makeStaticListIds({
             [[SIZE_ULTRA]]: 12,
         },
         traits: [
-            TRAIT_SHORT_6,
-            TRAIT_LIGHT,
-            TRAIT_FRAG,
+            makeTrait(TRAIT_SHORT, 6),
+            makeTrait(TRAIT_LIGHT),
+            makeTrait(TRAIT_FRAG),
         ],
         cost_by_size: {
             [[SIZE_LIGHT]]: 2,
@@ -234,8 +230,8 @@ export const HEV_WEAPONS = makeStaticListIds({
             [[SIZE_ULTRA]]: 4,
         },
         traits: [
-            TRAIT_SHORT_6,
-            TRAIT_FLAK,
+            makeTrait(TRAIT_SHORT, 6),
+            makeTrait(TRAIT_FLAK),
         ],
         cost_by_size: {
             [[SIZE_LIGHT]]: 1,
@@ -245,7 +241,6 @@ export const HEV_WEAPONS = makeStaticListIds({
         },
     }),
 });
-
 function makeWeapon({
                         display_name,
                         damage,
@@ -283,14 +278,10 @@ function makeWeapon({
     }
     let range = null;
     if (traits) {
-        if (traits.includes(TRAIT_SHORT_6)) {
-            range = 6;
-        }
-        if (traits.includes(TRAIT_SHORT_12)) {
-            range = 12;
-        }
-        if (traits.includes(TRAIT_SHORT_18)) {
-            range = 18;
+
+        let result = find(traits, (trait) => trait.id == TRAIT_SHORT);
+        if (result) {
+            range = result.number;
         }
     }
 

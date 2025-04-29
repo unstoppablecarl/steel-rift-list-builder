@@ -4,8 +4,9 @@ import Faction from './ArmyList/Faction.vue';
 import {useArmyListStore} from '../store/army-list-store.js';
 import Fraction from './functional/fraction.vue';
 import {storeToRefs} from 'pinia';
-import ArmyListType from './ArmyList/ArmyListType.vue';
+import ArmyListSize from './ArmyList/ArmyListSize.vue';
 import {BFormInput} from 'bootstrap-vue-next';
+import ArmyListSupportAssets from './ArmyList/ArmyListSupportAssets.vue';
 
 const store = useArmyListStore();
 
@@ -35,8 +36,20 @@ const {used_tons, max_tons, name} = storeToRefs(store);
           </div>
         </div>
         <div class="col">
-          <ArmyListType/>
+          <div class="row">
+            <div class="col-sm-6">
+              <ArmyListSize/>
+
+            </div>
+            <div class="col-sm-6">
+              <ArmyListSupportAssets/>
+
+            </div>
+          </div>
         </div>
+        <div class="col">
+        </div>
+
         <div class="col">
           <Faction/>
         </div>

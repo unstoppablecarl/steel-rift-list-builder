@@ -1,5 +1,5 @@
 import {SIZE_HEAVY, SIZE_LIGHT, SIZE_MEDIUM, SIZE_ULTRA} from './mech-sizes.js';
-import {listToDropDown, makeStaticListIds} from './data-helpers.js';
+import {listToDropDown, makeFrozenStaticListIds} from './data-helpers.js';
 import {HEV_BODY_MODS} from './mech-body.js';
 
 export const NO_ARMOR_UPGRADE = 'NO_ARMOR_UPGRADE';
@@ -7,7 +7,7 @@ export const ABLATIVE_ARMOR_UPGRADE = 'ABLATIVE_ARMOR_UPGRADE';
 export const REACTIVE_ARMOR_UPGRADE = 'REACTIVE_ARMOR_UPGRADE';
 export const CERAMIC_ARMOR_UPGRADE = 'CERAMIC_ARMOR_UPGRADE';
 
-export const HEV_ARMOR_UPGRADES = makeStaticListIds({
+export const HEV_ARMOR_UPGRADES = makeFrozenStaticListIds({
     [[NO_ARMOR_UPGRADE]]: makeArmorUpgrade({
         display_name: 'Standard Armour',
         cost: 0,

@@ -4,7 +4,7 @@ import {HEV_BODY_MODS, MOD_STANDARD} from '../data/mech-body.js';
 import {HEV_ARMOR_UPGRADES, NO_ARMOR_UPGRADE} from '../data/mech-armor-upgrades.js';
 import {findById, updateObject} from '../data/data-helpers.js';
 import {sumBy} from 'lodash';
-import {WEAPON_TRAITS} from '../data/weapon-traits.js';
+import {traitDisplayName} from '../data/weapon-traits.js';
 import {HEV_WEAPONS} from '../data/mech-weapons.js';
 import {readonly} from 'vue';
 import {HEV_UPGRADES} from '../data/mech-upgrades.js';
@@ -251,6 +251,8 @@ export const useMechStore = defineStore('mech', {
                         range_formatted = weapon.range + '"';
                     }
 
+                    const traitsBySize = weapon.traits_by_size[size_id];
+
                     return readonly({
                         weapon_id: weaponId,
                         display_name: weapon.display_name,
@@ -259,10 +261,10 @@ export const useMechStore = defineStore('mech', {
                         cost: weapon.cost_by_size[size_id],
                         range: weapon.range,
                         range_formatted,
-                        traits: weapon.traits_by_size[size_id],
-                        trait_display_names: weapon.traits_by_size[size_id]
-                            .map((traitId) => {
-                                return WEAPON_TRAITS[traitId].display_name;
+                        traits: traitsBySize,
+                        trait_display_names: traitsBySize
+                            .map((trait) => {
+                                return traitDisplayName(trait);
                             })
                             .join(', '),
                     });
