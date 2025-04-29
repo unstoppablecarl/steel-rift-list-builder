@@ -36,7 +36,7 @@ export default {
     </td>
     <td></td>
     <td>
-      <BButton @click="remove()">Delete</BButton>
+      <BButton @click="remove()" variant="danger">Remove</BButton>
     </td>
   </tr>
 

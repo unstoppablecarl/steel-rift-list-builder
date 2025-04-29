@@ -43,7 +43,7 @@ export default {
     <td class="cell-pad-top">
       {{ weapon.trait_display_names }}</td>
     <td>
-      <BButton @click="remove()">Delete</BButton>
+      <BButton @click="remove()" variant="danger">Remove</BButton>
     </td>
   </tr>
 </template>
