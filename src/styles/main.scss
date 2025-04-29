@@ -1,3 +1,4 @@
+@import "../../node_modules/bootstrap/scss/functions";
 
 $dropdown-border-width: 1px;
 
@@ -9,12 +10,22 @@ $blue: #3490dc;
 $indigo: #6574cd;
 $purple: #9561e2;
 $pink: #f66D9b;
-//$red: #e3342f;
+$red: #dc3545;
 $orange: #f6993f;
 $yellow: #ffed4a;
 $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
+
+$primary:       $blue !default;
+$success:       $green !default;
+$info:          $cyan !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+
+$success-text-emphasis:   shade-color($success, 40%);
+$danger-text-emphasis:    shade-color($danger, 40%);
+
 
 $body-tertiary-bg: #e9ecef;
 
@@ -30,6 +41,9 @@ $btn-focus-box-shadow: 0;
 
 @import "./collapse";
 
+.mech-stats > .row:nth-child(even){
+  background-color: var(--bs-light-bg-subtle);
+}
 
 .card {
   margin-top: .5rem;

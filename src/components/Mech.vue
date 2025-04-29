@@ -3,9 +3,10 @@ import {mapStores} from 'pinia';
 import {useMechStore} from '../store/mech-store.js';
 import MechWeapons from './Mech/MechWeapons.vue';
 import MechUpgrades from './Mech/MechUpgrades.vue';
+import Fraction from './functional/fraction.vue';
 
 export default {
-  components: {MechUpgrades, MechWeapons},
+  components: {Fraction, MechUpgrades, MechWeapons},
   props: {
     mechId: Number,
   },
@@ -47,12 +48,12 @@ export default {
           {{ info.structure_stat }}
         </span>
         <span class="px-2">
-          <strong>Slots:</strong>
-          {{ info.used_slots }}/{{ info.max_slots }}
+          <strong>Slots: </strong>
+          <fraction :a="info.used_slots" :b="info.max_slots"/>
         </span>
         <span class="px-2">
-          <strong>Tons:</strong>
-          {{ info.used_tons }}/{{ info.max_tons }}
+          <strong>Tons: </strong>
+          <fraction :a="info.used_tons" :b="info.max_tons"/>
         </span>
       </div>
 

@@ -190,12 +190,11 @@ export const useMechStore = defineStore('mech', {
 
                     const armor_stat = size.armor + armor_mod.modifier;
                     const structure_stat = size.structure + structure_mod.modifier;
-                    
+
                     let max_tons = size.max_tons;
                     if (factionStore.hasPerk(DWC_TOP_END_HARDWARE)) {
                         max_tons += DWC_TOP_END_HARDWARE_BONUS_TONS;
                     }
-
 
                     let max_slots = size.max_slots;
                     if (factionStore.hasPerk(RD_ADVANCED_HARDPOINT_DESIGN) ||
@@ -203,12 +202,18 @@ export const useMechStore = defineStore('mech', {
                         max_slots += RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS;
                     }
 
-                    const used_slots = sumBy(weaponsInfo, 'slots') +
-                        sumBy(upgradesInfo, 'slots') +
+                    const weapon_used_tons = sumBy(weaponsInfo, 'cost');
+                    const weapon_used_slots = sumBy(weaponsInfo, 'slots');
+
+                    const upgrade_used_slots = sumBy(upgradesInfo, 'slots');
+                    const upgrade_used_tons = sumBy(upgradesInfo, 'cost');
+
+                    const used_slots = weapon_used_slots +
+                        upgrade_used_slots +
                         armorUpgrade.slots;
 
-                    const used_tons = sumBy(weaponsInfo, 'cost') +
-                        sumBy(upgradesInfo, 'cost') +
+                    const used_tons = weapon_used_tons +
+                        upgrade_used_tons +
                         armor_stat +
                         structure_stat +
                         armorUpgrade.cost_by_size[size_id];
@@ -227,6 +232,10 @@ export const useMechStore = defineStore('mech', {
                         used_slots,
                         armor_stat,
                         structure_stat,
+                        upgrade_used_tons,
+                        upgrade_used_slots,
+                        weapon_used_slots,
+                        weapon_used_tons,
                     };
                 };
             },

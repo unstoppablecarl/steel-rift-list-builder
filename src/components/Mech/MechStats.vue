@@ -18,9 +18,10 @@ import {
 } from '../../data/factions.js';
 import Number from '../functional/number.vue';
 import MechStatRow from './MechStats/MechStatRow.vue';
+import Fraction from '../functional/fraction.vue';
 
 export default {
-  components: {MechStatRow, BInput, Number},
+  components: {Fraction, MechStatRow, BInput, Number},
   props: {
     mechId: Number,
   },
@@ -73,7 +74,7 @@ export default {
 };
 </script>
 <template>
-  <div class="px-2">
+  <div class="mech-stats px-2">
     <div class="row header-row">
       <label class="col-sm-2 col-form-label border-bottom" :for="'mech-input-name-' + mechId">Name</label>
       <div class="col-sm-4 border-bottom">
@@ -84,12 +85,10 @@ export default {
         <small>Stat</small>
       </div>
       <div class="col-sm-1 text-right pe-1 border-bottom">
-
         <div class="fw-bold">Structure</div>
         <small>Stat</small>
       </div>
       <div class="col-sm-1 text-right pe-1 border-bottom">
-
         <div class="fw-bold">Slots</div>
         <small>Used</small>
       </div>
@@ -112,7 +111,6 @@ export default {
         :tonnage="info.armor_mod.modifier"
         :armor="info.armor_mod.modifier"
         :structure="null"
-        bg-color="bg-light-subtle"
     />
     <MechBodyMods
         label="Structure Type"
@@ -145,29 +143,45 @@ export default {
         :usedSlots="advancedHardPointsBonusSlots"
     />
 
-    <div class="row">
+    <MechStatRow
+        v-if="mech.weapons.length"
+        label=""
+        :text="'Weapons ' + `(${mech.weapons.length})`"
+        :used-slots="info.weapon_used_slots"
+        :used-tons="info.weapon_used_tons"
+    />
+
+    <MechStatRow
+        v-if="mech.upgrades.length"
+        label=""
+        :text="'Upgrades ' + `(${mech.upgrades.length})`"
+        :used-slots="info.upgrade_used_slots"
+        :used-tons="info.upgrade_used_tons"
+    />
+
+    <div class="row border-top">
       <div class="col-sm-2"></div>
-      <div class="col-sm-4 number-cell">
-        <strong>Total</strong>
+      <div class="col-sm-4 col-form-label text-right">
+        Totals
       </div>
-      <div class="col-sm-1 number-cell">
+      <div class="col-sm-1 col-form-label text-right">
         <strong>
           {{ info.armor_stat }}
         </strong>
       </div>
-      <div class="col-sm-1 number-cell">
+      <div class="col-sm-1 col-form-label text-right">
         <strong>
           {{ info.structure_stat }}
         </strong>
       </div>
-      <div class="col-sm-1 number-cell">
+      <div class="col-sm-1 col-form-label text-right">
         <strong>
-          {{ info.max_slots - info.used_slots }}
+          <fraction :a="info.used_slots" :b="info.max_slots"/>
         </strong>
       </div>
-      <div class="col-sm-1 number-cell">
+      <div class="col-sm-1 col-form-label text-right">
         <strong>
-          {{ info.used_tons }}/{{ info.max_tons }}
+          <fraction :a="info.used_tons" :b="info.max_tons"/>
         </strong>
       </div>
     </div>

@@ -37,7 +37,7 @@ function selectOption(value) {
 </script>
 
 <template>
-  <div class="row my-1 bg-light-subtle">
+  <div class="row my-1">
     <label class="col-sm-2 col-form-label" :for="'mech-input-armor-upgrade-' + mechId">{{ label }}</label>
     <BCol sm="4">
       <BDropdown
