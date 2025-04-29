@@ -26,7 +26,9 @@ export default {
     <td>
       <span class="btn btn-light btn-grab">:::</span>
     </td>
-    <td>{{ upgrade.display_name }}</td>
+    <td class="cell-pad-top">
+      {{ upgrade.display_name }}
+    </td>
     <td class="cell-pad-top text-right">
       <number :val="upgrade.slots" :positive-signed="false" :invert-color="true"/>
 
