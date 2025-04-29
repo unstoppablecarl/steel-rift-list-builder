@@ -1,11 +1,9 @@
 <script setup>
 const {a, b} = defineProps({
   a: {
-    type: Number,
     required: true,
   },
   b: {
-    type: Number,
     required: true,
   },
 });

@@ -4,18 +4,18 @@ import {useMechStore} from './mech-store.js';
 
 export const useArmyListStore = defineStore('army-list', () => {
 
-        const name = ref('');
+        const name = ref('Army Name');
 
         const mechStore = useMechStore();
 
-        const total_tons = computed(() => {
-
+        const used_tons = computed(() => {
+            return mechStore.totalTons;
         });
-        const max_tons = ref(20);
+        const max_tons = ref(100);
 
         return {
             name,
-            total_tons,
+            used_tons,
             max_tons,
         };
     },
