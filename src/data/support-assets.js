@@ -10,7 +10,7 @@ export const SUPPORT_ASSETS = makeFrozenStaticListIds({
     [[ARTILLERY_BARRAGE]]: {
         display_name: 'Artillery Barrage',
         cost: 10,
-        attack: 4,
+        damage: 4,
         traits: [
             makeTrait(TRAIT_BLAST, 6),
             makeTrait(TRAIT_LIMITED, 3),
@@ -18,7 +18,7 @@ export const SUPPORT_ASSETS = makeFrozenStaticListIds({
     },
     [[MASS_DRIVER]]: {
         display_name: 'Mass Driver',
-        attack: 6,
+        damage: 6,
         cost: 10,
         traits: [
             makeTrait(TRAIT_KINETIC),
@@ -27,7 +27,7 @@ export const SUPPORT_ASSETS = makeFrozenStaticListIds({
     },
     [[MINE_DRONE_BARRAGE]]: {
         display_name: 'Mine-Drone Barrage',
-        attack: 0,
+        damage: 0,
         cost: 10,
         traits: [
             makeTrait(TRAIT_MINE_TOKENS, 3),
@@ -35,7 +35,7 @@ export const SUPPORT_ASSETS = makeFrozenStaticListIds({
     },
     [[ORBITAL_LASER]]: {
         display_name: 'Orbital Laser',
-        attack: 3,
+        damage: 3,
         cost: 10,
         traits: [
             makeTrait(TRAIT_AP, 3),

@@ -24,61 +24,57 @@ export default {
 <template>
   <BDropdown variant="light" text="Add Weapon" class="dropdown-block">
     <BDropdown-header>
-      <BRow class="my-1">
-        <BCol sm="2">
+      <div class="row my-1">
+        <div class="col-sm-2">
           Weapon
-        </BCol>
-        <BCol sm="1" class="text-right">
+        </div>
+        <div class="col-sm-1 text-right">
           Slots
-        </BCol>
-        <BCol sm="1" class="text-right">
+        </div>
+        <div class="col-sm-1 text-right">
           Tons
-        </BCol>
-        <BCol sm="1" class="text-right">
+        </div>
+        <div class="col-sm-1 text-right">
           Damage
-        </BCol>
-        <BCol sm="1" class="text-right">
+        </div>
+        <div class="col-sm-1 text-right">
           Range
-        </BCol>
-        <BCol sm="4">
+        </div>
+        <div class="col-sm-4">
           Traits
-        </BCol>
-        <BCol sm="2">
+        </div>
+        <div class="col-sm-2">
           Notes
-        </BCol>
-      </BRow>
+        </div>
+      </div>
     </BDropdown-header>
     <BDropdownDivider/>
     <BDropdown-item
         v-for="item in options" :key="item.weapon_id"
         @click="addWeapon(item.weapon_id)"
     >
-      <BRow class="my-1">
-        <BCol sm="2">
+      <div class="row my-1">
+        <div class="col-sm-2">
           {{ item.display_name }}
-        </BCol>
-        <BCol sm="1" class="text-right">
+        </div>
+        <div class="col-sm-1 text-right">
           <number :val="item.slots" :positive-signed="false" :invert-color="true"/>
-        </BCol>
-        <BCol sm="1" class="text-right">
+        </div>
+        <div class="col-sm-1 text-right">
           <number :val="item.cost" :positive-signed="false" :invert-color="true"/>
-        </BCol>
-        <BCol sm="1" class="text-right">
+        </div>
+        <div class="col-sm-1 text-right">
           {{ item.damage }}
-        </BCol>
-        <BCol sm="1" class="text-right">
+        </div>
+        <div class="col-sm-1 text-right">
           {{ item.range_formatted }}
-        </BCol>
-        <BCol sm="2">
+        </div>
+        <div class="col-sm-2">
           {{ item.trait_display_names }}
-        </BCol>
-        <BCol sm="2">
-        </BCol>
-      </BRow>
+        </div>
+        <div class="col-sm-2">
+        </div>
+      </div>
     </BDropdown-item>
   </BDropdown>
-
 </template>
-<style scoped>
-
-</style>

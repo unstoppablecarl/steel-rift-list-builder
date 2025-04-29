@@ -1,5 +1,5 @@
 <script setup>
-import {BFormInput} from 'bootstrap-vue-next';
+import {BFormFloatingLabel, BFormInput} from 'bootstrap-vue-next';
 import {useArmyListStore} from '../../store/army-list-store.js';
 import {storeToRefs} from 'pinia';
 import {onMounted, ref, watch} from 'vue';
@@ -53,25 +53,24 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div class="form-floating mb-1">
+  <BFormFloatingLabel label="Tonnage" label-for="list-max-tons" class="mb-1">
     <BFormInput
-        id="list_max_tons"
+        id="list-max-tons"
         v-model="max_tons"
         type="number"
         :disabled="disabled"
         @blur="syncArmyType"
     />
-    <label for="list_max_tons">Tonnage</label>
-  </div>
+  </BFormFloatingLabel>
 
-  <BFormRadioGroup
-      v-model="armyTypeMaxTons"
-      :options="options"
-      id="list-max-tons"
-      name="radios-btn-default"
-      buttons
-      button-variant="secondary"
-  />
+  <div class="form-floating mb-1">
+    <BFormSelect
+        v-model="armyTypeMaxTons"
+        :options="options"
+        id="list-army-size-tons"
+    />
+    <label for="list-army-size-tons">Army Size</label>
+  </div>
 
 
 </template>

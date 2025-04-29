@@ -3,10 +3,10 @@ import {computed, reactive, ref} from 'vue';
 import {sumBy} from 'lodash';
 import {SUPPORT_ASSETS} from '../data/support-assets.js';
 import {useArmyListStore} from './army-list-store.js';
+import {findItemIndexById} from '../helpers/collection-helper.js';
 
 export const useSupportAssetStore = defineStore('support-asset', () => {
 
-        const {max_tons} = useArmyListStore();
         const armyList = useArmyListStore();
 
         const support_assets_ids = reactive([]);
@@ -18,14 +18,16 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
         }
 
         const support_assets = computed(() => {
-            support_assets_ids.value.map(id => {
+            return support_assets_ids.map(id => {
                 return SUPPORT_ASSETS[id];
             });
         });
 
+        const support_assets_drop_down = computed(() => Object.values(SUPPORT_ASSETS));
+
         const used_tons = computed(() => sumBy(support_assets.value, 'cost'));
 
-        const used_support_assets = computed(() => support_assets_ids.value.length);
+        const used_support_assets = computed(() => support_assets_ids.length);
         const max_support_assets_based_on_tons = computed(() => {
             if (armyList.max_tons >= 350) {
                 return 5;
@@ -49,8 +51,17 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
             return max_support_assets_based_on_tons.value;
         });
 
+        function removeSupportAssetId(id) {
+            let index = findItemIndexById(support_assets_ids, id);
+            support_assets_ids.splice(index, 1);
+        }
+
         function canAddSupportAssetId(id) {
-            return support_assets_ids.value.includes(id);
+            return !support_assets_ids.includes(id);
+        }
+
+        function addSupportAsset(id) {
+            support_assets_ids.push(id);
         }
 
         return {
@@ -62,6 +73,9 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
             max_support_assets,
             custom_max_support_assets,
             canAddSupportAssetId,
+            removeSupportAssetId,
+            addSupportAsset,
+            support_assets_drop_down,
             $reset,
         };
     },

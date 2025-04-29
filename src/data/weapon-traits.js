@@ -71,14 +71,23 @@ export const WEAPON_TRAITS = makeStaticListIds({
 
 });
 
+export function traitDisplayNames(traits) {
+    return traits.map((trait) => traitDisplayName(trait))
+        .join(', ');
+
+}
+
 export function traitDisplayName({id, number}) {
 
-    const {formatter, display_name} = WEAPON_TRAITS[id];
+    const trait = WEAPON_TRAITS[id];
 
-    if (formatter) {
-        return formatter(display_name, number);
+    if (!trait) {
+        throw new Error('trait not found: '.id);
     }
-    return display_name;
+    if (trait.formatter) {
+        return trait.formatter(trait.display_name, number);
+    }
+    return trait.display_name;
 }
 
 export function makeTrait(id, number = null) {
