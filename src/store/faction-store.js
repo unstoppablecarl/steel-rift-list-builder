@@ -1,14 +1,13 @@
 import {defineStore} from 'pinia';
-import {computed, ref, watch} from 'vue';
+import {computed, ref} from 'vue';
 import {FACTIONS, NO_FACTION} from '../data/factions.js';
 import {find} from 'lodash';
 
 export const useFactionStore = defineStore('faction', () => {
 
-        const faction_id = ref(NO_FACTION);
-
         const perk_1_id = ref(null);
         const perk_2_id = ref(null);
+        const faction_id = ref(NO_FACTION);
 
         function $reset() {
             faction_id.value = NO_FACTION;
@@ -59,7 +58,7 @@ export const useFactionStore = defineStore('faction', () => {
 
         }
 
-        watch(faction_id, (newValue) => {
+        function clearInvalidPerks() {
             if (!perkBelongsToFaction(perk_1_id)) {
                 perk_1_id.value = null;
             }
@@ -67,7 +66,7 @@ export const useFactionStore = defineStore('faction', () => {
             if (!perkBelongsToFaction(perk_2_id)) {
                 perk_2_id.value = null;
             }
-        });
+        }
 
         const perks_drop_down = computed(() => {
             return [{
@@ -77,11 +76,12 @@ export const useFactionStore = defineStore('faction', () => {
         });
 
         return {
+            perk_1_id,
+            perk_2_id,
             faction_id,
             faction_display_name,
             perks_drop_down,
-            perk_1_id,
-            perk_2_id,
+            clearInvalidPerks,
             hasPerk,
             $reset,
         };
@@ -89,6 +89,9 @@ export const useFactionStore = defineStore('faction', () => {
     {
         persist: {
             enabled: true,
+            afterHydrate(context) {
+                context.$store.clearInvalidPerks();
+            },
         },
     },
 );
