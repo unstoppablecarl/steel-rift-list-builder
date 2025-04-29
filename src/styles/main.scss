@@ -17,14 +17,15 @@ $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
 
-$primary:       $blue !default;
-$success:       $green !default;
-$info:          $cyan !default;
-$warning:       $yellow !default;
-$danger:        $red !default;
+$primary: tint-color($blue, 50%);
+//$secondary: #6c757d;
+$success: $green;
+$info: $cyan;
+$warning: $yellow;
+$danger: $red;
 
-$success-text-emphasis:   shade-color($success, 40%);
-$danger-text-emphasis:    shade-color($danger, 40%);
+$success-text-emphasis: shade-color($success, 40%);
+$danger-text-emphasis: shade-color($danger, 40%);
 
 
 $body-tertiary-bg: #e9ecef;
@@ -42,9 +43,10 @@ $btn-focus-box-shadow: 0;
 @import "./collapse";
 
 body {
-  background: #6cb2eb;
+  background: tint-color($cyan, 80%);
 }
-.mech-stats > .row:nth-child(even){
+
+.mech-stats > .row:nth-child(even) {
   background-color: var(--bs-light-bg-subtle);
 }
 
@@ -71,9 +73,15 @@ body {
   border: 1px solid $input-border-color;
 }
 
+.card-header-btn-padding {
+  padding-top: $btn-padding-y;
+  font-size: 1rem;
+
+}
+
 .dropdown {
   &.dropdown-block {
-    display: grid;
+    //display: grid;
 
     .dropdown-menu {
       width: 100%;
@@ -92,9 +100,11 @@ body {
     cursor: ns-resize;
   }
 }
+
 th.cell-pad-top, td.cell-pad-top {
   padding-top: $btn-padding-y + $table-cell-padding-y !important;
 }
+
 .number-cell {
   text-align: right;
 }

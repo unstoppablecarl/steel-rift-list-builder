@@ -10,6 +10,12 @@ const {
   support_assets_drop_down,
 } = storeToRefs(store);
 
+const {
+  teleportTo,
+} = defineProps({
+  teleportTo: {},
+});
+
 const options = computed(() => {
   return support_assets_drop_down.value;
 });
@@ -17,7 +23,13 @@ const options = computed(() => {
 </script>
 <template>
 
-  <BDropdown variant="light" text="Add Support Asset" class="dropdown-block">
+  <BDropdown
+      text="Add"
+      class="dropdown-block"
+      menu-class="w-100"
+      :teleport-to="teleportTo"
+      placement="bottom-end"
+  >
     <BDropdown-header>
       <div class="row my-1">
         <div class="col-sm-3">

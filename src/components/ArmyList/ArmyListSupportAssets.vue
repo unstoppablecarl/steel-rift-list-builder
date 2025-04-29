@@ -3,8 +3,11 @@ import {storeToRefs} from 'pinia';
 import {useSupportAssetStore} from '../../store/support-asset-store.js';
 import ArmyListSupportAssetAdd from './ArmyListSupportAssets/ArmyListSupportAssetAdd.vue';
 import {traitDisplayNames} from '../../data/weapon-traits.js';
+import {useTemplateRef} from 'vue';
 
 const store = useSupportAssetStore();
+
+const supportAssetHeaderRef = useTemplateRef('support-asset-drop-down-container');
 
 const {
   support_assets,
@@ -12,12 +15,20 @@ const {
 
 </script>
 <template>
-  <ArmyListSupportAssetAdd/>
   <div class="card">
-    <div class="card-header">
+    <div class="card-header" ref="support-asset-drop-down-container">
+      <div class="float-end">
+        <ArmyListSupportAssetAdd
+            :teleport-to="supportAssetHeaderRef"
+        />
+      </div>
+      <div class="card-header-btn-padding fw-bold">
       Support Assets
+      </div>
+
     </div>
     <div class="card-body">
+
       <table class="table" v-if="support_assets.length">
         <thead>
         <tr>
