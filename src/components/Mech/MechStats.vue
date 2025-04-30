@@ -20,9 +20,10 @@ import Number from '../functional/number.vue';
 import MechStatRow from './MechStats/MechStatRow.vue';
 import Fraction from '../functional/fraction.vue';
 import MechWeapons from './MechWeapons.vue';
+import MechUpgrades from './MechUpgrades.vue';
 
 export default {
-  components: {MechWeapons, Fraction, MechStatRow, BInput, Number},
+  components: {MechUpgrades, MechWeapons, Fraction, MechStatRow, BInput, Number},
   props: {
     mechId: Number,
   },
@@ -136,7 +137,7 @@ export default {
           v-if="hasTopEndHardware"
           label="Perk"
           :text="topEndHardwareLabel"
-          :usedSlots="topEndHardwareBonusTons"
+          :usedTons="topEndHardwareBonusTons"
       />
 
       <MechStatRow
@@ -145,16 +146,43 @@ export default {
           :text="advancedHardPointsLabel"
           :usedSlots="advancedHardPointsBonusSlots"
       />
+      <MechUpgrades
+          :mech-id="mech.id"
+      />
       <MechWeapons
           :mech-id="mech.id"
       />
       </tbody>
       <tfoot>
       <tr>
-        <td></td>
-        <td class="text-end">
-          Totals
+        <td>
+
         </td>
+        <td colspan="3" class="text-end">
+
+        </td>
+        <td class="text-end pe-1 border-bottom">
+          <div class="fw-bold">Armor</div>
+          <small>Stat</small>
+        </td>
+        <td class="text-end pe-1 border-bottom">
+          <div class="fw-bold">Structure</div>
+          <small>Stat</small>
+        </td>
+        <td class="text-end pe-1 border-bottom">
+          <div class="fw-bold">Slots</div>
+          <small>Used</small>
+        </td>
+        <td class="text-end pe-1 border-bottom">
+          <div class="fw-bold">Tons</div>
+          <small>Used</small>
+        </td>
+      </tr>
+      <tr class="table-light">
+        <td></td>
+        <th colspan="3" class="text-end">
+          Totals
+        </th>
         <td class="text-end">
           {{ info.armor_stat }}
         </td>

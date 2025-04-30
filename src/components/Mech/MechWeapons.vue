@@ -19,9 +19,9 @@ export default {
 };
 </script>
 <template>
-  <tr>
+  <tr class="table-light">
     <th>
-      Weapon
+      Weapons
     </th>
     <th class="text-end pe-1">
       Damage

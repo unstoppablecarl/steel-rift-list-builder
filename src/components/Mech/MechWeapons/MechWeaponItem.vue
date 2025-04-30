@@ -32,11 +32,11 @@ export default {
     <td class="text-end">
       {{ weapon.range_formatted }}
     </td>
-    <td class="text-end">
+    <td>
       {{ weapon.trait_display_names }}
     </td>
     <td>
-      <BButton @click="remove()" variant="danger" size="sm">Remove</BButton>
+      <BButton @click="remove()" variant="danger" size="sm">X</BButton>
     </td>
     <td></td>
     <td class=" text-end">
@@ -47,6 +47,3 @@ export default {
     </td>
   </tr>
 </template>
-<style scoped>
-
-</style>

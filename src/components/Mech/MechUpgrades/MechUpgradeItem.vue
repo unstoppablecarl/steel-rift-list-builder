@@ -22,28 +22,24 @@ export default {
 };
 </script>
 <template>
-  <tr class="list-item-sortable">
+  <tr>
     <td>
-      <span class="btn btn-light btn-grab">:::</span>
-    </td>
-    <td class="cell-pad-top">
       {{ upgrade.display_name }}
     </td>
-    <td class="cell-pad-top text-end">
-      <number :val="upgrade.slots" :positive-signed="false" :invert-color="true"/>
+    <td colspan="3">
 
     </td>
-    <td class="cell-pad-top text-end">
-      <number :val="upgrade.cost" :positive-signed="false" :invert-color="true"/>
+    <td>
+      <BButton @click="remove()" variant="danger" size="sm">X</BButton>
     </td>
     <td></td>
-    <td>
-      <BButton @click="remove()" variant="danger">Remove</BButton>
+
+    <td class="text-end">
+      <number :val="upgrade.slots" :invert-color="true"/>
+    </td>
+    <td class="text-end">
+      <number :val="upgrade.cost" :invert-color="true"/>
     </td>
   </tr>
 
 </template>
-
-<style scoped>
-
-</style>

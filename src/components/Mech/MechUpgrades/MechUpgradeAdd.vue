@@ -1,5 +1,4 @@
 <script>
-import {BDropdownDivider} from 'bootstrap-vue-next';
 import {useMechStore} from '../../../store/mech-store.js';
 import {mapStores} from 'pinia';
 
@@ -21,46 +20,52 @@ export default {
 };
 </script>
 <template>
-  <BDropdown variant="light" text="Add Upgrade" class="dropdown-block">
-    <BDropdown-header>
-      <BRow class="my-1">
-        <BCol sm="3">
-          Upgrade
-        </BCol>
-        <BCol sm="3" class="text-end">
-          Slots
-        </BCol>
-        <BCol sm="3" class="text-end">
-          Tons
-        </BCol>
-        <BCol sm="3">
-          Notes
-        </BCol>
-      </BRow>
-    </BDropdown-header>
-    <BDropdownDivider/>
-    <BDropdown-item
-        v-for="item in options" :key="item.upgrade_id"
-        @click="addUpgrade(item.upgrade_id)"
-        :disabled="!item.valid"
-    >
-      <BRow class="my-1">
-        <BCol sm="3">
-          {{ item.display_name }}
-        </BCol>
-        <BCol sm="3" class="text-end">
-          <number :val="item.slots" :positive-signed="false" :invert-color="true"/>
-        </BCol>
-        <BCol sm="3" class="text-end">
-          <number :val="item.cost" :positive-signed="false" :invert-color="true"/>
-        </BCol>
-        <BCol sm="3">
-          {{ item.notes.join(', ')}}
-        </BCol>
-      </BRow>
-    </BDropdown-item>
+  <BDropdown
+      :id="'mech-input-upgrades-add-' + mechId"
+      class="dropdown-table"
+      text="Add"
+      size="sm"
+      variant="primary"
+  >
+    <div class="position-relative">
+      <table class="table table-hover table-borderless table-striped">
+        <thead class="sticky-top top-0 shadow">
+        <tr>
+          <td>
+            Upgrade
+          </td>
+          <td class="text-end">
+            Slots
+          </td>
+          <td class="text-end">
+            Tons
+          </td>
+          <td>
+            Notes
+          </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+            class="dropdown-row"
+            v-for="item in options" :key="item.upgrade_id"
+            @click="addUpgrade(item.upgrade_id)"
+        >
+          <td>
+            {{ item.display_name }}
+          </td>
+          <td class="text-end">
+            <number :val="item.slots" :positive-signed="false" :invert-color="true"/>
+          </td>
+          <td class="text-end">
+            <number :val="item.cost" :positive-signed="false" :invert-color="true"/>
+          </td>
+          <td>
+            {{ item.notes.join(', ') }}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </BDropdown>
 </template>
-<style scoped>
-
-</style>
