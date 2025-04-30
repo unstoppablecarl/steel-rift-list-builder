@@ -136,8 +136,26 @@ export const useMechStore = defineStore('mech', {
             },
             getMechWeaponAttachmentInfo(state) {
                 return (mechId, mechWeaponAttachmentId) => {
+                    const mech = this.getMech(mechId);
                     const weaponAttachment = this.getMechWeaponAttachment(mechId, mechWeaponAttachmentId);
-                    return this.getWeaponInfo(mechId, weaponAttachment.weapon_id);
+                    const weapon_id = weaponAttachment.weapon_id;
+                    const weaponInfo = this.getWeaponInfo(mechId, weaponAttachment.weapon_id);
+
+                    const previousWeaponInstances = mech.weapons.filter((item) => {
+                        return item.weapon_id == weapon_id && item.display_order < weaponAttachment.display_order;
+                    }).length;
+
+                    let cost = weaponInfo.cost
+                    const duplicate_cost = Math.floor(previousWeaponInstances * cost * 0.5);
+
+                    console.log(mechWeaponAttachmentId, duplicate_cost)
+
+                    const result = Object.assign({}, weaponInfo, {
+                        cost: cost + duplicate_cost,
+                        duplicate_cost
+                    })
+
+                    return readonly(result);
                 };
             },
             getMechAvailableWeaponsInfo(state) {
