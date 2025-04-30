@@ -43,6 +43,7 @@ export default {
           <div class="d-flex flex-row-reverse">
             <BButton
                 :class="'btn-collapse ' + (visible ? null : 'collapsed')"
+                variant="light"
                 :aria-expanded="visible ? 'true' : 'false'"
                 :aria-controls="'collapse-' + mechId"
                 @click="visible = !visible"
