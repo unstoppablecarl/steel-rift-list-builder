@@ -27,66 +27,52 @@ export default {
 };
 </script>
 <template>
-  <BCard>
-    <BRow>
-      <BCol sm="2">
-        <span class="btn btn-light btn-grab">:::</span>
-        <span class="collapse-header">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-2">
+          <span class="btn btn-light btn-grab">:::</span>
+          <span class="collapse-header">
           HE-V {{ info.size.display_name }}
         </span>
-      </BCol>
-      <BCol sm="4" class="collapse-header">
-        <strong>{{ info.display_name }}</strong>
-      </BCol>
-      <div class="col-sm-4 collapse-header">
-        <span class="px-2">
-          <strong>Arm:</strong>
-          {{ info.armor_stat }}
-        </span>
-        <span class="px-2">
-          <strong>Str:</strong>
-          {{ info.structure_stat }}
-        </span>
-        <span class="px-2">
-          <strong>Slots: </strong>
-          <fraction :a="info.used_slots" :b="info.max_slots"/>
-        </span>
-        <span class="px-2">
-          <strong>Tons: </strong>
-          <fraction :a="info.used_tons" :b="info.max_tons"/>
-        </span>
-      </div>
-
-      <BCol sm="2">
-        <div class="d-flex flex-row-reverse">
-          <BButton
-              :class="'btn-collapse ' + (visible ? null : 'collapsed')"
-              :aria-expanded="visible ? 'true' : 'false'"
-              :aria-controls="'collapse-' + mechId"
-              @click="visible = !visible"
-          >
-          </BButton>
         </div>
-      </BCol>
-    </BRow>
-    <BCollapse :id="'collapse-' + mechId" v-model="visible">
-      <hr>
-
-      <BTabs content-class="mt-3">
-        <BTab title="Stats" active>
-          <MechStats :mech-id="mechId"/>
-        </BTab>
-        <BTab title="Weapons">
-          <MechWeapons :mech-id="mechId"/>
-        </BTab>
-        <BTab title="Upgrades">
-          <MechUpgrades :mech-id="mechId"/>
-        </BTab>
-      </BTabs>
-    </BCollapse>
-  </BCard>
+        <div class="col-sm-2 collapse-header">
+          <strong>{{ info.display_name }}</strong>
+        </div>
+        <div class="col-sm-8">
+          <div class="d-flex flex-row-reverse">
+            <BButton
+                :class="'btn-collapse ' + (visible ? null : 'collapsed')"
+                :aria-expanded="visible ? 'true' : 'false'"
+                :aria-controls="'collapse-' + mechId"
+                @click="visible = !visible"
+            >
+            </BButton>
+            <div class="collapse-header">
+              <span class="px-2">
+                <strong>Arm:</strong>
+                {{ info.armor_stat }}
+              </span>
+              <span class="px-2">
+                <strong>Str:</strong>
+                {{ info.structure_stat }}
+              </span>
+              <span class="px-2">
+                <strong>Slots: </strong>
+                <fraction :a="info.used_slots" :b="info.max_slots"/>
+              </span>
+              <span class="px-2">
+                <strong>Tons: </strong>
+                <fraction :a="info.used_tons" :b="info.max_tons"/>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <BCollapse :id="'collapse-' + mechId" v-model="visible">
+        <hr>
+        <MechStats :mech-id="mechId"/>
+      </BCollapse>
+    </div>
+  </div>
 </template>
-
-<style scoped>
-
-</style>
