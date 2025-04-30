@@ -1,26 +1,23 @@
-<script>
+<script setup>
 import {useMechStore} from '../../../store/mech-store.js';
 import {mapStores} from 'pinia';
 import NumberVal from '../../functional/number.vue';
+import {computed} from 'vue';
 
-export default {
-  components: {NumberVal},
-  props: {
-    mechId: Number,
+const {mechId} = defineProps({
+  mechId: {
+    type: Number,
+    required: true,
   },
-  computed: {
-    ...mapStores(useMechStore),
-    options() {
-      return this.mechStore.getMechAvailableWeaponsInfo(this.mechId);
-    },
-  },
-  methods: {
-    addWeapon(weaponId) {
-      console.log(weaponId)
-      this.mechStore.addMechWeaponAttachment(this.mechId, weaponId);
-    },
-  },
-};
+});
+
+const mechStore = useMechStore();
+const options = computed(() => mechStore.getMechAvailableWeaponsInfo(mechId));
+
+function addWeapon(upgradeId) {
+  mechStore.addMechWeaponAttachment(mechId, upgradeId);
+}
+
 </script>
 
 <template>

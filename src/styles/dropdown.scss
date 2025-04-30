@@ -25,7 +25,10 @@
 
     table > thead > tr,
     table > tbody > tr {
-      cursor: pointer;
+
+      &:not(.disabled) {
+        cursor: pointer;
+      }
 
       > th,
       > td {
@@ -41,6 +44,12 @@
       > th:last-child {
         padding-right: 1rem;
       }
+    }
+  }
+
+  .dropdown-row {
+    &.disabled {
+      opacity: 0.6;
     }
   }
 

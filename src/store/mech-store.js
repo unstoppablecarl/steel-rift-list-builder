@@ -145,13 +145,13 @@ export const useMechStore = defineStore('mech', {
                         return item.weapon_id == weapon_id && item.display_order < weaponAttachment.display_order;
                     }).length;
 
-                    let cost = weaponInfo.cost
+                    let cost = weaponInfo.cost;
                     const duplicate_cost = Math.floor(previousWeaponInstances * cost * 0.5);
 
                     const result = Object.assign({}, weaponInfo, {
                         cost: cost + duplicate_cost,
-                        duplicate_cost
-                    })
+                        duplicate_cost,
+                    });
 
                     return readonly(result);
                 };
@@ -164,7 +164,13 @@ export const useMechStore = defineStore('mech', {
             },
             getMechAvailableUpgradesInfo(state) {
                 return (mechId) => {
+                    const mech = findById(state.mechs, mechId);
+                    const existingUpgradeIds = mech.upgrades.map((item) => item.upgrade_id);
+
                     return Object.keys(HEV_UPGRADES)
+                        .filter((upgradeId) => {
+                            return !existingUpgradeIds.includes(upgradeId);
+                        })
                         .map((upgradeId) => this.getUpgradeInfo(mechId, upgradeId));
                 };
             },
