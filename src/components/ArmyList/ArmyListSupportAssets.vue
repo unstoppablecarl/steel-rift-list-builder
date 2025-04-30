@@ -6,11 +6,11 @@ import {traitDisplayNames} from '../../data/weapon-traits.js';
 import {useTemplateRef} from 'vue';
 
 const store = useSupportAssetStore();
-
 const supportAssetHeaderRef = useTemplateRef('support-asset-drop-down-container');
 
 const {
   support_assets,
+  support_asset_count,
 } = storeToRefs(store);
 
 </script>
@@ -18,12 +18,13 @@ const {
   <div class="card">
     <div class="card-header" ref="support-asset-drop-down-container">
       <div class="float-end">
+        {{ support_asset_count }}
         <ArmyListSupportAssetAdd
             :teleport-to="supportAssetHeaderRef"
         />
       </div>
       <div class="card-header-btn-padding fw-bold">
-      Support Assets
+        Support Assets
       </div>
 
     </div>

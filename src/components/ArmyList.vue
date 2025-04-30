@@ -9,13 +9,22 @@ import {BFormFloatingLabel, BFormInput} from 'bootstrap-vue-next';
 import ArmyListSupportAssetCount from './ArmyList/ArmyListSupportAssetCount.vue';
 import ArmyListSupportAssets from './ArmyList/ArmyListSupportAssets.vue';
 import {useSupportAssetStore} from '../store/support-asset-store.js';
+import {ARTILLERY_BARRAGE, ORBITAL_LASER} from '../data/support-assets.js';
 
 const store = useArmyListStore();
 const {used_tons, max_tons, name} = storeToRefs(store);
-const {used_support_assets, max_support_assets} = storeToRefs(useSupportAssetStore());
+const {support_asset_ids, used_support_assets, max_support_assets} = storeToRefs(useSupportAssetStore());
 
+
+function test(){
+  support_asset_ids.value = [
+      ORBITAL_LASER,
+      ARTILLERY_BARRAGE,
+  ]
+}
 </script>
 <template>
+  <BButton @click="test">Test</BButton>
   <div class="card text-bg-light">
     <div class="card-header">
       <strong>
