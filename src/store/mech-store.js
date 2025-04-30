@@ -208,15 +208,7 @@ export const useMechStore = defineStore('mech', {
                     const structure_stat = size.structure + structure_mod.modifier;
 
                     let max_tons = size.max_tons;
-                    if (factionStore.hasPerk(DWC_TOP_END_HARDWARE)) {
-                        max_tons += DWC_TOP_END_HARDWARE_BONUS_TONS;
-                    }
-
                     let max_slots = size.max_slots;
-                    if (factionStore.hasPerk(RD_ADVANCED_HARDPOINT_DESIGN) ||
-                        factionStore.hasPerk(UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN)) {
-                        max_slots += RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS;
-                    }
 
                     const weapon_used_tons = sumBy(weaponsInfo, 'cost');
                     const weapon_used_slots = sumBy(weaponsInfo, 'slots');
@@ -224,15 +216,24 @@ export const useMechStore = defineStore('mech', {
                     const upgrade_used_slots = sumBy(upgradesInfo, 'slots');
                     const upgrade_used_tons = sumBy(upgradesInfo, 'cost');
 
-                    const used_slots = weapon_used_slots +
+                    let used_slots = weapon_used_slots +
                         upgrade_used_slots +
                         armorUpgrade.slots;
 
-                    const used_tons = weapon_used_tons +
+                    if (factionStore.hasPerk(RD_ADVANCED_HARDPOINT_DESIGN) ||
+                        factionStore.hasPerk(UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN)) {
+                        used_slots += RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS;
+                    }
+
+                    let used_tons = weapon_used_tons +
                         upgrade_used_tons +
                         armor_stat +
                         structure_stat +
                         armorUpgrade.cost_by_size[size_id];
+
+                    if (factionStore.hasPerk(DWC_TOP_END_HARDWARE)) {
+                        used_tons += DWC_TOP_END_HARDWARE_BONUS_TONS;
+                    }
 
                     let display_name = name || placeholder_name;
 

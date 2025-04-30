@@ -1,23 +1,20 @@
-<script>
+<script setup>
 import {useMechStore} from '../../../store/mech-store.js';
-import {mapStores} from 'pinia';
+import {computed} from 'vue';
 
-export default {
-  props: {
-    mechId: Number,
+const {mechId} = defineProps({
+  mechId: {
+    type: Number,
+    required: true,
   },
-  computed: {
-    ...mapStores(useMechStore),
-    options() {
-      return this.mechStore.getMechAvailableUpgradesInfo(this.mechId);
-    },
-  },
-  methods: {
-    addUpgrade(upgradeId) {
-      this.mechStore.addMechUpgradeAttachment(this.mechId, upgradeId);
-    },
-  },
-};
+});
+
+const mechStore = useMechStore();
+const options = computed(() => mechStore.getMechAvailableUpgradesInfo(mechId));
+
+function addUpgrade(upgradeId) {
+  mechStore.addMechUpgradeAttachment(mechId, upgradeId);
+}
 </script>
 <template>
   <BDropdown
