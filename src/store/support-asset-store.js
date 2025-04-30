@@ -18,7 +18,6 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
         }
 
         const support_assets = computed(() => {
-            console.log(support_asset_ids);
             return support_asset_ids.value.map((id) => {
                 return SUPPORT_ASSETS[id];
             });
