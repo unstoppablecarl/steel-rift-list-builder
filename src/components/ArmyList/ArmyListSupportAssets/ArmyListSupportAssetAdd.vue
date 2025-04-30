@@ -1,78 +1,74 @@
 <script setup>
 import {storeToRefs} from 'pinia';
-import {computed} from 'vue';
 import {useSupportAssetStore} from '../../../store/support-asset-store.js';
 import {traitDisplayNames} from '../../../data/weapon-traits.js';
 
 const store = useSupportAssetStore();
 
 const {
-  support_assets_drop_down,
+  available_support_assets,
 } = storeToRefs(store);
-
-const {
-  teleportTo,
-} = defineProps({
-  teleportTo: {},
-});
-
-const options = computed(() => {
-  return support_assets_drop_down.value;
-});
 
 </script>
 <template>
 
   <BDropdown
+      class="dropdown-table"
       text="Add"
-      class="dropdown-block"
-      menu-class="w-100"
-      variant="primary"
       size="sm"
-      :teleport-to="teleportTo"
+      variant="primary"
       placement="bottom-end"
   >
-    <BDropdown-header>
-      <div class="row my-1">
-        <div class="col-sm-3">
-          Support Asset
-        </div>
-        <div class="col-sm-1 text-end">
-          Attack
-        </div>
-        <div class="col-sm-1">
-          Tons
-        </div>
-        <div class="col-sm-4">
-          Traits
-        </div>
-        <div class="col-sm-3 text-start">
-          Notes
-        </div>
-      </div>
-    </BDropdown-header>
-    <BDropdownDivider/>
-    <BDropdown-item
-        v-for="item in options" :key="item.id"
-        @click="store.addSupportAsset(item.id)"
-        :disabled="!store.canAddSupportAssetId(item.id)"
-    >
-      <div class="row my-2">
-        <div class="col-sm-3">
-          {{ item.display_name }}
-        </div>
-        <div class="col-sm-1 text-end">
-          {{ item.damage }}
-        </div>
-        <div class="col-sm-1 text-end">
-          <number :val="item.cost" :positive-signed="false" :invert-color="true"/>
-        </div>
-        <div class="col-sm-4">
-          {{ traitDisplayNames(item.traits) }}
-        </div>
-        <div class="col-sm-3 text-start">
-        </div>
-      </div>
-    </BDropdown-item>
+    <div class="position-relative">
+      <table class="table table-hover table-borderless table-striped">
+        <thead class="sticky-top top-0 shadow">
+        <tr>
+          <td>
+            Support Asset
+          </td>
+          <td class="text-end">
+            Attack
+          </td>
+          <td class="text-end">
+            Tons
+          </td>
+          <td>
+            Traits
+          </td>
+          <td>
+            Notes
+          </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+            :class="{
+              'dropdown-row': true,
+            }"
+            v-for="item in available_support_assets" :key="item.id"
+            @click="store.addSupportAsset(item.id)"
+        >
+          <td>
+            {{ item.display_name }}
+          </td>
+          <td class="text-end">
+            {{ item.damage }}
+          </td>
+          <td class="text-end">
+            <number :val="item.cost" :positive-signed="false" :invert-color="true"/>
+          </td>
+          <td>
+            {{ traitDisplayNames(item.traits) }}
+          </td>
+          <td>
+            <small>
+              {{ item.notes }}
+            </small>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </BDropdown>
+
 </template>

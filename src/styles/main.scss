@@ -74,18 +74,12 @@ body {
 
 }
 
-
-
 .btn-grab {
   border: 1px solid $gray-300;
 
   &:hover {
     cursor: ns-resize;
   }
-}
-
-th.cell-pad-top, td.cell-pad-top {
-  padding-top: $btn-padding-y + $table-cell-padding-y !important;
 }
 
 .number-cell {
