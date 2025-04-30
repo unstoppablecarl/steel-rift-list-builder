@@ -17,26 +17,6 @@ export const useFactionStore = defineStore('faction', () => {
 
         const faction_display_name = computed(() => FACTIONS[faction_id.value].display_name);
 
-        const perk_groups = computed(() => {
-            let perkGroups = FACTIONS[faction_id.value].faction_perk_groups;
-
-            let result = Object.values(perkGroups);
-            result = result.map((perkGroup) => {
-                let perks = Object.values(perkGroup.perks);
-                perks = perks.map((perk) => {
-                    return Object.assign({}, perk, {
-                        disabled: hasPerkInGroup(perkGroup.id),
-                    });
-                });
-
-                return Object.assign({}, perkGroup, {
-                    perks: perks,
-                });
-            });
-
-            return result;
-        });
-
         function perkBelongsToFaction(perkId) {
 
             let result = find(FACTIONS[faction_id.value].faction_perk_groups, (perkGroup) => {
@@ -51,11 +31,9 @@ export const useFactionStore = defineStore('faction', () => {
             return perkId == perk_1_id.value || perkId == perk_2_id.value;
         }
 
-        function hasPerkInGroup(perkGroupId) {
+        function groupContainsPerkId(perkGroupId, perkId) {
             const perks = FACTIONS[faction_id.value].faction_perk_groups[perkGroupId].perks;
-            let result = Object.keys(perks).find((perkId) => hasPerk(perkId));
-            return !!result;
-
+            return Object.keys(perks).includes(perkId);
         }
 
         function clearInvalidPerks() {
@@ -68,19 +46,46 @@ export const useFactionStore = defineStore('faction', () => {
             }
         }
 
-        const perks_drop_down = computed(() => {
+        const perk_1_drop_down = computed(() => {
             return [{
                 id: null,
                 display_name: 'Select Perk',
-            }].concat(perk_groups.value);
+            }].concat(makeDropdownData(perk_2_id));
         });
+
+        const perk_2_drop_down = computed(() => {
+            return [{
+                id: null,
+                display_name: 'Select Perk',
+            }].concat(makeDropdownData(perk_1_id));
+        });
+
+        function makeDropdownData(otherPerkId) {
+            let perkGroups = FACTIONS[faction_id.value].faction_perk_groups;
+            let result = Object.values(perkGroups);
+            result = result.map((perkGroup) => {
+                perkGroups = Object.assign({}, perkGroup);
+                let perks = Object.values(perkGroup.perks);
+                perks = perks.map((perk) => {
+                    perk = Object.assign({}, perk);
+                    perk.disabled = groupContainsPerkId(perkGroup.id, otherPerkId.value);
+
+                    return perk;
+                });
+                perkGroups.perks = perks;
+
+                return perkGroups;
+            });
+            return result
+        }
 
         return {
             perk_1_id,
             perk_2_id,
             faction_id,
             faction_display_name,
-            perks_drop_down,
+            perk_1_drop_down,
+            perk_2_drop_down,
             clearInvalidPerks,
             hasPerk,
             $reset,

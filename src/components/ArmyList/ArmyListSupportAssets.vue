@@ -50,7 +50,7 @@ const {
           </td>
           <td>
             <div class="small lh-sm">
-              {{ item.notes }}
+              {{ item.notes.join(', ') }}
             </div>
           </td>
           <td>

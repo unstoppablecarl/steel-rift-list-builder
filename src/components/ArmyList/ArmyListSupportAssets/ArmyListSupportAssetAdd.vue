@@ -62,7 +62,7 @@ const {
           </td>
           <td>
             <small>
-              {{ item.notes }}
+              {{ item.notes.join(', ') }}
             </small>
           </td>
         </tr>

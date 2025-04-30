@@ -24,7 +24,7 @@ export default {
     },
     totalTons() {
       return this.mechStore.totalTons;
-    }
+    },
   },
   methods: {
     addMech() {
@@ -70,7 +70,9 @@ export default {
       </draggable>
     </div>
     <div class="card-footer">
-      <BButton @click="addMech">Add Mech</BButton>
+      <div class="float-end">
+        <BButton variant="primary" @click="addMech">Add Mech</BButton>
+      </div>
     </div>
   </div>
 </template>
