@@ -132,27 +132,29 @@ export default {
           :size-id="mech.size_id"
           :mech-id="mech.id"
       />
+      <MechStatRow
+          v-if="hasTopEndHardware"
+          label="Perk"
+          :text="topEndHardwareLabel"
+          :usedSlots="topEndHardwareBonusTons"
+      />
+
+      <MechStatRow
+          v-if="hasAdvancedHardPoints"
+          label="Perk"
+          :text="advancedHardPointsLabel"
+          :usedSlots="advancedHardPointsBonusSlots"
+      />
+
+      <MechWeapons :mech-id="mechId"/>
       </tbody>
     </table>
 
 
 
 
-    <MechStatRow
-        v-if="hasTopEndHardware"
-        label="Perk"
-        :text="topEndHardwareLabel"
-        :usedSlots="topEndHardwareBonusTons"
-    />
 
-    <MechStatRow
-        v-if="hasAdvancedHardPoints"
-        label="Perk"
-        :text="advancedHardPointsLabel"
-        :usedSlots="advancedHardPointsBonusSlots"
-    />
 
-    <MechWeapons :mech-id="mechId"/>
 
     <div class="row border-top">
       <div class="col-sm-2"></div>

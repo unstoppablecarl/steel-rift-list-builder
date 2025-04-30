@@ -41,8 +41,6 @@ export default {
       Weapons
     </div>
     <div class="col-sm-4">
-
-
       <div class="table-responsive">
         <table class="table w-auto">
           <thead class="table-light">

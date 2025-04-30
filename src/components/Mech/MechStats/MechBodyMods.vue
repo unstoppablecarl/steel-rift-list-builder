@@ -41,7 +41,7 @@ function selectOption(value) {
 }
 </script>
 <template>
-  <tr class="my-1">
+  <tr>
     <td>
       <label class="col-form-label" :for="formId">{{ label }}</label>
     </td>

@@ -148,8 +148,6 @@ export const useMechStore = defineStore('mech', {
                     let cost = weaponInfo.cost
                     const duplicate_cost = Math.floor(previousWeaponInstances * cost * 0.5);
 
-                    console.log(mechWeaponAttachmentId, duplicate_cost)
-
                     const result = Object.assign({}, weaponInfo, {
                         cost: cost + duplicate_cost,
                         duplicate_cost

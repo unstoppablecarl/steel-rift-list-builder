@@ -31,28 +31,26 @@ const {
 });
 
 </script>
-
 <template>
-
-  <div class="row my-1">
-    <div class="col-sm-2">
+  <tr>
+    <td>
       <label>{{ label }}</label>
-    </div>
-    <div class="col-sm-4">
+    </td>
+    <td>
       <BInput :model-value="text" disabled/>
-    </div>
-    <div class="col-sm-1 number-cell">
+    </td>
+    <td class="text-end">
       <number v-if="armor" :val="armor"/>
-    </div>
-    <div class="col-sm-1 number-cell">
+    </td>
+    <td class="text-end">
       <number v-if="structure" :val="structure"/>
-    </div>
-    <div class="col-sm-1 number-cell">
+    </td>
+    <td class="text-end">
       <number v-if="usedSlots" :val="usedSlots" invert-color/>
-    </div>
-    <div class="col-sm-1 number-cell">
+    </td>
+    <td class="text-end">
       <number v-if="usedTons" :val="usedTons" invert-color/>
-    </div>
-  </div>
+    </td>
+  </tr>
 </template>
 

@@ -32,9 +32,8 @@ export default {
 };
 
 </script>
-
 <template>
-  <tr class="my-1">
+  <tr>
     <td>
       <label class="col-form-label" :for="'mech-input-size-' + mechId">Size</label>
     </td>
@@ -69,7 +68,7 @@ export default {
           <tr
               :class="{
                 'dropdown-row': true,
-                'table-primary':   (item.value == model)
+                'table-primary':   (item.value == mech.size_id)
               }"
               v-for="item in options" :key="item.value"
               @click="selectOption(item.value)"
