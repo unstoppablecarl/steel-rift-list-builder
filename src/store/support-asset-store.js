@@ -132,14 +132,14 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
 
         const {perk_1_id, perk_2_id} = storeToRefs(factionStore);
 
-        function syncOutrageousSupportBudgetPerks() {
+        function syncOutrageousSupportBudgetPerk() {
             if (!factionStore.hasPerk(DWC_OUTRAGEOUS_SUPPORT_BUDGET)) {
                 outrageous_budget_perk_support_asset_id.value = null;
             }
         }
 
-        watch(perk_1_id, syncOutrageousSupportBudgetPerks);
-        watch(perk_2_id, syncOutrageousSupportBudgetPerks);
+        watch(perk_1_id, syncOutrageousSupportBudgetPerk);
+        watch(perk_2_id, syncOutrageousSupportBudgetPerk);
         return {
             support_asset_ids,
             support_assets,
