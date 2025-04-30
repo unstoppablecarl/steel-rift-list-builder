@@ -17,7 +17,7 @@ $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
 
-$primary: tint-color($blue, 50%);
+$primary: shade-color($blue, 20%);
 $success: $green;
 $info: $cyan;
 $warning: $yellow;
