@@ -18,7 +18,6 @@ const {
   <div class="card">
     <div class="card-header" ref="support-asset-drop-down-container">
       <div class="float-end">
-        {{ support_asset_count }}
         <ArmyListSupportAssetAdd
             :teleport-to="supportAssetHeaderRef"
         />
