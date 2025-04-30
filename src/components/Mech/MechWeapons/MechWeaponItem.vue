@@ -46,7 +46,10 @@ export default {
       <number :val="weapon.cost" :invert-color="true"/>
     </td>
     <td>
-
+      <small v-if="weapon.duplicate_cost">
+        +{{ weapon.duplicate_percent}}%
+         ({{weapon.base_cost}} + {{weapon.duplicate_cost}})
+      </small>
     </td>
   </tr>
 </template>

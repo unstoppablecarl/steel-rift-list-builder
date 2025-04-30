@@ -149,8 +149,10 @@ export const useMechStore = defineStore('mech', {
                     const duplicate_cost = Math.floor(previousWeaponInstances * cost * 0.5);
 
                     const result = Object.assign({}, weaponInfo, {
+                        base_cost: cost,
                         cost: cost + duplicate_cost,
                         duplicate_cost,
+                        duplicate_percent: previousWeaponInstances * 50
                     });
 
                     return readonly(result);
