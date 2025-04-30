@@ -39,7 +39,7 @@ $btn-focus-box-shadow: 0;
 @import '../../node_modules/bootstrap-vue-next/src/styles/styles';
 @import "./bootstrap-vue-component-styles";
 
-
+@import "./dropdown";
 @import "./collapse";
 
 body {
@@ -48,6 +48,10 @@ body {
 
 .mech-stats > .row:nth-child(even) {
   background-color: var(--bs-light-bg-subtle);
+}
+
+.mech-dropdown-menu {
+  width: 400px;
 }
 
 .card {
@@ -79,19 +83,7 @@ body {
 
 }
 
-.dropdown {
-  &.dropdown-block {
-    //display: grid;
 
-    .dropdown-menu {
-      width: 100%;
-    }
-
-    .btn {
-      text-align: left;
-    }
-  }
-}
 
 .btn-grab {
   border: 1px solid $gray-300;

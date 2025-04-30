@@ -1,0 +1,52 @@
+
+.dropdown {
+  &.dropdown-table {
+    .dropdown-menu {
+      padding: 0;
+      margin: 0;
+    }
+
+    table {
+      margin: 0;
+    }
+
+    thead tr td {
+      @include font-size($font-size-sm);
+      color: var(--#{$prefix}dropdown-header-color);
+      white-space: nowrap;
+      font-weight: 500;
+      border-bottom: 1px solid var(--#{$prefix}dropdown-divider-bg);
+    }
+
+    thead tr,
+    tbody tr {
+      cursor: pointer;
+
+      td:first-child,
+      th:first-child {
+        padding-left: 1rem;
+      }
+
+      td:last-child,
+      th:last-child {
+        padding-right: 1rem;
+      }
+    }
+  }
+
+  &.mech-dropdown-menu {
+    .dropdown-menu {
+      //width: 400px;
+    }
+  }
+
+  &.dropdown-block {
+    .dropdown-menu {
+      width: 100%;
+    }
+
+    //.btn {
+    //  text-align: left;
+    //}
+  }
+}

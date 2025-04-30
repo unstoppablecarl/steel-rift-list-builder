@@ -19,9 +19,10 @@ import {
 import Number from '../functional/number.vue';
 import MechStatRow from './MechStats/MechStatRow.vue';
 import Fraction from '../functional/fraction.vue';
+import MechWeapons from './MechWeapons.vue';
 
 export default {
-  components: {Fraction, MechStatRow, BInput, Number},
+  components: {MechWeapons, Fraction, MechStatRow, BInput, Number},
   props: {
     mechId: Number,
   },
@@ -75,53 +76,61 @@ export default {
 </script>
 <template>
   <div class="mech-stats px-2">
-    <div class="row header-row">
-      <label class="col-sm-2 col-form-label border-bottom" :for="'mech-input-name-' + mechId">Name</label>
-      <div class="col-sm-4 border-bottom">
-        <BFormInput :id="'mech-input-name-' + mechId" v-model="mech.name" :placeholder="info.placeholder_name"/>
-      </div>
-      <div class="col-sm-1 text-right pe-1 border-bottom">
-        <div class="fw-bold">Armor</div>
-        <small>Stat</small>
-      </div>
-      <div class="col-sm-1 text-right pe-1 border-bottom">
-        <div class="fw-bold">Structure</div>
-        <small>Stat</small>
-      </div>
-      <div class="col-sm-1 text-right pe-1 border-bottom">
-        <div class="fw-bold">Slots</div>
-        <small>Used</small>
-      </div>
-      <div class="col-sm-1 text-right pe-1 border-bottom">
-        <div class="fw-bold">Tons</div>
-        <small>Used</small>
-      </div>
-      <div class="col-sm-2 text-right pe-1 border-bottom">
+    <table class="table w-auto">
+      <thead>
+        <tr>
+          <td>
+            <label class="col-form-label" :for="'mech-input-name-' + mechId">Name</label>
+          </td>
+          <td>
+            <BFormInput :id="'mech-input-name-' + mechId" v-model="mech.name" :placeholder="info.placeholder_name"/>
+          </td>
+          <td class="text-right pe-1 border-bottom">
+            <div class="fw-bold">Armor</div>
+            <small>Stat</small>
+          </td>
+          <td class="text-right pe-1 border-bottom">
+            <div class="fw-bold">Structure</div>
+            <small>Stat</small>
+          </td>
+          <td class="text-right pe-1 border-bottom">
+            <div class="fw-bold">Slots</div>
+            <small>Used</small>
+          </td>
+          <td class="text-right pe-1 border-bottom">
+            <div class="fw-bold">Tons</div>
+            <small>Used</small>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+      <MechSizes
+          :mech-id="mechId"
+      />
+      <MechBodyMods
+          label="Armor Type"
+          modifier-label="Armor Stat"
+          v-model="mech.armor_mod_id"
+          :form-id="'mech-input-armor-mod-' + mechId"
+          :tonnage="info.armor_mod.modifier"
+          :armor="info.armor_mod.modifier"
+          :structure="null"
+      />
+      <MechBodyMods
+          label="Structure Type"
+          modifier-label="Structure Stat"
+          v-model="mech.structure_mod_id"
+          :form-id="'mech-input-structure-mod-' + mechId"
+          :tonnage="info.structure_mod.modifier"
+          :armor="null"
+          :structure="info.structure_mod.modifier"
 
-      </div>
-    </div>
-    <MechSizes
-        :mech-id="mechId"
-    />
-    <MechBodyMods
-        label="Armor Type"
-        modifier-label="Armor Stat"
-        v-model="mech.armor_mod_id"
-        :form-id="'mech-input-armor-mod-' + mechId"
-        :tonnage="info.armor_mod.modifier"
-        :armor="info.armor_mod.modifier"
-        :structure="null"
-    />
-    <MechBodyMods
-        label="Structure Type"
-        modifier-label="Structure Stat"
-        v-model="mech.structure_mod_id"
-        :form-id="'mech-input-structure-mod-' + mechId"
-        :tonnage="info.structure_mod.modifier"
-        :armor="null"
-        :structure="info.structure_mod.modifier"
+      />
 
-    />
+      </tbody>
+    </table>
+
+
     <MechArmorUpgrades
         label="Armor Upgrades"
         v-model="mech.armor_upgrade_id"
@@ -143,21 +152,7 @@ export default {
         :usedSlots="advancedHardPointsBonusSlots"
     />
 
-    <MechStatRow
-        v-if="mech.weapons.length"
-        label=""
-        :text="'Weapons ' + `(${mech.weapons.length})`"
-        :used-slots="info.weapon_used_slots"
-        :used-tons="info.weapon_used_tons"
-    />
-
-    <MechStatRow
-        v-if="mech.upgrades.length"
-        label=""
-        :text="'Upgrades ' + `(${mech.upgrades.length})`"
-        :used-slots="info.upgrade_used_slots"
-        :used-tons="info.upgrade_used_tons"
-    />
+    <MechWeapons :mech-id="mechId"/>
 
     <div class="row border-top">
       <div class="col-sm-2"></div>

@@ -35,48 +35,59 @@ export default {
 </script>
 <template>
 
-  <div class="table-responsive">
-  <table class="table w-auto">
-    <thead class="table-light">
-    <tr>
-      <th scope="col"></th>
-      <th scope="col">Name</th>
-      <th scope="col" class="text-right pe-1">Slots</th>
-      <th scope="col" class="text-right pe-1">Tons</th>
-      <th scope="col" class="text-right pe-1">Damage</th>
-      <th scope="col" class="text-right pe-1">Range</th>
-      <th scope="col">Traits</th>
-      <th scope="col"></th>
+  <div class="row">
 
-    </tr>
-    </thead>
+    <div class="col-sm-2">
+      Weapons
+    </div>
+    <div class="col-sm-4">
 
-    <draggable
-        :list="mech.weapons"
-        draggable=".list-item-sortable"
-        tag="tbody"
-        item-key="id"
-        :group="'mech-' + mechId +'-weapons'"
-        handle=".btn-grab"
-        ghost-class="ghost"
-        @start="dragging = true"
-        @end="dragging = false"
-        @change="onSortableChange"
-        :animation="200"
-        :preventOnFilter="false"
-    >
-      <template #item="{ element, index }">
-        <MechWeaponItem
-            :mech-id="mechId"
-            :mech-weapon-attachment-id="element.id"
-            :index="index"
-        />
-      </template>
 
-    </draggable>
-  </table>
+      <div class="table-responsive">
+        <table class="table w-auto">
+          <thead class="table-light">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Name</th>
+            <th scope="col" class="text-right pe-1">Slots</th>
+            <th scope="col" class="text-right pe-1">Tons</th>
+            <th scope="col" class="text-right pe-1">Damage</th>
+            <th scope="col" class="text-right pe-1">Range</th>
+            <th scope="col">Traits</th>
+            <th scope="col"></th>
+
+          </tr>
+          </thead>
+
+          <draggable
+              :list="mech.weapons"
+              draggable=".list-item-sortable"
+              tag="tbody"
+              item-key="id"
+              :group="'mech-' + mechId +'-weapons'"
+              handle=".btn-grab"
+              ghost-class="ghost"
+              @start="dragging = true"
+              @end="dragging = false"
+              @change="onSortableChange"
+              :animation="200"
+              :preventOnFilter="false"
+          >
+            <template #item="{ element, index }">
+              <MechWeaponItem
+                  :mech-id="mechId"
+                  :mech-weapon-attachment-id="element.id"
+                  :index="index"
+              />
+            </template>
+
+          </draggable>
+        </table>
+      </div>
+      <MechWeaponAdd :mech-id="mechId"/>
+    </div>
   </div>
-  <MechWeaponAdd :mech-id="mechId"/>
+
 </template>
 
 <style scoped>

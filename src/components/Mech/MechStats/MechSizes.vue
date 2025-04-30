@@ -1,6 +1,5 @@
 <script>
 import {HEV_SIZES_DROP_DOWN} from '../../../data/mech-sizes.js';
-import {BDropdownDivider} from 'bootstrap-vue-next';
 import {mapStores} from 'pinia';
 import {useMechStore} from '../../../store/mech-store.js';
 import Number from '../../functional/number.vue';
@@ -35,71 +34,77 @@ export default {
 </script>
 
 <template>
-  <div class="row my-1">
-    <label class="col-sm-2 col-form-label" :for="'mech-input-size-' + mechId">Size</label>
-    <BCol sm="4">
+  <tr class="my-1">
+    <td>
+      <label class="col-form-label" :for="'mech-input-size-' + mechId">Size</label>
+    </td>
+    <td>
       <BDropdown
           :id="'mech-input-size-' + mechId"
-          class="dropdown-block"
+          class="dropdown-table mech-dropdown-menu"
           :text="info.size.display_name"
           variant="light"
       >
-        <BDropdown-header class="w-100">
-          <BRow class="my-1">
-            <BCol sm="4">
+        <table class="table table-hover table-borderless">
+          <thead>
+          <tr>
+            <td>
               Type
-            </BCol>
-            <BCol sm="2" class="text-right">
+            </td>
+            <td class="text-end">
               Armor
-            </BCol>
-            <BCol sm="2" class="text-right">
+            </td>
+            <td class="text-end">
               Structure
-            </BCol>
-            <BCol sm="2" class="text-right">
+            </td>
+            <td class="text-end">
               Slots
-            </BCol>
-            <BCol sm="2" class="text-right">
+            </td>
+            <td class="text-end">
               Tons
-            </BCol>
-          </BRow>
-        </BDropdown-header>
-        <BDropdownDivider/>
-        <BDropdown-item
-            v-for="item in options" :key="item.value"
-            @click="selectOption(item.value)"
-            :active="item.value == mech.size_id"
-        >
-          <BRow class="my-1">
-            <BCol sm="4">
+            </td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr
+              :class="{
+                'dropdown-row': true,
+                'table-primary':   (item.value == model)
+              }"
+              v-for="item in options" :key="item.value"
+              @click="selectOption(item.value)"
+          >
+            <td>
               {{ item.text }}
-            </BCol>
-            <BCol sm="2" class="text-right">
+            </td>
+            <td class="text-end">
               {{ item.armor }}
-            </BCol>
-            <BCol sm="2" class="text-right">
+            </td>
+            <td class="text-end">
               {{ item.structure }}
-            </BCol>
-            <BCol sm="2" class="text-right">
+            </td>
+            <td class="text-end">
               {{ item.max_slots }}
-            </BCol>
-            <BCol sm="2" class="text-right">
+            </td>
+            <td class="text-end">
               {{ item.max_tons }}
-            </BCol>
-          </BRow>
-        </BDropdown-item>
+            </td>
+          </tr>
+          </tbody>
+        </table>
       </BDropdown>
-    </BCol>
-    <div class="col-sm-1 col-form-label text-right">
+    </td>
+    <td class="col-form-label text-end">
       {{ info.size.armor }}
-    </div>
-    <div class="col-sm-1 col-form-label text-right">
+    </td>
+    <td class="col-form-label text-end">
       {{ info.size.structure }}
-    </div>
-    <div class="col-sm-1 col-form-label text-right">
+    </td>
+    <td class="col-form-label text-end">
 
-    </div>
-    <div class="col-sm-1 col-form-label text-right">
+    </td>
+    <td class="col-form-label text-end">
       <number :val="info.size.armor + info.size.structure" :invert-color="true"/>
-    </div>
-  </div>
+    </td>
+  </tr>
 </template>
