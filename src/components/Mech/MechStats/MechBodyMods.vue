@@ -100,5 +100,6 @@ function selectOption(value) {
     <td class="col-form-label text-end">
       <number :val="tonnage" :invert-color="true"/>
     </td>
+    <td></td>
   </tr>
 </template>

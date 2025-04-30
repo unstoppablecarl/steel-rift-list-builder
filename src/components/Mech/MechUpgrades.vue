@@ -40,6 +40,7 @@ export default {
     <th class="fw-medium">
       Tons
     </th>
+    <th></th>
   </tr>
   <MechUpgradeItem
       :mech-id="mechId"

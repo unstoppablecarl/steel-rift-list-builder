@@ -40,6 +40,7 @@ export default {
     <td class="text-end">
       <number :val="upgrade.cost" :invert-color="true"/>
     </td>
+    <td></td>
   </tr>
 
 </template>

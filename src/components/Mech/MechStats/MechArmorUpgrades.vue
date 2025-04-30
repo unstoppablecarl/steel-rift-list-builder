@@ -94,5 +94,6 @@ function selectOption(value) {
     <td class=" col-form-label text-end">
       <number-val :val="selectedValue.cost_by_size[sizeId]" invert-color/>
     </td>
+    <td></td>
   </tr>
 </template>

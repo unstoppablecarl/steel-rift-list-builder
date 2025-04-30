@@ -102,6 +102,7 @@ export default {
           <div class="fw-bold">Tons</div>
           <small>Used</small>
         </td>
+        <td></td>
       </tr>
       </thead>
       <tbody>
@@ -177,6 +178,7 @@ export default {
           <div class="fw-bold">Tons</div>
           <small>Used</small>
         </td>
+        <td></td>
       </tr>
       <tr class="table-light">
         <td></td>
@@ -199,6 +201,7 @@ export default {
             <fraction :a="info.used_tons" :b="info.max_tons"/>
           </strong>
         </td>
+        <td></td>
       </tr>
       </tfoot>
     </table>

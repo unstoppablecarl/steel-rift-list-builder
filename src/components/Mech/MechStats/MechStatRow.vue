@@ -51,6 +51,7 @@ const {
     <td class="text-end">
       <number v-if="usedTons" :val="usedTons" invert-color/>
     </td>
+    <td></td>
   </tr>
 </template>
 

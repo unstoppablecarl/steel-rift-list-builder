@@ -45,5 +45,8 @@ export default {
     <td class=" text-end">
       <number :val="weapon.cost" :invert-color="true"/>
     </td>
+    <td>
+
+    </td>
   </tr>
 </template>

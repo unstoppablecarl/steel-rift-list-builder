@@ -105,5 +105,6 @@ export default {
     <td class="col-form-label text-end">
       <number :val="info.size.armor + info.size.structure" :invert-color="true"/>
     </td>
+    <td></td>
   </tr>
 </template>
