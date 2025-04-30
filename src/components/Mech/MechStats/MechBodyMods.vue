@@ -58,10 +58,10 @@ function selectOption(value) {
             <td>
               Type
             </td>
-            <td class="text-right">
+            <td class="text-end">
               {{ modifierLabel }}
             </td>
-            <td class="text-right">
+            <td class="text-end">
               Tons Used
             </td>
           </tr>
@@ -78,10 +78,10 @@ function selectOption(value) {
             <td>
               {{ item.text }}
             </td>
-            <td class="text-right">
+            <td class="text-end">
               <number :val="item.modifier"/>
             </td>
-            <td class="text-right">
+            <td class="text-end">
               <number :val="item.max_tons" invert invert-color/>
             </td>
           </tr>
@@ -90,14 +90,14 @@ function selectOption(value) {
       </BDropdown>
 
     </td>
-    <td class="col-form-label text-right">
+    <td class="col-form-label text-end">
       <number :val="armor" v-if="armor !== null"/>
     </td>
-    <td class="col-form-label text-right">
+    <td class="col-form-label text-end">
       <number :val="structure" v-if="structure !== null"/>
     </td>
     <td></td>
-    <td class="col-form-label text-right">
+    <td class="col-form-label text-end">
       <number :val="tonnage" :invert-color="true"/>
     </td>
   </tr>

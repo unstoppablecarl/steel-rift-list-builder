@@ -38,8 +38,8 @@ export default {
     <tr>
       <th scope="col"></th>
       <th scope="col">Name</th>
-      <th scope="col" class="text-right pe-1">Slots</th>
-      <th scope="col" class="text-right pe-1">Tons</th>
+      <th scope="col" class="text-end pe-1">Slots</th>
+      <th scope="col" class="text-end pe-1">Tons</th>
       <th scope="col">Notes</th>
       <th scope="col"></th>
     </tr>

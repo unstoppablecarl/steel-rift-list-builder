@@ -44,10 +44,10 @@ const {
           <td class="cell-pad-top">
             {{ item.display_name }}
           </td>
-          <td class="cell-pad-top text-right">
+          <td class="cell-pad-top text-end">
             {{ item.damage }}
           </td>
-          <td class="cell-pad-top text-right">
+          <td class="cell-pad-top text-end">
             <number :val="item.cost" :positive-signed="false" :invert-color="true"/>
           </td>
           <td class="cell-pad-top">

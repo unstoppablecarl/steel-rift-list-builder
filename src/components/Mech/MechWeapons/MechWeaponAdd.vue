@@ -28,16 +28,16 @@ export default {
         <div class="col-sm-2">
           Weapon
         </div>
-        <div class="col-sm-1 text-right">
+        <div class="col-sm-1 text-end">
           Slots
         </div>
-        <div class="col-sm-1 text-right">
+        <div class="col-sm-1 text-end">
           Tons
         </div>
-        <div class="col-sm-1 text-right">
+        <div class="col-sm-1 text-end">
           Damage
         </div>
-        <div class="col-sm-1 text-right">
+        <div class="col-sm-1 text-end">
           Range
         </div>
         <div class="col-sm-4">
@@ -57,16 +57,16 @@ export default {
         <div class="col-sm-2">
           {{ item.display_name }}
         </div>
-        <div class="col-sm-1 text-right">
+        <div class="col-sm-1 text-end">
           <number :val="item.slots" :positive-signed="false" :invert-color="true"/>
         </div>
-        <div class="col-sm-1 text-right">
+        <div class="col-sm-1 text-end">
           <number :val="item.cost" :positive-signed="false" :invert-color="true"/>
         </div>
-        <div class="col-sm-1 text-right">
+        <div class="col-sm-1 text-end">
           {{ item.damage }}
         </div>
-        <div class="col-sm-1 text-right">
+        <div class="col-sm-1 text-end">
           {{ item.range_formatted }}
         </div>
         <div class="col-sm-2">

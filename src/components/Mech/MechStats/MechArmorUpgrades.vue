@@ -86,12 +86,12 @@ function selectOption(value) {
     </td>
     <td class="">
     </td>
-    <td class=" col-form-label text-right">
+    <td class=" col-form-label text-end">
     </td>
-    <td class=" col-form-label text-right">
+    <td class=" col-form-label text-end">
       <number-val :val="selectedValue.slots" invert-color/>
     </td>
-    <td class=" col-form-label text-right">
+    <td class=" col-form-label text-end">
       <number-val :val="selectedValue.cost_by_size[sizeId]" invert-color/>
     </td>
   </tr>

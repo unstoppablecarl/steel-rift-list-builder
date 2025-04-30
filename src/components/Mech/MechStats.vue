@@ -85,19 +85,19 @@ export default {
         <td colspan="3">
           <BFormInput :id="'mech-input-name-' + mechId" v-model="mech.name" :placeholder="info.placeholder_name"/>
         </td>
-        <td class="text-right pe-1 border-bottom">
+        <td class="text-end pe-1 border-bottom">
           <div class="fw-bold">Armor</div>
           <small>Stat</small>
         </td>
-        <td class="text-right pe-1 border-bottom">
+        <td class="text-end pe-1 border-bottom">
           <div class="fw-bold">Structure</div>
           <small>Stat</small>
         </td>
-        <td class="text-right pe-1 border-bottom">
+        <td class="text-end pe-1 border-bottom">
           <div class="fw-bold">Slots</div>
           <small>Used</small>
         </td>
-        <td class="text-right pe-1 border-bottom">
+        <td class="text-end pe-1 border-bottom">
           <div class="fw-bold">Tons</div>
           <small>Used</small>
         </td>

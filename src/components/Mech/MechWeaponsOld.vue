@@ -45,10 +45,10 @@ export default {
           <tr>
             <th scope="col"></th>
             <th scope="col">Name</th>
-            <th scope="col" class="text-right pe-1">Slots</th>
-            <th scope="col" class="text-right pe-1">Tons</th>
-            <th scope="col" class="text-right pe-1">Damage</th>
-            <th scope="col" class="text-right pe-1">Range</th>
+            <th scope="col" class="text-end pe-1">Slots</th>
+            <th scope="col" class="text-end pe-1">Tons</th>
+            <th scope="col" class="text-end pe-1">Damage</th>
+            <th scope="col" class="text-end pe-1">Range</th>
             <th scope="col">Traits</th>
             <th scope="col"></th>
 

@@ -35,7 +35,7 @@ const options = computed(() => {
         <div class="col-sm-3">
           Support Asset
         </div>
-        <div class="col-sm-1 text-right">
+        <div class="col-sm-1 text-end">
           Attack
         </div>
         <div class="col-sm-1">
@@ -59,10 +59,10 @@ const options = computed(() => {
         <div class="col-sm-3">
           {{ item.display_name }}
         </div>
-        <div class="col-sm-1 text-right">
+        <div class="col-sm-1 text-end">
           {{ item.damage }}
         </div>
-        <div class="col-sm-1 text-right">
+        <div class="col-sm-1 text-end">
           <number :val="item.cost" :positive-signed="false" :invert-color="true"/>
         </div>
         <div class="col-sm-4">

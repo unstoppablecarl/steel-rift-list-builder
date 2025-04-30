@@ -26,23 +26,23 @@ export default {
     <td>
       {{ weapon.display_name }}
     </td>
-    <td class="text-right">
+    <td class="text-end">
       {{ weapon.damage }}
     </td>
-    <td class="text-right">
+    <td class="text-end">
       {{ weapon.range_formatted }}
     </td>
-    <td class="text-right">
+    <td class="text-end">
       {{ weapon.trait_display_names }}
     </td>
     <td>
       <BButton @click="remove()" variant="danger" size="sm">Remove</BButton>
     </td>
     <td></td>
-    <td class=" text-right">
+    <td class=" text-end">
       <number :val="weapon.slots" :invert-color="true"/>
     </td>
-    <td class=" text-right">
+    <td class=" text-end">
       <number :val="weapon.cost" :invert-color="true"/>
     </td>
   </tr>

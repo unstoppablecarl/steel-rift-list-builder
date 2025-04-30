@@ -29,11 +29,11 @@ export default {
     <td class="cell-pad-top">
       {{ upgrade.display_name }}
     </td>
-    <td class="cell-pad-top text-right">
+    <td class="cell-pad-top text-end">
       <number :val="upgrade.slots" :positive-signed="false" :invert-color="true"/>
 
     </td>
-    <td class="cell-pad-top text-right">
+    <td class="cell-pad-top text-end">
       <number :val="upgrade.cost" :positive-signed="false" :invert-color="true"/>
     </td>
     <td></td>

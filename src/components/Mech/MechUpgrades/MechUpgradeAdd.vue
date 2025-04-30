@@ -27,10 +27,10 @@ export default {
         <BCol sm="3">
           Upgrade
         </BCol>
-        <BCol sm="3" class="text-right">
+        <BCol sm="3" class="text-end">
           Slots
         </BCol>
-        <BCol sm="3" class="text-right">
+        <BCol sm="3" class="text-end">
           Tons
         </BCol>
         <BCol sm="3">
@@ -48,10 +48,10 @@ export default {
         <BCol sm="3">
           {{ item.display_name }}
         </BCol>
-        <BCol sm="3" class="text-right">
+        <BCol sm="3" class="text-end">
           <number :val="item.slots" :positive-signed="false" :invert-color="true"/>
         </BCol>
-        <BCol sm="3" class="text-right">
+        <BCol sm="3" class="text-end">
           <number :val="item.cost" :positive-signed="false" :invert-color="true"/>
         </BCol>
         <BCol sm="3">

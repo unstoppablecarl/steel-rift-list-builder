@@ -28,16 +28,16 @@ export default {
     <td class="cell-pad-top">
       {{ weapon.display_name }}
     </td>
-    <td class="cell-pad-top text-right">
+    <td class="cell-pad-top text-end">
       <number :val="weapon.slots" :positive-signed="false" :invert-color="true"/>
     </td>
-    <td class="cell-pad-top text-right">
+    <td class="cell-pad-top text-end">
       <number :val="weapon.cost" :positive-signed="false" :invert-color="true"/>
     </td>
-    <td class="cell-pad-top text-right">
+    <td class="cell-pad-top text-end">
       {{ weapon.damage }}
     </td>
-    <td class="cell-pad-top text-right">
+    <td class="cell-pad-top text-end">
       {{ weapon.range_formatted }}
     </td>
     <td class="cell-pad-top">
