@@ -16,6 +16,7 @@ export default {
   },
   methods: {
     addWeapon(weaponId) {
+      console.log(weaponId)
       this.mechStore.addMechWeaponAttachment(this.mechId, weaponId);
     },
   },
@@ -27,6 +28,8 @@ export default {
       :id="'mech-input-weapons-add-' + mechId"
       class="dropdown-table"
       text="Add"
+      size="sm"
+      variant="primary"
   >
     <div class="position-relative">
       <table class="table table-hover table-borderless table-striped">
@@ -58,8 +61,8 @@ export default {
         <tbody>
         <tr
             class="dropdown-row"
-            v-for="item in options" :key="item.value"
-            @click="selectOption(item.value)"
+            v-for="item in options" :key="item.weapon_id"
+            @click="addWeapon(item.weapon_id)"
         >
           <td>
             {{ item.display_name }}

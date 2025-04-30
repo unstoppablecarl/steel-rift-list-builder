@@ -21,7 +21,7 @@ export default {
 <template>
   <tr>
     <th>
-      Weapons
+      Weapon
     </th>
     <th class="text-end pe-1">
       Damage
@@ -36,10 +36,11 @@ export default {
       <MechWeaponAdd :mech-id="mechId"/>
     </td>
     <th></th>
-    <th>
+    <th class="fw-medium">
+      Slots
     </th>
-    <th>
-
+    <th class="fw-medium">
+      Tons
     </th>
   </tr>
   <MechWeaponItem
@@ -48,7 +49,6 @@ export default {
       :mech-weapon-attachment-id="weaponAttachment.id"
       :index="weaponAttachment.display_order"
   />
-
 
 
 </template>
