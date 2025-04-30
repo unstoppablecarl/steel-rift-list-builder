@@ -45,7 +45,7 @@ function selectOption(value) {
     <td>
       <label class="col-form-label" :for="formId">{{ label }}</label>
     </td>
-    <td>
+    <td colspan="3">
       <BDropdown
           :id="formId"
           class="dropdown-table"

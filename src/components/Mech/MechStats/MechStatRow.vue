@@ -36,7 +36,7 @@ const {
     <td>
       <label>{{ label }}</label>
     </td>
-    <td>
+    <td colspan="3">
       <BInput :model-value="text" disabled/>
     </td>
     <td class="text-end">

@@ -37,7 +37,7 @@ export default {
     <td>
       <label class="col-form-label" :for="'mech-input-size-' + mechId">Size</label>
     </td>
-    <td>
+    <td colspan="3">
       <BDropdown
           :id="'mech-input-size-' + mechId"
           class="dropdown-table"

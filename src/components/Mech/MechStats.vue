@@ -78,30 +78,30 @@ export default {
   <div class="mech-stats px-2">
     <table class="table w-auto">
       <thead>
-        <tr>
-          <td>
-            <label class="col-form-label" :for="'mech-input-name-' + mechId">Name</label>
-          </td>
-          <td>
-            <BFormInput :id="'mech-input-name-' + mechId" v-model="mech.name" :placeholder="info.placeholder_name"/>
-          </td>
-          <td class="text-right pe-1 border-bottom">
-            <div class="fw-bold">Armor</div>
-            <small>Stat</small>
-          </td>
-          <td class="text-right pe-1 border-bottom">
-            <div class="fw-bold">Structure</div>
-            <small>Stat</small>
-          </td>
-          <td class="text-right pe-1 border-bottom">
-            <div class="fw-bold">Slots</div>
-            <small>Used</small>
-          </td>
-          <td class="text-right pe-1 border-bottom">
-            <div class="fw-bold">Tons</div>
-            <small>Used</small>
-          </td>
-        </tr>
+      <tr>
+        <td>
+          <label class="col-form-label" :for="'mech-input-name-' + mechId">Name</label>
+        </td>
+        <td colspan="3">
+          <BFormInput :id="'mech-input-name-' + mechId" v-model="mech.name" :placeholder="info.placeholder_name"/>
+        </td>
+        <td class="text-right pe-1 border-bottom">
+          <div class="fw-bold">Armor</div>
+          <small>Stat</small>
+        </td>
+        <td class="text-right pe-1 border-bottom">
+          <div class="fw-bold">Structure</div>
+          <small>Stat</small>
+        </td>
+        <td class="text-right pe-1 border-bottom">
+          <div class="fw-bold">Slots</div>
+          <small>Used</small>
+        </td>
+        <td class="text-right pe-1 border-bottom">
+          <div class="fw-bold">Tons</div>
+          <small>Used</small>
+        </td>
+      </tr>
       </thead>
       <tbody>
       <MechSizes
@@ -145,42 +145,34 @@ export default {
           :text="advancedHardPointsLabel"
           :usedSlots="advancedHardPointsBonusSlots"
       />
-
-      <MechWeapons :mech-id="mechId"/>
+      <MechWeapons
+          :mech-id="mech.id"
+      />
       </tbody>
-    </table>
-
-
-
-
-
-
-
-    <div class="row border-top">
-      <div class="col-sm-2"></div>
-      <div class="col-sm-4 col-form-label text-right">
-        Totals
-      </div>
-      <div class="col-sm-1 col-form-label text-right">
-        <strong>
+      <tfoot>
+      <tr>
+        <td></td>
+        <td class="text-end">
+          Totals
+        </td>
+        <td class="text-end">
           {{ info.armor_stat }}
-        </strong>
-      </div>
-      <div class="col-sm-1 col-form-label text-right">
-        <strong>
+        </td>
+        <td class="text-end">
           {{ info.structure_stat }}
-        </strong>
-      </div>
-      <div class="col-sm-1 col-form-label text-right">
-        <strong>
-          <fraction :a="info.used_slots" :b="info.max_slots"/>
-        </strong>
-      </div>
-      <div class="col-sm-1 col-form-label text-right">
-        <strong>
-          <fraction :a="info.used_tons" :b="info.max_tons"/>
-        </strong>
-      </div>
-    </div>
+        </td>
+        <td class="text-end">
+          <strong>
+            <fraction :a="info.used_slots" :b="info.max_slots"/>
+          </strong>
+        </td>
+        <td class="text-end">
+          <strong>
+            <fraction :a="info.used_tons" :b="info.max_tons"/>
+          </strong>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
   </div>
 </template>

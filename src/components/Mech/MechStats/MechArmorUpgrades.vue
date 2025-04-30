@@ -40,7 +40,7 @@ function selectOption(value) {
     <td>
       <label class="col-form-label" :for="'mech-input-armor-upgrade-' + mechId">{{ label }}</label>
     </td>
-    <td>
+    <td colspan="3">
       <BDropdown
           :id="'mech-input-armor-upgrade-' + mechId"
           class="dropdown-table"

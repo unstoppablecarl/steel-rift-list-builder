@@ -22,28 +22,28 @@ export default {
 };
 </script>
 <template>
-  <tr>
-    <td>
+  <tr class="list-item-sortable">
+    <td><span class="btn btn-light btn-grab">:::</span>
+    </td>
+    <td class="cell-pad-top">
       {{ weapon.display_name }}
     </td>
-    <td class="text-right">
+    <td class="cell-pad-top text-right">
+      <number :val="weapon.slots" :positive-signed="false" :invert-color="true"/>
+    </td>
+    <td class="cell-pad-top text-right">
+      <number :val="weapon.cost" :positive-signed="false" :invert-color="true"/>
+    </td>
+    <td class="cell-pad-top text-right">
       {{ weapon.damage }}
     </td>
-    <td class="text-right">
+    <td class="cell-pad-top text-right">
       {{ weapon.range_formatted }}
     </td>
-    <td class="text-right">
-      {{ weapon.trait_display_names }}
-    </td>
+    <td class="cell-pad-top">
+      {{ weapon.trait_display_names }}</td>
     <td>
-      <BButton @click="remove()" variant="danger" size="sm">Remove</BButton>
-    </td>
-    <td></td>
-    <td class=" text-right">
-      <number :val="weapon.slots" :invert-color="true"/>
-    </td>
-    <td class=" text-right">
-      <number :val="weapon.cost" :invert-color="true"/>
+      <BButton @click="remove()" variant="danger">Remove</BButton>
     </td>
   </tr>
 </template>

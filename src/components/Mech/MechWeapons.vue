@@ -10,11 +10,6 @@ export default {
   props: {
     mechId: Number,
   },
-  data() {
-    return {
-      dragging: false,
-    };
-  },
   computed: {
     ...mapStores(useMechStore),
     mech() {
@@ -34,57 +29,38 @@ export default {
 };
 </script>
 <template>
-
-  <div class="row">
-
-    <div class="col-sm-2">
+  <tr>
+    <th>
       Weapons
-    </div>
-    <div class="col-sm-4">
-      <div class="table-responsive">
-        <table class="table w-auto">
-          <thead class="table-light">
-          <tr>
-            <th scope="col"></th>
-            <th scope="col">Name</th>
-            <th scope="col" class="text-right pe-1">Slots</th>
-            <th scope="col" class="text-right pe-1">Tons</th>
-            <th scope="col" class="text-right pe-1">Damage</th>
-            <th scope="col" class="text-right pe-1">Range</th>
-            <th scope="col">Traits</th>
-            <th scope="col"></th>
+    </th>
+    <th class="text-end pe-1">
+      Damage
+    </th>
+    <th class="text-end pe-1">
+      Range
+    </th>
+    <th>
+      Traits
+    </th>
+    <th></th>
+    <th></th>
+    <th>
+    </th>
+    <th>
 
-          </tr>
-          </thead>
+    </th>
+  </tr>
 
-          <draggable
-              :list="mech.weapons"
-              draggable=".list-item-sortable"
-              tag="tbody"
-              item-key="id"
-              :group="'mech-' + mechId +'-weapons'"
-              handle=".btn-grab"
-              ghost-class="ghost"
-              @start="dragging = true"
-              @end="dragging = false"
-              @change="onSortableChange"
-              :animation="200"
-              :preventOnFilter="false"
-          >
-            <template #item="{ element, index }">
-              <MechWeaponItem
-                  :mech-id="mechId"
-                  :mech-weapon-attachment-id="element.id"
-                  :index="index"
-              />
-            </template>
 
-          </draggable>
-        </table>
-      </div>
-      <MechWeaponAdd :mech-id="mechId"/>
-    </div>
-  </div>
+  <MechWeaponItem
+      :mech-id="mechId"
+      v-for="weaponAttachment in mech.weapons"
+      :mech-weapon-attachment-id="weaponAttachment.id"
+      :index="weaponAttachment.display_order"
+  />
+
+  <MechWeaponAdd :mech-id="mechId"/>
+
 
 </template>
 
