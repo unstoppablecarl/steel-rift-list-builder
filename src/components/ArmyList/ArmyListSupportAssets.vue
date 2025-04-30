@@ -29,9 +29,9 @@ const {
     </div>
     <div class="card-body">
 
-      <table class="table" v-if="support_assets.length">
+      <table class="table m-0" v-if="support_assets.length">
         <thead>
-        <tr>
+        <tr class="table-light">
           <th>Name</th>
           <th class="text-end pe-1">Damage</th>
           <th class="text-end pe-1">Tons</th>

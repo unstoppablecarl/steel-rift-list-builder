@@ -48,7 +48,7 @@ function selectOption(value) {
     <td colspan="3">
       <BDropdown
           :id="formId"
-          class="dropdown-table"
+          class="dropdown-form dropdown-table"
           variant="light"
           :text="selectedValueLabel"
       >

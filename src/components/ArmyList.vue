@@ -53,7 +53,6 @@ function test(){
     </div>
     <div class="card-body">
       <div class="row">
-
         <div class="col-sm-3">
           <BFormFloatingLabel label="Name" label-for="list-name" class="mb-1">
             <BFormInput

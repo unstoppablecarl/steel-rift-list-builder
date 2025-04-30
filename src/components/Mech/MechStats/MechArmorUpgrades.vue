@@ -43,7 +43,7 @@ function selectOption(value) {
     <td colspan="3">
       <BDropdown
           :id="'mech-input-armor-upgrade-' + mechId"
-          class="dropdown-table"
+          class="dropdown-form dropdown-table"
           :text="selectedValueLabel"
           variant="light"
       >

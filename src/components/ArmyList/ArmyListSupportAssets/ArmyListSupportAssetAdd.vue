@@ -27,6 +27,8 @@ const options = computed(() => {
       text="Add"
       class="dropdown-block"
       menu-class="w-100"
+      variant="primary"
+      size="sm"
       :teleport-to="teleportTo"
       placement="bottom-end"
   >
