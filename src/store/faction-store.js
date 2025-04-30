@@ -89,9 +89,6 @@ export const useFactionStore = defineStore('faction', () => {
     {
         persist: {
             enabled: true,
-            afterHydrate(context) {
-                context.$store.clearInvalidPerks();
-            },
         },
     },
 );
