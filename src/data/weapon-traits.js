@@ -15,11 +15,11 @@ export const TRAIT_SMART = 'SMART';
 export const TRAIT_MINE_TOKENS = 'MINE_TOKENS';
 
 function numberFormater(name, number) {
-    return `${name} (${number})`;
+    return `${name}(${number})`;
 }
 
 function inchFormater(name, number) {
-    return `${name} (${number}")`;
+    return `${name}(${number}")`;
 }
 
 export const WEAPON_TRAITS = makeStaticListIds({
@@ -59,7 +59,6 @@ export const WEAPON_TRAITS = makeStaticListIds({
     },
     [[TRAIT_SHORT]]: {
         display_name: 'Short',
-        formatter: numberFormater,
     },
     [[TRAIT_SMART]]: {
         display_name: 'Smart',

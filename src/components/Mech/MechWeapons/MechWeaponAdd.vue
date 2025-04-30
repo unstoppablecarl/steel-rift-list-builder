@@ -1,9 +1,10 @@
 <script>
-import {BDropdownDivider} from 'bootstrap-vue-next';
 import {useMechStore} from '../../../store/mech-store.js';
 import {mapStores} from 'pinia';
+import NumberVal from '../../functional/number.vue';
 
 export default {
+  components: {NumberVal},
   props: {
     mechId: Number,
   },
@@ -22,59 +23,67 @@ export default {
 </script>
 
 <template>
-  <BDropdown variant="light" text="Add Weapon" class="dropdown-block">
-    <BDropdown-header>
-      <div class="row my-1">
-        <div class="col-sm-2">
-          Weapon
-        </div>
-        <div class="col-sm-1 text-end">
-          Slots
-        </div>
-        <div class="col-sm-1 text-end">
-          Tons
-        </div>
-        <div class="col-sm-1 text-end">
-          Damage
-        </div>
-        <div class="col-sm-1 text-end">
-          Range
-        </div>
-        <div class="col-sm-4">
-          Traits
-        </div>
-        <div class="col-sm-2">
-          Notes
-        </div>
-      </div>
-    </BDropdown-header>
-    <BDropdownDivider/>
-    <BDropdown-item
-        v-for="item in options" :key="item.weapon_id"
-        @click="addWeapon(item.weapon_id)"
-    >
-      <div class="row my-1">
-        <div class="col-sm-2">
-          {{ item.display_name }}
-        </div>
-        <div class="col-sm-1 text-end">
-          <number :val="item.slots" :positive-signed="false" :invert-color="true"/>
-        </div>
-        <div class="col-sm-1 text-end">
-          <number :val="item.cost" :positive-signed="false" :invert-color="true"/>
-        </div>
-        <div class="col-sm-1 text-end">
-          {{ item.damage }}
-        </div>
-        <div class="col-sm-1 text-end">
-          {{ item.range_formatted }}
-        </div>
-        <div class="col-sm-2">
-          {{ item.trait_display_names }}
-        </div>
-        <div class="col-sm-2">
-        </div>
-      </div>
-    </BDropdown-item>
+  <BDropdown
+      :id="'mech-input-weapons-add-' + mechId"
+      class="dropdown-table"
+      text="Add"
+  >
+    <div class="position-relative">
+      <table class="table table-hover table-borderless table-striped">
+        <thead class="sticky-top top-0 shadow">
+        <tr>
+          <td>
+            Weapon
+          </td>
+          <td class="text-end">
+            Slots
+          </td>
+          <td class="text-end">
+            Tons
+          </td>
+          <td class="text-end">
+            Damage
+          </td>
+          <td class="text-end">
+            Range
+          </td>
+          <td>
+            Traits
+          </td>
+          <td>
+            Notes
+          </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+            class="dropdown-row"
+            v-for="item in options" :key="item.value"
+            @click="selectOption(item.value)"
+        >
+          <td>
+            {{ item.display_name }}
+          </td>
+          <td class="text-end">
+            <number :val="item.slots" :positive-signed="false" :invert-color="true"/>
+          </td>
+          <td class="text-end">
+            <number :val="item.cost" :positive-signed="false" :invert-color="true"/>
+          </td>
+          <td class="text-end">
+            {{ item.damage }}
+          </td>
+          <td class="text-end">
+            {{ item.range_formatted }}
+          </td>
+          <td>
+            {{ item.trait_display_names }}
+          </td>
+          <td>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </BDropdown>
 </template>

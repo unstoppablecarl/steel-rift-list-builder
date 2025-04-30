@@ -14,17 +14,23 @@
       margin: 0;
     }
 
-    > thead > tr > td {
+    table > thead > tr > td {
       @include font-size($font-size-sm);
       color: var(--#{$prefix}dropdown-header-color);
       white-space: nowrap;
       font-weight: 500;
       border-bottom: 1px solid var(--#{$prefix}dropdown-divider-bg);
+      text-wrap: nowrap;
     }
 
-    > thead > tr,
-    > tbody > tr {
+    table > thead > tr,
+    table > tbody > tr {
       cursor: pointer;
+
+      > th,
+      > td {
+
+      }
 
       > td:first-child,
       > th:first-child {

@@ -16,16 +16,6 @@ export default {
       return this.mechStore.getMech(this.mechId);
     },
   },
-  methods: {
-    onSortableChange(event) {
-      let moved = event.moved;
-      if (!moved) {
-        return;
-      }
-
-      this.mechStore.moveMechWeaponAttachment(this.mechId, moved.element, moved.newIndex);
-    },
-  },
 };
 </script>
 <template>
@@ -42,7 +32,9 @@ export default {
     <th>
       Traits
     </th>
-    <th></th>
+    <td>
+      <MechWeaponAdd :mech-id="mechId"/>
+    </td>
     <th></th>
     <th>
     </th>
@@ -50,8 +42,6 @@ export default {
 
     </th>
   </tr>
-
-
   <MechWeaponItem
       :mech-id="mechId"
       v-for="weaponAttachment in mech.weapons"
@@ -59,7 +49,6 @@ export default {
       :index="weaponAttachment.display_order"
   />
 
-  <MechWeaponAdd :mech-id="mechId"/>
 
 
 </template>
