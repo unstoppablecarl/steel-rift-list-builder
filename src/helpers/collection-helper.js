@@ -23,7 +23,7 @@ export function findItemIndex(items, item) {
 export function findItemIndexByIdOrFail(items, item) {
     let index = findItemIndex(items, item);
     if (index === false) {
-        console.log('Item not found', item);
+        console.error('Item not found', item);
         throw Error('Item not found', item);
     }
     return index;
