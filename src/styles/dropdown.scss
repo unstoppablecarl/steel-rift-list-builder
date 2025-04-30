@@ -1,4 +1,8 @@
 
+.dropdown .btn {
+  border: 1px solid $input-border-color;
+}
+
 .dropdown {
   &.dropdown-table {
     .dropdown-menu {
@@ -31,12 +35,6 @@
       th:last-child {
         padding-right: 1rem;
       }
-    }
-  }
-
-  &.mech-dropdown-menu {
-    .dropdown-menu {
-      //width: 400px;
     }
   }
 

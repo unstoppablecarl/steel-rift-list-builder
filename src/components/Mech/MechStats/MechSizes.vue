@@ -41,7 +41,7 @@ export default {
     <td>
       <BDropdown
           :id="'mech-input-size-' + mechId"
-          class="dropdown-table mech-dropdown-menu"
+          class="dropdown-table"
           :text="info.size.display_name"
           variant="light"
       >

@@ -50,10 +50,6 @@ body {
   background-color: var(--bs-light-bg-subtle);
 }
 
-.mech-dropdown-menu {
-  width: 400px;
-}
-
 .card {
   margin-top: .5rem;
   margin-bottom: .5rem;
@@ -71,10 +67,6 @@ body {
   padding: 0 $btn-padding-x;
   margin-bottom: .25rem;
   font-weight: bold;
-}
-
-.dropdown .btn {
-  border: 1px solid $input-border-color;
 }
 
 .card-header-btn-padding {

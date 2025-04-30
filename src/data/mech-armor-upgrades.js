@@ -9,12 +9,12 @@ export const CERAMIC_ARMOR_UPGRADE = 'CERAMIC_ARMOR_UPGRADE';
 
 export const HEV_ARMOR_UPGRADES = makeFrozenStaticListIds({
     [[NO_ARMOR_UPGRADE]]: makeArmorUpgrade({
-        display_name: 'Standard Armour',
+        display_name: 'Standard',
         cost: 0,
         slots: 0,
     }),
     [[ABLATIVE_ARMOR_UPGRADE]]: makeArmorUpgrade({
-        display_name: 'Ablative Armour',
+        display_name: 'Ablative',
         cost_by_size: {
             [[SIZE_LIGHT]]: 1,
             [[SIZE_MEDIUM]]: 1,
@@ -24,12 +24,12 @@ export const HEV_ARMOR_UPGRADES = makeFrozenStaticListIds({
         slots: 1,
     }),
     [[REACTIVE_ARMOR_UPGRADE]]: makeArmorUpgrade({
-        display_name: 'Reactive Armour',
+        display_name: 'Reactive',
         cost: 1,
         slots: 1,
     }),
     [[CERAMIC_ARMOR_UPGRADE]]: makeArmorUpgrade({
-        display_name: 'Ceramic Armour',
+        display_name: 'Ceramic',
         cost_by_size: {
             [[SIZE_LIGHT]]: 2,
             [[SIZE_MEDIUM]]: 2,

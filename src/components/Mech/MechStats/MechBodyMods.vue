@@ -48,7 +48,7 @@ function selectOption(value) {
     <td>
       <BDropdown
           :id="formId"
-          class="dropdown-table mech-dropdown-menu"
+          class="dropdown-table"
           variant="light"
           :text="selectedValueLabel"
       >

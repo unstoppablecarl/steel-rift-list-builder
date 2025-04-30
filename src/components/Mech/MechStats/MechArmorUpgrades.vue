@@ -1,6 +1,5 @@
 <script setup>
 import {computed} from 'vue';
-import {BDropdownDivider} from 'bootstrap-vue-next';
 import {HEV_ARMOR_UPGRADES, HEV_ARMOR_UPGRADES_DROP_DOWN} from '../../../data/mech-armor-upgrades.js';
 import NumberVal from '../../functional/number.vue';
 
@@ -37,60 +36,63 @@ function selectOption(value) {
 </script>
 
 <template>
-  <div class="row my-1">
-    <label class="col-sm-2 col-form-label" :for="'mech-input-armor-upgrade-' + mechId">{{ label }}</label>
-    <BCol sm="4">
+  <tr class="my-1">
+    <td>
+      <label class="col-form-label" :for="'mech-input-armor-upgrade-' + mechId">{{ label }}</label>
+    </td>
+    <td>
       <BDropdown
           :id="'mech-input-armor-upgrade-' + mechId"
-          class="dropdown-block"
+          class="dropdown-table"
           :text="selectedValueLabel"
           variant="light"
       >
-        <BDropdown-header>
-          <BRow class="my-1">
-            <BCol sm="4">
+        <table class="table table-hover table-borderless">
+          <thead>
+          <tr>
+            <td>
               Type
-            </BCol>
-            <BCol sm="4" class="text-right">
+            </td>
+            <td class="text-end">
               Slots Used
-            </BCol>
-            <BCol sm="4" class="text-right">
+            </td>
+            <td class="text-end">
               Tons Used
-            </BCol>
-          </BRow>
-        </BDropdown-header>
-        <BDropdownDivider/>
-        <BDropdown-item
-            v-for="item in options" :key="item.value"
-            @click="selectOption(item.value)"
-            :active="item.value == model"
-        >
-          <BRow class="my-1">
-            <BCol sm="4">
+            </td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr
+              :class="{
+                'dropdown-row': true,
+                'table-primary':   (item.value == model)
+              }"
+              v-for="item in options" :key="item.value"
+              @click="selectOption(item.value)"
+          >
+            <td>
               {{ item.text }}
-            </BCol>
-            <BCol sm="4" class="text-right">
+            </td>
+            <td class="text-end">
               <number-val :val="item.slots" :invert-color="true" :positive-signed="false"/>
-            </BCol>
-            <BCol sm="4" class="text-right">
+            </td>
+            <td class="text-end">
               <number-val :val="item.cost_by_size[sizeId]" :invert-color="true" :positive-signed="false"/>
-            </BCol>
-          </BRow>
-        </BDropdown-item>
+            </td>
+          </tr>
+          </tbody>
+        </table>
       </BDropdown>
-    </BCol>
-    <div class="col-sm-1">
-    </div>
-    <div class="col-sm-1 col-form-label text-right">
-    </div>
-    <div class="col-sm-1 col-form-label text-right">
+    </td>
+    <td class="">
+    </td>
+    <td class=" col-form-label text-right">
+    </td>
+    <td class=" col-form-label text-right">
       <number-val :val="selectedValue.slots" invert-color/>
-    </div>
-    <div class="col-sm-1 col-form-label text-right">
+    </td>
+    <td class=" col-form-label text-right">
       <number-val :val="selectedValue.cost_by_size[sizeId]" invert-color/>
-    </div>
-  </div>
+    </td>
+  </tr>
 </template>
-<style scoped>
-
-</style>

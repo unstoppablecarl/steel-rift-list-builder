@@ -126,17 +126,17 @@ export default {
           :structure="info.structure_mod.modifier"
 
       />
-
+      <MechArmorUpgrades
+          label="Armor Upgrades"
+          v-model="mech.armor_upgrade_id"
+          :size-id="mech.size_id"
+          :mech-id="mech.id"
+      />
       </tbody>
     </table>
 
 
-    <MechArmorUpgrades
-        label="Armor Upgrades"
-        v-model="mech.armor_upgrade_id"
-        :size-id="mech.size_id"
-        :mech-id="mech.id"
-    />
+
 
     <MechStatRow
         v-if="hasTopEndHardware"
