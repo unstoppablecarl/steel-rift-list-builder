@@ -14,6 +14,7 @@ import {
     OLD_INFRASTRUCTURE,
 } from '../data/factions.js';
 import {TRAIT_LIMITED} from '../data/weapon-traits.js';
+import {GAME_SIZES, getGameSize} from '../data/game-sizes.js';
 
 export const useSupportAssetStore = defineStore('support-asset', () => {
 
@@ -91,19 +92,8 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
         const used_tons = computed(() => sumBy(support_assets.value, 'cost'));
         const used_support_assets = computed(() => support_asset_ids.value.length);
         const max_support_assets_based_on_tons = computed(() => {
-            if (armyList.max_tons >= 350) {
-                return 5;
-            }
-            if (armyList.max_tons >= 200) {
-                return 3;
-            }
-            if (armyList.max_tons >= 150) {
-                return 2;
-            }
-            if (armyList.max_tons >= 100) {
-                return 1;
-            }
-            return 0;
+            const sizeId = getGameSize(armyList.max_tons)
+            return GAME_SIZES[sizeId].max_support_assets
         });
 
         const max_support_assets = computed(() => {
