@@ -41,6 +41,8 @@ export const MECH_TEAMS = makeStaticListIds({
         groups: makeStaticListIds({
             'A': makeGroup({
                 display_name: 'Group A',
+                min_count: false,
+                max_count: false,
                 new_mech_defaults: {
                     size_id: SIZE_MEDIUM,
                     structure_mod_id: MOD_STANDARD,
@@ -76,12 +78,9 @@ export const MECH_TEAMS = makeStaticListIds({
                     HOWITZER,
                     MISSILES,
                 ],
-                // new_mech_defaults: {
-                //     size_id: SIZE_MEDIUM,
-                //     structure_mod_id: MOD_STANDARD,
-                //     armor_mod_id: MOD_STANDARD,
-                //     armor_upgrade_id: NO_ARMOR_UPGRADE,
-                // },
+                new_mech_defaults: {
+                    size_id: SIZE_MEDIUM,
+                },
             }),
         }),
         team_size_benefits: {

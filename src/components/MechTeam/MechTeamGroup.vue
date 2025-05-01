@@ -4,6 +4,7 @@ import Mech from '../Mech.vue';
 import draggable from 'vuedraggable';
 import {computed, ref} from 'vue';
 import {useTeamStore} from '../../store/team-store.js';
+import {TEAM_GENERAL} from '../../data/mech-teams.js';
 
 const teamStore = useTeamStore();
 const {teamId, groupId} = defineProps({
@@ -31,6 +32,8 @@ function onSortableChange(event) {
   teamStore.moveGroupMech(teamId, groupId, moved.element, moved.newIndex);
 }
 
+const isGeneralGroup = computed(() => teamId === TEAM_GENERAL)
+
 function collapseAll() {
   collapsed.value = Date.now();
 }
@@ -46,12 +49,15 @@ function expandAll() {
         <div class="d-inline-block py-2 pe-4">
           {{ groupInfo.display_name }}
         </div>
-        <span :class="{
+        <span
+            v-if="!isGeneralGroup"
+            :class="{
           'btn btn-sm btn-outline mx-1': true,
-          'btn-outline-success': groupInfo.size_valid,
+          'btn-light': groupInfo.size_valid,
           'btn-outline-danger': !groupInfo.size_valid,
-
-        }">
+        }"
+            v-b-tooltip.hover.top="{title: groupInfo.size_validation_message}"
+        >
           Size: {{ groupInfo.min_count }}-{{ groupInfo.max_count }}
         </span>
       </div>
@@ -95,6 +101,8 @@ function expandAll() {
         <template #item="{ element }">
           <mech
               :mech-id="element"
+              :team-id="teamId"
+              :group-id="groupId"
               :collapse-signal="collapsed"
               :expand-signal="expanded"
           />

@@ -58,32 +58,80 @@ export const useTeamStore = defineStore('team', () => {
             });
         }
 
-        function findGroup(teamId, groupId) {
-            const team = find(teams.value, {id: teamId});
-            return find(team.groups, {id: groupId});
+        const getTeamInfo = getter((teamId) => MECH_TEAMS[teamId]);
+
+        const getTeamGroupInfo = getter((teamId, groupId) => {
+            const groupDef = MECH_TEAMS[teamId].groups[groupId];
+            const group = findGroup.value(teamId, groupId);
+
+            const {
+                size_valid,
+                size_validation_message,
+            } = validateGroupSize(groupDef, group.mechs.length);
+
+            console.log({
+                size_valid,
+                size_validation_message,
+            })
+
+
+            return Object.assign({
+                size_valid,
+                size_validation_message,
+            }, groupDef);
+        });
+
+        function validateGroupSize(groupDef, mechCount) {
+            let size_valid = true;
+            let size_validation_message = 'Group Size Valid';
+            if (groupDef.min_count !== false) {
+                if (groupDef.min_count > mechCount) {
+                    size_valid = false;
+                    size_validation_message = 'Group has less than the minimum number of HE-V: ' + groupDef.min_count;
+                }
+            }
+
+            if (groupDef.max_count !== false) {
+                if (groupDef.max_count < mechCount) {
+                    size_valid = false;
+                    size_validation_message = 'Group has more than the maximum number of HE-V: ' + groupDef.max_count;
+                }
+            }
+
+            return {
+                size_valid,
+                size_validation_message,
+            };
         }
 
-        const addMechToTeam = getter((teamId, groupId) => {
+        const getTeamGroupMechIds = getter((teamId, groupId) => {
+            const group = findGroup.value(teamId, groupId);
+            return map(group.mechs, 'mech_id');
+        });
+
+        const findGroup = getter((teamId, groupId) => {
+            const team = find(teams.value, {id: teamId});
+            return find(team.groups, {id: groupId});
+        });
+
+        function addMechToTeam(teamId, groupId) {
             const mechOptions = MECH_TEAMS[teamId].groups[groupId].new_mech_defaults;
             const mech = mechStore.addMech(mechOptions ?? {});
-            const group = findGroup(teamId, groupId);
+            const group = findGroup.value(teamId, groupId);
 
             group.mechs.push({
                 mech_id: mech.id,
                 display_order: 0,
             });
-        });
+        }
 
-        const getTeamInfo = getter((teamId) => {
-            return MECH_TEAMS[teamId];
-        });
+        function removeMechFromTeam(teamId, groupId, mechId) {
+            const group = findGroup.value(teamId, groupId);
+            const index = findIndex(group.mechs, {'mech_id': mechId});
 
-        const getTeamGroupInfo = computed(() => (teamId, groupId) => MECH_TEAMS[teamId].groups[groupId]);
-
-        const getTeamGroupMechIds = getter((teamId, groupId) => {
-            const group = findGroup(teamId, groupId);
-            return map(group.mechs, 'mech_id');
-        });
+            group.mechs.splice(index, 1);
+            mechStore.removeMech(mechId);
+        }
 
         function removeTeam(id) {
             let index = findItemIndexById(teams.value, id);
@@ -91,7 +139,7 @@ export const useTeamStore = defineStore('team', () => {
         }
 
         function moveGroupMech(teamId, groupId, mechId, toIndex) {
-            const group = findGroup(teamId, groupId);
+            const group = findGroup.value(teamId, groupId);
 
             const index = findIndex(group.mechs, {mech_id: mechId});
             move(group.mechs, index, toIndex);
@@ -102,6 +150,7 @@ export const useTeamStore = defineStore('team', () => {
             teams,
             addable_teams,
             addMechToTeam,
+            removeMechFromTeam,
             getTeamGroupInfo,
             getTeamGroupMechIds,
             moveGroupMech,

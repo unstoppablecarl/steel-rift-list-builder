@@ -3,16 +3,28 @@ import {useMechStore} from '../store/mech-store.js';
 import Fraction from './functional/fraction.vue';
 import {computed, ref, watch} from 'vue';
 import {BButton} from 'bootstrap-vue-next';
+import {useTeamStore} from '../store/team-store.js';
 
 const mechStore = useMechStore();
+const teamStore = useTeamStore();
 
 const {
   mechId,
+  teamId,
+  groupId,
   collapseSignal,
   expandSignal,
 } = defineProps({
   mechId: {
     type: Number,
+    required: true,
+  },
+  teamId: {
+    type: String,
+    required: true,
+  },
+  groupId: {
+    type: String,
     required: true,
   },
   collapseSignal: {
@@ -55,7 +67,7 @@ watch(() => expandSignal, () => visible.value = true);
             </BButton>
 
             <BButton
-                @click="mechStore.removeMech(mechId)"
+                @click="teamStore.removeMechFromTeam(teamId, groupId, mechId)"
                 variant="danger"
                 class="mx-1"
             >
