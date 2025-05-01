@@ -18,25 +18,53 @@ import {
 } from './mech-benefits.js';
 import {MOD_REINFORCED, MOD_STANDARD, MOD_STRIPPED} from './mech-body.js';
 import {makeStaticListIds} from './data-helpers.js';
-import {ABLATIVE_ARMOR_UPGRADE, CERAMIC_ARMOR_UPGRADE, REACTIVE_ARMOR_UPGRADE} from './mech-armor-upgrades.js';
+import {
+    ABLATIVE_ARMOR_UPGRADE,
+    CERAMIC_ARMOR_UPGRADE,
+    NO_ARMOR_UPGRADE,
+    REACTIVE_ARMOR_UPGRADE,
+} from './mech-armor-upgrades.js';
+
 export const TEAM_SIZE_SMALL = 'TEAM_SIZE_SMALL';
 export const TEAM_SIZE_MEDIUM = 'TEAM_SIZE_MEDIUM';
 export const TEAM_SIZE_LARGE = 'TEAM_SIZE_LARGE';
+
+export const TEAM_GENERAL = 'TEAM_GENERAL';
 export const TEAM_FIRE_SUPPORT = 'TEAM_FIRE_SUPPORT';
 export const TEAM_RECON = 'TEAM_RECON';
 export const TEAM_SECURITY = 'TEAM_SECURITY';
 export const TEAM_TACTICAL = 'TEAM_TACTICAL';
 
 export const MECH_TEAMS = makeStaticListIds({
+    [[TEAM_GENERAL]]: {
+        display_name: 'General Team',
+        groups: makeStaticListIds({
+            'A': makeGroup({
+                display_name: 'Group A',
+                new_mech_defaults: {
+                    size_id: SIZE_MEDIUM,
+                    structure_mod_id: MOD_STANDARD,
+                    armor_mod_id: MOD_STANDARD,
+                    armor_upgrade_id: NO_ARMOR_UPGRADE,
+                },
+            }),
+        }),
+    },
     [[TEAM_FIRE_SUPPORT]]: {
         display_name: 'Fire Support Team',
-        groups: {
+        groups: makeStaticListIds({
             'A': makeGroup({
                 display_name: 'Group A',
                 min_count: 1,
                 max_count: 2,
                 size_ids: [SIZE_LIGHT],
                 required_weapons_ids: [TARGET_DESIGNATOR],
+                new_mech_defaults: {
+                    size_id: SIZE_LIGHT,
+                    structure_mod_id: MOD_STANDARD,
+                    armor_mod_id: MOD_STANDARD,
+                    armor_upgrade_id: NO_ARMOR_UPGRADE,
+                },
             }),
             'B': makeGroup({
                 display_name: 'Group B',
@@ -48,13 +76,19 @@ export const MECH_TEAMS = makeStaticListIds({
                     HOWITZER,
                     MISSILES,
                 ],
+                // new_mech_defaults: {
+                //     size_id: SIZE_MEDIUM,
+                //     structure_mod_id: MOD_STANDARD,
+                //     armor_mod_id: MOD_STANDARD,
+                //     armor_upgrade_id: NO_ARMOR_UPGRADE,
+                // },
             }),
-        },
+        }),
         team_size_benefits: {
             2: {
                 [[SIZE_LIGHT]]: [],
-                [[SIZE_MEDIUM]]: [BENEFIT_EXTRA_MLRS],
-                [[SIZE_HEAVY]]: [BENEFIT_EXTRA_MLRS],
+                [[SIZE_MEDIUM]]: [BENEFIT_EXTRA_MISSILE_AMMO],
+                [[SIZE_HEAVY]]: [BENEFIT_EXTRA_MISSILE_AMMO],
                 [[SIZE_ULTRA]]: [],
 
             },
@@ -66,8 +100,8 @@ export const MECH_TEAMS = makeStaticListIds({
             },
             4: {
                 [[SIZE_LIGHT]]: [BENEFIT_0_TON_TARGET_DESIGNATORS],
-                [[SIZE_MEDIUM]]: [BENEFIT_EXTRA_MLRS],
-                [[SIZE_HEAVY]]: [BENEFIT_EXTRA_MLRS],
+                [[SIZE_MEDIUM]]: [BENEFIT_EXTRA_MISSILE_AMMO],
+                [[SIZE_HEAVY]]: [BENEFIT_EXTRA_MISSILE_AMMO],
                 [[SIZE_ULTRA]]: [],
             },
 
@@ -75,7 +109,7 @@ export const MECH_TEAMS = makeStaticListIds({
     },
     [[TEAM_RECON]]: {
         display_name: 'Recon Team',
-        groups: {
+        groups: makeStaticListIds({
             'A': makeGroup({
                 display_name: 'Group A',
                 min_count: 1,
@@ -92,7 +126,7 @@ export const MECH_TEAMS = makeStaticListIds({
                 limited_structure_mod_ids: [MOD_STRIPPED],
                 limited_armor_mod_ids: [MOD_STRIPPED],
             }),
-        },
+        }),
         team_size_benefits: {
             2: {
                 [[SIZE_LIGHT]]: [BENEFIT_0_SLOT_ECM],
@@ -117,7 +151,7 @@ export const MECH_TEAMS = makeStaticListIds({
     },
     [[TEAM_SECURITY]]: {
         display_name: 'Security Team',
-        groups: {
+        groups: makeStaticListIds({
             'A': makeGroup({
                 display_name: 'Group A',
                 min_count: 1,
@@ -158,7 +192,7 @@ export const MECH_TEAMS = makeStaticListIds({
                 limited_structure_mod_ids: [MOD_STANDARD, MOD_REINFORCED],
                 limited_armor_mod_ids: [MOD_STANDARD, MOD_REINFORCED],
             }),
-        },
+        }),
         team_size_benefits: {
             2: {
                 [[SIZE_LIGHT]]: [],
@@ -183,7 +217,7 @@ export const MECH_TEAMS = makeStaticListIds({
     },
     [[TEAM_TACTICAL]]: {
         display_name: 'Tactical Team',
-        groups: {
+        groups: makeStaticListIds({
             'A': makeGroup({
                 display_name: 'Group A',
                 min_count: 1,
@@ -207,7 +241,7 @@ export const MECH_TEAMS = makeStaticListIds({
                 size_ids: [SIZE_HEAVY],
                 at_least_one_of_weapon_ids: [ROCKET_PACK, MISSILES],
             }),
-        },
+        }),
         team_size_benefits: {
             3: {
                 [[SIZE_LIGHT]]: [BENEFIT_0_SLOT_TARGET_DESIGNATORS],

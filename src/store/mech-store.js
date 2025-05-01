@@ -27,15 +27,26 @@ export const useMechStore = defineStore('mech', {
             };
         },
         actions: {
-            addMech() {
+            addMech({
+                        size_id,
+                        structure_mod_id,
+                        armor_mod_id,
+                        armor_upgrade_id,
+                    }) {
+
+                size_id = size_id ?? SIZE_MEDIUM;
+                structure_mod_id = structure_mod_id ?? MOD_STANDARD;
+                armor_mod_id = armor_mod_id ?? MOD_STANDARD;
+                armor_upgrade_id = armor_upgrade_id ?? NO_ARMOR_UPGRADE;
+
                 let id = this.mechs_id_increment++;
                 let mech = {
                     id,
                     name: null,
-                    size_id: SIZE_MEDIUM,
-                    structure_mod_id: MOD_STANDARD,
-                    armor_mod_id: MOD_STANDARD,
-                    armor_upgrade_id: NO_ARMOR_UPGRADE,
+                    size_id,
+                    structure_mod_id,
+                    armor_mod_id,
+                    armor_upgrade_id,
                     weapons: [],
                     weapons_id_increment: 1,
                     upgrades: [],
@@ -45,6 +56,8 @@ export const useMechStore = defineStore('mech', {
 
                 this.mechs.push(mech);
                 mech.display_order = findItemIndex(this.mechs, mech);
+
+                return mech;
             },
             updateMech(mechId, data) {
                 let mech = findById(this.mechs, mechId);
@@ -62,6 +75,9 @@ export const useMechStore = defineStore('mech', {
             },
             moveMech(mech, toIndex) {
                 moveItem(this.mechs, mech, toIndex);
+            },
+            removeMech(mechId) {
+                deleteItemById(this.mechs, mechId);
             },
             addMechWeaponAttachment(mechId, weaponId) {
                 let mech = findById(this.mechs, mechId);
@@ -152,7 +168,7 @@ export const useMechStore = defineStore('mech', {
                         base_cost: cost,
                         cost: cost + duplicate_cost,
                         duplicate_cost,
-                        duplicate_percent: previousWeaponInstances * 50
+                        duplicate_percent: previousWeaponInstances * 50,
                     });
 
                     return readonly(result);
@@ -187,6 +203,9 @@ export const useMechStore = defineStore('mech', {
                     const upgradeAttachment = this.getMechUpgradeAttachment(mechId, mechUpgradeAttachmentId);
                     return this.getUpgradeInfo(mechId, upgradeAttachment.upgrade_id);
                 };
+            },
+            getAllMechInfo(state) {
+                return state.mechs.map((mech) => this.getMechInfo(mech.id));
             },
             getMechInfo(state) {
                 return function (mechId) {

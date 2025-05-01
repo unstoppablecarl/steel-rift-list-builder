@@ -2,6 +2,7 @@ import {defineStore} from 'pinia';
 import {computed, ref} from 'vue';
 import {FACTIONS, NO_FACTION} from '../data/factions.js';
 import {find} from 'lodash';
+import {getter} from './store-helpers.js';
 
 export const useFactionStore = defineStore('faction', () => {
 
@@ -17,7 +18,7 @@ export const useFactionStore = defineStore('faction', () => {
 
         const faction_display_name = computed(() => FACTIONS[faction_id.value].display_name);
 
-        function perkBelongsToFaction(perkId) {
+        const perkBelongsToFaction = getter((perkId) => {
 
             let result = find(FACTIONS[faction_id.value].faction_perk_groups, (perkGroup) => {
                 const validPerkIds = Object.keys(perkGroup.perks);
@@ -25,23 +26,21 @@ export const useFactionStore = defineStore('faction', () => {
             });
 
             return !!result;
-        }
+        });
 
-        function hasPerk(perkId) {
-            return perkId == perk_1_id.value || perkId == perk_2_id.value;
-        }
+        const hasPerk = getter((perkId) => perkId == perk_1_id.value || perkId == perk_2_id.value);
 
-        function groupContainsPerkId(perkGroupId, perkId) {
+        function groupContainsPerkId(perkGroupId, perkId)  {
             const perks = FACTIONS[faction_id.value].faction_perk_groups[perkGroupId].perks;
             return Object.keys(perks).includes(perkId);
         }
 
         function clearInvalidPerks() {
-            if (!perkBelongsToFaction(perk_1_id)) {
+            if (!perkBelongsToFaction.value(perk_1_id)) {
                 perk_1_id.value = null;
             }
 
-            if (!perkBelongsToFaction(perk_2_id)) {
+            if (!perkBelongsToFaction.value(perk_2_id)) {
                 perk_2_id.value = null;
             }
         }
@@ -50,17 +49,17 @@ export const useFactionStore = defineStore('faction', () => {
             return [{
                 id: null,
                 display_name: 'Select Perk',
-            }].concat(makeDropdownData(perk_2_id));
+            }].concat(makeDropdownData.value(perk_2_id));
         });
 
         const perk_2_drop_down = computed(() => {
             return [{
                 id: null,
                 display_name: 'Select Perk',
-            }].concat(makeDropdownData(perk_1_id));
+            }].concat(makeDropdownData.value(perk_1_id));
         });
 
-        function makeDropdownData(otherPerkId) {
+        const makeDropdownData = getter((otherPerkId) => {
             let perkGroups = FACTIONS[faction_id.value].faction_perk_groups;
             let result = Object.values(perkGroups);
             result = result.map((perkGroup) => {
@@ -76,8 +75,8 @@ export const useFactionStore = defineStore('faction', () => {
 
                 return perkGroups;
             });
-            return result
-        }
+            return result;
+        });
 
         return {
             perk_1_id,

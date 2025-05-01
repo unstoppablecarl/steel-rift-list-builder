@@ -33,6 +33,7 @@ $dropdown-header-padding-y: .2rem;
 $dropdown-divider-margin-y: .2rem;
 
 $btn-focus-box-shadow: 0;
+//$badge-font-size: .9em;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import '../../node_modules/bootstrap-vue-next/src/styles/styles';
@@ -49,6 +50,16 @@ body {
   background-color: var(--bs-light-bg-subtle);
 }
 
+.btn-fake {
+  --bs-btn-border-color: rgba(0,0,0,0.3);
+  --bs-btn-hover-color: var(--bs-btn-color);
+  --bs-btn-hover-bg: var(--bs-btn-bg);
+  --bs-btn-hover-border-color: var(--bs-btn-border-color);
+  --bs-btn-active-color: var(--bs-btn-color);
+  --bs-btn-active-bg: var(--bs-btn-bg);
+  --bs-btn-active-border-color: var(--bs-btn-border-color);
+  cursor: default;
+}
 .card {
   margin-top: .5rem;
   margin-bottom: .5rem;

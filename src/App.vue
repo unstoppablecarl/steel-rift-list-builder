@@ -3,6 +3,7 @@ import MechList from './components/MechList.vue';
 import Toaster from './components/UI/Toaster.vue';
 import FileControls from './components/FileControls.vue';
 import ArmyList from './components/ArmyList.vue';
+import MechTeamList from './components/MechTeamList.vue';
 </script>
 <template>
   <Toaster/>
@@ -10,7 +11,7 @@ import ArmyList from './components/ArmyList.vue';
 
     <FileControls/>
     <ArmyList/>
-    <MechList/>
+    <MechTeamList/>
 
   </div>
 </template>
