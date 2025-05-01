@@ -19,9 +19,8 @@ const groupInfo = computed(() => teamStore.getTeamGroupInfo(teamId, groupId));
 const mechIds = computed(() => teamStore.getTeamGroupMechIds(teamId, groupId));
 
 const dragging = ref(false);
-
-const collapsed = ref('');
-const expanded = ref('');
+const collapsed = ref(0);
+const expanded = ref(0);
 
 function onSortableChange(event) {
   let moved = event.moved;
@@ -43,40 +42,40 @@ function expandAll() {
 <template>
   <div class="card text-bg-light">
     <div class="card-header d-flex">
-      <div class="flex-grow-1 py-1">
-        <strong>
+      <div class="flex-grow-1">
+        <div class="d-inline-block py-2 pe-4">
           {{ groupInfo.display_name }}
-        </strong>
+        </div>
         <span :class="{
-          'btn btn-sm btn-fake mx-1': true,
-          'btn-light': groupInfo.size_valid
+          'btn btn-sm btn-outline mx-1': true,
+          'btn-outline-success': groupInfo.size_valid,
+          'btn-outline-danger': !groupInfo.size_valid,
+
         }">
           Size: {{ groupInfo.min_count }}-{{ groupInfo.max_count }}
         </span>
       </div>
       <div class="text-end">
         <BButton
-            class="ms-1"
-            variant="secondary"
-            size="sm"
-            @click="collapseAll"
-        >
-          Collapse All
-        </BButton>
-        <BButton
-            class="ms-1"
-            variant="secondary"
-            size="sm"
-            @click="expandAll"
-        >
-          Expand All
-        </BButton>
-        <BButton
             variant="primary"
             class="ms-1"
-            size="sm"
             @click="teamStore.addMechToTeam(teamId, groupId)">
           Add Mech
+        </BButton>
+        <BButton
+            class="ms-1 btn-icon"
+            variant="light"
+            @click="collapseAll"
+        >
+          <span class="material-symbols-outlined">keyboard_double_arrow_up</span>
+
+        </BButton>
+        <BButton
+            class="ms-1 btn-icon"
+            variant="light"
+            @click="expandAll"
+        >
+          <span class="material-symbols-outlined">keyboard_double_arrow_down</span>
         </BButton>
       </div>
     </div>

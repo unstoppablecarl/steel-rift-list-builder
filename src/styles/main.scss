@@ -42,6 +42,19 @@ $btn-focus-box-shadow: 0;
 @import "./dropdown";
 @import "./collapse";
 
+.material-symbols-outlined{
+  font-size: 1.2rem;
+  line-height: inherit;
+}
+
+.btn-icon {
+  padding: .1rem .2rem;
+  min-width: 2.5rem;
+}
+.btn-light {
+  border-color: rgba(0,0,0,0.2);
+}
+
 body {
   background: tint-color($cyan, 80%);
 }
@@ -49,6 +62,8 @@ body {
 .mech-stats > .row:nth-child(even) {
   background-color: var(--bs-light-bg-subtle);
 }
+
+
 
 .btn-fake {
   --bs-btn-border-color: rgba(0,0,0,0.3);

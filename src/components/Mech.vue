@@ -16,10 +16,10 @@ const {
     required: true,
   },
   collapseSignal: {
-    type: String,
+    type: Number,
   },
   expandSignal: {
-    type: String,
+    type: Number,
   },
 });
 

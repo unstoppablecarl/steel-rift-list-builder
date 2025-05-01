@@ -15,7 +15,7 @@ const teamInfo = computed(() => teamStore.getTeamInfo(teamId));
 
 </script>
 <template>
-  <div class="card text-bg-light">
+  <div class="card">
     <div class="card-header fw-bold">
       {{ teamInfo.display_name }}
     </div>
