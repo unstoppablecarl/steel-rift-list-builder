@@ -1,30 +1,33 @@
-<script>
-import {mapStores} from 'pinia';
+<script setup>
 import {useMechStore} from '../store/mech-store.js';
-import MechWeapons from './Mech/MechWeapons.vue';
-import MechUpgrades from './Mech/MechUpgrades.vue';
 import Fraction from './functional/fraction.vue';
+import {computed, ref, watch} from 'vue';
+import {BButton} from 'bootstrap-vue-next';
 
-export default {
-  components: {Fraction, MechUpgrades, MechWeapons},
-  props: {
-    mechId: Number,
+const mechStore = useMechStore();
+
+const {
+  mechId,
+  collapseSignal,
+  expandSignal,
+} = defineProps({
+  mechId: {
+    type: Number,
+    required: true,
   },
-  data() {
-    return {
-      visible: true,
-    };
+  collapseSignal: {
+    type: String,
   },
-  computed: {
-    ...mapStores(useMechStore),
-    mech() {
-      return this.mechStore.getMech(this.mechId);
-    },
-    info() {
-      return this.mechStore.getMechInfo(this.mechId);
-    },
+  expandSignal: {
+    type: String,
   },
-};
+});
+
+const visible = ref(true);
+const info = computed(() => mechStore.getMechInfo(mechId));
+
+watch(() => collapseSignal, () => visible.value = false);
+watch(() => expandSignal, () => visible.value = true);
 </script>
 <template>
   <div class="card">
@@ -41,6 +44,7 @@ export default {
         </div>
         <div class="col-sm-8">
           <div class="d-flex flex-row-reverse">
+
             <BButton
                 :class="'btn-collapse ' + (visible ? null : 'collapsed')"
                 variant="light"
@@ -49,6 +53,15 @@ export default {
                 @click="visible = !visible"
             >
             </BButton>
+
+            <BButton
+                @click="mechStore.removeMech(mechId)"
+                variant="danger"
+                class="mx-1"
+            >
+              X
+            </BButton>
+
             <div class="collapse-header">
               <span class="px-2">
                 <strong>Arm:</strong>

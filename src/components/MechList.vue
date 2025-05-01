@@ -1,51 +1,55 @@
-<script>
+<script setup>
 
 import Mech from './Mech.vue';
-import {mapStores} from 'pinia';
+import {storeToRefs} from 'pinia';
 import {useMechStore} from '../store/mech-store.js';
 import draggable from 'vuedraggable';
+import {ref} from 'vue';
 
-export default {
-  name: 'mech-list',
-  components: {Mech, draggable},
-  data() {
-    return {
-      drag: false,
+const dragging = ref(false);
 
-    };
-  },
-  computed: {
-    ...mapStores(useMechStore),
-    mechs() {
-      return this.mechStore.mechs;
-    },
-    name() {
-      return this.mechStore.name;
-    },
-    totalTons() {
-      return this.mechStore.totalTons;
-    },
-  },
-  methods: {
-    addMech() {
-      this.mechStore.addMech();
-    },
-    onSortableChange(event) {
-      let moved = event.moved;
-      if (!moved) {
-        return;
-      }
+const mechStore = useMechStore();
+const {mechs, totalTons} = storeToRefs(mechStore);
 
-      this.mechStore.moveMech(moved.element, moved.newIndex);
-    },
-  },
-};
+const collapsed = ref(0);
+const expanded = ref(0);
+
+function onSortableChange(event) {
+  let moved = event.moved;
+  if (!moved) {
+    return;
+  }
+
+  mechStore.moveMech(moved.element, moved.newIndex);
+}
+function collapseAll() {
+  collapsed.value = Date.now();
+}
+function expandAll() {
+  expanded.value = Date.now();
+}
 </script>
 <template>
   <div class="card text-bg-light">
     <div class="card-header">
       Mechs
       <div class="float-end">
+        <BButton
+            class="mx-1"
+            variant="secondary"
+            size="sm"
+            @click="collapseAll"
+        >
+          Collapse All
+        </BButton>
+        <BButton
+            class="mx-1"
+            variant="secondary"
+            size="sm"
+            @click="expandAll"
+        >
+          Expand All
+        </BButton>
         <strong>Tonnage: </strong>{{ totalTons }}
       </div>
     </div>
@@ -65,13 +69,15 @@ export default {
         <template #item="{ element }">
           <mech
               :mech-id="element.id"
+              :collapse-signal="collapsed"
+              :expand-signal="expanded"
           />
         </template>
       </draggable>
     </div>
     <div class="card-footer">
       <div class="float-end">
-        <BButton variant="primary" @click="addMech">Add Mech</BButton>
+        <BButton variant="primary" @click="mechStore.addMech">Add Mech</BButton>
       </div>
     </div>
   </div>
