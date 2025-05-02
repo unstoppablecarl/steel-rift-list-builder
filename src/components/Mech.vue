@@ -10,8 +10,6 @@ const teamStore = useTeamStore();
 
 const {
   mechId,
-  teamId,
-  groupId,
   collapseSignal,
   expandSignal,
 } = defineProps({
@@ -34,9 +32,6 @@ const {
     type: Number,
   },
 });
-
-provide('teamId', teamId);
-provide('groupId', groupId);
 
 const visible = ref(true);
 const info = computed(() => mechStore.getMechInfo(mechId));

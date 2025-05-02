@@ -102,8 +102,6 @@ function expandAll() {
         <template #item="{ element }">
           <mech
               :mech-id="element"
-              :team-id="teamId"
-              :group-id="groupId"
               :collapse-signal="collapsed"
               :expand-signal="expanded"
           />
