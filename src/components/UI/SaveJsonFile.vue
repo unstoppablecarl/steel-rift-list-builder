@@ -1,5 +1,12 @@
 <script setup>
 import fileSaver from 'file-saver';
+import {useMechStore} from '../../store/mech-store.js';
+import {useFactionStore} from '../../store/faction-store.js';
+import {useTeamStore} from '../../store/team-store.js';
+
+const mechStore = useMechStore();
+const factionStore = useFactionStore();
+const teamStore = useTeamStore();
 
 function saveFile(fileName, data) {
   let payload = JSON.stringify(data);
@@ -8,6 +15,11 @@ function saveFile(fileName, data) {
 }
 
 function loadFromLocal(key) {
+  //make sure stores are persisted in case they have not been mutated yet
+  mechStore.$persist();
+  factionStore.$persist();
+  teamStore.$persist();
+
   return JSON.parse(localStorage[key]);
 }
 
