@@ -126,7 +126,6 @@ export const MECH_TEAMS = makeStaticListIds({
                 [[SIZE_HEAVY]]: [BENEFIT_DIRECTIONAL_ASSETS],
                 [[SIZE_ULTRA]]: [],
             },
-
         },
     },
     [[TEAM_SECURITY]]: {
