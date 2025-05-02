@@ -17,7 +17,7 @@ const {
 const teamId = inject('teamId');
 const groupId = inject('groupId');
 
-const weapon = computed(() => mechStore.getMechWeaponAttachmentInfo(mechId, mechWeaponAttachmentId, teamId, groupId));
+const weapon = computed(() => mechStore.getMechWeaponAttachmentInfo(teamId, groupId, mechId, mechWeaponAttachmentId));
 
 function remove() {
   mechStore.removeMechWeaponAttachment(mechId, mechWeaponAttachmentId);

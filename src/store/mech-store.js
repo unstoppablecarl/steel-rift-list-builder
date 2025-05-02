@@ -152,7 +152,7 @@ export const useMechStore = defineStore('mech', {
                 };
             },
             getMechWeaponAttachmentInfo(state) {
-                return (mechId, mechWeaponAttachmentId, teamId, groupId) => {
+                return (teamId, groupId, mechId, mechWeaponAttachmentId) => {
                     const teamStore = useTeamStore();
 
                     const mech = this.getMech(mechId);
@@ -204,9 +204,14 @@ export const useMechStore = defineStore('mech', {
                 };
             },
             getMechUpgradeAttachmentInfo(state) {
-                return (mechId, mechUpgradeAttachmentId) => {
+                return (teamId, groupId, mechId, mechUpgradeAttachmentId) => {
+                    const teamStore = useTeamStore();
                     const upgradeAttachment = this.getMechUpgradeAttachment(mechId, mechUpgradeAttachmentId);
-                    return this.getUpgradeInfo(mechId, upgradeAttachment.upgrade_id);
+
+                    const info = this.getUpgradeInfo(mechId, upgradeAttachment.upgrade_id);
+                    const isRequired = teamStore.getUpgradeIsRequired(teamId, groupId, upgradeAttachment.upgrade_id);
+
+                    return Object.assign({}, info, {required_by_group: isRequired});
                 };
             },
             getAllMechInfo(state) {

@@ -65,6 +65,10 @@ export const useTeamStore = defineStore('team', () => {
             const groupDef = MECH_TEAMS[teamId].groups[groupId];
             return groupDef.required_weapon_ids.includes(weaponId);
         });
+        const getUpgradeIsRequired = getter((teamId, groupId, upgradeId) => {
+            const groupDef = MECH_TEAMS[teamId].groups[groupId];
+            return groupDef.required_upgrade_ids.includes(upgradeId);
+        });
 
         const getTeamGroupSizeValidation = getter((teamId, groupId) => {
             const {min_count, max_count} = MECH_TEAMS[teamId].groups[groupId];
@@ -114,6 +118,9 @@ export const useTeamStore = defineStore('team', () => {
             groupDef.required_weapon_ids.forEach((weaponId) => {
                 mechStore.addMechWeaponAttachment(mech.id, weaponId);
             });
+            groupDef.required_upgrade_ids.forEach((upgradeId) => {
+                mechStore.addMechUpgradeAttachment(mech.id, upgradeId);
+            });
 
             group.mechs.push({
                 mech_id: mech.id,
@@ -150,6 +157,7 @@ export const useTeamStore = defineStore('team', () => {
             getTeamGroupMechIds,
             getTeamGroupSizeValidation,
             getWeaponIsRequired,
+            getUpgradeIsRequired,
             addMechToTeam,
             removeMechFromTeam,
             moveGroupMech,
