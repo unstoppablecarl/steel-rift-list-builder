@@ -36,7 +36,7 @@ export const MECH_TEAMS = makeStaticListIds({
         display_name: 'General Team',
         groups: makeStaticListIds({
             'A': makeGroup({
-                display_name: 'Group A',
+                display_name: 'HE-Vs',
                 min_count: false,
                 max_count: false,
             }),
@@ -46,14 +46,14 @@ export const MECH_TEAMS = makeStaticListIds({
         display_name: 'Fire Support Team',
         groups: makeStaticListIds({
             'A': makeGroup({
-                display_name: 'Group A',
+                display_name: 'Light HE-Vs',
                 min_count: 1,
                 max_count: 2,
                 size_ids: [SIZE_LIGHT],
                 required_upgrade_ids: [TARGET_DESIGNATOR],
             }),
             'B': makeGroup({
-                display_name: 'Group B',
+                display_name: 'Medium and Heavy HE-Vs',
                 min_count: 1,
                 max_count: 2,
                 size_ids: [SIZE_MEDIUM, SIZE_HEAVY],
@@ -91,14 +91,14 @@ export const MECH_TEAMS = makeStaticListIds({
         display_name: 'Recon Team',
         groups: makeStaticListIds({
             'A': makeGroup({
-                display_name: 'Group A',
+                display_name: 'Light HE-Vs',
                 min_count: 1,
                 max_count: 4,
                 size_ids: [SIZE_LIGHT],
                 required_upgrade_ids: [TARGET_DESIGNATOR],
             }),
             'B': makeGroup({
-                display_name: 'Group B',
+                display_name: 'Medium and Heavy HE-Vs',
                 min_count: 0,
                 max_count: 2,
                 size_ids: [SIZE_MEDIUM, SIZE_HEAVY],
@@ -132,7 +132,7 @@ export const MECH_TEAMS = makeStaticListIds({
         display_name: 'Security Team',
         groups: makeStaticListIds({
             'A': makeGroup({
-                display_name: 'Group A',
+                display_name: 'Medium HE-Vs',
                 min_count: 1,
                 max_count: 4,
                 size_ids: [SIZE_MEDIUM],
@@ -146,7 +146,7 @@ export const MECH_TEAMS = makeStaticListIds({
                 limited_armor_mod_ids: [MOD_STANDARD, MOD_REINFORCED],
             }),
             'B': makeGroup({
-                display_name: 'Group B',
+                display_name: 'Heavy HE-Vs',
                 min_count: 1,
                 max_count: 2,
                 size_ids: [SIZE_HEAVY],

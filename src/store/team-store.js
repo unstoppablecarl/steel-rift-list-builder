@@ -72,7 +72,6 @@ export const useTeamStore = defineStore('team', () => {
         });
 
         const getMechTeamAndGroupIds = getter((mechId) => {
-
             let teamId = null;
             let groupId = null;
 
@@ -86,47 +85,62 @@ export const useTeamStore = defineStore('team', () => {
                     }
                 });
             });
-
             if (!teamId) {
                 throw new Error('Mech team not found!');
             }
             if (!groupId) {
                 throw new Error('Mech group not found!');
             }
-
             return {
                 teamId,
                 groupId,
             };
-
         });
 
         const getMechSizeValid = getter((mechId, sizeId) => {
             const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
             const info = getTeamGroupInfo.value(teamId, groupId);
-            return info?.size_ids.includes(sizeId);
+            if (!info.size_ids || !info.size_ids.length) {
+                return true;
+            }
+
+            return info.size_ids.includes(sizeId);
         });
 
         const getMechStructureModValid = getter((mechId, modId) => {
             const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
             const info = getTeamGroupInfo.value(teamId, groupId);
 
-            if(!info.limited_structure_mod_ids|| !info.limited_structure_mod_ids.length){
-                return true
-            }
-
-            return info.limited_structure_mod_ids.includes(modId);
+            return getStructureModValid(info.limited_structure_mod_ids, modId);
         });
 
         const getMechArmorModValid = getter((mechId, modId) => {
             const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
             const info = getTeamGroupInfo.value(teamId, groupId);
-            if(!info.limited_armor_mod_ids || !info.limited_armor_mod_ids.length){
-                return true
+
+            return getStructureModValid(info.limited_armor_mod_ids, modId);
+        });
+
+        function getStructureModValid(limitedModIds, modId) {
+            if (!limitedModIds || !limitedModIds.length) {
+                return {
+                    valid: true,
+                    validation_message: null,
+                };
             }
 
-            return info.limited_armor_mod_ids.includes(modId);
-        });
+            if (!limitedModIds.includes(modId)) {
+                return {
+                    valid: false,
+                    validation_message: 'Not available in Group',
+                };
+            }
+
+            return {
+                valid: true,
+                validation_message: null,
+            };
+        }
 
         const getTeamGroupSizeValidation = getter((teamId, groupId) => {
             const {min_count, max_count} = MECH_TEAMS[teamId].groups[groupId];
@@ -155,6 +169,16 @@ export const useTeamStore = defineStore('team', () => {
                 size_valid,
                 size_validation_message,
             };
+        });
+
+        const getTeamMechIds = getter((teamId) => {
+            const team = find(teams.value, {id: teamId});
+
+            let mechIds = [];
+            team.groups.forEach((group) => {
+                mechIds = mechIds.concat(map(group.mechs, 'mech_id'));
+            });
+            return mechIds;
         });
 
         const getTeamGroupMechIds = getter((teamId, groupId) => {
@@ -187,16 +211,16 @@ export const useTeamStore = defineStore('team', () => {
             const groupDef = MECH_TEAMS[teamId].groups[groupId];
             const mechOptions = {};
 
-            if (groupDef.size_ids.length) {
+            if (groupDef?.size_ids?.length) {
                 mechOptions.size_id = groupDef.size_ids[0];
             }
-            if (groupDef.limited_structure_mod_ids.length) {
+            if (groupDef?.limited_structure_mod_ids?.length) {
                 mechOptions.structure_mod_id = groupDef.limited_structure_mod_ids[0];
             }
-            if (groupDef.limited_armor_mod_ids.length) {
+            if (groupDef?.limited_armor_mod_ids?.length) {
                 mechOptions.armor_mod_id = groupDef.limited_armor_mod_ids[0];
             }
-            if (groupDef.limited_armor_upgrade_ids.length) {
+            if (groupDef?.limited_armor_upgrade_ids?.length) {
                 mechOptions.armor_upgrade_id = groupDef.limited_armor_upgrade_ids[0];
             }
 
@@ -224,8 +248,11 @@ export const useTeamStore = defineStore('team', () => {
             group.mechs.splice(index, 1);
         }
 
-        function removeTeam(id) {
-            let index = findItemIndexById(teams.value, id);
+        function removeTeam(teamId) {
+            const mechIds = getTeamMechIds.value(teamId);
+            console.log(mechIds)
+            mechIds.forEach((mechId) => mechStore.removeMech(mechId));
+            let index = findItemIndexById(teams.value, teamId);
             teams.value.splice(index, 1);
         }
 

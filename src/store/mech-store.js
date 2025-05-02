@@ -79,8 +79,8 @@ export const useMechStore = defineStore('mech', {
             },
             removeMech(mechId) {
                 const teamStore = useTeamStore();
-                deleteItemById(this.mechs, mechId);
                 teamStore.removeMechFromTeam(mechId);
+                deleteItemById(this.mechs, mechId);
             },
             addMechWeaponAttachment(mechId, weaponId) {
                 let mech = findById(this.mechs, mechId);
