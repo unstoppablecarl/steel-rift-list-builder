@@ -256,16 +256,16 @@ function makeGroup(obj) {
     each(result.groups, (group) => {
         const mechOptions = {};
 
-        if (group.size_ids.length) {
+        if (group?.size_ids.length) {
             mechOptions.size_id = group.size_ids[0];
         }
-        if (group.limited_structure_mod_ids.length) {
+        if (group?.limited_structure_mod_ids.length) {
             mechOptions.structure_mod_id = group.limited_structure_mod_ids[0];
         }
-        if (group.limited_armor_mod_ids.length) {
+        if (group?.limited_armor_mod_ids.length) {
             mechOptions.armor_mod_id = group.limited_armor_mod_ids[0];
         }
-        if (group.limited_armor_upgrade_ids.length) {
+        if (group?.limited_armor_upgrade_ids.length) {
             mechOptions.armor_upgrade_id = group.limited_armor_upgrade_ids[0];
         }
 

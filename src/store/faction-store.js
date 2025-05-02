@@ -1,6 +1,19 @@
 import {defineStore} from 'pinia';
 import {computed, ref} from 'vue';
-import {FACTIONS, NO_FACTION} from '../data/factions.js';
+import {
+    CORPORATIONS,
+    DEEP_WAR_CHEST,
+    DWC_TOP_END_HARDWARE,
+    DWC_TOP_END_HARDWARE_BONUS_TONS,
+    FACTIONS,
+    FREELANCERS,
+    NO_FACTION,
+    RD_ADVANCED_HARDPOINT_DESIGN,
+    RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS,
+    RESEARCH_AND_DEVELOPMENT,
+    UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN,
+    UNDERWORLD_AFFILIATIONS,
+} from '../data/factions.js';
 import {find} from 'lodash';
 import {getter} from './store-helpers.js';
 
@@ -30,7 +43,7 @@ export const useFactionStore = defineStore('faction', () => {
 
         const hasPerk = getter((perkId) => perkId == perk_1_id.value || perkId == perk_2_id.value);
 
-        function groupContainsPerkId(perkGroupId, perkId)  {
+        function groupContainsPerkId(perkGroupId, perkId) {
             const perks = FACTIONS[faction_id.value].faction_perk_groups[perkGroupId].perks;
             return Object.keys(perks).includes(perkId);
         }
@@ -78,6 +91,36 @@ export const useFactionStore = defineStore('faction', () => {
             return result;
         });
 
+        const hasAdvancedHardPoints = computed(() => {
+            return hasPerk.value(RD_ADVANCED_HARDPOINT_DESIGN) ||
+                hasPerk.value(UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN);
+        });
+        const advancedHardPointsLabel = computed(() => {
+            if (hasPerk.value(RD_ADVANCED_HARDPOINT_DESIGN)) {
+                return FACTIONS[CORPORATIONS]
+                    .faction_perk_groups[RESEARCH_AND_DEVELOPMENT]
+                    .perks[RD_ADVANCED_HARDPOINT_DESIGN]
+                    .display_name;
+            }
+            if (hasPerk.value(UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN)) {
+                return FACTIONS[FREELANCERS]
+                    .faction_perk_groups[UNDERWORLD_AFFILIATIONS]
+                    .perks[UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN]
+                    .display_name;
+            }
+        });
+
+        const hasTopEndHardware = computed(() => hasPerk.value(DWC_TOP_END_HARDWARE));
+        const topEndHardwareLabel = computed(() => {
+            return FACTIONS[CORPORATIONS]
+                .faction_perk_groups[DEEP_WAR_CHEST]
+                .perks[DWC_TOP_END_HARDWARE]
+                .display_name;
+        });
+
+        const advancedHardPointsBonusSlots = computed(() => RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS);
+        const topEndHardwareBonusTons = computed(() => DWC_TOP_END_HARDWARE_BONUS_TONS);
+
         return {
             perk_1_id,
             perk_2_id,
@@ -86,6 +129,12 @@ export const useFactionStore = defineStore('faction', () => {
             perk_1_drop_down,
             perk_2_drop_down,
             clearInvalidPerks,
+            hasAdvancedHardPoints,
+            advancedHardPointsLabel,
+            advancedHardPointsBonusSlots,
+            topEndHardwareBonusTons,
+            hasTopEndHardware,
+            topEndHardwareLabel,
             hasPerk,
             $reset,
         };

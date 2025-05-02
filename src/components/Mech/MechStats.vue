@@ -1,79 +1,37 @@
-<script>
-import {BFormInput, BInput} from 'bootstrap-vue-next';
-import {mapStores} from 'pinia';
+<script setup>
+import {BFormInput} from 'bootstrap-vue-next';
 import {useMechStore} from '../../store/mech-store.js';
 import {useFactionStore} from '../../store/faction-store.js';
-import {
-  CORPORATIONS,
-  DEEP_WAR_CHEST,
-  DWC_TOP_END_HARDWARE,
-  DWC_TOP_END_HARDWARE_BONUS_TONS,
-  FACTIONS,
-  FREELANCERS,
-  RD_ADVANCED_HARDPOINT_DESIGN,
-  RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS,
-  RESEARCH_AND_DEVELOPMENT,
-  UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN,
-  UNDERWORLD_AFFILIATIONS,
-} from '../../data/factions.js';
 import Number from '../functional/number.vue';
 import MechStatRow from './MechStats/MechStatRow.vue';
 import Fraction from '../functional/fraction.vue';
 import MechWeapons from './MechWeapons.vue';
 import MechUpgrades from './MechUpgrades.vue';
+import {computed} from 'vue';
+import {storeToRefs} from 'pinia';
+import {useTeamStore} from '../../store/team-store.js';
 
-export default {
-  components: {MechUpgrades, MechWeapons, Fraction, MechStatRow, BInput, Number},
-  props: {
-    mechId: Number,
-  },
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapStores(useMechStore),
-    ...mapStores(useFactionStore),
-    mech() {
-      return this.mechStore.getMech(this.mechId);
-    },
-    info() {
-      return this.mechStore.getMechInfo(this.mechId);
-    },
-    hasTopEndHardware() {
-      return this.factionStore.hasPerk(DWC_TOP_END_HARDWARE);
-    },
-    topEndHardwareLabel() {
-      return FACTIONS[CORPORATIONS]
-          .faction_perk_groups[DEEP_WAR_CHEST]
-          .perks[DWC_TOP_END_HARDWARE]
-          .display_name;
-    },
-    hasAdvancedHardPoints() {
-      return this.factionStore.hasPerk(RD_ADVANCED_HARDPOINT_DESIGN) ||
-          this.factionStore.hasPerk(UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN);
-    },
-    advancedHardPointsLabel() {
-      if (this.factionStore.hasPerk(RD_ADVANCED_HARDPOINT_DESIGN)) {
-        return FACTIONS[CORPORATIONS]
-            .faction_perk_groups[RESEARCH_AND_DEVELOPMENT]
-            .perks[RD_ADVANCED_HARDPOINT_DESIGN]
-            .display_name;
-      }
-      if (this.factionStore.hasPerk(UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN)) {
-        return FACTIONS[FREELANCERS]
-            .faction_perk_groups[UNDERWORLD_AFFILIATIONS]
-            .perks[UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN]
-            .display_name;
-      }
-    },
-    advancedHardPointsBonusSlots() {
-      return RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS;
-    },
-    topEndHardwareBonusTons() {
-      return DWC_TOP_END_HARDWARE_BONUS_TONS;
-    },
-  },
-};
+const mechStore = useMechStore();
+const factionStore = useFactionStore();
+const teamStore = useTeamStore();
+
+const {mechId} = defineProps({mechId: Number});
+
+const mech = computed(() => mechStore.getMech(mechId));
+const info = computed(() => mechStore.getMechInfo(mechId));
+
+const {
+  hasAdvancedHardPoints,
+  advancedHardPointsLabel,
+  advancedHardPointsBonusSlots,
+  topEndHardwareBonusTons,
+  hasTopEndHardware,
+  topEndHardwareLabel,
+} = storeToRefs(factionStore);
+
+const structureModOptions = computed(() => teamStore.getMechStructureModOptions(mechId));
+const armorModOptions = computed(() => teamStore.getMechArmorModOptions(mechId));
+
 </script>
 <template>
   <div class="mech-stats px-2">
@@ -117,6 +75,7 @@ export default {
           :tonnage="info.armor_mod.modifier"
           :armor="info.armor_mod.modifier"
           :structure="null"
+          :options="armorModOptions"
       />
       <MechBodyMods
           label="Structure Type"
@@ -126,7 +85,7 @@ export default {
           :tonnage="info.structure_mod.modifier"
           :armor="null"
           :structure="info.structure_mod.modifier"
-
+          :options="structureModOptions"
       />
       <MechArmorUpgrades
           label="Armor Upgrades"

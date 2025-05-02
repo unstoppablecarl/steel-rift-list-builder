@@ -1,14 +1,14 @@
 <script setup>
-import {HEV_BODY_MODS, HEV_BODY_MODS_DROP_DOWN} from '../../../data/mech-body.js';
+import {HEV_BODY_MODS} from '../../../data/mech-body.js';
 import {computed} from 'vue';
 
-const options = HEV_BODY_MODS_DROP_DOWN;
 const {
   formId,
   label,
   tonnage,
   armor,
   structure,
+  options,
 } = defineProps({
   formId: {
     type: String,
@@ -28,10 +28,13 @@ const {
   structure: {
     default: 0,
   },
+  options: {
+    required: true,
+    type: Array,
+  },
 });
 
 const model = defineModel();
-
 const selectedValueLabel = computed(() => {
   return HEV_BODY_MODS[model.value].display_name;
 });
@@ -64,11 +67,13 @@ function selectOption(value) {
             <td class="text-end">
               Tons Used
             </td>
+            <td></td>
           </tr>
           </thead>
           <tbody>
           <tr
               :class="{
+                'disabled': !item.valid,
                 'dropdown-row': true,
                 'table-primary':   (item.value == model)
               }"
@@ -83,6 +88,18 @@ function selectOption(value) {
             </td>
             <td class="text-end">
               <number :val="item.max_tons" invert invert-color/>
+            </td>
+            <td class="notes">
+              <span
+                  v-if="!item.valid"
+                  v-b-tooltip.hover.top="'Not available in Group'"
+              >
+                <span class="btn btn-danger disabled">
+                  <span class="material-symbols-outlined">
+                  block
+                  </span>
+                </span>
+              </span>
             </td>
           </tr>
           </tbody>

@@ -59,7 +59,7 @@ watch(() => expandSignal, () => visible.value = true);
                 variant="danger"
                 class="mx-1"
             >
-              X
+              <span class="material-symbols-outlined">delete</span>
             </BButton>
 
             <div class="collapse-header">
