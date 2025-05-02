@@ -5,10 +5,12 @@ import {useMechStore} from '../../store/mech-store.js';
 import {useFactionStore} from '../../store/faction-store.js';
 import {useTemplateRef} from 'vue';
 import {useToastStore} from '../../store/toast-store.js';
+import {useTeamStore} from '../../store/team-store.js';
 
 const toastStore = useToastStore();
 const mechStore = useMechStore();
 const factionStore = useFactionStore();
+const teamStore = useTeamStore();
 
 function loadToStore(store, data) {
   store.$reset();
@@ -27,10 +29,12 @@ function fileChange(event) {
     const reader = new FileReader();
     reader.onload = (e) => {
       try {
-        const {mech, faction} = JSON.parse(e.target.result);
+        const {mech, faction, team} = JSON.parse(e.target.result);
 
         loadToStore(factionStore, faction);
         loadToStore(mechStore, mech);
+        loadToStore(teamStore, team);
+
 
       } catch (error) {
         toastStore.toastError('Invalid Save File', error);
