@@ -59,50 +59,41 @@ export const useTeamStore = defineStore('team', () => {
         }
 
         const getTeamInfo = getter((teamId) => MECH_TEAMS[teamId]);
+        const getTeamGroupInfo = getter((teamId, groupId) => MECH_TEAMS[teamId].groups[groupId]);
 
-        const getTeamGroupInfo = getter((teamId, groupId) => {
+        const getWeaponIsRequired = getter((teamId, groupId, weaponId) => {
             const groupDef = MECH_TEAMS[teamId].groups[groupId];
-            const group = findGroup.value(teamId, groupId);
-
-            const {
-                size_valid,
-                size_validation_message,
-            } = validateGroupSize(groupDef, group.mechs.length);
-
-            console.log({
-                size_valid,
-                size_validation_message,
-            })
-
-
-            return Object.assign({
-                size_valid,
-                size_validation_message,
-            }, groupDef);
+            return groupDef.required_weapon_ids.includes(weaponId);
         });
 
-        function validateGroupSize(groupDef, mechCount) {
+        const getTeamGroupSizeValidation = getter((teamId, groupId) => {
+            const {min_count, max_count} = MECH_TEAMS[teamId].groups[groupId];
+            const group = findGroup.value(teamId, groupId);
+            const mechCount = group.mechs.length;
+
             let size_valid = true;
             let size_validation_message = 'Group Size Valid';
-            if (groupDef.min_count !== false) {
-                if (groupDef.min_count > mechCount) {
+            if (min_count !== false) {
+                if (min_count > mechCount) {
                     size_valid = false;
-                    size_validation_message = 'Group has less than the minimum number of HE-V: ' + groupDef.min_count;
+                    size_validation_message = 'Group has less than the minimum number of HE-V: ' + min_count;
                 }
             }
 
-            if (groupDef.max_count !== false) {
-                if (groupDef.max_count < mechCount) {
+            if (max_count !== false) {
+                if (max_count < mechCount) {
                     size_valid = false;
-                    size_validation_message = 'Group has more than the maximum number of HE-V: ' + groupDef.max_count;
+                    size_validation_message = 'Group has more than the maximum number of HE-V: ' + max_count;
                 }
             }
 
             return {
+                min_count,
+                max_count,
                 size_valid,
                 size_validation_message,
             };
-        }
+        });
 
         const getTeamGroupMechIds = getter((teamId, groupId) => {
             const group = findGroup.value(teamId, groupId);
@@ -115,9 +106,14 @@ export const useTeamStore = defineStore('team', () => {
         });
 
         function addMechToTeam(teamId, groupId) {
-            const mechOptions = MECH_TEAMS[teamId].groups[groupId].new_mech_defaults;
+            const groupDef = MECH_TEAMS[teamId].groups[groupId];
+            const mechOptions = groupDef.new_mech_defaults;
             const mech = mechStore.addMech(mechOptions ?? {});
             const group = findGroup.value(teamId, groupId);
+
+            groupDef.required_weapon_ids.forEach((weaponId) => {
+                mechStore.addMechWeaponAttachment(mech.id, weaponId);
+            });
 
             group.mechs.push({
                 mech_id: mech.id,
@@ -149,12 +145,14 @@ export const useTeamStore = defineStore('team', () => {
         return {
             teams,
             addable_teams,
-            addMechToTeam,
-            removeMechFromTeam,
+            getTeamInfo,
             getTeamGroupInfo,
             getTeamGroupMechIds,
+            getTeamGroupSizeValidation,
+            getWeaponIsRequired,
+            addMechToTeam,
+            removeMechFromTeam,
             moveGroupMech,
-            getTeamInfo,
             addTeam,
             removeTeam,
             $reset,

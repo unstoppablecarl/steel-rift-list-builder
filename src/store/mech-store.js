@@ -18,6 +18,7 @@ import {
     RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS,
     UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN,
 } from '../data/factions.js';
+import {useTeamStore} from './team-store.js';
 
 export const useMechStore = defineStore('mech', {
         state() {
@@ -151,7 +152,9 @@ export const useMechStore = defineStore('mech', {
                 };
             },
             getMechWeaponAttachmentInfo(state) {
-                return (mechId, mechWeaponAttachmentId) => {
+                return (mechId, mechWeaponAttachmentId, teamId, groupId) => {
+                    const teamStore = useTeamStore();
+
                     const mech = this.getMech(mechId);
                     const weaponAttachment = this.getMechWeaponAttachment(mechId, mechWeaponAttachmentId);
                     const weapon_id = weaponAttachment.weapon_id;
@@ -163,11 +166,13 @@ export const useMechStore = defineStore('mech', {
 
                     let cost = weaponInfo.cost;
                     const duplicate_cost = Math.floor(previousWeaponInstances * cost * 0.5);
+                    const isRequired = teamStore.getWeaponIsRequired(teamId, groupId, weapon_id);
 
                     const result = Object.assign({}, weaponInfo, {
                         base_cost: cost,
                         cost: cost + duplicate_cost,
                         duplicate_cost,
+                        required_by_group: previousWeaponInstances === 0 && isRequired,
                         duplicate_percent: previousWeaponInstances * 50,
                     });
 

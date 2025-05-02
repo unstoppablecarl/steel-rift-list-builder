@@ -1,25 +1,27 @@
-<script>
-import {mapStores} from 'pinia';
+<script setup>
 import {useMechStore} from '../../../store/mech-store.js';
+import {computed, inject} from 'vue';
 
-export default {
-  props: {
-    mechId: Number,
-    mechWeaponAttachmentId: Number,
-    index: Number,
-  },
-  computed: {
-    ...mapStores(useMechStore),
-    weapon() {
-      return this.mechStore.getMechWeaponAttachmentInfo(this.mechId, this.mechWeaponAttachmentId);
-    },
-  },
-  methods: {
-    remove() {
-      this.mechStore.removeMechWeaponAttachment(this.mechId, this.mechWeaponAttachmentId);
-    },
-  },
-};
+const mechStore = useMechStore();
+
+const {
+  mechId,
+  mechWeaponAttachmentId,
+  index,
+} = defineProps({
+  mechId: Number,
+  mechWeaponAttachmentId: Number,
+  index: Number,
+});
+
+const teamId = inject('teamId');
+const groupId = inject('groupId');
+
+const weapon = computed(() => mechStore.getMechWeaponAttachmentInfo(mechId, mechWeaponAttachmentId, teamId, groupId));
+
+function remove() {
+  mechStore.removeMechWeaponAttachment(mechId, mechWeaponAttachmentId);
+}
 </script>
 <template>
   <tr>
@@ -36,7 +38,23 @@ export default {
       {{ weapon.trait_display_names }}
     </td>
     <td>
-      <BButton @click="remove()" variant="danger" size="sm">X</BButton>
+      <BButton
+          v-if="!weapon.required_by_group"
+          @click="remove()"
+          variant="danger"
+          size="sm"
+      >
+        <span class="material-symbols-outlined">delete</span>
+      </BButton>
+
+      <span v-b-tooltip.hover.top="'Weapon Required By Group'">
+      <span
+          class="btn btn-sm btn-danger disabled"
+          v-if="weapon.required_by_group"
+      >
+        <span class="material-symbols-outlined">lock</span>
+      </span>
+      </span>
     </td>
     <td></td>
     <td class=" text-end">
@@ -47,8 +65,8 @@ export default {
     </td>
     <td>
       <small v-if="weapon.duplicate_cost">
-        +{{ weapon.duplicate_percent}}%
-         ({{weapon.base_cost}} + {{weapon.duplicate_cost}})
+        +{{ weapon.duplicate_percent }}%
+        ({{ weapon.base_cost }} + {{ weapon.duplicate_cost }})
       </small>
     </td>
   </tr>

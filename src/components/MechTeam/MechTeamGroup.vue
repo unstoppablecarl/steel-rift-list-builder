@@ -18,6 +18,7 @@ const {teamId, groupId} = defineProps({
 
 const groupInfo = computed(() => teamStore.getTeamGroupInfo(teamId, groupId));
 const mechIds = computed(() => teamStore.getTeamGroupMechIds(teamId, groupId));
+const size = computed(() => teamStore.getTeamGroupSizeValidation(teamId, groupId));
 
 const dragging = ref(false);
 const collapsed = ref(0);
@@ -32,7 +33,7 @@ function onSortableChange(event) {
   teamStore.moveGroupMech(teamId, groupId, moved.element, moved.newIndex);
 }
 
-const isGeneralGroup = computed(() => teamId === TEAM_GENERAL)
+const isGeneralGroup = computed(() => teamId === TEAM_GENERAL);
 
 function collapseAll() {
   collapsed.value = Date.now();
@@ -53,12 +54,12 @@ function expandAll() {
             v-if="!isGeneralGroup"
             :class="{
           'btn btn-sm btn-outline mx-1': true,
-          'btn-light': groupInfo.size_valid,
-          'btn-outline-danger': !groupInfo.size_valid,
+          'btn-light': size.size_valid,
+          'btn-outline-danger': !size.size_valid,
         }"
-            v-b-tooltip.hover.top="{title: groupInfo.size_validation_message}"
+            v-b-tooltip.hover.top="{title: size.size_validation_message}"
         >
-          Size: {{ groupInfo.min_count }}-{{ groupInfo.max_count }}
+          Size: {{ size.min_count }}-{{ size.max_count }}
         </span>
       </div>
       <div class="text-end">
@@ -69,7 +70,7 @@ function expandAll() {
           Add Mech
         </BButton>
         <BButton
-            class="ms-1 btn-icon"
+            class="ms-1"
             variant="light"
             @click="collapseAll"
         >
@@ -77,7 +78,7 @@ function expandAll() {
 
         </BButton>
         <BButton
-            class="ms-1 btn-icon"
+            class="ms-1"
             variant="light"
             @click="expandAll"
         >

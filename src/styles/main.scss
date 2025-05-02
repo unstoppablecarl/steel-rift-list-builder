@@ -39,20 +39,13 @@ $btn-focus-box-shadow: 0;
 @import '../../node_modules/bootstrap-vue-next/src/styles/styles';
 @import "./bootstrap-vue-component-styles";
 
+@import "./icons";
 @import "./dropdown";
 @import "./collapse";
 
-.material-symbols-outlined{
-  font-size: 1.2rem;
-  line-height: inherit;
-}
 
-.btn-icon {
-  padding: .1rem .2rem;
-  min-width: 2.5rem;
-}
 .btn-light {
-  border-color: rgba(0,0,0,0.2);
+  border-color: rgba(0, 0, 0, 0.2);
 }
 
 body {
@@ -64,9 +57,8 @@ body {
 }
 
 
-
 .btn-fake {
-  --bs-btn-border-color: rgba(0,0,0,0.3);
+  --bs-btn-border-color: rgba(0, 0, 0, 0.3);
   --bs-btn-hover-color: var(--bs-btn-color);
   --bs-btn-hover-bg: var(--bs-btn-bg);
   --bs-btn-hover-border-color: var(--bs-btn-border-color);
@@ -75,6 +67,7 @@ body {
   --bs-btn-active-border-color: var(--bs-btn-border-color);
   cursor: default;
 }
+
 .card {
   margin-top: .5rem;
   margin-bottom: .5rem;

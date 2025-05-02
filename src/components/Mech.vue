@@ -1,7 +1,7 @@
 <script setup>
 import {useMechStore} from '../store/mech-store.js';
 import Fraction from './functional/fraction.vue';
-import {computed, ref, watch} from 'vue';
+import {computed, provide, ref, watch} from 'vue';
 import {BButton} from 'bootstrap-vue-next';
 import {useTeamStore} from '../store/team-store.js';
 
@@ -34,6 +34,9 @@ const {
     type: Number,
   },
 });
+
+provide('teamId', teamId);
+provide('groupId', groupId);
 
 const visible = ref(true);
 const info = computed(() => mechStore.getMechInfo(mechId));
