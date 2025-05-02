@@ -1,35 +1,33 @@
-<script>
+<script setup>
 import {HEV_SIZES_DROP_DOWN} from '../../../data/mech-sizes.js';
-import {mapStores} from 'pinia';
 import {useMechStore} from '../../../store/mech-store.js';
 import Number from '../../functional/number.vue';
+import {computed} from 'vue';
+import {useTeamStore} from '../../../store/team-store.js';
 
-export default {
-  components: {Number},
-  props: {
-    mechId: Number,
-  },
+const mechStore = useMechStore();
+const teamStore = useTeamStore();
 
-  data() {
-    return {
-      options: HEV_SIZES_DROP_DOWN,
-    };
-  },
-  computed: {
-    ...mapStores(useMechStore),
-    mech() {
-      return this.mechStore.getMech(this.mechId);
-    },
-    info() {
-      return this.mechStore.getMechInfo(this.mechId);
-    },
-  },
-  methods: {
-    selectOption(size_id) {
-      this.mechStore.updateMech(this.mechId, {size_id});
-    },
-  },
-};
+const {mechId} = defineProps({
+  mechId: Number,
+});
+const options = computed(() => {
+  return HEV_SIZES_DROP_DOWN.map((size) => {
+    return Object.assign({}, size, {
+      valid: teamStore.getMechSizeValid(mechId, size.id),
+    });
+  });
+});
+
+const mech = computed(() => mechStore.getMech(mechId));
+const info = computed(() => mechStore.getMechInfo(mechId));
+
+function selectOption(size_id, valid) {
+  if (!valid) {
+    return;
+  }
+  mechStore.updateMech(mechId, {size_id});
+}
 
 </script>
 <template>
@@ -62,16 +60,18 @@ export default {
             <td class="text-end">
               Tons
             </td>
+            <td></td>
           </tr>
           </thead>
           <tbody>
           <tr
               :class="{
+                'disabled': !item.valid,
                 'dropdown-row': true,
                 'table-primary':   (item.value == mech.size_id)
               }"
               v-for="item in options" :key="item.value"
-              @click="selectOption(item.value)"
+              @click="selectOption(item.value, item.valid)"
           >
             <td>
               {{ item.text }}
@@ -87,6 +87,18 @@ export default {
             </td>
             <td class="text-end">
               {{ item.max_tons }}
+            </td>
+            <td class="notes">
+              <span
+                  v-if="!item.valid"
+                  v-b-tooltip.hover.top="'Not available in Group'"
+              >
+                <span class="btn btn-danger disabled">
+                  <span class="material-symbols-outlined">
+                  block
+                  </span>
+                </span>
+              </span>
             </td>
           </tr>
           </tbody>

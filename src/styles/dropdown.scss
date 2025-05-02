@@ -48,8 +48,11 @@
   }
 
   .dropdown-row {
-    &.disabled {
-      opacity: 0.6;
+    &.disabled{
+      --bs-table-hover-bg: #fff;
+      > td:not(.notes) {
+        opacity: 0.6;
+      }
     }
   }
 

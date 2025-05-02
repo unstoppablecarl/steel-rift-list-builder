@@ -17,14 +17,6 @@ const {
     type: Number,
     required: true,
   },
-  teamId: {
-    type: String,
-    required: true,
-  },
-  groupId: {
-    type: String,
-    required: true,
-  },
   collapseSignal: {
     type: Number,
   },
