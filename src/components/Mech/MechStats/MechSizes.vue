@@ -12,11 +12,7 @@ const {mechId} = defineProps({
   mechId: Number,
 });
 const options = computed(() => {
-  return HEV_SIZES_DROP_DOWN.map((size) => {
-    return Object.assign({}, size, {
-      valid: teamStore.getMechSizeValid(mechId, size.id),
-    });
-  });
+  return HEV_SIZES_DROP_DOWN.filter((size) => teamStore.getMechSizeValid(mechId, size.id));
 });
 
 const mech = computed(() => mechStore.getMech(mechId));
@@ -60,7 +56,6 @@ function selectOption(size_id, valid) {
             <td class="text-end">
               Tons
             </td>
-            <td></td>
           </tr>
           </thead>
           <tbody>
@@ -87,18 +82,6 @@ function selectOption(size_id, valid) {
             </td>
             <td class="text-end">
               {{ item.max_tons }}
-            </td>
-            <td class="notes">
-              <span
-                  v-if="!item.valid"
-                  v-b-tooltip.hover.top="'Not available in Group'"
-              >
-                <span class="btn btn-danger disabled">
-                  <span class="material-symbols-outlined">
-                  block
-                  </span>
-                </span>
-              </span>
             </td>
           </tr>
           </tbody>
