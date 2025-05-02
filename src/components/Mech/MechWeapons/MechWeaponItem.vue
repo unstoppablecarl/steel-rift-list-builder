@@ -1,6 +1,6 @@
 <script setup>
 import {useMechStore} from '../../../store/mech-store.js';
-import {computed, inject} from 'vue';
+import {computed} from 'vue';
 
 const mechStore = useMechStore();
 
@@ -14,10 +14,7 @@ const {
   index: Number,
 });
 
-const teamId = inject('teamId');
-const groupId = inject('groupId');
-
-const weapon = computed(() => mechStore.getMechWeaponAttachmentInfo(teamId, groupId, mechId, mechWeaponAttachmentId));
+const weapon = computed(() => mechStore.getMechWeaponAttachmentInfo(mechId, mechWeaponAttachmentId));
 
 function remove() {
   mechStore.removeMechWeaponAttachment(mechId, mechWeaponAttachmentId);

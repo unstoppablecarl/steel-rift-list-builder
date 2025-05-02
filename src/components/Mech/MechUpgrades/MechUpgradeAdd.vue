@@ -16,7 +16,6 @@ const options = computed(() => {
 
 function addUpgrade(upgradeId, valid) {
   if (!valid) {
-    console.log('invalid');
     return;
   }
   mechStore.addMechUpgradeAttachment(mechId, upgradeId);

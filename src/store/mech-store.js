@@ -152,13 +152,13 @@ export const useMechStore = defineStore('mech', {
                 };
             },
             getMechWeaponAttachmentInfo(state) {
-                return (teamId, groupId, mechId, mechWeaponAttachmentId) => {
+                return (mechId, mechWeaponAttachmentId) => {
                     const teamStore = useTeamStore();
 
                     const mech = this.getMech(mechId);
                     const weaponAttachment = this.getMechWeaponAttachment(mechId, mechWeaponAttachmentId);
                     const weapon_id = weaponAttachment.weapon_id;
-                    const weaponInfo = this.getWeaponInfo(mechId, weaponAttachment.weapon_id);
+                    const weaponInfo = this.getWeaponInfo(mechId, weapon_id);
 
                     const previousWeaponInstances = mech.weapons.filter((item) => {
                         return item.weapon_id == weapon_id && item.display_order < weaponAttachment.display_order;
@@ -166,7 +166,8 @@ export const useMechStore = defineStore('mech', {
 
                     let cost = weaponInfo.cost;
                     const duplicate_cost = Math.floor(previousWeaponInstances * cost * 0.5);
-                    const isRequired = teamStore.getWeaponIsRequired(teamId, groupId, weapon_id);
+                    const {team_id, group_id} = teamStore.getMechTeamAndGroupIds(mechId)
+                    const isRequired = teamStore.getWeaponIsRequired(team_id, group_id, weapon_id);
 
                     const result = Object.assign({}, weaponInfo, {
                         base_cost: cost,
@@ -204,12 +205,14 @@ export const useMechStore = defineStore('mech', {
                 };
             },
             getMechUpgradeAttachmentInfo(state) {
-                return (teamId, groupId, mechId, mechUpgradeAttachmentId) => {
+                return (mechId, mechUpgradeAttachmentId) => {
                     const teamStore = useTeamStore();
                     const upgradeAttachment = this.getMechUpgradeAttachment(mechId, mechUpgradeAttachmentId);
 
-                    const info = this.getUpgradeInfo(mechId, upgradeAttachment.upgrade_id);
-                    const isRequired = teamStore.getUpgradeIsRequired(teamId, groupId, upgradeAttachment.upgrade_id);
+                    const upgrade_id = upgradeAttachment.upgrade_id;
+                    const info = this.getUpgradeInfo(mechId, upgrade_id);
+                    const {team_id, group_id} = teamStore.getMechTeamAndGroupIds(mechId)
+                    const isRequired = teamStore.getUpgradeIsRequired(team_id, group_id, upgrade_id);
 
                     return Object.assign({}, info, {required_by_group: isRequired});
                 };

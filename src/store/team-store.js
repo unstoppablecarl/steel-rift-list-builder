@@ -70,6 +70,36 @@ export const useTeamStore = defineStore('team', () => {
             return groupDef.required_upgrade_ids.includes(upgradeId);
         });
 
+        const getMechTeamAndGroupIds = getter((mechId) => {
+
+            let team_id = null;
+            let group_id = null;
+
+            find(teams.value, (team) => {
+                find(team.groups, (group) => {
+                    const found = find(group.mechs, {mech_id: mechId});
+
+                    if (!!found) {
+                        team_id = team.id;
+                        group_id = group.id;
+                    }
+                });
+            });
+
+            if (!team_id) {
+                throw new Error('Mech team not found!');
+            }
+            if (!group_id) {
+                throw new Error('Mech group not found!');
+            }
+
+            return {
+                team_id,
+                group_id,
+            };
+
+        });
+
         const getTeamGroupSizeValidation = getter((teamId, groupId) => {
             const {min_count, max_count} = MECH_TEAMS[teamId].groups[groupId];
             const group = findGroup.value(teamId, groupId);
@@ -158,6 +188,7 @@ export const useTeamStore = defineStore('team', () => {
             getTeamGroupSizeValidation,
             getWeaponIsRequired,
             getUpgradeIsRequired,
+            getMechTeamAndGroupIds,
             addMechToTeam,
             removeMechFromTeam,
             moveGroupMech,
