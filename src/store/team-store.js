@@ -7,6 +7,7 @@ import {difference, find, findIndex, map} from 'lodash';
 import {getter} from './store-helpers.js';
 import {HEV_BODY_MODS_DROP_DOWN} from '../data/mech-body.js';
 import {HEV_ARMOR_UPGRADES_DROP_DOWN} from '../data/mech-armor-upgrades.js';
+import {HEV_WEAPONS} from '../data/mech-weapons.js';
 
 export const useTeamStore = defineStore('team', () => {
 
@@ -63,10 +64,45 @@ export const useTeamStore = defineStore('team', () => {
         const getTeamInfo = getter((teamId) => MECH_TEAMS[teamId]);
         const getTeamGroupInfo = getter((teamId, groupId) => MECH_TEAMS[teamId].groups[groupId]);
 
+        const getRequiredByTeamGroupMessage = getter((teamId, groupId) => {
+            const teamDisplayName = getTeamInfo.value(teamId).display_name;
+            const groupDisplayName = getTeamGroupInfo.value(teamId, groupId).display_name;
+
+            return `Required by ${teamDisplayName} ${groupDisplayName}`;
+        });
+
         const getWeaponIsRequired = getter((teamId, groupId, weaponId) => {
             const groupDef = MECH_TEAMS[teamId].groups[groupId];
-            return groupDef.required_weapon_ids.includes(weaponId);
+
+            if (groupDef.required_weapon_ids.includes(weaponId)) {
+                return {
+                    required: true,
+                    required_reason: getRequiredByTeamGroupMessage.value(teamId, groupId),
+                };
+            }
+
+            return {
+                required: false,
+                required_reason: null,
+            };
         });
+
+        const getAtLeastOneOfWeaponsIsRequired = getter((teamId, groupId) => {
+            const groupInfo = getTeamGroupInfo.value(teamId, groupId);
+
+            return groupInfo.required_at_least_one_of_weapon_ids;
+        });
+
+        const getAtLeastOneOfWeaponsIsRequiredMessage = getter((teamId, groupId) => {
+            const teamDisplayName = getTeamInfo.value(teamId).display_name;
+            const groupInfo = getTeamGroupInfo.value(teamId, groupId);
+            const atLeastOneWeapons = groupInfo.required_at_least_one_of_weapon_ids
+                .map((weaponId) => HEV_WEAPONS[weaponId].display_name);
+
+            return `${teamDisplayName} ${groupInfo.display_name} require at least one of the following: ${atLeastOneWeapons.join(', ')}`;
+
+        });
+
         const getUpgradeIsRequired = getter((teamId, groupId, upgradeId) => {
             const groupDef = MECH_TEAMS[teamId].groups[groupId];
             return groupDef.required_upgrade_ids.includes(upgradeId);
@@ -100,7 +136,6 @@ export const useTeamStore = defineStore('team', () => {
 
         const getMechSizeValid = getter((mechId, sizeId) => {
             const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
-            const teamDisplayName = getTeamInfo.value(teamId).display_name;
             const info = getTeamGroupInfo.value(teamId, groupId);
 
             if (!info.size_ids || !info.size_ids.length) {
@@ -310,6 +345,10 @@ export const useTeamStore = defineStore('team', () => {
             groupDef.required_upgrade_ids.forEach((upgradeId) => {
                 mechStore.addMechUpgradeAttachment(mech.id, upgradeId);
             });
+            if (groupDef?.required_at_least_one_of_weapon_ids.length) {
+                console.log(groupDef?.required_at_least_one_of_weapon_ids.length);
+                mechStore.addMechWeaponAttachment(mech.id, groupDef?.required_at_least_one_of_weapon_ids[0]);
+            }
 
             const group = findGroup.value(teamId, groupId);
 
@@ -328,7 +367,6 @@ export const useTeamStore = defineStore('team', () => {
 
         function removeTeam(teamId) {
             const mechIds = getTeamMechIds.value(teamId);
-            console.log(mechIds);
             mechIds.forEach((mechId) => mechStore.removeMech(mechId));
             let index = findItemIndexById(teams.value, teamId);
             teams.value.splice(index, 1);
@@ -356,6 +394,9 @@ export const useTeamStore = defineStore('team', () => {
             getMechStructureModOptions,
             getMechArmorModOptions,
             getMechArmorUpgradeOptions,
+            getAtLeastOneOfWeaponsIsRequired,
+            getAtLeastOneOfWeaponsIsRequiredMessage,
+            getRequiredByTeamGroupMessage,
             addMechToTeam,
             removeMechFromTeam,
             moveGroupMech,

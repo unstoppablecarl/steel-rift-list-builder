@@ -44,11 +44,11 @@ function remove() {
         <span class="material-symbols-outlined">delete</span>
       </BButton>
 
-      <span v-b-tooltip.hover.top="'Weapon Required By Group'">
       <span
-          class="btn btn-sm btn-danger disabled"
           v-if="weapon.required_by_group"
+          v-b-tooltip.hover.top="weapon.required_by_group_reason"
       >
+      <span class="btn btn-sm btn-danger disabled">
         <span class="material-symbols-outlined">lock</span>
       </span>
       </span>
