@@ -85,7 +85,11 @@ watch(() => expandSignal, () => visible.value = true);
       </div>
       <BCollapse :id="'collapse-' + mechId" v-model="visible">
         <hr>
+        <div class="d-flex justify-content-md-center">
+
         <MechStats :mech-id="mechId"/>
+
+        </div>
       </BCollapse>
     </div>
   </div>

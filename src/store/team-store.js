@@ -108,25 +108,77 @@ export const useTeamStore = defineStore('team', () => {
         });
 
         const getMechStructureModValid = getter((mechId, modId) => {
+            const mech = mechStore.getMech(mechId);
             const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
+            const teamDisplayName = getTeamInfo.value(teamId).display_name
             const info = getTeamGroupInfo.value(teamId, groupId);
 
-            return getStructureModValid(info.limited_structure_mod_ids, modId);
+            const result = getStructureModValid(info.limited_structure_mod_ids, modId);
+
+            if (result) {
+                return result;
+            }
+
+            if (info.required_armor_or_structure_mod_once) {
+                console.log('getMechStructureModValid', modId);
+
+                const requiredId = info.required_armor_or_structure_mod_once;
+
+                if (
+                    mech.armor_mod_id != requiredId &&
+                    mech.structure_mod_id == requiredId &&
+                    modId != requiredId
+                ) {
+                    return {
+                        valid: false,
+                        validation_message: `${teamDisplayName} requires ${info.display_name} structure or armor to be Reinforced`,
+                    };
+                }
+            }
+
+            return {
+                valid: true,
+                validation_message: null,
+            };
         });
 
         const getMechArmorModValid = getter((mechId, modId) => {
+            const mech = mechStore.getMech(mechId);
             const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
+            const teamDisplayName = getTeamInfo.value(teamId).display_name
             const info = getTeamGroupInfo.value(teamId, groupId);
 
-            return getStructureModValid(info.limited_armor_mod_ids, modId);
+            const result = getStructureModValid(info.limited_armor_mod_ids, modId);
+
+            if (result) {
+                return result;
+            }
+
+            if (info.required_armor_or_structure_mod_once) {
+                const requiredId = info.required_armor_or_structure_mod_once;
+
+                if (
+                    mech.structure_mod_id != requiredId &&
+                    mech.armor_mod_id == requiredId &&
+                    modId != requiredId
+                ) {
+                    return {
+                        valid: false,
+                        validation_message: `${teamDisplayName} requires ${info.display_name} structure or armor to be Reinforced`,
+                    };
+                }
+
+            }
+
+            return {
+                valid: true,
+                validation_message: null,
+            };
         });
 
         function getStructureModValid(limitedModIds, modId) {
             if (!limitedModIds || !limitedModIds.length) {
-                return {
-                    valid: true,
-                    validation_message: null,
-                };
+                return;
             }
 
             if (!limitedModIds.includes(modId)) {
@@ -135,11 +187,6 @@ export const useTeamStore = defineStore('team', () => {
                     validation_message: 'Not available in Group',
                 };
             }
-
-            return {
-                valid: true,
-                validation_message: null,
-            };
         }
 
         const getTeamGroupSizeValidation = getter((teamId, groupId) => {
@@ -194,7 +241,9 @@ export const useTeamStore = defineStore('team', () => {
         const getMechStructureModOptions = getter((mechId) => {
             return HEV_BODY_MODS_DROP_DOWN.map((item) => {
                 item = Object.assign({}, item);
-                item.valid = getMechStructureModValid.value(mechId, item.id);
+                const {valid, validation_message} = getMechStructureModValid.value(mechId, item.id);
+                item.valid = valid;
+                item.validation_message = validation_message;
                 return item;
             });
         });
@@ -202,7 +251,9 @@ export const useTeamStore = defineStore('team', () => {
         const getMechArmorModOptions = getter((mechId) => {
             return HEV_BODY_MODS_DROP_DOWN.map((item) => {
                 item = Object.assign({}, item);
-                item.valid = getMechArmorModValid.value(mechId, item.id);
+                const {valid, validation_message} = getMechArmorModValid.value(mechId, item.id);
+                item.valid = valid;
+                item.validation_message = validation_message;
                 return item;
             });
         });
@@ -250,7 +301,7 @@ export const useTeamStore = defineStore('team', () => {
 
         function removeTeam(teamId) {
             const mechIds = getTeamMechIds.value(teamId);
-            console.log(mechIds)
+            console.log(mechIds);
             mechIds.forEach((mechId) => mechStore.removeMech(mechId));
             let index = findItemIndexById(teams.value, teamId);
             teams.value.splice(index, 1);

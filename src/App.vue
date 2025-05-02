@@ -6,7 +6,7 @@ import MechTeamList from './components/MechTeamList.vue';
 </script>
 <template>
   <Toaster/>
-  <div class="container py-1">
+  <div class="container-lg py-1 ">
 
     <FileControls/>
     <ArmyList/>

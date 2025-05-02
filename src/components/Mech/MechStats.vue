@@ -34,7 +34,7 @@ const armorModOptions = computed(() => teamStore.getMechArmorModOptions(mechId))
 
 </script>
 <template>
-  <div class="mech-stats px-2">
+  <div class="mech-stats px-2 table-responsive">
     <table class="table w-auto">
       <thead>
       <tr>
