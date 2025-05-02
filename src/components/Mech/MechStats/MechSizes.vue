@@ -18,10 +18,7 @@ const options = computed(() => {
 const mech = computed(() => mechStore.getMech(mechId));
 const info = computed(() => mechStore.getMechInfo(mechId));
 
-function selectOption(size_id, valid) {
-  if (!valid) {
-    return;
-  }
+function selectOption(size_id) {
   mechStore.updateMech(mechId, {size_id});
 }
 
@@ -61,12 +58,11 @@ function selectOption(size_id, valid) {
           <tbody>
           <tr
               :class="{
-                'disabled': !item.valid,
                 'dropdown-row': true,
                 'table-primary':   (item.value == mech.size_id)
               }"
               v-for="item in options" :key="item.value"
-              @click="selectOption(item.value, item.valid)"
+              @click="selectOption(item.value)"
           >
             <td>
               {{ item.text }}

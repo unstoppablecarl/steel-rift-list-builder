@@ -6,6 +6,7 @@ import {useMechStore} from './mech-store.js';
 import {difference, find, findIndex, map} from 'lodash';
 import {getter} from './store-helpers.js';
 import {HEV_BODY_MODS_DROP_DOWN} from '../data/mech-body.js';
+import {HEV_ARMOR_UPGRADES_DROP_DOWN} from '../data/mech-armor-upgrades.js';
 
 export const useTeamStore = defineStore('team', () => {
 
@@ -99,7 +100,9 @@ export const useTeamStore = defineStore('team', () => {
 
         const getMechSizeValid = getter((mechId, sizeId) => {
             const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
+            const teamDisplayName = getTeamInfo.value(teamId).display_name;
             const info = getTeamGroupInfo.value(teamId, groupId);
+
             if (!info.size_ids || !info.size_ids.length) {
                 return true;
             }
@@ -110,25 +113,24 @@ export const useTeamStore = defineStore('team', () => {
         const getMechStructureModValid = getter((mechId, modId) => {
             const mech = mechStore.getMech(mechId);
             const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
-            const teamDisplayName = getTeamInfo.value(teamId).display_name
+            const teamDisplayName = getTeamInfo.value(teamId).display_name;
             const info = getTeamGroupInfo.value(teamId, groupId);
 
-            const result = getStructureModValid(info.limited_structure_mod_ids, modId);
-
-            if (result) {
-                return result;
+            if (!getBodyModValid(info.limited_structure_mod_ids, modId)) {
+                return {
+                    valid: false,
+                    validation_message: `Not available to ${teamDisplayName} ${info.display_name}`,
+                };
             }
 
-            if (info.required_armor_or_structure_mod_once) {
-                console.log('getMechStructureModValid', modId);
-
-                const requiredId = info.required_armor_or_structure_mod_once;
-
-                if (
-                    mech.armor_mod_id != requiredId &&
-                    mech.structure_mod_id == requiredId &&
-                    modId != requiredId
-                ) {
+            const requiredId = info.required_armor_or_structure_mod_once;
+            if (requiredId) {
+                if (!requiredStructureOrArmorModValid(
+                    mech.structure_mod_id,
+                    mech.armor_mod_id,
+                    requiredId,
+                    modId,
+                )) {
                     return {
                         valid: false,
                         validation_message: `${teamDisplayName} requires ${info.display_name} structure or armor to be Reinforced`,
@@ -145,29 +147,29 @@ export const useTeamStore = defineStore('team', () => {
         const getMechArmorModValid = getter((mechId, modId) => {
             const mech = mechStore.getMech(mechId);
             const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
-            const teamDisplayName = getTeamInfo.value(teamId).display_name
+            const teamDisplayName = getTeamInfo.value(teamId).display_name;
             const info = getTeamGroupInfo.value(teamId, groupId);
 
-            const result = getStructureModValid(info.limited_armor_mod_ids, modId);
-
-            if (result) {
-                return result;
+            if (!getBodyModValid(info.limited_armor_mod_ids, modId)) {
+                return {
+                    valid: false,
+                    validation_message: `Not available to ${teamDisplayName} ${info.display_name}`,
+                };
             }
 
-            if (info.required_armor_or_structure_mod_once) {
-                const requiredId = info.required_armor_or_structure_mod_once;
-
-                if (
-                    mech.structure_mod_id != requiredId &&
-                    mech.armor_mod_id == requiredId &&
-                    modId != requiredId
-                ) {
+            const requiredId = info.required_armor_or_structure_mod_once;
+            if (requiredId) {
+                if (!requiredStructureOrArmorModValid(
+                    mech.armor_mod_id,
+                    mech.structure_mod_id,
+                    requiredId,
+                    modId,
+                )) {
                     return {
                         valid: false,
                         validation_message: `${teamDisplayName} requires ${info.display_name} structure or armor to be Reinforced`,
                     };
                 }
-
             }
 
             return {
@@ -176,17 +178,18 @@ export const useTeamStore = defineStore('team', () => {
             };
         });
 
-        function getStructureModValid(limitedModIds, modId) {
+        function requiredStructureOrArmorModValid(currentModId, otherModId, requiredId, modId) {
+            return !(otherModId !== requiredId &&
+                currentModId === requiredId &&
+                modId !== requiredId);
+        }
+
+        function getBodyModValid(limitedModIds, modId) {
             if (!limitedModIds || !limitedModIds.length) {
-                return;
+                return true;
             }
 
-            if (!limitedModIds.includes(modId)) {
-                return {
-                    valid: false,
-                    validation_message: 'Not available in Group',
-                };
-            }
+            return limitedModIds.includes(modId);
         }
 
         const getTeamGroupSizeValidation = getter((teamId, groupId) => {
@@ -252,6 +255,30 @@ export const useTeamStore = defineStore('team', () => {
             return HEV_BODY_MODS_DROP_DOWN.map((item) => {
                 item = Object.assign({}, item);
                 const {valid, validation_message} = getMechArmorModValid.value(mechId, item.id);
+                item.valid = valid;
+                item.validation_message = validation_message;
+                return item;
+            });
+        });
+
+        const getMechArmorUpgradeOptions = getter((mechId) => {
+            const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
+            const teamDisplayName = getTeamInfo.value(teamId).display_name;
+            const groupInfo = getTeamGroupInfo.value(teamId, groupId);
+
+            return HEV_ARMOR_UPGRADES_DROP_DOWN.map((item) => {
+                item = Object.assign({}, item);
+
+                let valid = true;
+                let validation_message = null;
+
+                if (groupInfo.limited_armor_upgrade_ids.length) {
+                    if (!groupInfo.limited_armor_upgrade_ids.includes(item.id)) {
+                        valid = false;
+                        validation_message = `Not available to ${teamDisplayName} ${groupInfo.display_name}`;
+                    }
+                }
+
                 item.valid = valid;
                 item.validation_message = validation_message;
                 return item;
@@ -328,6 +355,7 @@ export const useTeamStore = defineStore('team', () => {
             getMechSizeValid,
             getMechStructureModOptions,
             getMechArmorModOptions,
+            getMechArmorUpgradeOptions,
             addMechToTeam,
             removeMechFromTeam,
             moveGroupMech,

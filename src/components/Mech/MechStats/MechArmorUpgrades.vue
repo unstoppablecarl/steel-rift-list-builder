@@ -1,9 +1,11 @@
 <script setup>
 import {computed} from 'vue';
-import {HEV_ARMOR_UPGRADES, HEV_ARMOR_UPGRADES_DROP_DOWN} from '../../../data/mech-armor-upgrades.js';
+import {HEV_ARMOR_UPGRADES} from '../../../data/mech-armor-upgrades.js';
 import NumberVal from '../../functional/number.vue';
+import {useTeamStore} from '../../../store/team-store.js';
 
-const options = HEV_ARMOR_UPGRADES_DROP_DOWN;
+const teamStore = useTeamStore();
+
 const {
   label,
   sizeId,
@@ -21,6 +23,7 @@ const {
 });
 
 const model = defineModel();
+const options = computed(() => teamStore.getMechArmorUpgradeOptions(mechId));
 
 const selectedValueLabel = computed(() => {
   return HEV_ARMOR_UPGRADES[model.value].display_name;
@@ -59,6 +62,7 @@ function selectOption(value) {
             <td class="text-end">
               Tons Used
             </td>
+            <td></td>
           </tr>
           </thead>
           <tbody>
@@ -78,6 +82,18 @@ function selectOption(value) {
             </td>
             <td class="text-end">
               <number-val :val="item.cost_by_size[sizeId]" :invert-color="true" :positive-signed="false"/>
+            </td>
+            <td class="notes">
+              <span
+                  v-if="!item.valid"
+                  v-b-tooltip.hover.top="item.validation_message"
+              >
+                <span class="btn btn-danger disabled">
+                  <span class="material-symbols-outlined">
+                  block
+                  </span>
+                </span>
+              </span>
             </td>
           </tr>
           </tbody>

@@ -92,7 +92,7 @@ function selectOption(value) {
             <td class="notes">
               <span
                   v-if="!item.valid"
-                  v-b-tooltip.hover.top="item.validation_message || 'Not available in Group'"
+                  v-b-tooltip.hover.top="item.validation_message"
               >
                 <span class="btn btn-danger disabled">
                   <span class="material-symbols-outlined">
