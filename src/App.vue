@@ -1,5 +1,4 @@
 <script setup>
-import MechList from './components/MechList.vue';
 import Toaster from './components/UI/Toaster.vue';
 import FileControls from './components/FileControls.vue';
 import ArmyList from './components/ArmyList.vue';
