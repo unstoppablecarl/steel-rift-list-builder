@@ -78,7 +78,9 @@ export const useMechStore = defineStore('mech', {
                 moveItem(this.mechs, mech, toIndex);
             },
             removeMech(mechId) {
+                const teamStore = useTeamStore();
                 deleteItemById(this.mechs, mechId);
+                teamStore.removeMechFromTeam(mechId);
             },
             addMechWeaponAttachment(mechId, weaponId) {
                 let mech = findById(this.mechs, mechId);
@@ -166,8 +168,8 @@ export const useMechStore = defineStore('mech', {
 
                     let cost = weaponInfo.cost;
                     const duplicate_cost = Math.floor(previousWeaponInstances * cost * 0.5);
-                    const {team_id, group_id} = teamStore.getMechTeamAndGroupIds(mechId)
-                    const isRequired = teamStore.getWeaponIsRequired(team_id, group_id, weapon_id);
+                    const {teamId, groupId} = teamStore.getMechTeamAndGroupIds(mechId);
+                    const isRequired = teamStore.getWeaponIsRequired(teamId, groupId, weapon_id);
 
                     const result = Object.assign({}, weaponInfo, {
                         base_cost: cost,
@@ -211,8 +213,8 @@ export const useMechStore = defineStore('mech', {
 
                     const upgrade_id = upgradeAttachment.upgrade_id;
                     const info = this.getUpgradeInfo(mechId, upgrade_id);
-                    const {team_id, group_id} = teamStore.getMechTeamAndGroupIds(mechId)
-                    const isRequired = teamStore.getUpgradeIsRequired(team_id, group_id, upgrade_id);
+                    const {teamId, groupId} = teamStore.getMechTeamAndGroupIds(mechId);
+                    const isRequired = teamStore.getUpgradeIsRequired(teamId, groupId, upgrade_id);
 
                     return Object.assign({}, info, {required_by_group: isRequired});
                 };

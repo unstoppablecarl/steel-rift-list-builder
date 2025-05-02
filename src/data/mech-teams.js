@@ -18,12 +18,8 @@ import {
 } from './mech-benefits.js';
 import {MOD_REINFORCED, MOD_STANDARD, MOD_STRIPPED} from './mech-body.js';
 import {makeStaticListIds} from './data-helpers.js';
-import {
-    ABLATIVE_ARMOR_UPGRADE,
-    CERAMIC_ARMOR_UPGRADE,
-    NO_ARMOR_UPGRADE,
-    REACTIVE_ARMOR_UPGRADE,
-} from './mech-armor-upgrades.js';
+import {ABLATIVE_ARMOR_UPGRADE, CERAMIC_ARMOR_UPGRADE, REACTIVE_ARMOR_UPGRADE} from './mech-armor-upgrades.js';
+import {each} from 'lodash';
 
 export const TEAM_SIZE_SMALL = 'TEAM_SIZE_SMALL';
 export const TEAM_SIZE_MEDIUM = 'TEAM_SIZE_MEDIUM';
@@ -43,12 +39,6 @@ export const MECH_TEAMS = makeStaticListIds({
                 display_name: 'Group A',
                 min_count: false,
                 max_count: false,
-                new_mech_defaults: {
-                    size_id: SIZE_MEDIUM,
-                    structure_mod_id: MOD_STANDARD,
-                    armor_mod_id: MOD_STANDARD,
-                    armor_upgrade_id: NO_ARMOR_UPGRADE,
-                },
             }),
         }),
     },
@@ -61,12 +51,6 @@ export const MECH_TEAMS = makeStaticListIds({
                 max_count: 2,
                 size_ids: [SIZE_LIGHT],
                 required_upgrade_ids: [TARGET_DESIGNATOR],
-                new_mech_defaults: {
-                    size_id: SIZE_LIGHT,
-                    structure_mod_id: MOD_STANDARD,
-                    armor_mod_id: MOD_STANDARD,
-                    armor_upgrade_id: NO_ARMOR_UPGRADE,
-                },
             }),
             'B': makeGroup({
                 display_name: 'Group B',
@@ -78,9 +62,6 @@ export const MECH_TEAMS = makeStaticListIds({
                     HOWITZER,
                     MISSILES,
                 ],
-                new_mech_defaults: {
-                    size_id: SIZE_MEDIUM,
-                },
             }),
         }),
         team_size_benefits: {
@@ -270,5 +251,26 @@ function makeGroup(obj) {
         limited_armor_mod_ids: [],
         limited_armor_upgrade_ids: [],
     };
-    return Object.assign(defaults, obj);
+    const result = Object.assign(defaults, obj);
+
+    each(result.groups, (group) => {
+        const mechOptions = {};
+
+        if (group.size_ids.length) {
+            mechOptions.size_id = group.size_ids[0];
+        }
+        if (group.limited_structure_mod_ids.length) {
+            mechOptions.structure_mod_id = group.limited_structure_mod_ids[0];
+        }
+        if (group.limited_armor_mod_ids.length) {
+            mechOptions.armor_mod_id = group.limited_armor_mod_ids[0];
+        }
+        if (group.limited_armor_upgrade_ids.length) {
+            mechOptions.armor_upgrade_id = group.limited_armor_upgrade_ids[0];
+        }
+
+        group.new_mech_defaults = mechOptions;
+    });
+
+    return result;
 }

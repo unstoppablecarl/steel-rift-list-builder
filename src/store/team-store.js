@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia';
 import {computed, ref} from 'vue';
-import {findItemIndexById, move} from '../helpers/collection-helper.js';
+import {findItemIndexById, move, setDisplayOrders} from '../helpers/collection-helper.js';
 import {MECH_TEAMS, TEAM_GENERAL} from '../data/mech-teams.js';
 import {useMechStore} from './mech-store.js';
 import {difference, find, findIndex, map} from 'lodash';
@@ -72,39 +72,45 @@ export const useTeamStore = defineStore('team', () => {
 
         const getMechTeamAndGroupIds = getter((mechId) => {
 
-            let team_id = null;
-            let group_id = null;
+            let teamId = null;
+            let groupId = null;
 
             find(teams.value, (team) => {
                 find(team.groups, (group) => {
                     const found = find(group.mechs, {mech_id: mechId});
 
                     if (!!found) {
-                        team_id = team.id;
-                        group_id = group.id;
+                        teamId = team.id;
+                        groupId = group.id;
                     }
                 });
             });
 
-            if (!team_id) {
+            if (!teamId) {
                 throw new Error('Mech team not found!');
             }
-            if (!group_id) {
+            if (!groupId) {
                 throw new Error('Mech group not found!');
             }
 
             return {
-                team_id,
-                group_id,
+                teamId,
+                groupId,
             };
 
         });
 
         const getMechSizeValid = getter((mechId, sizeId) => {
-            const {team_id, group_id} = getMechTeamAndGroupIds.value(mechId);
-            const info = getTeamGroupInfo.value(team_id, group_id);
+            const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
+            const info = getTeamGroupInfo.value(teamId, groupId);
             return info.size_ids.includes(sizeId)
         });
+
+        // const getMechStructureModValid = getter((mechId, modId) => {
+        //     const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
+        //     const info = getTeamGroupInfo.value(teamId, groupId);
+        //     return info.size_ids.includes(sizeId)
+        // });
 
         const getTeamGroupSizeValidation = getter((teamId, groupId) => {
             const {min_count, max_count} = MECH_TEAMS[teamId].groups[groupId];
@@ -147,9 +153,24 @@ export const useTeamStore = defineStore('team', () => {
 
         function addMechToTeam(teamId, groupId) {
             const groupDef = MECH_TEAMS[teamId].groups[groupId];
-            const mechOptions = groupDef.new_mech_defaults;
-            const mech = mechStore.addMech(mechOptions ?? {});
-            const group = findGroup.value(teamId, groupId);
+            const mechOptions = {}
+
+            if(groupDef.size_ids.length){
+                mechOptions.size_id = groupDef.size_ids[0]
+            }
+            if(groupDef.limited_structure_mod_ids.length){
+                mechOptions.structure_mod_id = groupDef.limited_structure_mod_ids[0]
+            }
+            if(groupDef.limited_armor_mod_ids.length){
+                mechOptions.armor_mod_id = groupDef.limited_armor_mod_ids[0]
+            }
+            if(groupDef.limited_armor_upgrade_ids.length){
+                mechOptions.armor_upgrade_id = groupDef.limited_armor_upgrade_ids[0]
+            }
+
+
+            const mech = mechStore.addMech(mechOptions);
+
 
             groupDef.required_weapon_ids.forEach((weaponId) => {
                 mechStore.addMechWeaponAttachment(mech.id, weaponId);
@@ -158,18 +179,19 @@ export const useTeamStore = defineStore('team', () => {
                 mechStore.addMechUpgradeAttachment(mech.id, upgradeId);
             });
 
+            const group = findGroup.value(teamId, groupId);
+
             group.mechs.push({
                 mech_id: mech.id,
-                display_order: 0,
             });
+            setDisplayOrders(group.mechs)
         }
 
-        function removeMechFromTeam(teamId, groupId, mechId) {
+        function removeMechFromTeam(mechId) {
+            const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
             const group = findGroup.value(teamId, groupId);
             const index = findIndex(group.mechs, {'mech_id': mechId});
-
             group.mechs.splice(index, 1);
-            mechStore.removeMech(mechId);
         }
 
         function removeTeam(id) {

@@ -1,12 +1,10 @@
 <script setup>
 import {useMechStore} from '../store/mech-store.js';
 import Fraction from './functional/fraction.vue';
-import {computed, provide, ref, watch} from 'vue';
+import {computed, ref, watch} from 'vue';
 import {BButton} from 'bootstrap-vue-next';
-import {useTeamStore} from '../store/team-store.js';
 
 const mechStore = useMechStore();
-const teamStore = useTeamStore();
 
 const {
   mechId,
@@ -32,7 +30,7 @@ watch(() => collapseSignal, () => visible.value = false);
 watch(() => expandSignal, () => visible.value = true);
 </script>
 <template>
-  <div class="card">
+  <div class="card card-mech">
     <div class="card-body">
       <div class="row">
         <div class="col-sm-2">
@@ -57,7 +55,7 @@ watch(() => expandSignal, () => visible.value = true);
             </BButton>
 
             <BButton
-                @click="teamStore.removeMechFromTeam(teamId, groupId, mechId)"
+                @click="mechStore.removeMech(mechId)"
                 variant="danger"
                 class="mx-1"
             >
