@@ -15,20 +15,20 @@ function saveFile(fileName, data) {
 }
 
 function loadFromLocal(key) {
+  return JSON.parse(localStorage[key]);
+}
+
+function save() {
   //make sure stores are persisted in case they have not been mutated yet
   mechStore.$persist();
   factionStore.$persist();
   teamStore.$persist();
 
-  return JSON.parse(localStorage[key]);
-}
-
-function save() {
-
   const data = {
     save_schema_version: 1,
     mech: loadFromLocal('mech'),
     faction: loadFromLocal('faction'),
+    team: loadFromLocal('team')
   };
 
   saveFile('my-list', data);
