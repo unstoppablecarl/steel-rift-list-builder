@@ -8,9 +8,9 @@ import BtnLoad from './UI/BtnLoad.vue';
   <div class="px-4 pt-2">
     <div class="row">
       <div class="col col-form-label fw-bold">
-        <h4>
+        <h5>
           Steel Rift: Garage
-        </h4>
+        </h5>
       </div>
       <div class="col">
         <div class="float-end">
