@@ -8,10 +8,13 @@ import {getter} from './helpers/store-helpers.js';
 import {HEV_BODY_MODS_DROP_DOWN} from '../data/mech-body.js';
 import {HEV_ARMOR_UPGRADES_DROP_DOWN} from '../data/mech-armor-upgrades.js';
 import {HEV_WEAPONS} from '../data/mech-weapons.js';
+import {useArmyListStore} from './army-list-store.js';
+import {GAME_SIZES} from '../data/game-sizes.js';
 
 export const useTeamStore = defineStore('team', () => {
 
         const mechStore = useMechStore();
+        const armyListStore = useArmyListStore();
 
         const teams = ref([makeGeneralTeam()]);
 
@@ -320,6 +323,11 @@ export const useTeamStore = defineStore('team', () => {
             });
         });
 
+        const max_team_size_counts = computed(() => {
+            const sizeId = armyListStore.game_size_id.value;
+            return GAME_SIZES[sizeId].max_teams;
+        });
+
         function addMechToTeam(teamId, groupId) {
             const groupDef = MECH_TEAMS[teamId].groups[groupId];
             const mechOptions = {};
@@ -383,6 +391,7 @@ export const useTeamStore = defineStore('team', () => {
         return {
             teams,
             addable_teams,
+            max_team_size_counts,
             getTeamInfo,
             getTeamGroupInfo,
             getTeamGroupMechIds,

@@ -9,6 +9,7 @@ import {BFormFloatingLabel, BFormInput} from 'bootstrap-vue-next';
 import ArmyListSupportAssetCount from './ArmyList/ArmyListSupportAssetCount.vue';
 import ArmyListSupportAssets from './ArmyList/ArmyListSupportAssets.vue';
 import {useSupportAssetStore} from '../store/support-asset-store.js';
+import ArmyListTeams from './ArmyList/ArmyListTeams.vue';
 
 const store = useArmyListStore();
 const {used_tons, max_tons, name} = storeToRefs(store);
@@ -21,8 +22,7 @@ const {used_support_assets, max_support_assets} = storeToRefs(useSupportAssetSto
       <strong>
         Army:
       </strong>
-      {{name || 'Not named'}}
-
+      {{ name || 'Not named' }}
       <div class="float-end">
         <span class="ms-2">
 
@@ -59,12 +59,10 @@ const {used_support_assets, max_support_assets} = storeToRefs(useSupportAssetSto
               <ArmyListSupportAssetCount/>
             </div>
             <div class="col">
-
+              <ArmyListTeams/>
             </div>
           </div>
         </div>
-
-
         <div class="col-sm-6">
           <ArmyListSupportAssets/>
         </div>
