@@ -251,7 +251,6 @@ export const MECH_TEAMS = makeStaticListIds({
             },
         },
     },
-
 });
 
 function makeGroup(obj) {
