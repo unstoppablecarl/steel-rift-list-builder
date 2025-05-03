@@ -3,11 +3,11 @@ import {computed, ref} from 'vue';
 import {findItemIndexById, move, setDisplayOrders} from './helpers/collection-helper.js';
 import {MECH_TEAM_SIZES, MECH_TEAMS, TEAM_GENERAL} from '../data/mech-teams.js';
 import {useMechStore} from './mech-store.js';
-import {countBy, difference, find, findIndex, map, max, min, sumBy} from 'lodash';
+import {countBy, difference, find, findIndex, indexOf, map, max, min, sumBy} from 'lodash';
 import {getter} from './helpers/store-helpers.js';
-import {HEV_BODY_MODS_DROP_DOWN} from '../data/mech-body.js';
-import {HEV_ARMOR_UPGRADES_DROP_DOWN} from '../data/mech-armor-upgrades.js';
-import {HEV_WEAPONS} from '../data/mech-weapons.js';
+import {MECH_BODY_MODS_DROP_DOWN} from '../data/mech-body.js';
+import {MECH_ARMOR_UPGRADES_DROP_DOWN} from '../data/mech-armor-upgrades.js';
+import {MECH_WEAPONS} from '../data/mech-weapons.js';
 import {useArmyListStore} from './army-list-store.js';
 import {GAME_SIZE_BATTLE, GAME_SIZE_DUEL, GAME_SIZE_RECON, GAME_SIZE_STRIKE, GAME_SIZES} from '../data/game-sizes.js';
 
@@ -102,7 +102,7 @@ export const useTeamStore = defineStore('team', () => {
             const teamDisplayName = getTeamInfo.value(teamId).display_name;
             const groupInfo = getTeamGroupInfo.value(teamId, groupId);
             const atLeastOneWeapons = groupInfo.required_at_least_one_of_weapon_ids
-                .map((weaponId) => HEV_WEAPONS[weaponId].display_name);
+                .map((weaponId) => MECH_WEAPONS[weaponId].display_name);
 
             return `${teamDisplayName} ${groupInfo.display_name} require at least one of the following: ${atLeastOneWeapons.join(', ')}`;
 
@@ -287,7 +287,7 @@ export const useTeamStore = defineStore('team', () => {
         });
 
         const getMechStructureModOptions = getter((mechId) => {
-            return HEV_BODY_MODS_DROP_DOWN.map((item) => {
+            return MECH_BODY_MODS_DROP_DOWN.map((item) => {
                 item = Object.assign({}, item);
                 const {valid, validation_message} = getMechStructureModValid.value(mechId, item.id);
                 item.valid = valid;
@@ -297,7 +297,7 @@ export const useTeamStore = defineStore('team', () => {
         });
 
         const getMechArmorModOptions = getter((mechId) => {
-            return HEV_BODY_MODS_DROP_DOWN.map((item) => {
+            return MECH_BODY_MODS_DROP_DOWN.map((item) => {
                 item = Object.assign({}, item);
                 const {valid, validation_message} = getMechArmorModValid.value(mechId, item.id);
                 item.valid = valid;
@@ -311,7 +311,7 @@ export const useTeamStore = defineStore('team', () => {
             const teamDisplayName = getTeamInfo.value(teamId).display_name;
             const groupInfo = getTeamGroupInfo.value(teamId, groupId);
 
-            return HEV_ARMOR_UPGRADES_DROP_DOWN.map((item) => {
+            return MECH_ARMOR_UPGRADES_DROP_DOWN.map((item) => {
                 item = Object.assign({}, item);
 
                 let valid = true;
@@ -328,6 +328,16 @@ export const useTeamStore = defineStore('team', () => {
                 item.validation_message = validation_message;
                 return item;
             });
+        });
+
+        const getMechTeamPerkIds = getter((teamId, teamSize, mechSizeId) => {
+            const columns = MECH_TEAMS[teamId].team_size_perk_columns;
+            const index = indexOf(columns, (sizeIds) => sizeIds.includes(mechSizeId));
+            if (index === -1) {
+                return [];
+            }
+
+            return MECH_TEAMS[teamId].team_size_perk_rows[teamSize] || [];
         });
 
         const used_teams_count = computed(() => teams.value.filter((team) => team.id !== TEAM_GENERAL).length);
@@ -478,6 +488,7 @@ export const useTeamStore = defineStore('team', () => {
             getAtLeastOneOfWeaponsIsRequired,
             getAtLeastOneOfWeaponsIsRequiredMessage,
             getRequiredByTeamGroupMessage,
+            getMechTeamPerkIds,
 
             addMechToTeam,
             removeMechFromTeam,

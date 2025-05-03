@@ -4,7 +4,7 @@ export const MOD_STRIPPED = 'MOD_STRIPPED';
 export const MOD_STANDARD = 'MOD_STANDARD';
 export const MOD_REINFORCED = 'MOD_REINFORCED';
 
-export const HEV_BODY_MODS = makeFrozenStaticListIds({
+export const MECH_BODY_MODS = makeFrozenStaticListIds({
     [[MOD_STRIPPED]]: {
         display_name: 'Stripped',
         modifier: -2,
@@ -22,4 +22,4 @@ export const HEV_BODY_MODS = makeFrozenStaticListIds({
     },
 });
 
-export const HEV_BODY_MODS_DROP_DOWN = listToDropDown(HEV_BODY_MODS);
+export const MECH_BODY_MODS_DROP_DOWN = listToDropDown(MECH_BODY_MODS);

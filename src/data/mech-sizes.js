@@ -5,7 +5,7 @@ export const SIZE_MEDIUM = 'SIZE_MEDIUM';
 export const SIZE_HEAVY = 'SIZE_HEAVY';
 export const SIZE_ULTRA = 'SIZE_ULTRA';
 
-export const HEV_SIZES = makeFrozenStaticListIds({
+export const MECH_SIZES = makeFrozenStaticListIds({
     [[SIZE_LIGHT]]: {
         display_name: 'Light',
         armor: 6,
@@ -44,4 +44,4 @@ export const HEV_SIZES = makeFrozenStaticListIds({
     },
 });
 
-export const HEV_SIZES_DROP_DOWN = listToDropDown(HEV_SIZES);
+export const MECH_SIZES_DROP_DOWN = listToDropDown(MECH_SIZES);

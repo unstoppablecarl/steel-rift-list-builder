@@ -1,6 +1,6 @@
 <script setup>
 import {computed} from 'vue';
-import {HEV_ARMOR_UPGRADES} from '../../../data/mech-armor-upgrades.js';
+import {MECH_ARMOR_UPGRADES} from '../../../data/mech-armor-upgrades.js';
 import NumberVal from '../../functional/number.vue';
 import {useTeamStore} from '../../../store/team-store.js';
 
@@ -26,11 +26,11 @@ const model = defineModel();
 const options = computed(() => teamStore.getMechArmorUpgradeOptions(mechId));
 
 const selectedValueLabel = computed(() => {
-  return HEV_ARMOR_UPGRADES[model.value].display_name;
+  return MECH_ARMOR_UPGRADES[model.value].display_name;
 });
 
 const selectedValue = computed(() => {
-  return HEV_ARMOR_UPGRADES[model.value];
+  return MECH_ARMOR_UPGRADES[model.value];
 });
 
 function selectOption(value) {

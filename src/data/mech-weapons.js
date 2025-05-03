@@ -29,7 +29,7 @@ export const ROTARY_CANNON = 'ROTARY_CANNON';
 export const SHOT_CANNON = 'SHOT_CANNON';
 export const SUBMUNITIONS = 'SUBMUNITIONS';
 
-export const HEV_WEAPONS = makeFrozenStaticListIds({
+export const MECH_WEAPONS = makeFrozenStaticListIds({
     [[AUTO_CANNON]]: makeWeapon({
         display_name: 'Auto-Cannon',
         damage_by_size: {
@@ -295,4 +295,4 @@ function makeWeapon({
 
 }
 
-export const HEV_WEAPONS_DROP_DOWN = listToDropDown(HEV_WEAPONS);
+export const MECH_WEAPONS_DROP_DOWN = listToDropDown(MECH_WEAPONS);

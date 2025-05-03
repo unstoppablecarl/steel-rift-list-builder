@@ -1,13 +1,13 @@
 import {defineStore} from 'pinia';
-import {HEV_SIZES, SIZE_MEDIUM} from '../data/mech-sizes.js';
-import {HEV_BODY_MODS, MOD_STANDARD} from '../data/mech-body.js';
-import {HEV_ARMOR_UPGRADES, NO_ARMOR_UPGRADE} from '../data/mech-armor-upgrades.js';
+import {MECH_SIZES, SIZE_MEDIUM} from '../data/mech-sizes.js';
+import {MECH_BODY_MODS, MOD_STANDARD} from '../data/mech-body.js';
+import {MECH_ARMOR_UPGRADES, NO_ARMOR_UPGRADE} from '../data/mech-armor-upgrades.js';
 import {findById, updateObject} from '../data/data-helpers.js';
 import {sumBy} from 'lodash';
 import {traitDisplayNames} from '../data/weapon-traits.js';
-import {HEV_WEAPONS} from '../data/mech-weapons.js';
+import {MECH_WEAPONS} from '../data/mech-weapons.js';
 import {readonly} from 'vue';
-import {HEV_UPGRADES} from '../data/mech-upgrades.js';
+import {MECH_UPGRADES} from '../data/mech-upgrades.js';
 import {deleteItemById, findItemIndex, moveItem} from './helpers/collection-helper.js';
 import {useToastStore} from './toast-store.js';
 import {useFactionStore} from './faction-store.js';
@@ -211,7 +211,7 @@ export const useMechStore = defineStore('mech', {
             },
             getMechAvailableWeaponsInfo(state) {
                 return (mechId) => {
-                    return Object.keys(HEV_WEAPONS)
+                    return Object.keys(MECH_WEAPONS)
                         .map((weaponId) => this.getWeaponInfo(mechId, weaponId));
                 };
             },
@@ -220,7 +220,7 @@ export const useMechStore = defineStore('mech', {
                     const mech = findById(state.mechs, mechId);
                     const existingUpgradeIds = mech.upgrades.map((item) => item.upgrade_id);
 
-                    return Object.keys(HEV_UPGRADES)
+                    return Object.keys(MECH_UPGRADES)
                         .filter((upgradeId) => {
                             return !existingUpgradeIds.includes(upgradeId);
                         })
@@ -257,7 +257,7 @@ export const useMechStore = defineStore('mech', {
                         slots,
                         cost_by_size,
                         display_name,
-                    } = HEV_ARMOR_UPGRADES[armor_upgrade_id];
+                    } = MECH_ARMOR_UPGRADES[armor_upgrade_id];
 
                     return {
                         cost: cost_by_size[size_id],
@@ -286,9 +286,9 @@ export const useMechStore = defineStore('mech', {
 
                     const armorUpgradeInfo = this.getMechArmorUpgradeInfo(mechId)
 
-                    const size = HEV_SIZES[size_id];
-                    const structure_mod = HEV_BODY_MODS[structure_mod_id];
-                    const armor_mod = HEV_BODY_MODS[armor_mod_id];
+                    const size = MECH_SIZES[size_id];
+                    const structure_mod = MECH_BODY_MODS[structure_mod_id];
+                    const armor_mod = MECH_BODY_MODS[armor_mod_id];
 
                     const armor_stat = size.armor + armor_mod.modifier;
                     const structure_stat = size.structure + structure_mod.modifier;
@@ -347,7 +347,7 @@ export const useMechStore = defineStore('mech', {
 
                     let mech = this.getMech(mechId);
                     let size_id = mech.size_id;
-                    let weapon = HEV_WEAPONS[weaponId];
+                    let weapon = MECH_WEAPONS[weaponId];
 
                     let range_formatted = '-';
                     if (weapon.range) {
@@ -375,7 +375,7 @@ export const useMechStore = defineStore('mech', {
 
                     const mech = this.getMech(mechId);
                     const size_id = mech.size_id;
-                    const upgrade = HEV_UPGRADES[upgradeId];
+                    const upgrade = MECH_UPGRADES[upgradeId];
                     const notes = [];
                     const validation_messages = [];
 

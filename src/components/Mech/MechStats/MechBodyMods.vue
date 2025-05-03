@@ -1,5 +1,5 @@
 <script setup>
-import {HEV_BODY_MODS} from '../../../data/mech-body.js';
+import {MECH_BODY_MODS} from '../../../data/mech-body.js';
 import {computed} from 'vue';
 
 const {
@@ -36,7 +36,7 @@ const {
 
 const model = defineModel();
 const selectedValueLabel = computed(() => {
-  return HEV_BODY_MODS[model.value].display_name;
+  return MECH_BODY_MODS[model.value].display_name;
 });
 
 function selectOption(value) {

@@ -1,21 +1,21 @@
-import {HEV_SIZES, SIZE_HEAVY, SIZE_LIGHT, SIZE_MEDIUM, SIZE_ULTRA} from './mech-sizes.js';
+import {MECH_SIZES, SIZE_HEAVY, SIZE_LIGHT, SIZE_MEDIUM, SIZE_ULTRA} from './mech-sizes.js';
 import {TARGET_DESIGNATOR} from './mech-upgrades.js';
 import {HOWITZER, MELEE, MISSILES, ROCKET_PACK} from './mech-weapons.js';
 import {
-    BENEFIT_0_SLOT_ARMOR_UPGRADES,
-    BENEFIT_0_SLOT_ECM,
-    BENEFIT_0_SLOT_TARGET_DESIGNATORS,
-    BENEFIT_0_TON_ARMOR_UPGRADES,
-    BENEFIT_0_TON_ECM,
-    BENEFIT_0_TON_TARGET_DESIGNATORS,
-    BENEFIT_DIRECTIONAL_ASSETS,
-    BENEFIT_EXTRA_MISSILE_AMMO,
-    BENEFIT_EXTRA_TONNAGE,
-    BENEFIT_RECON_INITIATIVE,
-    BENEFIT_SIDE_ARMOR,
-    BENEFIT_SMART_HOWITZERS,
-    BENEFIT_SUPPORT_ASSET_DAMAGE,
-} from './mech-benefits.js';
+    TEAM_PERK_0_SLOT_ARMOR_UPGRADES,
+    TEAM_PERK_0_SLOT_ECM,
+    TEAM_PERK_0_SLOT_TARGET_DESIGNATORS,
+    TEAM_PERK_0_TON_ARMOR_UPGRADES,
+    TEAM_PERK_0_TON_ECM,
+    TEAM_PERK_0_TON_TARGET_DESIGNATORS,
+    TEAM_PERK_DIRECTIONAL_ASSETS,
+    TEAM_PERK_EXTRA_MISSILE_AMMO,
+    TEAM_PERK_EXTRA_TONNAGE,
+    TEAM_PERK_RECON_INITIATIVE,
+    TEAM_PERK_SIDE_ARMOR,
+    TEAM_PERK_SMART_HOWITZERS,
+    TEAM_PERK_SUPPORT_ASSET_DAMAGE,
+} from './mech-team-perks.js';
 import {MOD_REINFORCED, MOD_STANDARD, MOD_STRIPPED} from './mech-body.js';
 import {makeStaticListIds} from './data-helpers.js';
 import {ABLATIVE_ARMOR_UPGRADE, CERAMIC_ARMOR_UPGRADE, REACTIVE_ARMOR_UPGRADE} from './mech-armor-upgrades.js';
@@ -87,27 +87,23 @@ export const MECH_TEAMS = makeStaticListIds({
                 ],
             }),
         }),
-        team_size_benefits: {
-            2: {
-                [[SIZE_LIGHT]]: [],
-                [[SIZE_MEDIUM]]: [BENEFIT_EXTRA_MISSILE_AMMO],
-                [[SIZE_HEAVY]]: [BENEFIT_EXTRA_MISSILE_AMMO],
-                [[SIZE_ULTRA]]: [],
-
-            },
-            3: {
-                [[SIZE_LIGHT]]: [BENEFIT_0_SLOT_TARGET_DESIGNATORS],
-                [[SIZE_MEDIUM]]: [BENEFIT_SMART_HOWITZERS],
-                [[SIZE_HEAVY]]: [BENEFIT_SMART_HOWITZERS],
-                [[SIZE_ULTRA]]: [],
-            },
-            4: {
-                [[SIZE_LIGHT]]: [BENEFIT_0_TON_TARGET_DESIGNATORS],
-                [[SIZE_MEDIUM]]: [BENEFIT_EXTRA_MISSILE_AMMO],
-                [[SIZE_HEAVY]]: [BENEFIT_EXTRA_MISSILE_AMMO],
-                [[SIZE_ULTRA]]: [],
-            },
-
+        team_size_perk_columns: [
+            [SIZE_LIGHT],
+            [SIZE_MEDIUM, SIZE_HEAVY],
+        ],
+        team_size_perk_rows: {
+            2: [
+                [],
+                [TEAM_PERK_EXTRA_MISSILE_AMMO],
+            ],
+            3: [
+                [TEAM_PERK_0_SLOT_TARGET_DESIGNATORS],
+                [TEAM_PERK_SMART_HOWITZERS],
+            ],
+            4: [
+                [TEAM_PERK_0_TON_TARGET_DESIGNATORS],
+                [TEAM_PERK_EXTRA_MISSILE_AMMO],
+            ],
         },
     },
     [[TEAM_RECON]]: {
@@ -128,25 +124,23 @@ export const MECH_TEAMS = makeStaticListIds({
                 limited_armor_mod_ids: [MOD_STRIPPED],
             }),
         }),
-        team_size_benefits: {
-            2: {
-                [[SIZE_LIGHT]]: [BENEFIT_0_SLOT_ECM],
-                [[SIZE_MEDIUM]]: [BENEFIT_RECON_INITIATIVE],
-                [[SIZE_HEAVY]]: [BENEFIT_RECON_INITIATIVE],
-                [[SIZE_ULTRA]]: [],
-            },
-            3: {
-                [[SIZE_LIGHT]]: [BENEFIT_0_SLOT_TARGET_DESIGNATORS],
-                [[SIZE_MEDIUM]]: [BENEFIT_SUPPORT_ASSET_DAMAGE],
-                [[SIZE_HEAVY]]: [BENEFIT_SUPPORT_ASSET_DAMAGE],
-                [[SIZE_ULTRA]]: [],
-            },
-            4: {
-                [[SIZE_LIGHT]]: [BENEFIT_0_TON_ECM, BENEFIT_0_TON_TARGET_DESIGNATORS],
-                [[SIZE_MEDIUM]]: [BENEFIT_DIRECTIONAL_ASSETS],
-                [[SIZE_HEAVY]]: [BENEFIT_DIRECTIONAL_ASSETS],
-                [[SIZE_ULTRA]]: [],
-            },
+        team_size_perk_columns: [
+            [SIZE_LIGHT],
+            [SIZE_MEDIUM, SIZE_HEAVY],
+        ],
+        team_size_perk_rows: {
+            2: [
+                [TEAM_PERK_0_SLOT_ECM],
+                [TEAM_PERK_RECON_INITIATIVE],
+            ],
+            3: [
+                [TEAM_PERK_0_SLOT_TARGET_DESIGNATORS],
+                [TEAM_PERK_SUPPORT_ASSET_DAMAGE],
+            ],
+            4: [
+                [TEAM_PERK_0_TON_ECM, TEAM_PERK_0_TON_TARGET_DESIGNATORS],
+                [TEAM_PERK_DIRECTIONAL_ASSETS],
+            ],
         },
     },
     [[TEAM_SECURITY]]: {
@@ -190,26 +184,27 @@ export const MECH_TEAMS = makeStaticListIds({
                 limited_armor_mod_ids: [MOD_STANDARD, MOD_REINFORCED],
             }),
         }),
-        team_size_benefits: {
-            2: {
-                [[SIZE_LIGHT]]: [],
-                [[SIZE_MEDIUM]]: [BENEFIT_0_SLOT_ARMOR_UPGRADES],
-                [[SIZE_HEAVY]]: [BENEFIT_0_SLOT_ARMOR_UPGRADES, BENEFIT_EXTRA_TONNAGE],
-                [[SIZE_ULTRA]]: [BENEFIT_0_SLOT_ARMOR_UPGRADES, BENEFIT_EXTRA_TONNAGE],
-            },
-            3: {
-                [[SIZE_LIGHT]]: [],
-                [[SIZE_MEDIUM]]: [BENEFIT_0_TON_ARMOR_UPGRADES, BENEFIT_EXTRA_TONNAGE],
-                [[SIZE_HEAVY]]: [BENEFIT_0_TON_ARMOR_UPGRADES, BENEFIT_SIDE_ARMOR],
-                [[SIZE_ULTRA]]: [BENEFIT_0_TON_ARMOR_UPGRADES, BENEFIT_SIDE_ARMOR],
-            },
-            4: {
-                [[SIZE_LIGHT]]: [],
-                [[SIZE_MEDIUM]]: [BENEFIT_SIDE_ARMOR],
-                [[SIZE_HEAVY]]: [],
-                [[SIZE_ULTRA]]: [],
-            },
-
+        team_size_perk_columns: [
+            [SIZE_LIGHT],
+            [SIZE_MEDIUM],
+            [SIZE_HEAVY, SIZE_ULTRA],
+        ],
+        team_size_perk_rows: {
+            2: [
+                [],
+                [TEAM_PERK_0_SLOT_ARMOR_UPGRADES],
+                [TEAM_PERK_0_SLOT_ARMOR_UPGRADES, TEAM_PERK_EXTRA_TONNAGE],
+            ],
+            3: [
+                [],
+                [TEAM_PERK_0_TON_ARMOR_UPGRADES, TEAM_PERK_EXTRA_TONNAGE],
+                [TEAM_PERK_0_TON_ARMOR_UPGRADES, TEAM_PERK_SIDE_ARMOR],
+            ],
+            4: [
+                [],
+                [TEAM_PERK_SIDE_ARMOR],
+                [],
+            ],
         },
     },
     [[TEAM_TACTICAL]]: {
@@ -236,19 +231,22 @@ export const MECH_TEAMS = makeStaticListIds({
                 required_at_least_one_of_weapon_ids: [ROCKET_PACK, MISSILES],
             }),
         }),
-        team_size_benefits: {
-            3: {
-                [[SIZE_LIGHT]]: [BENEFIT_0_SLOT_TARGET_DESIGNATORS],
-                [[SIZE_MEDIUM]]: [BENEFIT_EXTRA_TONNAGE],
-                [[SIZE_HEAVY]]: [BENEFIT_EXTRA_MISSILE_AMMO],
-                [[SIZE_ULTRA]]: [],
-            },
-            4: {
-                [[SIZE_LIGHT]]: [],
-                [[SIZE_MEDIUM]]: [BENEFIT_SIDE_ARMOR],
-                [[SIZE_HEAVY]]: [],
-                [[SIZE_ULTRA]]: [],
-            },
+        team_size_perk_columns: [
+            [SIZE_LIGHT],
+            [SIZE_MEDIUM],
+            [SIZE_HEAVY],
+        ],
+        team_size_perk_rows: {
+            3: [
+                [TEAM_PERK_0_SLOT_TARGET_DESIGNATORS],
+                [TEAM_PERK_EXTRA_TONNAGE],
+                [TEAM_PERK_EXTRA_MISSILE_AMMO],
+            ],
+            4: [
+                [],
+                [TEAM_PERK_SIDE_ARMOR],
+                [],
+            ],
         },
     },
 });
@@ -267,7 +265,7 @@ function makeGroup(obj) {
     const result = Object.assign(defaults, obj);
 
     if (obj.size_ids) {
-        result.display_name = obj.size_ids.map((sizeId) => HEV_SIZES[sizeId].display_name)
+        result.display_name = obj.size_ids.map((sizeId) => MECH_SIZES[sizeId].display_name)
             .join(' and ') + ' HE-Vs';
     }
 
