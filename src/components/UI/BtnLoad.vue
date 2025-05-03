@@ -4,7 +4,6 @@ import {useToastStore} from '../../store/toast-store.js';
 import {loadSaveFileData} from '../../store/helpers/store-save-load.js';
 
 const toastStore = useToastStore();
-
 const fileUpload = useTemplateRef('file-upload');
 
 function clickFile() {
@@ -33,5 +32,5 @@ function fileChange(event) {
 </script>
 <template>
   <input ref="file-upload" type="file" @change="fileChange" accept="application/json" hidden>
-  <BButton @click="clickFile">Load</BButton>
+  <BButton @click="clickFile" size="sm">Load</BButton>
 </template>

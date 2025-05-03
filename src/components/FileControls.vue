@@ -6,12 +6,10 @@ import BtnLoad from './UI/BtnLoad.vue';
 </script>
 <template>
   <div class="px-4 pt-2">
-
-
     <div class="row">
       <div class="col col-form-label fw-bold">
         <h4>
-          Steel Rift Army Builder
+          Steel Rift: Garage
         </h4>
       </div>
       <div class="col">

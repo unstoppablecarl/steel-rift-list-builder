@@ -10,7 +10,6 @@ onMounted(() => {
 });
 </script>
 <template>
-
   <Toaster/>
   <div class="container-lg py-1 ">
     <FileControls/>
