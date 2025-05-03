@@ -2,7 +2,7 @@ import {defineStore} from 'pinia';
 import {computed, ref} from 'vue';
 import {useMechStore} from './mech-store.js';
 import {useSupportAssetStore} from './support-asset-store.js';
-import {getGameSize} from '../data/game-sizes.js';
+import {GAME_SIZES, getGameSizeId} from '../data/game-sizes.js';
 
 export const useArmyListStore = defineStore('army-list', () => {
 
@@ -20,7 +20,9 @@ export const useArmyListStore = defineStore('army-list', () => {
         const mechStore = useMechStore();
         const supportAssets = useSupportAssetStore();
 
-        const game_size_id = computed(() => getGameSize(max_tons.value));
+        const game_size_id = computed(() => getGameSizeId(max_tons.value));
+        const game_size_info = computed(() => GAME_SIZES[game_size_id.value]);
+
         const used_tons = computed(() => {
             return mechStore.totalTons +
                 supportAssets.used_tons;
@@ -31,6 +33,7 @@ export const useArmyListStore = defineStore('army-list', () => {
             used_tons,
             max_tons,
             game_size_id,
+            game_size_info,
             $reset,
         };
     },

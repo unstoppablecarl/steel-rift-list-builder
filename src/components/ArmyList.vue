@@ -10,8 +10,11 @@ import ArmyListSupportAssetCount from './ArmyList/ArmyListSupportAssetCount.vue'
 import ArmyListSupportAssets from './ArmyList/ArmyListSupportAssets.vue';
 import {useSupportAssetStore} from '../store/support-asset-store.js';
 import ArmyListTeams from './ArmyList/ArmyListTeams.vue';
+import {useTeamStore} from '../store/team-store.js';
 
 const store = useArmyListStore();
+const {used_teams_count, max_teams_count} = storeToRefs(useTeamStore());
+
 const {used_tons, max_tons, name} = storeToRefs(store);
 const {used_support_assets, max_support_assets} = storeToRefs(useSupportAssetStore());
 
@@ -25,7 +28,15 @@ const {used_support_assets, max_support_assets} = storeToRefs(useSupportAssetSto
       {{ name || 'Not named' }}
       <div class="float-end">
         <span class="ms-2">
+        <strong>Teams: </strong>
+        <fraction
+            :a="used_teams_count"
+            :b="max_teams_count"
+            success-class="fw-bold"
+        />
+        </span>
 
+        <span class="ms-2">
         <strong>Support Assets: </strong>
         <fraction
             :a="used_support_assets"

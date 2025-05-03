@@ -11,7 +11,8 @@ export const GAME_SIZES = {
     [[GAME_SIZE_DUEL]]: {
         min_tons: 0,
         max_support_assets: 0,
-        max_teams: {
+        max_teams: 0,
+        max_team_sizes: {
             [[TEAM_SIZE_SMALL]]: 0,
             [[TEAM_SIZE_MEDIUM]]: 0,
             [[TEAM_SIZE_LARGE]]: 0,
@@ -20,7 +21,8 @@ export const GAME_SIZES = {
     [[GAME_SIZE_RECON]]: {
         min_tons: 100,
         max_support_assets: 1,
-        max_teams: {
+        max_teams: 1,
+        max_team_sizes: {
             [[TEAM_SIZE_SMALL]]: 1,
             [[TEAM_SIZE_MEDIUM]]: 0,
             [[TEAM_SIZE_LARGE]]: 0,
@@ -29,7 +31,8 @@ export const GAME_SIZES = {
     [[GAME_SIZE_STRIKE]]: {
         min_tons: 150,
         max_support_assets: 2,
-        max_teams: {
+        max_teams: 2,
+        max_team_sizes: {
             [[TEAM_SIZE_SMALL]]: 0,
             [[TEAM_SIZE_MEDIUM]]: 2,
             [[TEAM_SIZE_LARGE]]: 0,
@@ -38,7 +41,8 @@ export const GAME_SIZES = {
     [[GAME_SIZE_BATTLE]]: {
         min_tons: 200,
         max_support_assets: 3,
-        max_teams: {
+        max_teams: 3,
+        max_team_sizes: {
             [[TEAM_SIZE_SMALL]]: 0,
             [[TEAM_SIZE_MEDIUM]]: 2,
             [[TEAM_SIZE_LARGE]]: 1,
@@ -47,7 +51,8 @@ export const GAME_SIZES = {
     [[GAME_SIZE_WAR]]: {
         min_tons: 350,
         max_support_assets: 4,
-        max_teams: {
+        max_teams: 3,
+        max_team_sizes: {
             [[TEAM_SIZE_SMALL]]: 1,
             [[TEAM_SIZE_MEDIUM]]: 2,
             [[TEAM_SIZE_LARGE]]: 1,
@@ -55,7 +60,7 @@ export const GAME_SIZES = {
     },
 };
 
-export function getGameSize(maxTons) {
+export function getGameSizeId(maxTons) {
     const sizes = [
         GAME_SIZE_WAR,
         GAME_SIZE_BATTLE,

@@ -1,15 +1,15 @@
 import {defineStore} from 'pinia';
 import {computed, ref} from 'vue';
 import {findItemIndexById, move, setDisplayOrders} from '../helpers/collection-helper.js';
-import {MECH_TEAMS, TEAM_GENERAL} from '../data/mech-teams.js';
+import {MECH_TEAM_SIZES, MECH_TEAMS, TEAM_GENERAL} from '../data/mech-teams.js';
 import {useMechStore} from './mech-store.js';
-import {difference, find, findIndex, map} from 'lodash';
+import {countBy, difference, find, findIndex, map, max, min, sumBy} from 'lodash';
 import {getter} from './helpers/store-helpers.js';
 import {HEV_BODY_MODS_DROP_DOWN} from '../data/mech-body.js';
 import {HEV_ARMOR_UPGRADES_DROP_DOWN} from '../data/mech-armor-upgrades.js';
 import {HEV_WEAPONS} from '../data/mech-weapons.js';
 import {useArmyListStore} from './army-list-store.js';
-import {GAME_SIZES} from '../data/game-sizes.js';
+import {GAME_SIZE_BATTLE, GAME_SIZE_DUEL, GAME_SIZE_RECON, GAME_SIZE_STRIKE, GAME_SIZES} from '../data/game-sizes.js';
 
 export const useTeamStore = defineStore('team', () => {
 
@@ -33,6 +33,8 @@ export const useTeamStore = defineStore('team', () => {
                 ],
             };
         }
+
+        const special_teams = computed(() => teams.value.filter(item => item.id !== TEAM_GENERAL));
 
         const addable_teams = computed(() => {
             const currentTeamIds = map(teams.value, 'id');
@@ -230,6 +232,11 @@ export const useTeamStore = defineStore('team', () => {
             return limitedModIds.includes(modId);
         }
 
+        const getTeamMechCount = getter((teamId) => {
+            let team = find(teams.value, {id: teamId});
+            return sumBy(team.groups, (group) => group.mechs.length);
+        });
+
         const getTeamGroupSizeValidation = getter((teamId, groupId) => {
             const {min_count, max_count} = MECH_TEAMS[teamId].groups[groupId];
             const group = findGroup.value(teamId, groupId);
@@ -323,9 +330,70 @@ export const useTeamStore = defineStore('team', () => {
             });
         });
 
-        const max_team_size_counts = computed(() => {
-            const sizeId = armyListStore.game_size_id.value;
-            return GAME_SIZES[sizeId].max_teams;
+        const used_teams_count = computed(() => teams.value.filter((team) => team.id !== TEAM_GENERAL).length);
+        const max_teams_count = computed(() => armyListStore.game_size_info.max_teams);
+
+        const team_size_count_validation = computed(() => {
+            const messageValid = {
+                valid: true,
+                validation_message: '',
+            };
+            const messageMin = (val) => ({
+                valid: false,
+                validation_message: `A team has less than the minimum of ${val} HE-Vs`,
+            });
+            const messageMax = (val) => ({
+                valid: false,
+                validation_message: `A team has more than the maximum of ${val} HE-Vs`,
+            });
+
+            const gameSizeId = armyListStore.game_size_id;
+
+            if (gameSizeId === GAME_SIZE_DUEL) {
+                return messageValid;
+            }
+            const teamCounts = special_teams.value.map((team) => getTeamMechCount.value(team.id));
+            const smallestTeamCount = min(teamCounts);
+            const largestTeamCount = max(teamCounts);
+
+            if (smallestTeamCount < 2) {
+                return messageMin(2);
+            }
+
+            if (gameSizeId === GAME_SIZE_RECON) {
+                if (largestTeamCount > 2) {
+                    return messageMax(2);
+                }
+            }
+
+            if (gameSizeId === GAME_SIZE_STRIKE) {
+                if (largestTeamCount > 3) {
+                    return messageMax(3);
+                }
+            }
+
+            if (gameSizeId === GAME_SIZE_BATTLE) {
+                if (largestTeamCount > 4) {
+                    return messageMax(4);
+                }
+                const instancesOfCount = countBy(teamCounts);
+                if (instancesOfCount[4] > 1) {
+                    return {
+                        valid: false,
+                        validation_message: `There may only be one team with a count of 4 HE-Vs`,
+                    };
+                }
+            }
+            return messageValid;
+        });
+
+        const max_team_size_info = computed(() => {
+            const sizeId = armyListStore.game_size_id;
+            return map(GAME_SIZES[sizeId].max_team_sizes, (count, teamSizeId) => {
+                return Object.assign({
+                    max_instance_count: count,
+                }, MECH_TEAM_SIZES[teamSizeId]);
+            });
         });
 
         function addMechToTeam(teamId, groupId) {
@@ -391,7 +459,11 @@ export const useTeamStore = defineStore('team', () => {
         return {
             teams,
             addable_teams,
-            max_team_size_counts,
+            max_team_size_info,
+            used_teams_count,
+            max_teams_count,
+            team_size_count_validation,
+            getTeamMechCount,
             getTeamInfo,
             getTeamGroupInfo,
             getTeamGroupMechIds,
@@ -406,6 +478,7 @@ export const useTeamStore = defineStore('team', () => {
             getAtLeastOneOfWeaponsIsRequired,
             getAtLeastOneOfWeaponsIsRequiredMessage,
             getRequiredByTeamGroupMessage,
+
             addMechToTeam,
             removeMechFromTeam,
             moveGroupMech,
