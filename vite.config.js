@@ -5,7 +5,7 @@ import {BootstrapVueNextResolver} from 'bootstrap-vue-next'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
 export default defineConfig({
-  base: '/steel-rift-list-builder',
+  base: '/steel-rift-list-builder/',
   build: {
     outDir: 'docs'
   },
