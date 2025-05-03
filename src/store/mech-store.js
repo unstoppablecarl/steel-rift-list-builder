@@ -246,8 +246,25 @@ export const useMechStore = defineStore('mech', {
                     return Object.assign({}, info, {required_by_group: isRequired});
                 };
             },
-            getAllMechInfo(state) {
-                return state.mechs.map((mech) => this.getMechInfo(mech.id));
+            getMechArmorUpgradeInfo(state) {
+                return function (mechId) {
+                    let {
+                        armor_upgrade_id,
+                        size_id,
+                    } = this.getMech(mechId);
+
+                    const {
+                        slots,
+                        cost_by_size,
+                        display_name,
+                    } = HEV_ARMOR_UPGRADES[armor_upgrade_id];
+
+                    return {
+                        cost: cost_by_size[size_id],
+                        slots,
+                        display_name,
+                    };
+                };
             },
             getMechInfo(state) {
                 return function (mechId) {
@@ -258,20 +275,20 @@ export const useMechStore = defineStore('mech', {
                         size_id,
                         structure_mod_id,
                         armor_mod_id,
-                        armor_upgrade_id,
                         weapons,
                         upgrades,
                     } = this.getMech(mechId);
 
                     const placeholder_name = ('Mech-' + mechId).padStart(1);
 
-                    const weaponsInfo = weapons.map((item) => this.getWeaponInfo(mechId, item.weapon_id));
-                    const upgradesInfo = upgrades.map((item) => this.getUpgradeInfo(mechId, item.upgrade_id));
+                    const upgradesInfo = upgrades.map((item) => this.getMechUpgradeAttachmentInfo(mechId, item.id));
+                    const weaponsInfo = weapons.map((item) => this.getMechWeaponAttachmentInfo(mechId, item.id));
+
+                    const armorUpgradeInfo = this.getMechArmorUpgradeInfo(mechId)
 
                     const size = HEV_SIZES[size_id];
                     const structure_mod = HEV_BODY_MODS[structure_mod_id];
                     const armor_mod = HEV_BODY_MODS[armor_mod_id];
-                    const armorUpgrade = HEV_ARMOR_UPGRADES[armor_upgrade_id];
 
                     const armor_stat = size.armor + armor_mod.modifier;
                     const structure_stat = size.structure + structure_mod.modifier;
@@ -287,7 +304,7 @@ export const useMechStore = defineStore('mech', {
 
                     let used_slots = weapon_used_slots +
                         upgrade_used_slots +
-                        armorUpgrade.slots;
+                        armorUpgradeInfo.slots;
 
                     if (factionStore.hasPerk(RD_ADVANCED_HARDPOINT_DESIGN) ||
                         factionStore.hasPerk(UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN)) {
@@ -298,7 +315,7 @@ export const useMechStore = defineStore('mech', {
                         upgrade_used_tons +
                         armor_stat +
                         structure_stat +
-                        armorUpgrade.cost_by_size[size_id];
+                        armorUpgradeInfo.cost;
 
                     if (factionStore.hasPerk(DWC_TOP_END_HARDWARE)) {
                         used_tons += DWC_TOP_END_HARDWARE_BONUS_TONS;

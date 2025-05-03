@@ -6,6 +6,10 @@ import {BFormFloatingLabel, BFormInput} from 'bootstrap-vue-next';
 import ArmyListSupportAssetCount from './ArmyList/ArmyListSupportAssetCount.vue';
 import ArmyListSupportAssets from './ArmyList/ArmyListSupportAssets.vue';
 import ArmyListTeams from './ArmyList/ArmyListTeams.vue';
+import {useArmyListStore} from '../store/army-list-store.js';
+import {storeToRefs} from 'pinia';
+
+const {name} = storeToRefs(useArmyListStore());
 </script>
 <template>
   <div class="card text-bg-light">
