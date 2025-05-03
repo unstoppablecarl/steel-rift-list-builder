@@ -8,7 +8,7 @@ import {traitDisplayNames} from '../data/weapon-traits.js';
 import {HEV_WEAPONS} from '../data/mech-weapons.js';
 import {readonly} from 'vue';
 import {HEV_UPGRADES} from '../data/mech-upgrades.js';
-import {deleteItemById, findItemIndex, moveItem} from '../helpers/collection-helper.js';
+import {deleteItemById, findItemIndex, moveItem} from './helpers/collection-helper.js';
 import {useToastStore} from './toast-store.js';
 import {useFactionStore} from './faction-store.js';
 import {

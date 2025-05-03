@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia';
 import {computed, ref} from 'vue';
-import {findItemIndexById, move, setDisplayOrders} from '../helpers/collection-helper.js';
+import {findItemIndexById, move, setDisplayOrders} from './helpers/collection-helper.js';
 import {MECH_TEAM_SIZES, MECH_TEAMS, TEAM_GENERAL} from '../data/mech-teams.js';
 import {useMechStore} from './mech-store.js';
 import {countBy, difference, find, findIndex, map, max, min, sumBy} from 'lodash';
