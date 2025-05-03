@@ -53,5 +53,3 @@ export const MECH_TEAM_BENEFITS = {
         desc: 'Enemy Units do not gain bonuses to their Damage Rating for Side Arcs.',
     },
 };
-
-
