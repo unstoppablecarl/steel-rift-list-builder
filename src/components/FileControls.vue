@@ -1,8 +1,8 @@
 <script setup>
 
-import JSONFileSave from './UI/SaveJsonFile.vue';
+import BtnSave from './UI/BtnSave.vue';
 import BtnReset from './UI/BtnReset.vue';
-import JSONFileLoad from './UI/LoadJsonFile.vue';
+import BtnLoad from './UI/BtnLoad.vue';
 </script>
 <template>
   <div class="px-4 pt-2">
@@ -16,8 +16,8 @@ import JSONFileLoad from './UI/LoadJsonFile.vue';
       </div>
       <div class="col">
         <div class="float-end">
-          <JSONFileLoad/>&nbsp;
-          <JSONFileSave/>&nbsp;
+          <BtnLoad/>&nbsp;
+          <BtnSave/>&nbsp;
           <BtnReset/>
         </div>
       </div>

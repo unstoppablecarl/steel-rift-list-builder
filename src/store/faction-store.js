@@ -15,16 +15,18 @@ import {
     UNDERWORLD_AFFILIATIONS,
 } from '../data/factions.js';
 import {find} from 'lodash';
-import {getter} from './store-helpers.js';
+import {getter} from './helpers/store-helpers.js';
 
 export const useFactionStore = defineStore('faction', () => {
 
+        const defaultFactionId = NO_FACTION;
+
         const perk_1_id = ref(null);
         const perk_2_id = ref(null);
-        const faction_id = ref(NO_FACTION);
+        const faction_id = ref(defaultFactionId);
 
         function $reset() {
-            faction_id.value = NO_FACTION;
+            faction_id.value = defaultFactionId;
             perk_1_id.value = null;
             perk_2_id.value = null;
         }

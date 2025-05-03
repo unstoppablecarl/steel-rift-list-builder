@@ -21,7 +21,8 @@ const {used_support_assets, max_support_assets} = storeToRefs(useSupportAssetSto
       <strong>
         Army:
       </strong>
-      {{ name }}
+      {{name || 'Not named'}}
+
       <div class="float-end">
         <span class="ms-2">
 
@@ -45,22 +46,25 @@ const {used_support_assets, max_support_assets} = storeToRefs(useSupportAssetSto
     <div class="card-body">
       <div class="row">
         <div class="col-sm-3">
-          <BFormFloatingLabel label="Name" label-for="list-name" class="mb-1">
+          <BFormFloatingLabel label="Army Name" label-for="list-name" class="mb-1">
             <BFormInput
                 id="list-name"
                 v-model="name"
-                placeholder="Name"
+                placeholder="Army Name"
             />
           </BFormFloatingLabel>
-          <div class="row">
-            <div class="col-sm-6">
-              <ArmyListSize/>
-            </div>
-            <div class="col-sm-6">
+          <ArmyListSize/>
+          <div class="row g-1">
+            <div class="col">
               <ArmyListSupportAssetCount/>
+            </div>
+            <div class="col">
+
             </div>
           </div>
         </div>
+
+
         <div class="col-sm-6">
           <ArmyListSupportAssets/>
         </div>

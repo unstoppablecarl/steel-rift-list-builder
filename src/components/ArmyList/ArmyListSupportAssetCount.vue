@@ -1,7 +1,6 @@
 <script setup>
 import {BFormInput} from 'bootstrap-vue-next';
 import {storeToRefs} from 'pinia';
-import {ref, watch} from 'vue';
 import {useSupportAssetStore} from '../../store/support-asset-store.js';
 
 const store = useSupportAssetStore();
@@ -11,19 +10,17 @@ const {
   custom_max_support_assets,
 } = storeToRefs(store);
 
-const customSupportAssets = ref(false);
-
 function setCustomSupportAssetCount(value) {
   custom_max_support_assets.value = value;
 }
 
-watch(customSupportAssets, () => {
-  if (!customSupportAssets.value) {
-    custom_max_support_assets.value = null;
-  } else {
+function updateCheck(value) {
+  if (value) {
     custom_max_support_assets.value = max_support_assets.value;
+  } else {
+    custom_max_support_assets.value = null;
   }
-});
+}
 
 </script>
 <template>
@@ -33,11 +30,14 @@ watch(customSupportAssets, () => {
         @update:model-value="setCustomSupportAssetCount"
         :model-value="max_support_assets"
         type="number"
-        :disabled="!customSupportAssets"
+        :disabled="custom_max_support_assets === null"
     />
     <label for="list_max_support_assets">Support Assets</label>
   </div>
-  <BFormCheckbox v-model="customSupportAssets">
+  <BFormCheckbox
+      :model-value="custom_max_support_assets !== null"
+      @update:model-value="updateCheck"
+  >
     Custom
   </BFormCheckbox>
 </template>

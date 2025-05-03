@@ -5,22 +5,30 @@ import {useSupportAssetStore} from './support-asset-store.js';
 
 export const useArmyListStore = defineStore('army-list', () => {
 
-        const name = ref('Army Name');
+        const defaultArmyName = '';
+        const defaultMaxTons = 100;
+
+        const name = ref(defaultArmyName);
+        const max_tons = ref(defaultMaxTons);
+
+        function $reset() {
+            name.value = defaultArmyName;
+            max_tons.valie = defaultMaxTons;
+        }
 
         const mechStore = useMechStore();
-        const supportAssets = useSupportAssetStore()
+        const supportAssets = useSupportAssetStore();
 
         const used_tons = computed(() => {
             return mechStore.totalTons +
                 supportAssets.used_tons;
         });
 
-        const max_tons = ref(100);
-
         return {
             name,
             used_tons,
             max_tons,
+            $reset,
         };
     },
     {

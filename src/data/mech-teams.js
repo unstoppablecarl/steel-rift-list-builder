@@ -31,6 +31,27 @@ export const TEAM_RECON = 'TEAM_RECON';
 export const TEAM_SECURITY = 'TEAM_SECURITY';
 export const TEAM_TACTICAL = 'TEAM_TACTICAL';
 
+export const MECH_TEAM_SIZES = makeStaticListIds({
+    [[TEAM_SIZE_SMALL]]: {
+        display_name: 'Small',
+        desc: '2 HE-Vs',
+        min_count: 2,
+        max_count: 2,
+    },
+    [[TEAM_SIZE_MEDIUM]]: {
+        display_name: 'Medium',
+        desc: '2-3 HE-Vs',
+        min_count: 2,
+        max_count: 3,
+    },
+    [[TEAM_SIZE_LARGE]]: {
+        display_name: 'Large',
+        desc: '2-4 HE-Vs',
+        min_count: 2,
+        max_count: 4,
+    }
+});
+
 export const MECH_TEAMS = makeStaticListIds({
     [[TEAM_GENERAL]]: {
         display_name: 'General Team',

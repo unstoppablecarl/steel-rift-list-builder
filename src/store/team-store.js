@@ -4,7 +4,7 @@ import {findItemIndexById, move, setDisplayOrders} from '../helpers/collection-h
 import {MECH_TEAMS, TEAM_GENERAL} from '../data/mech-teams.js';
 import {useMechStore} from './mech-store.js';
 import {difference, find, findIndex, map} from 'lodash';
-import {getter} from './store-helpers.js';
+import {getter} from './helpers/store-helpers.js';
 import {HEV_BODY_MODS_DROP_DOWN} from '../data/mech-body.js';
 import {HEV_ARMOR_UPGRADES_DROP_DOWN} from '../data/mech-armor-upgrades.js';
 import {HEV_WEAPONS} from '../data/mech-weapons.js';
