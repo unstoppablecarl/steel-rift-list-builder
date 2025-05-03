@@ -7,7 +7,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 export default defineConfig({
   base: '/steel-rift-list-builder/',
   build: {
-    outDir: 'docs'
+    outDir: 'dist'
   },
   plugins: [
     vue(),
