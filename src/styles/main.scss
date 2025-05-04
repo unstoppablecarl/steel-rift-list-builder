@@ -33,7 +33,6 @@ $dropdown-header-padding-y: .2rem;
 $dropdown-divider-margin-y: .2rem;
 
 $btn-focus-box-shadow: 0;
-//$badge-font-size: .9em;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import '../../node_modules/bootstrap-vue-next/src/styles/styles';
@@ -51,7 +50,7 @@ $btn-focus-box-shadow: 0;
 }
 
 .btn-light {
-  border-color: rgba(0, 0, 0, 0.2);
+  --bs-btn-border-color: rgba(0, 0, 0, 0.2);
 }
 
 body {
