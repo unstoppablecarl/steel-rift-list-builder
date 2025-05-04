@@ -1,8 +1,7 @@
 <script setup>
 import {useMechStore} from '../../../store/mech-store.js';
-import {mapStores} from 'pinia';
-import NumberVal from '../../functional/number.vue';
 import {computed} from 'vue';
+import TeamPerkIcon from '../../UI/TeamPerkIcon.vue';
 
 const {mechId} = defineProps({
   mechId: {
@@ -80,6 +79,10 @@ function addWeapon(upgradeId) {
             {{ item.trait_display_names }}
           </td>
           <td>
+            <TeamPerkIcon
+                :perk-id="item.team_perk_id"
+                :perk-desc="item.team_perk_desc"
+            />
           </td>
         </tr>
         </tbody>

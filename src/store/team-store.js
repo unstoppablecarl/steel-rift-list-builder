@@ -3,7 +3,7 @@ import {computed, ref} from 'vue';
 import {findItemIndexById, move, setDisplayOrders} from './helpers/collection-helper.js';
 import {MECH_TEAM_SIZES, MECH_TEAMS, TEAM_GENERAL} from '../data/mech-teams.js';
 import {useMechStore} from './mech-store.js';
-import {countBy, difference, find, findIndex, indexOf, map, max, min, sumBy} from 'lodash';
+import {countBy, difference, find, findIndex, map, max, min, sumBy} from 'lodash';
 import {getter} from './helpers/store-helpers.js';
 import {MECH_BODY_MODS_DROP_DOWN} from '../data/mech-body.js';
 import {MECH_ARMOR_UPGRADES_DROP_DOWN} from '../data/mech-armor-upgrades.js';
@@ -330,14 +330,23 @@ export const useTeamStore = defineStore('team', () => {
             });
         });
 
-        const getMechTeamPerkIds = getter((teamId, teamSize, mechSizeId) => {
+        const getMechTeamPerkIds = getter((mechId) => {
+            const sizeId = mechStore.getMech(mechId).size_id;
+            const {teamId} = getMechTeamAndGroupIds.value(mechId);
+
             const columns = MECH_TEAMS[teamId].team_size_perk_columns;
-            const index = indexOf(columns, (sizeIds) => sizeIds.includes(mechSizeId));
+            const index = findIndex(columns, (sizeIds) => sizeIds.includes(sizeId));
             if (index === -1) {
                 return [];
             }
 
-            return MECH_TEAMS[teamId].team_size_perk_rows[teamSize] || [];
+            const teamSize = getTeamMechCount.value(teamId);
+            const row = MECH_TEAMS[teamId].team_size_perk_rows[teamSize];
+            return row?.[index] || [];
+        });
+
+        const getMechHasTeamPerkId = getter((mechId, teamPerkId) => {
+            return getMechTeamPerkIds.value(mechId).includes(teamPerkId);
         });
 
         const used_teams_count = computed(() => teams.value.filter((team) => team.id !== TEAM_GENERAL).length);
@@ -473,6 +482,7 @@ export const useTeamStore = defineStore('team', () => {
             used_teams_count,
             max_teams_count,
             team_size_count_validation,
+
             getTeamMechCount,
             getTeamInfo,
             getTeamGroupInfo,
@@ -489,6 +499,7 @@ export const useTeamStore = defineStore('team', () => {
             getAtLeastOneOfWeaponsIsRequiredMessage,
             getRequiredByTeamGroupMessage,
             getMechTeamPerkIds,
+            getMechHasTeamPerkId,
 
             addMechToTeam,
             removeMechFromTeam,

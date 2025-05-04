@@ -3,9 +3,9 @@ import {MECH_SIZES, SIZE_MEDIUM} from '../data/mech-sizes.js';
 import {MECH_BODY_MODS, MOD_STANDARD} from '../data/mech-body.js';
 import {MECH_ARMOR_UPGRADES, NO_ARMOR_UPGRADE} from '../data/mech-armor-upgrades.js';
 import {findById, updateObject} from '../data/data-helpers.js';
-import {sumBy} from 'lodash';
-import {traitDisplayNames} from '../data/weapon-traits.js';
-import {MECH_WEAPONS} from '../data/mech-weapons.js';
+import {cloneDeep, find, sumBy} from 'lodash';
+import {makeTrait, TRAIT_LIMITED, TRAIT_SMART, traitDisplayNames} from '../data/weapon-traits.js';
+import {HOWITZER, MECH_WEAPONS, MISSILES, ROCKET_PACK} from '../data/mech-weapons.js';
 import {readonly} from 'vue';
 import {MECH_UPGRADES} from '../data/mech-upgrades.js';
 import {deleteItemById, findItemIndex, moveItem} from './helpers/collection-helper.js';
@@ -19,6 +19,7 @@ import {
     UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN,
 } from '../data/factions.js';
 import {useTeamStore} from './team-store.js';
+import {MECH_TEAM_PERKS, TEAM_PERK_EXTRA_MISSILE_AMMO, TEAM_PERK_SMART_HOWITZERS} from '../data/mech-team-perks.js';
 
 export const useMechStore = defineStore('mech', {
         state() {
@@ -284,7 +285,7 @@ export const useMechStore = defineStore('mech', {
                     const upgradesInfo = upgrades.map((item) => this.getMechUpgradeAttachmentInfo(mechId, item.id));
                     const weaponsInfo = weapons.map((item) => this.getMechWeaponAttachmentInfo(mechId, item.id));
 
-                    const armorUpgradeInfo = this.getMechArmorUpgradeInfo(mechId)
+                    const armorUpgradeInfo = this.getMechArmorUpgradeInfo(mechId);
 
                     const size = MECH_SIZES[size_id];
                     const structure_mod = MECH_BODY_MODS[structure_mod_id];
@@ -342,31 +343,75 @@ export const useMechStore = defineStore('mech', {
                     };
                 };
             },
-            getWeaponInfo(state) {
+            getWeaponTraitInfo(state) {
                 return (mechId, weaponId) => {
+                    const teamStore = useTeamStore();
+                    const mech = this.getMech(mechId);
+                    const size_id = mech.size_id;
+                    const weapon = MECH_WEAPONS[weaponId];
 
-                    let mech = this.getMech(mechId);
-                    let size_id = mech.size_id;
-                    let weapon = MECH_WEAPONS[weaponId];
+                    const traits = cloneDeep(weapon.traits_by_size[size_id]);
 
-                    let range_formatted = '-';
-                    if (weapon.range) {
-                        range_formatted = weapon.range + '"';
+                    let team_perk_id = null
+                    let team_perk_desc = null
+
+                    if (
+                        (weaponId === ROCKET_PACK || weaponId === MISSILES) &&
+                        teamStore.getMechHasTeamPerkId(mechId, TEAM_PERK_EXTRA_MISSILE_AMMO)
+                    ) {
+                        const match = find(traits, {id: TRAIT_LIMITED});
+                        match.number += 1;
+
+                        const perk = MECH_TEAM_PERKS[TEAM_PERK_EXTRA_MISSILE_AMMO];
+                        team_perk_id = TEAM_PERK_EXTRA_MISSILE_AMMO;
+                        team_perk_desc = perk.desc;
                     }
 
-                    const traitsBySize = weapon.traits_by_size[size_id];
-                    let cost = weapon.cost_by_size[size_id];
+                    if (
+                        (weaponId === HOWITZER) &&
+                        teamStore.getMechHasTeamPerkId(mechId, TEAM_PERK_SMART_HOWITZERS)
+                    ) {
+                        traits.push(makeTrait(TRAIT_SMART))
+                        const perk = MECH_TEAM_PERKS[TEAM_PERK_SMART_HOWITZERS];
+                        team_perk_id = TEAM_PERK_SMART_HOWITZERS;
+                        team_perk_desc = perk.desc;
+                    }
+                    return {traits, team_perk_id, team_perk_desc};
+                };
+            },
+            getWeaponInfo(state) {
+                return (mechId, weaponId) => {
+                    const mech = this.getMech(mechId);
+                    const size_id = mech.size_id;
+                    const weapon = MECH_WEAPONS[weaponId];
+                    const damage = weapon.damage_by_size[size_id];
+                    const cost = weapon.cost_by_size[size_id];
+                    const slots = 1;
+
+                    const {
+                        range,
+                        display_name,
+                    } = weapon;
+
+                    let range_formatted = '-';
+                    if (range) {
+                        range_formatted = range + '"';
+                    }
+
+                    const {traits, team_perk_id, team_perk_desc} = this.getWeaponTraitInfo(mechId, weaponId);
 
                     return readonly({
                         weapon_id: weaponId,
-                        display_name: weapon.display_name,
-                        damage: weapon.damage_by_size[size_id],
-                        slots: 1,
+                        display_name,
+                        damage,
+                        slots,
                         cost,
-                        range: weapon.range,
+                        range,
                         range_formatted,
-                        traits: traitsBySize,
-                        trait_display_names: traitDisplayNames(traitsBySize),
+                        traits,
+                        trait_display_names: traitDisplayNames(traits),
+                        team_perk_id,
+                        team_perk_desc,
                     });
                 };
             },

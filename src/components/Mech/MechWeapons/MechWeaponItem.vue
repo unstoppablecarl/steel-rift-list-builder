@@ -1,6 +1,7 @@
 <script setup>
 import {useMechStore} from '../../../store/mech-store.js';
 import {computed} from 'vue';
+import TeamPerkIcon from '../../UI/TeamPerkIcon.vue';
 
 const mechStore = useMechStore();
 
@@ -53,7 +54,12 @@ function remove() {
       </span>
       </span>
     </td>
-    <td></td>
+    <td>
+      <TeamPerkIcon
+          :perk-id="weapon.team_perk_id"
+          :perk-desc="weapon.team_perk_desc"
+      />
+    </td>
     <td class=" text-end">
       <number :val="weapon.slots" :invert-color="true"/>
     </td>
