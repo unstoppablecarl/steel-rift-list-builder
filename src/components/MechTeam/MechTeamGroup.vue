@@ -7,6 +7,7 @@ import {useTeamStore} from '../../store/team-store.js';
 import {TEAM_GENERAL} from '../../data/mech-teams.js';
 import HEVIcon from '../UI/HEVIcon.vue';
 import {useExpandCollapseAll} from '../functional/expand-collapse.js';
+import {MECH_TEAM_PERKS} from '../../data/mech-team-perks.js';
 
 const teamStore = useTeamStore();
 const {teamId, groupId} = defineProps({
@@ -24,6 +25,9 @@ const mechIds = computed(() => teamStore.getTeamGroupMechIds(teamId, groupId));
 const size = computed(() => teamStore.getTeamGroupSizeValidation(teamId, groupId));
 const isGeneralGroup = computed(() => teamId === TEAM_GENERAL);
 
+const teamGroupPerks = computed(() => {
+  return teamStore.getTeamGroupPerkIds(teamId, groupId).map((perkId) => MECH_TEAM_PERKS[perkId].desc).join(' ');
+});
 const dragging = ref(false);
 
 function onSortableChange(event) {
@@ -55,6 +59,7 @@ const {
         <HEVIcon/>
         {{ groupCount }}
         </span>
+
         <span
             v-if="!isGeneralGroup"
             :class="{
@@ -66,13 +71,24 @@ const {
         >
           Size: {{ size.min_count }}-{{ size.max_count }}
         </span>
+        <span
+            v-if="!isGeneralGroup && teamGroupPerks"
+            class="btn btn-sm btn-outline mx-1 btn-light"
+            v-b-tooltip.hover.top="teamGroupPerks"
+        >
+          Group Perks
+           <span class="material-symbols-outlined">
+          star_rate
+          </span>
+        </span>
       </div>
       <div class="text-end">
         <BButton
             variant="primary"
             class="ms-1"
             @click="teamStore.addMechToTeam(teamId, groupId)">
-          Add <HEVIcon light />
+          Add
+          <HEVIcon light/>
         </BButton>
         <BButton
             class="ms-1"

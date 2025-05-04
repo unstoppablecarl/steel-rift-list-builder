@@ -239,8 +239,8 @@ export const useTeamStore = defineStore('team', () => {
 
         const getTeamGroupMechCount = getter((teamId, groupId) => {
             let team = find(teams.value, {id: teamId});
-            let group = find(team.groups, {id: groupId})
-            return group.mechs.length
+            let group = find(team.groups, {id: groupId});
+            return group.mechs.length;
         });
 
         const getTeamGroupSizeValidation = getter((teamId, groupId) => {
@@ -339,6 +339,16 @@ export const useTeamStore = defineStore('team', () => {
         const getMechTeamPerkIds = getter((mechId) => {
             const sizeId = mechStore.getMech(mechId).size_id;
             const {teamId} = getMechTeamAndGroupIds.value(mechId);
+            return getTeamMechSizePerkIds.value(teamId, sizeId);
+        });
+
+        const getTeamGroupPerkIds = getter((teamId, groupId) => {
+            const groupInfo = getTeamGroupInfo.value(teamId, groupId);
+            const sizeId = groupInfo.size_ids[0];
+            return getTeamMechSizePerkIds.value(teamId, sizeId);
+        });
+
+        const getTeamMechSizePerkIds = getter((teamId, sizeId) => {
 
             const columns = MECH_TEAMS[teamId].team_size_perk_columns;
             const index = findIndex(columns, (sizeIds) => sizeIds.includes(sizeId));
@@ -507,6 +517,7 @@ export const useTeamStore = defineStore('team', () => {
             getRequiredByTeamGroupMessage,
             getMechTeamPerkIds,
             getMechHasTeamPerkId,
+            getTeamGroupPerkIds,
 
             addMechToTeam,
             removeMechFromTeam,
