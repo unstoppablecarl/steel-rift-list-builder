@@ -33,6 +33,7 @@ function onSortableChange(event) {
 
   teamStore.moveGroupMech(teamId, groupId, moved.element, moved.newIndex);
 }
+const isGeneralGroup = computed(() => teamId === TEAM_GENERAL);
 
 function collapseAll() {
   collapsed.value = Date.now();

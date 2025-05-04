@@ -5,6 +5,7 @@ import MechTeamGroup from './MechTeamGroup.vue';
 import {BButton} from 'bootstrap-vue-next';
 import {MECH_SIZES} from '../../data/mech-sizes.js';
 import {MECH_TEAM_PERKS} from '../../data/mech-team-perks.js';
+import HEVIcon from '../UI/HEVIcon.vue';
 
 const teamStore = useTeamStore();
 
@@ -34,7 +35,14 @@ const sizeDisplayNames = computed(() => sizeIds => {
         <div class="d-inline-block py-1 fw-bold">
           {{ teamInfo.display_name }}&nbsp;
         </div>
-        {{teamMechCount}}
+
+        <span
+            class="btn btn-sm btn-outline mx-1 btn-light"
+        >
+
+        <HEVIcon />
+        {{ teamMechCount }}
+        </span>
       </div>
       <div class="text-end">
         <BButton
