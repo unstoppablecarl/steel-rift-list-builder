@@ -1,11 +1,12 @@
 <script setup>
 import {useTeamStore} from '../../store/team-store.js';
-import {computed, ref} from 'vue';
+import {computed, inject, provide, ref} from 'vue';
 import MechTeamGroup from './MechTeamGroup.vue';
 import {BButton} from 'bootstrap-vue-next';
 import {MECH_SIZES} from '../../data/mech-sizes.js';
 import {MECH_TEAM_PERKS} from '../../data/mech-team-perks.js';
 import HEVIcon from '../UI/HEVIcon.vue';
+import {useExpandCollapseAll} from '../functional/expand-collapse.js';
 
 const teamStore = useTeamStore();
 
@@ -17,15 +18,16 @@ const {teamId} = defineProps({
 const show = ref(false);
 const teamInfo = computed(() => teamStore.getTeamInfo(teamId));
 const teamMechCount = computed(() => teamStore.getTeamMechCount(teamId));
-
 const teamPerkIdDisplayName = computed(() => perkId => MECH_TEAM_PERKS[perkId].desc);
-
 const sizeDisplayNames = computed(() => sizeIds => {
   return sizeIds
       .map((sizeId) => MECH_SIZES[sizeId].display_name)
       .join('/');
 });
-
+const {
+  expandAll,
+  collapseAll,
+} = useExpandCollapseAll();
 </script>
 <template>
 
@@ -35,11 +37,10 @@ const sizeDisplayNames = computed(() => sizeIds => {
         <div class="d-inline-block py-1 fw-bold">
           {{ teamInfo.display_name }}&nbsp;
         </div>
-
         <span
             class="btn btn-sm btn-outline mx-1 btn-light"
+            v-b-tooltip.hover.top="'Team Size'"
         >
-
         <HEVIcon />
         {{ teamMechCount }}
         </span>
@@ -59,6 +60,20 @@ const sizeDisplayNames = computed(() => sizeIds => {
             class="mx-1"
         >
           <span class="material-symbols-outlined">delete</span>
+        </BButton>
+        <BButton
+            class="ms-1"
+            variant="light"
+            @click="collapseAll"
+        >
+          <span class="material-symbols-outlined">keyboard_double_arrow_up</span>
+        </BButton>
+        <BButton
+            class="ms-1"
+            variant="light"
+            @click="expandAll"
+        >
+          <span class="material-symbols-outlined">keyboard_double_arrow_down</span>
         </BButton>
       </div>
     </div>

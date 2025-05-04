@@ -3,31 +3,29 @@ import {useMechStore} from '../store/mech-store.js';
 import Fraction from './functional/fraction.vue';
 import {computed, ref, watch} from 'vue';
 import {BButton} from 'bootstrap-vue-next';
+import {useExpandCollapseAll} from './functional/expand-collapse.js';
 
 const mechStore = useMechStore();
 
 const {
   mechId,
-  collapseSignal,
-  expandSignal,
 } = defineProps({
   mechId: {
     type: Number,
     required: true,
-  },
-  collapseSignal: {
-    type: Number,
-  },
-  expandSignal: {
-    type: Number,
   },
 });
 
 const visible = ref(true);
 const info = computed(() => mechStore.getMechInfo(mechId));
 
-watch(() => collapseSignal, () => visible.value = false);
-watch(() => expandSignal, () => visible.value = true);
+const {
+  collapseSignal,
+  expandSignal,
+} = useExpandCollapseAll();
+
+watch(collapseSignal, () => visible.value = false);
+watch(expandSignal, () => visible.value = true);
 </script>
 <template>
   <div class="card card-mech">
@@ -87,7 +85,7 @@ watch(() => expandSignal, () => visible.value = true);
         <hr>
         <div class="d-flex justify-content-md-center">
 
-        <MechStats :mech-id="mechId"/>
+          <MechStats :mech-id="mechId"/>
 
         </div>
       </BCollapse>

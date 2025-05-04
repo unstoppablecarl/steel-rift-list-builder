@@ -5,6 +5,8 @@ import draggable from 'vuedraggable';
 import {computed, ref} from 'vue';
 import {useTeamStore} from '../../store/team-store.js';
 import {TEAM_GENERAL} from '../../data/mech-teams.js';
+import HEVIcon from '../UI/HEVIcon.vue';
+import {useExpandCollapseAll} from '../functional/expand-collapse.js';
 
 const teamStore = useTeamStore();
 const {teamId, groupId} = defineProps({
@@ -20,10 +22,9 @@ const groupCount = computed(() => teamStore.getTeamGroupMechCount(teamId, groupI
 const groupInfo = computed(() => teamStore.getTeamGroupInfo(teamId, groupId));
 const mechIds = computed(() => teamStore.getTeamGroupMechIds(teamId, groupId));
 const size = computed(() => teamStore.getTeamGroupSizeValidation(teamId, groupId));
+const isGeneralGroup = computed(() => teamId === TEAM_GENERAL);
 
 const dragging = ref(false);
-const collapsed = ref(0);
-const expanded = ref(0);
 
 function onSortableChange(event) {
   let moved = event.moved;
@@ -33,24 +34,27 @@ function onSortableChange(event) {
 
   teamStore.moveGroupMech(teamId, groupId, moved.element, moved.newIndex);
 }
-const isGeneralGroup = computed(() => teamId === TEAM_GENERAL);
 
-function collapseAll() {
-  collapsed.value = Date.now();
-}
+const {
+  expandAll,
+  collapseAll,
+} = useExpandCollapseAll();
 
-function expandAll() {
-  expanded.value = Date.now();
-}
 </script>
 <template>
   <div class="card text-bg-light">
     <div class="card-header d-flex">
       <div class="flex-grow-1">
-        <div class="d-inline-block py-2 pe-4">
+        <div class="d-inline-block py-2 pe-1">
           {{ groupInfo.display_name }}
         </div>
-        {{groupCount}}
+        <span
+            class="btn btn-sm btn-outline mx-1 btn-light"
+            v-b-tooltip.hover.top="'Group Size'"
+        >
+        <HEVIcon/>
+        {{ groupCount }}
+        </span>
         <span
             v-if="!isGeneralGroup"
             :class="{
@@ -102,8 +106,6 @@ function expandAll() {
         <template #item="{ element }">
           <mech
               :mech-id="element"
-              :collapse-signal="collapsed"
-              :expand-signal="expanded"
           />
         </template>
       </draggable>
