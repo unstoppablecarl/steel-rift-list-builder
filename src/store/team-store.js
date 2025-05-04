@@ -507,7 +507,7 @@ export const useTeamStore = defineStore('team', () => {
             getRequiredByTeamGroupMessage,
             getMechTeamPerkIds,
             getMechHasTeamPerkId,
-            
+
             addMechToTeam,
             removeMechFromTeam,
             moveGroupMech,

@@ -15,7 +15,7 @@ const {name} = storeToRefs(useArmyListStore());
   <div class="card text-bg-light">
     <div class="card-body">
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-md-3">
           <BFormFloatingLabel label="Army Name" label-for="list-name" class="mb-1">
             <BFormInput
                 id="list-name"
@@ -33,10 +33,10 @@ const {name} = storeToRefs(useArmyListStore());
             </div>
           </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-md-6">
           <ArmyListSupportAssets/>
         </div>
-        <div class="col-sm-3">
+        <div class="col-md-3">
           <Faction/>
         </div>
       </div>
