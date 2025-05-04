@@ -34,7 +34,7 @@
   text-align: left; // Reset button style
   //background-color: $primary;
   //border:0;
-  border: 1px solid $gray-500;
+  //border: 1px solid $gray-500;
   overflow-anchor: none;
   @include transition(var(--#{$prefix}accordion-transition));
 

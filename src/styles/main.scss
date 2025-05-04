@@ -18,10 +18,12 @@ $teal: #4dc0b5;
 $cyan: #6cb2eb;
 
 $primary: shade-color($blue, 20%);
+//$secondary: #6c757d;
 $success: $green;
 $info: $cyan;
 $warning: $yellow;
 $danger: $red;
+
 
 $success-text-emphasis: shade-color($success, 40%);
 $danger-text-emphasis: shade-color($danger, 40%);
@@ -34,6 +36,14 @@ $dropdown-divider-margin-y: .2rem;
 
 $btn-focus-box-shadow: 0;
 
+$spacer: 1rem;
+
+$card-spacer-y: $spacer;
+$card-spacer-x: $spacer;
+
+$card-cap-padding-x: $card-spacer-y * .5;
+$card-cap-padding-y: $card-spacer-y * .5;
+
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import '../../node_modules/bootstrap-vue-next/src/styles/styles';
 @import "./bootstrap-vue-component-styles";
@@ -42,6 +52,21 @@ $btn-focus-box-shadow: 0;
 @import "./dropdown";
 @import "./collapse";
 
+.btn-tertiary {
+  @include button-variant(
+                  rgba(0, 0, 0, 0),
+                  rgba(0, 0, 0, 0),
+                  $gray-800,
+
+                  rgba(0, 0, 0, 0.1),
+                  rgba(0,0,0,0),
+                  $gray-800,
+
+                  rgba(0, 0, 0, 0.2),
+                  rgba(0,0,0,0),
+                  $gray-800
+  );
+}
 
 .card-mech {
   .card-body {

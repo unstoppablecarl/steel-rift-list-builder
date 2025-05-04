@@ -76,14 +76,14 @@ const {
         </BButton>
         <BButton
             class="ms-1"
-            variant="light"
+            variant="tertiary"
             @click="collapseAll"
         >
           <span class="material-symbols-outlined">keyboard_double_arrow_up</span>
         </BButton>
         <BButton
             class="ms-1"
-            variant="light"
+            variant="tertiary"
             @click="expandAll"
         >
           <span class="material-symbols-outlined">keyboard_double_arrow_down</span>
@@ -94,7 +94,7 @@ const {
       <draggable
           :list="mechIds"
           item-key="id"
-          group="mechs"
+          :group="'mechs-' + teamId + '-' + groupId"
           handle=".btn-grab"
           ghost-class="ghost"
           @start="dragging = true"
