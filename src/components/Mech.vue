@@ -33,14 +33,14 @@ watch(expandSignal, () => visible.value = true);
       <div class="row">
         <div class="col-sm-2">
           <span class="btn btn-light btn-grab">:::</span>
-          <span class="collapse-header">
-          HE-V {{ info.size.display_name }}
-        </span>
+          <div class="d-inline-block py-2 ps-3">
+            HE-V {{ info.size.display_name }}
+          </div>
         </div>
-        <div class="col-sm-2 collapse-header">
+        <div class="col-sm-2 py-2">
           <strong>{{ info.display_name }}</strong>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm">
           <div class="d-flex flex-row-reverse">
 
             <BButton
@@ -60,7 +60,7 @@ watch(expandSignal, () => visible.value = true);
               <span class="material-symbols-outlined">delete</span>
             </BButton>
 
-            <div class="collapse-header">
+            <div class="py-2">
               <span class="px-2">
                 <strong>Arm:</strong>
                 {{ info.armor_stat }}

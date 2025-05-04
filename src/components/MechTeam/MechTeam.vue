@@ -1,6 +1,6 @@
 <script setup>
 import {useTeamStore} from '../../store/team-store.js';
-import {computed, inject, provide, ref} from 'vue';
+import {computed, ref} from 'vue';
 import MechTeamGroup from './MechTeamGroup.vue';
 import {BButton} from 'bootstrap-vue-next';
 import {MECH_SIZES} from '../../data/mech-sizes.js';
@@ -34,34 +34,36 @@ const {
   <div class="card">
     <div class="card-header d-flex ">
       <div class="flex-grow-1">
-        <div class="d-inline-block py-1 fw-bold">
-          {{ teamInfo.display_name }}&nbsp;
-        </div>
+        <span class="d-inline-block py-1 ps-3 pe-1 fw-bold">
+          {{ teamInfo.display_name }}
+        </span>
         <span
             class="btn btn-sm btn-outline mx-1 btn-light"
             v-b-tooltip.hover.top="'Team Size'"
         >
-        <HEVIcon />
+        <HEVIcon/>
         {{ teamMechCount }}
         </span>
       </div>
       <div class="text-end">
         <BButton
             size="sm"
+            class="ms-1"
             variant="light"
             @click="show = !show"
         >
           Show Team Perks
         </BButton>
         <BButton
-            @click="teamStore.removeTeam(teamId)"
             size="sm"
+            class="ms-1"
             variant="danger"
-            class="mx-1"
+            @click="teamStore.removeTeam(teamId)"
         >
           <span class="material-symbols-outlined">delete</span>
         </BButton>
         <BButton
+            size="sm"
             class="ms-1"
             variant="light"
             @click="collapseAll"
@@ -69,6 +71,7 @@ const {
           <span class="material-symbols-outlined">keyboard_double_arrow_up</span>
         </BButton>
         <BButton
+            size="sm"
             class="ms-1"
             variant="light"
             @click="expandAll"

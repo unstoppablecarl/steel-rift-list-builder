@@ -45,7 +45,7 @@ const {
   <div class="card text-bg-light">
     <div class="card-header d-flex">
       <div class="flex-grow-1">
-        <div class="d-inline-block py-2 pe-1">
+        <div class="d-inline-block py-2 ps-3 pe-1 fw-medium">
           {{ groupInfo.display_name }}
         </div>
         <span
@@ -72,7 +72,7 @@ const {
             variant="primary"
             class="ms-1"
             @click="teamStore.addMechToTeam(teamId, groupId)">
-          Add Mech
+          Add <HEVIcon light />
         </BButton>
         <BButton
             class="ms-1"
