@@ -103,7 +103,10 @@ const {
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(row, count) in teamInfo.team_size_perk_rows">
+      <tr
+          v-for="(row, count) in teamInfo.team_size_perk_rows"
+        :class="{'table-success': teamMechCount == count}"
+      >
         <td>{{ count }}</td>
         <td v-for="teamPerkIds in row">
           <p class="p-gap" v-for="perkId in teamPerkIds">
