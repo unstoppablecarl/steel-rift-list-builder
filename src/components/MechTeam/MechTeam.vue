@@ -15,6 +15,7 @@ const {teamId} = defineProps({
 
 const show = ref(false);
 const teamInfo = computed(() => teamStore.getTeamInfo(teamId));
+const teamMechCount = computed(() => teamStore.getTeamMechCount(teamId));
 
 const teamPerkIdDisplayName = computed(() => perkId => MECH_TEAM_PERKS[perkId].desc);
 
@@ -33,6 +34,7 @@ const sizeDisplayNames = computed(() => sizeIds => {
         <div class="d-inline-block py-1 fw-bold">
           {{ teamInfo.display_name }}&nbsp;
         </div>
+        {{teamMechCount}}
       </div>
       <div class="text-end">
         <BButton

@@ -237,6 +237,12 @@ export const useTeamStore = defineStore('team', () => {
             return sumBy(team.groups, (group) => group.mechs.length);
         });
 
+        const getTeamGroupMechCount = getter((teamId, groupId) => {
+            let team = find(teams.value, {id: teamId});
+            let group = find(team.groups, {id: groupId})
+            return group.mechs.length
+        });
+
         const getTeamGroupSizeValidation = getter((teamId, groupId) => {
             const {min_count, max_count} = MECH_TEAMS[teamId].groups[groupId];
             const group = findGroup.value(teamId, groupId);
@@ -484,6 +490,7 @@ export const useTeamStore = defineStore('team', () => {
             team_size_count_validation,
 
             getTeamMechCount,
+            getTeamGroupMechCount,
             getTeamInfo,
             getTeamGroupInfo,
             getTeamGroupMechIds,
@@ -500,7 +507,7 @@ export const useTeamStore = defineStore('team', () => {
             getRequiredByTeamGroupMessage,
             getMechTeamPerkIds,
             getMechHasTeamPerkId,
-
+            
             addMechToTeam,
             removeMechFromTeam,
             moveGroupMech,

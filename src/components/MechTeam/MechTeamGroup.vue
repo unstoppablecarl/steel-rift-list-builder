@@ -16,6 +16,7 @@ const {teamId, groupId} = defineProps({
   },
 });
 
+const groupCount = computed(() => teamStore.getTeamGroupMechCount(teamId, groupId));
 const groupInfo = computed(() => teamStore.getTeamGroupInfo(teamId, groupId));
 const mechIds = computed(() => teamStore.getTeamGroupMechIds(teamId, groupId));
 const size = computed(() => teamStore.getTeamGroupSizeValidation(teamId, groupId));
@@ -33,8 +34,6 @@ function onSortableChange(event) {
   teamStore.moveGroupMech(teamId, groupId, moved.element, moved.newIndex);
 }
 
-const isGeneralGroup = computed(() => teamId === TEAM_GENERAL);
-
 function collapseAll() {
   collapsed.value = Date.now();
 }
@@ -50,6 +49,7 @@ function expandAll() {
         <div class="d-inline-block py-2 pe-4">
           {{ groupInfo.display_name }}
         </div>
+        {{groupCount}}
         <span
             v-if="!isGeneralGroup"
             :class="{
@@ -75,7 +75,6 @@ function expandAll() {
             @click="collapseAll"
         >
           <span class="material-symbols-outlined">keyboard_double_arrow_up</span>
-
         </BButton>
         <BButton
             class="ms-1"
