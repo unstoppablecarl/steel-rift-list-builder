@@ -1,4 +1,6 @@
 export const TEAM_PERK_EXTRA_MISSILE_AMMO = 'TEAM_PERK_EXTRA_MISSILE_AMMO';
+export const TEAM_PERK_EXTRA_MISSILE_AMMO_X2 = 'TEAM_PERK_EXTRA_MISSILE_AMMO_X2';
+
 export const TEAM_PERK_0_SLOT_TARGET_DESIGNATORS = 'TEAM_PERK_0_SLOT_TARGET_DESIGNATORS';
 export const TEAM_PERK_0_TON_TARGET_DESIGNATORS = 'TEAM_PERK_0_TON_TARGET_DESIGNATORS';
 export const TEAM_PERK_SMART_HOWITZERS = 'TEAM_PERK_SMART_HOWITZERS';
@@ -12,9 +14,16 @@ export const TEAM_PERK_0_TON_ARMOR_UPGRADES = 'TEAM_PERK_0_TON_ARMOR_UPGRADES';
 export const TEAM_PERK_EXTRA_TONNAGE = 'TEAM_PERK_EXTRA_TONNAGE';
 export const TEAM_PERK_SIDE_ARMOR = 'TEAM_PERK_SIDE_ARMOR';
 
+function renderMissileAmmoDesc(number) {
+    return `All Rocket Packs and Missiles gain +${number} to their Limited Trait`;
+}
+
 export const MECH_TEAM_PERKS = {
     [[TEAM_PERK_EXTRA_MISSILE_AMMO]]: {
-        desc: 'All Rocket Packs and Missiles gain +1 to their Limited Trait',
+        desc: renderMissileAmmoDesc(1),
+    },
+    [[TEAM_PERK_EXTRA_MISSILE_AMMO_X2]]: {
+        desc: renderMissileAmmoDesc(2),
     },
     [[TEAM_PERK_0_SLOT_TARGET_DESIGNATORS]]: {
         desc: 'Target Designators do not use an Upgrade Slot.',
@@ -53,3 +62,11 @@ export const MECH_TEAM_PERKS = {
         desc: 'Enemy Units do not gain bonuses to their Damage Rating for Side Arcs.',
     },
 };
+
+export const SPECIAL_ABILITY_PERK_IDS = [
+    TEAM_PERK_RECON_INITIATIVE,
+    TEAM_PERK_SUPPORT_ASSET_DAMAGE,
+    TEAM_PERK_DIRECTIONAL_ASSETS,
+    TEAM_PERK_EXTRA_TONNAGE,
+    TEAM_PERK_SIDE_ARMOR,
+];

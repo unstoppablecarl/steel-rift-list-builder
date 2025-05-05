@@ -28,6 +28,7 @@ import {
     TEAM_PERK_0_TON_ECM,
     TEAM_PERK_0_TON_TARGET_DESIGNATORS,
     TEAM_PERK_EXTRA_MISSILE_AMMO,
+    TEAM_PERK_EXTRA_MISSILE_AMMO_X2,
     TEAM_PERK_SMART_HOWITZERS,
 } from '../data/mech-team-perks.js';
 
@@ -409,19 +410,21 @@ export const useMechStore = defineStore('mech', {
 
                     const traits = cloneDeep(weapon.traits_by_size[size_id]);
 
-                    let team_perk_id = null;
-                    let team_perk_description = null;
+                    let perk_id = null;
 
-                    if (
-                        (weaponId === ROCKET_PACK || weaponId === MISSILES) &&
-                        teamStore.getMechHasTeamPerkId(mechId, TEAM_PERK_EXTRA_MISSILE_AMMO)
-                    ) {
-                        const match = find(traits, {id: TRAIT_LIMITED});
-                        match.number += 1;
-
-                        const perk = MECH_TEAM_PERKS[TEAM_PERK_EXTRA_MISSILE_AMMO];
-                        team_perk_id = TEAM_PERK_EXTRA_MISSILE_AMMO;
-                        team_perk_description = perk.desc;
+                    if (weaponId === ROCKET_PACK || weaponId === MISSILES) {
+                        let pId = TEAM_PERK_EXTRA_MISSILE_AMMO;
+                        if (teamStore.getMechHasTeamPerkId(mechId, pId)) {
+                            perk_id = pId;
+                            const match = find(traits, {id: TRAIT_LIMITED});
+                            match.number += 1;
+                        }
+                        pId = TEAM_PERK_EXTRA_MISSILE_AMMO_X2;
+                        if (teamStore.getMechHasTeamPerkId(mechId, pId)) {
+                            perk_id = pId;
+                            const match = find(traits, {id: TRAIT_LIMITED});
+                            match.number += 2;
+                        }
                     }
 
                     if (
@@ -429,9 +432,12 @@ export const useMechStore = defineStore('mech', {
                         teamStore.getMechHasTeamPerkId(mechId, TEAM_PERK_SMART_HOWITZERS)
                     ) {
                         traits.push({id: TRAIT_SMART});
-                        const perk = MECH_TEAM_PERKS[TEAM_PERK_SMART_HOWITZERS];
-                        team_perk_id = TEAM_PERK_SMART_HOWITZERS;
-                        team_perk_description = perk.desc;
+                        perk_id = TEAM_PERK_SMART_HOWITZERS;
+                    }
+
+                    let team_perk_description = null;
+                    if (perk_id) {
+                        team_perk_description = MECH_TEAM_PERKS[perk_id].desc;
                     }
 
                     traits.forEach(trait => Object.assign(
@@ -440,7 +446,7 @@ export const useMechStore = defineStore('mech', {
                         {display_name: traitDisplayName(trait)},
                     ));
 
-                    return {traits, team_perk_id, team_perk_description};
+                    return {traits, team_perk_id:perk_id, team_perk_description};
                 };
             },
             getWeaponInfo(state) {
@@ -494,7 +500,7 @@ export const useMechStore = defineStore('mech', {
                     if (upgrade.prohibited_by_sizes) {
                         valid = !upgrade.prohibited_by_sizes.includes(size_id);
                         if (!valid) {
-                            validation_message = `Not available for ${MECH_SIZES[size_id].display_name} HE-Vs`
+                            validation_message = `Not available for ${MECH_SIZES[size_id].display_name} HE-Vs`;
                         }
                     }
 

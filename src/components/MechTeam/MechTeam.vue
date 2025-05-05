@@ -30,7 +30,6 @@ const {
 } = useExpandCollapseAll();
 </script>
 <template>
-
   <div class="card">
     <div class="card-header d-flex ">
       <div class="flex-grow-1">

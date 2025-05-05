@@ -3,13 +3,13 @@ import {computed, ref} from 'vue';
 import {findItemIndexById, move, setDisplayOrders} from './helpers/collection-helper.js';
 import {MECH_TEAM_SIZES, MECH_TEAMS, TEAM_GENERAL} from '../data/mech-teams.js';
 import {useMechStore} from './mech-store.js';
-import {countBy, difference, find, findIndex, map, max, min, sumBy} from 'lodash';
+import {countBy, difference, each, find, findIndex, map, max, min, sumBy} from 'lodash';
 import {getter} from './helpers/store-helpers.js';
 import {MECH_BODY_MODS_DROP_DOWN} from '../data/mech-body.js';
-import {MECH_ARMOR_UPGRADES_DROP_DOWN} from '../data/mech-armor-upgrades.js';
 import {MECH_WEAPONS} from '../data/mech-weapons.js';
 import {useArmyListStore} from './army-list-store.js';
 import {GAME_SIZE_BATTLE, GAME_SIZE_DUEL, GAME_SIZE_RECON, GAME_SIZE_STRIKE, GAME_SIZES} from '../data/game-sizes.js';
+import {TEAM_PERK_EXTRA_MISSILE_AMMO, TEAM_PERK_EXTRA_MISSILE_AMMO_X2} from '../data/mech-team-perks.js';
 
 export const useTeamStore = defineStore('team', () => {
 
@@ -328,7 +328,6 @@ export const useTeamStore = defineStore('team', () => {
         });
 
         const getTeamMechSizePerkIds = getter((teamId, sizeId) => {
-
             const columns = MECH_TEAMS[teamId].team_size_perk_columns;
             const index = findIndex(columns, (sizeIds) => sizeIds.includes(sizeId));
             if (index === -1) {
@@ -336,8 +335,26 @@ export const useTeamStore = defineStore('team', () => {
             }
 
             const teamSize = getTeamMechCount.value(teamId);
-            const row = MECH_TEAMS[teamId].team_size_perk_rows[teamSize];
-            return row?.[index] || [];
+
+            let perkIds = [];
+
+            each(MECH_TEAMS[teamId].team_size_perk_rows, (row, count) => {
+                if (!row) {
+                    return;
+                }
+                if (count <= teamSize) {
+                    perkIds = perkIds.concat(row[index]);
+                }
+            });
+
+            const missileAmmoCount = perkIds.filter(id => id === TEAM_PERK_EXTRA_MISSILE_AMMO).length;
+
+            if (missileAmmoCount === 2) {
+                perkIds = perkIds.filter(id => id !== TEAM_PERK_EXTRA_MISSILE_AMMO);
+                perkIds.push(TEAM_PERK_EXTRA_MISSILE_AMMO_X2);
+            }
+
+            return perkIds;
         });
 
         const getMechHasTeamPerkId = getter((mechId, teamPerkId) => {
