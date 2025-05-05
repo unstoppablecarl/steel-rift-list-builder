@@ -4,7 +4,7 @@ import {MECH_BODY_MODS, MOD_STANDARD} from '../data/mech-body.js';
 import {MECH_ARMOR_UPGRADES, NO_ARMOR_UPGRADE} from '../data/mech-armor-upgrades.js';
 import {findById, updateObject} from '../data/data-helpers.js';
 import {cloneDeep, find, sumBy} from 'lodash';
-import {makeTrait, TRAIT_LIMITED, TRAIT_SMART, traitDisplayNames} from '../data/weapon-traits.js';
+import {TRAIT_LIMITED, TRAIT_SMART, traitDisplayName, traitDisplayNames, WEAPON_TRAITS} from '../data/weapon-traits.js';
 import {HOWITZER, MECH_WEAPONS, MISSILES, ROCKET_PACK} from '../data/mech-weapons.js';
 import {readonly} from 'vue';
 import {MECH_UPGRADES, TARGET_DESIGNATOR} from '../data/mech-upgrades.js';
@@ -377,11 +377,18 @@ export const useMechStore = defineStore('mech', {
                         (weaponId === HOWITZER) &&
                         teamStore.getMechHasTeamPerkId(mechId, TEAM_PERK_SMART_HOWITZERS)
                     ) {
-                        traits.push(makeTrait(TRAIT_SMART));
+                        traits.push({id: TRAIT_SMART});
                         const perk = MECH_TEAM_PERKS[TEAM_PERK_SMART_HOWITZERS];
                         team_perk_id = TEAM_PERK_SMART_HOWITZERS;
                         team_perk_description = perk.desc;
                     }
+
+                    traits.forEach(trait => Object.assign(
+                        trait,
+                        WEAPON_TRAITS[trait.id],
+                        {display_name: traitDisplayName(trait)},
+                    ));
+
                     return {traits, team_perk_id, team_perk_description};
                 };
             },
@@ -406,6 +413,7 @@ export const useMechStore = defineStore('mech', {
 
                     const {traits, team_perk_id, team_perk_description} = this.getWeaponTraitInfo(mechId, weaponId);
 
+
                     return readonly({
                         weapon_id: weaponId,
                         display_name,
@@ -415,7 +423,6 @@ export const useMechStore = defineStore('mech', {
                         range,
                         range_formatted,
                         traits,
-                        trait_display_names: traitDisplayNames(traits),
                         team_perk_id,
                         team_perk_description,
                     });

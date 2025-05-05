@@ -25,49 +25,60 @@ function inchFormater(name, number) {
 export const WEAPON_TRAITS = makeStaticListIds({
     [[TRAIT_AP]]: {
         display_name: 'AP',
+        desc: 'If any damage is inflicted by this Attack, apply AP(X) damage directly to the target unit\'s Structure',
         formatter: numberFormater,
     },
     [[TRAIT_BLAST]]: {
         display_name: 'Blast',
+        desc: 'All units (friend or foe) within (x") of the original target must also make a Defense Roll against this Attack at -1 to the Attack Pool (to a minimum of 1).',
         formatter: inchFormater,
     },
     [[TRAIT_DISRUPTIVE]]: {
         display_name: 'Disruptive',
+        desc: 'If a target model suffers any damage from a weapon with this Trait, the Active Player rolls 1D6. On a 5 or 6, mark the target unit with a Redlined marker.',
     },
     [[TRAIT_DRAINING]]: {
         display_name: 'Draining',
+        desc: 'If a model uses this Weapon System during an activation, mark it with a Redline marker as well as an Activated token when it has completed its Orders. This does not cause Structure damage. If a model has a Redlined token when it activates, it may not use Weapon Systems with this Trait.',
     },
     [[TRAIT_FLAK]]: {
         display_name: 'Flak',
+        desc: 'Reduce the number of dice in an attack from Mine Drones, Missiles, or Rocket Packs by 2 to a minimum of 1 if this model doesn\'t have a Redlined marker.',
     },
     [[TRAIT_FRAG]]: {
         display_name: 'Frag',
+        desc: 'Targets are -1 to Defense Rolls from attacks with this Trait.',
     },
     [[TRAIT_KINETIC]]: {
         display_name: 'Kinetic',
+        desc: 'If any damage is inflicted by this attack, roll 1D6. Add +1 to the roll for each Class Size larger the Active model is than the target model. Subtract -1 from the roll for each Class Size smaller the Active model is than the target model. On a result of 4+, rotate the target model 45° away from the Active Unit, in a direction chosen by the Active Player.',
     },
     [[TRAIT_LIGHT]]: {
         display_name: 'Light',
+        desc: 'This attack will cause 1 damage to Armor or Structure for every 2 hits that are not evaded, rounding down.',
     },
     [[TRAIT_LIMITED]]: {
         display_name: 'Limited',
+        desc: 'This attack may only be made (x) times during a mission.',
         formatter: numberFormater,
     },
     [[TRAIT_MELEE]]: {
         display_name: 'Melee',
+        desc: 'Add (x) to the Attack Pool of this mech when it is performing a Smash Order. This model counts as one Class Size larger during a Smash order. This weapon System is not used in an Engage Order. Note that more than one Melee weapon does not grant this bonus multiple times.',
         formatter: numberFormater,
     },
     [[TRAIT_SHORT]]: {
         display_name: 'Short',
+        desc: 'The maximum range for this attack is (x") instead of unlimited during an Engage Order.',
     },
     [[TRAIT_SMART]]: {
         display_name: 'Smart',
+        desc: 'The Active Unit may use any friendly unit with a Target Designator for determining Line of Sight for attacks with this Weapon System.',
     },
     [[TRAIT_MINE_TOKENS]]: {
         display_name: 'Mine Tokens',
         formatter: numberFormater,
     },
-
 });
 
 export function traitDisplayNames(traits) {

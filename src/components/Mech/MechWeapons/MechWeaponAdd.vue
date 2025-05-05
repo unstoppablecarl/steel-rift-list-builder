@@ -76,7 +76,14 @@ function addWeapon(upgradeId) {
             {{ item.range_formatted }}
           </td>
           <td>
-            {{ item.trait_display_names }}
+            <span
+                class="trait-tooltip"
+                v-for="(trait, index) in item.traits"
+                v-b-tooltip.hover.top="trait.desc"
+            >
+              {{ trait.display_name }}<template v-if="index !== item.traits.length - 1">, </template>
+            </span>
+
           </td>
           <td>
             <TeamGroupPerkIcon

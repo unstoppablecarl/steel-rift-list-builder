@@ -33,7 +33,14 @@ function remove() {
       {{ weapon.range_formatted }}
     </td>
     <td>
-      {{ weapon.trait_display_names }}
+      <span
+          class="trait-tooltip"
+          v-for="(trait, index) in weapon.traits"
+          v-b-tooltip.hover.top="trait.desc"
+      >
+        {{ trait.display_name }}
+        <template v-if="index !== weapon.traits.length - 1">,</template>
+      </span>
     </td>
     <td>
       <BButton
