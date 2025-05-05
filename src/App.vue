@@ -4,6 +4,7 @@ import ArmyList from './components/ArmyList.vue';
 import MechTeamList from './components/MechTeamList.vue';
 import {onMounted} from 'vue';
 import AppHeader from './components/AppHeader.vue';
+import SecondaryAgendas from './components/SecondaryAgendas.vue';
 
 onMounted(() => {
   document.getElementById('failsafe-container').remove();
@@ -16,5 +17,6 @@ onMounted(() => {
 
     <ArmyList/>
     <MechTeamList/>
+    <SecondaryAgendas/>
   </div>
 </template>
