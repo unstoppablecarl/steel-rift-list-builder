@@ -76,7 +76,9 @@ function makeLightWeight(name) {
 }
 
 function makeTeamPerks(perks) {
-    each(perks, (perk, perkId) => {
+
+    let display_order = 0;
+    each(perks, (perk, perkId, index) => {
         perk.id = perkId;
         if (perk.renderDisplayName) {
             perk.display_name = perk.renderDisplayName(perk.value);
@@ -84,6 +86,8 @@ function makeTeamPerks(perks) {
         if (perk.renderDesc) {
             perk.description = perk.renderDesc(perk.value);
         }
+
+        perk.display_order = display_order++
     });
 
     return deepFreeze(perks);

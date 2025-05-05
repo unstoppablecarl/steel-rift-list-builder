@@ -25,7 +25,8 @@ const size = computed(() => teamStore.getTeamGroupSizeValidation(teamId, groupId
 const isGeneralGroup = computed(() => teamId === TEAM_GENERAL);
 const teamGroupPerks = computed(() => teamStore.getTeamGroupPerksInfo(teamId, groupId));
 const dragging = ref(false);
-const groupPerksOpen = ref(false)
+const groupPerksOpen = ref(false);
+
 function onSortableChange(event) {
   let moved = event.moved;
   if (!moved) {

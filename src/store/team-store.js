@@ -3,7 +3,7 @@ import {computed, ref} from 'vue';
 import {findItemIndexById, move, setDisplayOrders} from './helpers/collection-helper.js';
 import {MECH_TEAM_SIZES, MECH_TEAMS, TEAM_GENERAL} from '../data/mech-teams.js';
 import {useMechStore} from './mech-store.js';
-import {countBy, difference, each, find, findIndex, groupBy, map, max, min, sumBy} from 'lodash';
+import {countBy, difference, each, find, findIndex, groupBy, map, max, min, sortBy, sumBy} from 'lodash';
 import {getter} from './helpers/store-helpers.js';
 import {MECH_BODY_MODS_DROP_DOWN} from '../data/mech-body.js';
 import {MECH_WEAPONS} from '../data/mech-weapons.js';
@@ -336,7 +336,7 @@ export const useTeamStore = defineStore('team', () => {
             const perkIds = getTeamGroupPerkIds.value(teamId, groupId);
             const grouped = groupBy(perkIds, (perkId) => perkId);
 
-            return map(grouped, (perkIds, perkId) => {
+            let result = map(grouped, (perkIds, perkId) => {
                 const repeatCount = perkIds.length;
                 const perkInfo = MECH_TEAM_PERKS[perkId];
                 let {
@@ -348,6 +348,7 @@ export const useTeamStore = defineStore('team', () => {
                     renderDisplayName,
                     renderDesc,
                     value,
+                    display_order,
                 } = perkInfo;
 
                 if (repeatCount > 1) {
@@ -358,6 +359,7 @@ export const useTeamStore = defineStore('team', () => {
                             display_name: renderDisplayName(newValue),
                             display_name_short,
                             description: renderDesc(newValue),
+                            display_order,
                             value: newValue
                         };
                     } else {
@@ -371,8 +373,11 @@ export const useTeamStore = defineStore('team', () => {
                     display_name_short,
                     description,
                     value,
+                    display_order,
                 };
             });
+
+            return sortBy(result, 'display_order')
         });
 
         const getTeamMechSizePerkIds = getter((teamId, sizeId) => {
