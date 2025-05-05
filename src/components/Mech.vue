@@ -32,19 +32,19 @@ watch(expandSignal, () => visible.value = true);
     <div class="card-body">
       <div class="row">
         <div class="col-sm-2">
-          <span class="btn btn-light btn-grab">:::</span>
-          <div class="d-inline-block py-2 ps-3">
+          <span class="btn btn-sm btn-light btn-grab">:::</span>
+          <div class="d-inline-block py-1 ps-3">
             HE-V {{ info.size.display_name }}
           </div>
         </div>
-        <div class="col-sm-2 py-2">
+        <div class="col-sm-2 py-1">
           <strong>{{ info.display_name }}</strong>
         </div>
         <div class="col-sm">
           <div class="d-flex flex-row-reverse">
 
             <BButton
-                :class="'btn-collapse ' + (visible ? null : 'collapsed')"
+                :class="'btn-sm btn-collapse ' + (visible ? null : 'collapsed')"
                 variant="tertiary"
                 :aria-expanded="visible ? 'true' : 'false'"
                 :aria-controls="'collapse-' + mechId"
@@ -53,14 +53,15 @@ watch(expandSignal, () => visible.value = true);
             </BButton>
 
             <BButton
-                @click="mechStore.removeMech(mechId)"
-                variant="danger"
+                size="sm"
                 class="mx-1"
+                variant="danger"
+                @click="mechStore.removeMech(mechId)"
             >
               <span class="material-symbols-outlined">delete</span>
             </BButton>
 
-            <div class="py-2">
+            <div class="py-1">
               <span class="px-2">
                 <strong>Arm:</strong>
                 {{ info.armor_stat }}

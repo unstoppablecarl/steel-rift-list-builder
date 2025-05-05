@@ -49,7 +49,7 @@ const {
   <div class="card text-bg-light">
     <div class="card-header d-flex">
       <div class="flex-grow-1">
-        <div class="d-inline-block py-2 ps-3 pe-1 fw-medium">
+        <div class="d-inline-block py-1 ps-3 pe-1 fw-medium">
           {{ groupInfo.display_name }}
         </div>
         <span
@@ -84,6 +84,7 @@ const {
       </div>
       <div class="text-end">
         <BButton
+            size="sm"
             variant="primary"
             class="ms-1"
             @click="teamStore.addMechToTeam(teamId, groupId)">
@@ -91,15 +92,17 @@ const {
           <IconHev light/>
         </BButton>
         <BButton
-            class="ms-1"
+            size="sm"
             variant="tertiary"
+            class="ms-1"
             @click="collapseAll"
         >
           <span class="material-symbols-outlined">keyboard_double_arrow_up</span>
         </BButton>
         <BButton
-            class="ms-1"
+            size="sm"
             variant="tertiary"
+            class="ms-1"
             @click="expandAll"
         >
           <span class="material-symbols-outlined">keyboard_double_arrow_down</span>

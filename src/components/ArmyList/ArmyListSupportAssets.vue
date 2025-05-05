@@ -18,7 +18,7 @@ const {
       <div class="float-end">
         <ArmyListSupportAssetAdd/>
       </div>
-      <div class="card-header-btn-padding fw-bold">
+      <div class="py-1 ps-2 fw-bold">
         Support Assets
       </div>
     </div>
