@@ -6,7 +6,6 @@ import {computed} from 'vue';
 const {max_team_size_info, team_size_count_validation} = storeToRefs(useTeamStore());
 
 const teamSizeInfo = computed(() => {
-
   return max_team_size_info.value.filter((item) => item.max_instance_count);
 });
 </script>

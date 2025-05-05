@@ -1,4 +1,5 @@
 import {listToDropDown, makeFrozenStaticListIds} from './data-helpers.js';
+import {SA_ASSET_PROTECTION, SA_TERRITORIAL, SA_WILDCARDS} from './secondary-agendas.js';
 
 export const NO_FACTION = 'NO_FACTION';
 export const AUTHORITIES = 'AUTHORITIES';
@@ -52,6 +53,7 @@ export const FACTIONS = makeFrozenStaticListIds({
     },
     [[AUTHORITIES]]: {
         display_name: 'Authorities',
+        secondary_agenda_id: SA_TERRITORIAL,
         faction_perk_groups: makeFrozenStaticListIds({
             [[MILITARY_TRAINING]]: {
                 display_name: 'Military Training',
@@ -99,6 +101,7 @@ export const FACTIONS = makeFrozenStaticListIds({
     },
     [[CORPORATIONS]]: {
         display_name: 'Corporations',
+        secondary_agenda_id: SA_ASSET_PROTECTION,
         faction_perk_groups: makeFrozenStaticListIds({
             [[ESPIONAGE]]: {
                 display_name: 'Espionage',
@@ -146,6 +149,7 @@ export const FACTIONS = makeFrozenStaticListIds({
     },
     [[FREELANCERS]]: {
         display_name: 'Freelancers',
+        secondary_agenda_id: SA_WILDCARDS,
         faction_perk_groups: makeFrozenStaticListIds({
             [[ROGUE_AGENCY]]: {
                 display_name: 'Rogue Agency',

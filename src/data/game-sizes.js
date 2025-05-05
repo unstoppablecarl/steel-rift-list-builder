@@ -12,6 +12,7 @@ export const GAME_SIZES = {
         min_tons: 0,
         max_support_assets: 0,
         max_teams: 0,
+        max_secondary_agendas: 0,
         max_team_sizes: {
             [[TEAM_SIZE_SMALL]]: 0,
             [[TEAM_SIZE_MEDIUM]]: 0,
@@ -22,6 +23,7 @@ export const GAME_SIZES = {
         min_tons: 100,
         max_support_assets: 1,
         max_teams: 1,
+        max_secondary_agendas: 1,
         max_team_sizes: {
             [[TEAM_SIZE_SMALL]]: 1,
             [[TEAM_SIZE_MEDIUM]]: 0,
@@ -32,6 +34,7 @@ export const GAME_SIZES = {
         min_tons: 150,
         max_support_assets: 2,
         max_teams: 2,
+        max_secondary_agendas: 2,
         max_team_sizes: {
             [[TEAM_SIZE_SMALL]]: 0,
             [[TEAM_SIZE_MEDIUM]]: 2,
@@ -42,6 +45,7 @@ export const GAME_SIZES = {
         min_tons: 200,
         max_support_assets: 3,
         max_teams: 3,
+        max_secondary_agendas: 3,
         max_team_sizes: {
             [[TEAM_SIZE_SMALL]]: 0,
             [[TEAM_SIZE_MEDIUM]]: 2,
@@ -52,6 +56,7 @@ export const GAME_SIZES = {
         min_tons: 350,
         max_support_assets: 4,
         max_teams: 3,
+        max_secondary_agendas: 3,
         max_team_sizes: {
             [[TEAM_SIZE_SMALL]]: 1,
             [[TEAM_SIZE_MEDIUM]]: 2,

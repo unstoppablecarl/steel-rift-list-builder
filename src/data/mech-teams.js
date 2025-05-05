@@ -20,6 +20,12 @@ import {MOD_REINFORCED, MOD_STANDARD, MOD_STRIPPED} from './mech-body.js';
 import {makeStaticListIds} from './data-helpers.js';
 import {ABLATIVE_ARMOR_UPGRADE, CERAMIC_ARMOR_UPGRADE, REACTIVE_ARMOR_UPGRADE} from './mech-armor-upgrades.js';
 import {each} from 'lodash';
+import {
+    SA_DEATH_FROM_ABOVE,
+    SA_DONT_GIVE_AN_INCH,
+    SA_FIRE_FOR_EFFECT,
+    SA_MISSION_MOMENTUM,
+} from './secondary-agendas.js';
 
 export const TEAM_SIZE_SMALL = 'TEAM_SIZE_SMALL';
 export const TEAM_SIZE_MEDIUM = 'TEAM_SIZE_MEDIUM';
@@ -46,16 +52,6 @@ export const MECH_TEAM_SIZES = makeStaticListIds({
     },
 });
 
-export function displayTeamSizeRange(teamSizeId) {
-    const {min_count, max_count} = MECH_TEAM_SIZES[teamSizeId];
-
-    if (min_count === max_count) {
-        return min_count;
-    }
-
-    return `${min_count}-${max_count}`;
-}
-
 export const MECH_TEAMS = makeStaticListIds({
     [[TEAM_GENERAL]]: {
         display_name: 'General Team',
@@ -69,6 +65,7 @@ export const MECH_TEAMS = makeStaticListIds({
     },
     [[TEAM_FIRE_SUPPORT]]: {
         display_name: 'Fire Support Team',
+        secondary_agenda_id: SA_FIRE_FOR_EFFECT,
         groups: makeStaticListIds({
             'A': makeGroup({
                 min_count: 1,
@@ -108,6 +105,7 @@ export const MECH_TEAMS = makeStaticListIds({
     },
     [[TEAM_RECON]]: {
         display_name: 'Recon Team',
+        secondary_agenda_id: SA_DEATH_FROM_ABOVE,
         groups: makeStaticListIds({
             'A': makeGroup({
                 min_count: 1,
@@ -145,6 +143,7 @@ export const MECH_TEAMS = makeStaticListIds({
     },
     [[TEAM_SECURITY]]: {
         display_name: 'Security Team',
+        secondary_agenda_id: SA_DONT_GIVE_AN_INCH,
         groups: makeStaticListIds({
             'A': makeGroup({
                 min_count: 1,
@@ -209,6 +208,7 @@ export const MECH_TEAMS = makeStaticListIds({
     },
     [[TEAM_TACTICAL]]: {
         display_name: 'Tactical Team',
+        secondary_agenda_id: SA_MISSION_MOMENTUM,
         groups: makeStaticListIds({
             'A': makeGroup({
                 min_count: 1,
