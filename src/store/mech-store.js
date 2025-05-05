@@ -7,7 +7,7 @@ import {cloneDeep, find, sumBy} from 'lodash';
 import {makeTrait, TRAIT_LIMITED, TRAIT_SMART, traitDisplayNames} from '../data/weapon-traits.js';
 import {HOWITZER, MECH_WEAPONS, MISSILES, ROCKET_PACK} from '../data/mech-weapons.js';
 import {readonly} from 'vue';
-import {MECH_UPGRADES} from '../data/mech-upgrades.js';
+import {MECH_UPGRADES, TARGET_DESIGNATOR} from '../data/mech-upgrades.js';
 import {deleteItemById, findItemIndex, moveItem} from './helpers/collection-helper.js';
 import {useToastStore} from './toast-store.js';
 import {useFactionStore} from './faction-store.js';
@@ -19,7 +19,13 @@ import {
     UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN,
 } from '../data/factions.js';
 import {useTeamStore} from './team-store.js';
-import {MECH_TEAM_PERKS, TEAM_PERK_EXTRA_MISSILE_AMMO, TEAM_PERK_SMART_HOWITZERS} from '../data/mech-team-perks.js';
+import {
+    MECH_TEAM_PERKS,
+    TEAM_PERK_0_SLOT_TARGET_DESIGNATORS,
+    TEAM_PERK_0_TON_TARGET_DESIGNATORS,
+    TEAM_PERK_EXTRA_MISSILE_AMMO,
+    TEAM_PERK_SMART_HOWITZERS,
+} from '../data/mech-team-perks.js';
 
 export const useMechStore = defineStore('mech', {
         state() {
@@ -352,8 +358,8 @@ export const useMechStore = defineStore('mech', {
 
                     const traits = cloneDeep(weapon.traits_by_size[size_id]);
 
-                    let team_perk_id = null
-                    let team_perk_desc = null
+                    let team_perk_id = null;
+                    let team_perk_description = null;
 
                     if (
                         (weaponId === ROCKET_PACK || weaponId === MISSILES) &&
@@ -364,19 +370,19 @@ export const useMechStore = defineStore('mech', {
 
                         const perk = MECH_TEAM_PERKS[TEAM_PERK_EXTRA_MISSILE_AMMO];
                         team_perk_id = TEAM_PERK_EXTRA_MISSILE_AMMO;
-                        team_perk_desc = perk.desc;
+                        team_perk_description = perk.desc;
                     }
 
                     if (
                         (weaponId === HOWITZER) &&
                         teamStore.getMechHasTeamPerkId(mechId, TEAM_PERK_SMART_HOWITZERS)
                     ) {
-                        traits.push(makeTrait(TRAIT_SMART))
+                        traits.push(makeTrait(TRAIT_SMART));
                         const perk = MECH_TEAM_PERKS[TEAM_PERK_SMART_HOWITZERS];
                         team_perk_id = TEAM_PERK_SMART_HOWITZERS;
-                        team_perk_desc = perk.desc;
+                        team_perk_description = perk.desc;
                     }
-                    return {traits, team_perk_id, team_perk_desc};
+                    return {traits, team_perk_id, team_perk_description};
                 };
             },
             getWeaponInfo(state) {
@@ -398,7 +404,7 @@ export const useMechStore = defineStore('mech', {
                         range_formatted = range + '"';
                     }
 
-                    const {traits, team_perk_id, team_perk_desc} = this.getWeaponTraitInfo(mechId, weaponId);
+                    const {traits, team_perk_id, team_perk_description} = this.getWeaponTraitInfo(mechId, weaponId);
 
                     return readonly({
                         weapon_id: weaponId,
@@ -411,19 +417,22 @@ export const useMechStore = defineStore('mech', {
                         traits,
                         trait_display_names: traitDisplayNames(traits),
                         team_perk_id,
-                        team_perk_desc,
+                        team_perk_description,
                     });
                 };
             },
             getUpgradeInfo(state) {
                 return (mechId, upgradeId) => {
-
+                    const teamStore = useTeamStore();
                     const mech = this.getMech(mechId);
                     const size_id = mech.size_id;
                     const upgrade = MECH_UPGRADES[upgradeId];
+                    let slots = 1;
+                    let cost = upgrade.cost_by_size[size_id];
                     const notes = [];
                     const validation_messages = [];
-
+                    let team_perk_id = null;
+                    let team_perk_description = null;
                     let valid = true;
 
                     if (upgrade.prohibited_by_sizes) {
@@ -435,14 +444,32 @@ export const useMechStore = defineStore('mech', {
                         }
                     }
 
+                    if (upgradeId === TARGET_DESIGNATOR) {
+                        let perkId = TEAM_PERK_0_SLOT_TARGET_DESIGNATORS;
+                        if (teamStore.getMechHasTeamPerkId(mechId, perkId)) {
+                            slots = 0;
+                            team_perk_id = perkId;
+                            team_perk_description = MECH_TEAM_PERKS[perkId].desc;
+                        }
+
+                        perkId = TEAM_PERK_0_TON_TARGET_DESIGNATORS;
+                        if (teamStore.getMechHasTeamPerkId(mechId, perkId)) {
+                            cost = 0;
+                            team_perk_id = perkId;
+                            team_perk_description = MECH_TEAM_PERKS[perkId].desc;
+                        }
+                    }
+
                     return readonly({
                         upgrade_id: upgradeId,
                         display_name: upgrade.display_name,
                         valid,
                         validation_messages,
                         notes,
-                        slots: 1,
-                        cost: upgrade.cost_by_size[size_id],
+                        slots,
+                        cost,
+                        team_perk_id,
+                        team_perk_description,
                     });
                 };
             },

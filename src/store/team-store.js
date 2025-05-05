@@ -344,7 +344,10 @@ export const useTeamStore = defineStore('team', () => {
 
         const getTeamGroupPerkIds = getter((teamId, groupId) => {
             const groupInfo = getTeamGroupInfo.value(teamId, groupId);
-            const sizeId = groupInfo.size_ids[0];
+            const sizeId = groupInfo.size_ids?.[0];
+            if (!sizeId) {
+                return [];
+            }
             return getTeamMechSizePerkIds.value(teamId, sizeId);
         });
 

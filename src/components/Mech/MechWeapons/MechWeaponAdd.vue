@@ -1,7 +1,7 @@
 <script setup>
 import {useMechStore} from '../../../store/mech-store.js';
 import {computed} from 'vue';
-import TeamPerkIcon from '../../UI/TeamPerkIcon.vue';
+import TeamGroupPerkIcon from '../../UI/TeamGroupPerkIcon.vue';
 
 const {mechId} = defineProps({
   mechId: {
@@ -79,9 +79,9 @@ function addWeapon(upgradeId) {
             {{ item.trait_display_names }}
           </td>
           <td>
-            <TeamPerkIcon
+            <TeamGroupPerkIcon
                 :perk-id="item.team_perk_id"
-                :perk-desc="item.team_perk_desc"
+                :perk-desc="item.team_perk_description"
             />
           </td>
         </tr>
