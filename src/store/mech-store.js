@@ -20,7 +20,7 @@ import {
 } from '../data/factions.js';
 import {useTeamStore} from './team-store.js';
 import {
-    MECH_TEAM_PERKS,
+    makePerkItem,
     TEAM_PERK_0_SLOT_ARMOR_UPGRADES,
     TEAM_PERK_0_SLOT_ECM,
     TEAM_PERK_0_SLOT_TARGET_DESIGNATORS,
@@ -28,7 +28,6 @@ import {
     TEAM_PERK_0_TON_ECM,
     TEAM_PERK_0_TON_TARGET_DESIGNATORS,
     TEAM_PERK_EXTRA_MISSILE_AMMO,
-    TEAM_PERK_EXTRA_MISSILE_AMMO_X2,
     TEAM_PERK_SMART_HOWITZERS,
 } from '../data/mech-team-perks.js';
 
@@ -287,24 +286,17 @@ export const useMechStore = defineStore('mech', {
                         }
                     }
 
-                    let team_perk_id = null;
-                    let team_perk_description = null;
+                    let team_perks = [];
 
                     let perkId = TEAM_PERK_0_SLOT_ARMOR_UPGRADES;
                     if (slots !== 0 && teamStore.getMechHasTeamPerkId(mechId, perkId)) {
                         slots = 0;
-
-                        const perk = MECH_TEAM_PERKS[perkId];
-                        team_perk_id = perkId;
-                        team_perk_description = perk.desc;
+                        team_perks.push(makePerkItem(perkId));
                     }
                     perkId = TEAM_PERK_0_TON_ARMOR_UPGRADES;
                     if (cost !== 0 && teamStore.getMechHasTeamPerkId(mechId, perkId)) {
                         cost = 0;
-
-                        const perk = MECH_TEAM_PERKS[perkId];
-                        team_perk_id = perkId;
-                        team_perk_description = perk.desc;
+                        team_perks.push(makePerkItem(perkId));
                     }
 
                     return {
@@ -314,8 +306,7 @@ export const useMechStore = defineStore('mech', {
                         display_name,
                         valid,
                         validation_message,
-                        team_perk_id,
-                        team_perk_description,
+                        team_perks,
                     };
                 };
             },
@@ -407,37 +398,29 @@ export const useMechStore = defineStore('mech', {
                     const mech = this.getMech(mechId);
                     const size_id = mech.size_id;
                     const weapon = MECH_WEAPONS[weaponId];
-
                     const traits = cloneDeep(weapon.traits_by_size[size_id]);
+                    const team_perks = [];
+                    const perksInfo = teamStore.getMechTeamPerkInfo(mechId);
 
-                    let perk_id = null;
-
+                    let perkId = null;
                     if (weaponId === ROCKET_PACK || weaponId === MISSILES) {
-                        let pId = TEAM_PERK_EXTRA_MISSILE_AMMO;
-                        if (teamStore.getMechHasTeamPerkId(mechId, pId)) {
-                            perk_id = pId;
+                        perkId = TEAM_PERK_EXTRA_MISSILE_AMMO;
+                        const perkItem = find(perksInfo, {id: perkId});
+
+                        if (perkItem) {
                             const match = find(traits, {id: TRAIT_LIMITED});
-                            match.number += 1;
-                        }
-                        pId = TEAM_PERK_EXTRA_MISSILE_AMMO_X2;
-                        if (teamStore.getMechHasTeamPerkId(mechId, pId)) {
-                            perk_id = pId;
-                            const match = find(traits, {id: TRAIT_LIMITED});
-                            match.number += 2;
+                            match.number += perkItem.value;
+                            team_perks.push(perkItem);
                         }
                     }
 
+                    perkId = TEAM_PERK_SMART_HOWITZERS;
                     if (
                         (weaponId === HOWITZER) &&
-                        teamStore.getMechHasTeamPerkId(mechId, TEAM_PERK_SMART_HOWITZERS)
+                        teamStore.getMechHasTeamPerkId(mechId, perkId)
                     ) {
                         traits.push({id: TRAIT_SMART});
-                        perk_id = TEAM_PERK_SMART_HOWITZERS;
-                    }
-
-                    let team_perk_description = null;
-                    if (perk_id) {
-                        team_perk_description = MECH_TEAM_PERKS[perk_id].desc;
+                        team_perks.push(makePerkItem(perkId));
                     }
 
                     traits.forEach(trait => Object.assign(
@@ -446,7 +429,7 @@ export const useMechStore = defineStore('mech', {
                         {display_name: traitDisplayName(trait)},
                     ));
 
-                    return {traits, team_perk_id:perk_id, team_perk_description};
+                    return {traits, team_perks};
                 };
             },
             getWeaponInfo(state) {
@@ -468,7 +451,7 @@ export const useMechStore = defineStore('mech', {
                         range_formatted = range + '"';
                     }
 
-                    const {traits, team_perk_id, team_perk_description} = this.getWeaponTraitInfo(mechId, weaponId);
+                    const {traits, team_perks} = this.getWeaponTraitInfo(mechId, weaponId);
 
                     return readonly({
                         weapon_id: weaponId,
@@ -479,8 +462,7 @@ export const useMechStore = defineStore('mech', {
                         range,
                         range_formatted,
                         traits,
-                        team_perk_id,
-                        team_perk_description,
+                        team_perks,
                     });
                 };
             },
@@ -493,8 +475,6 @@ export const useMechStore = defineStore('mech', {
                     let slots = 1;
                     let cost = upgrade.cost_by_size[size_id];
                     let validation_message = null;
-                    let team_perk_id = null;
-                    let team_perk_description = null;
                     let valid = true;
 
                     if (upgrade.prohibited_by_sizes) {
@@ -504,19 +484,19 @@ export const useMechStore = defineStore('mech', {
                         }
                     }
 
+                    let team_perks = [];
+
                     if (upgradeId === TARGET_DESIGNATOR) {
                         let perkId = TEAM_PERK_0_SLOT_TARGET_DESIGNATORS;
                         if (teamStore.getMechHasTeamPerkId(mechId, perkId)) {
                             slots = 0;
-                            team_perk_id = perkId;
-                            team_perk_description = MECH_TEAM_PERKS[perkId].desc;
+                            team_perks.push(makePerkItem(perkId));
                         }
 
                         perkId = TEAM_PERK_0_TON_TARGET_DESIGNATORS;
                         if (teamStore.getMechHasTeamPerkId(mechId, perkId)) {
                             cost = 0;
-                            team_perk_id = perkId;
-                            team_perk_description = MECH_TEAM_PERKS[perkId].desc;
+                            team_perks.push(makePerkItem(perkId));
                         }
                     }
 
@@ -524,15 +504,13 @@ export const useMechStore = defineStore('mech', {
                         let perkId = TEAM_PERK_0_SLOT_ECM;
                         if (teamStore.getMechHasTeamPerkId(mechId, perkId)) {
                             slots = 0;
-                            team_perk_id = perkId;
-                            team_perk_description = MECH_TEAM_PERKS[perkId].desc;
+                            team_perks.push(makePerkItem(perkId));
                         }
 
                         perkId = TEAM_PERK_0_TON_ECM;
                         if (teamStore.getMechHasTeamPerkId(mechId, perkId)) {
                             cost = 0;
-                            team_perk_id = perkId;
-                            team_perk_description = MECH_TEAM_PERKS[perkId].desc;
+                            team_perks.push(makePerkItem(perkId));
                         }
                     }
 
@@ -543,8 +521,7 @@ export const useMechStore = defineStore('mech', {
                         validation_message,
                         slots,
                         cost,
-                        team_perk_id,
-                        team_perk_description,
+                        team_perks,
                     });
                 };
             },

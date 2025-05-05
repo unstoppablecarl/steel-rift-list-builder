@@ -1,7 +1,7 @@
 <script setup>
 import {useMechStore} from '../../../store/mech-store.js';
 import {computed} from 'vue';
-import IconTeamGroupPerk from '../../UI/IconTeamGroupPerk.vue';
+import IconTeamGroupPerks from '../../UI/IconTeamGroupPerks.vue';
 import IconNotAvailable from '../../UI/IconNotAvailable.vue';
 
 const {mechId} = defineProps({
@@ -70,9 +70,8 @@ function addUpgrade(upgradeId, valid) {
                 :valid="item.valid"
                 :validation_message="item.validation_message"
             />
-            <IconTeamGroupPerk
-                :perk-id="item.team_perk_id"
-                :perk-desc="item.team_perk_description"
+            <IconTeamGroupPerks
+                :perks="item.team_perks"
             />
           </td>
         </tr>

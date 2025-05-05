@@ -3,13 +3,13 @@ import {computed, ref} from 'vue';
 import {findItemIndexById, move, setDisplayOrders} from './helpers/collection-helper.js';
 import {MECH_TEAM_SIZES, MECH_TEAMS, TEAM_GENERAL} from '../data/mech-teams.js';
 import {useMechStore} from './mech-store.js';
-import {countBy, difference, each, find, findIndex, map, max, min, sumBy} from 'lodash';
+import {countBy, difference, each, find, findIndex, groupBy, map, max, min, sumBy} from 'lodash';
 import {getter} from './helpers/store-helpers.js';
 import {MECH_BODY_MODS_DROP_DOWN} from '../data/mech-body.js';
 import {MECH_WEAPONS} from '../data/mech-weapons.js';
 import {useArmyListStore} from './army-list-store.js';
 import {GAME_SIZE_BATTLE, GAME_SIZE_DUEL, GAME_SIZE_RECON, GAME_SIZE_STRIKE, GAME_SIZES} from '../data/game-sizes.js';
-import {TEAM_PERK_EXTRA_MISSILE_AMMO, TEAM_PERK_EXTRA_MISSILE_AMMO_X2} from '../data/mech-team-perks.js';
+import {MECH_TEAM_PERKS} from '../data/mech-team-perks.js';
 
 export const useTeamStore = defineStore('team', () => {
 
@@ -318,6 +318,11 @@ export const useTeamStore = defineStore('team', () => {
             return getTeamMechSizePerkIds.value(teamId, sizeId);
         });
 
+        const getMechTeamPerkInfo = getter((mechId) => {
+            const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
+            return getTeamGroupPerksInfo.value(teamId, groupId);
+        });
+
         const getTeamGroupPerkIds = getter((teamId, groupId) => {
             const groupInfo = getTeamGroupInfo.value(teamId, groupId);
             const sizeId = groupInfo.size_ids?.[0];
@@ -325,6 +330,49 @@ export const useTeamStore = defineStore('team', () => {
                 return [];
             }
             return getTeamMechSizePerkIds.value(teamId, sizeId);
+        });
+
+        const getTeamGroupPerksInfo = getter((teamId, groupId) => {
+            const perkIds = getTeamGroupPerkIds.value(teamId, groupId);
+            const grouped = groupBy(perkIds, (perkId) => perkId);
+
+            return map(grouped, (perkIds, perkId) => {
+                const repeatCount = perkIds.length;
+                const perkInfo = MECH_TEAM_PERKS[perkId];
+                let {
+                    id,
+                    display_name,
+                    display_name_short,
+                    description,
+                    stackable,
+                    renderDisplayName,
+                    renderDesc,
+                    value,
+                } = perkInfo;
+
+                if (repeatCount > 1) {
+                    if (stackable) {
+                        const newValue = value * repeatCount;
+                        return {
+                            id,
+                            display_name: renderDisplayName(newValue),
+                            display_name_short,
+                            description: renderDesc(newValue),
+                            value: newValue
+                        };
+                    } else {
+                        throw new Error(`Multiple instances (${repeatCount}) of non-stackable perk: ${perkId}`);
+                    }
+                }
+
+                return {
+                    id,
+                    display_name,
+                    display_name_short,
+                    description,
+                    value,
+                };
+            });
         });
 
         const getTeamMechSizePerkIds = getter((teamId, sizeId) => {
@@ -346,13 +394,6 @@ export const useTeamStore = defineStore('team', () => {
                     perkIds = perkIds.concat(row[index]);
                 }
             });
-
-            const missileAmmoCount = perkIds.filter(id => id === TEAM_PERK_EXTRA_MISSILE_AMMO).length;
-
-            if (missileAmmoCount === 2) {
-                perkIds = perkIds.filter(id => id !== TEAM_PERK_EXTRA_MISSILE_AMMO);
-                perkIds.push(TEAM_PERK_EXTRA_MISSILE_AMMO_X2);
-            }
 
             return perkIds;
         });
@@ -453,7 +494,6 @@ export const useTeamStore = defineStore('team', () => {
                 mechStore.addMechUpgradeAttachment(mech.id, upgradeId);
             });
             if (groupDef?.required_at_least_one_of_weapon_ids.length) {
-                console.log(groupDef?.required_at_least_one_of_weapon_ids.length);
                 mechStore.addMechWeaponAttachment(mech.id, groupDef?.required_at_least_one_of_weapon_ids[0]);
             }
 
@@ -510,9 +550,10 @@ export const useTeamStore = defineStore('team', () => {
             getAtLeastOneOfWeaponsIsRequired,
             getAtLeastOneOfWeaponsIsRequiredMessage,
             getRequiredByTeamGroupMessage,
-            getMechTeamPerkIds,
             getMechHasTeamPerkId,
             getTeamGroupPerkIds,
+            getTeamGroupPerksInfo,
+            getMechTeamPerkInfo,
 
             addMechToTeam,
             removeMechFromTeam,

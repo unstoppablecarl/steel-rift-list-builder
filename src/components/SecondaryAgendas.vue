@@ -21,7 +21,7 @@ const {secondary_agendas} = storeToRefs(useSecondaryAgendaStore());
             <strong>{{ item.type }}:</strong> {{item.type_display_name}}
           </span>
         </div>
-        <p>{{ item.desc }}</p>
+        <p>{{ item.description }}</p>
       </div>
     </div>
   </div>

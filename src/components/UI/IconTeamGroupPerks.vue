@@ -1,0 +1,59 @@
+<script setup>
+
+const {
+  perks,
+  useFullDisplayName,
+} = defineProps({
+  perks: {
+    type: Array,
+  },
+  useFullDisplayName: {
+    type: Boolean,
+    default: false,
+  },
+});
+</script>
+<template>
+  <BPopover
+      :hover="true"
+      :close-on-hide="true"
+      :delay="{show: 0, hide: 0}"
+  >
+    <template #target>
+      <span
+          v-show="perks && perks.length"
+          class="btn btn-sm btn-light">
+        <span class="material-symbols-outlined">
+          star_rate
+        </span>
+      </span>
+    </template>
+
+    <template #title>
+      Group Perks
+      <span class="material-symbols-outlined">
+        star_rate
+      </span>
+    </template>
+
+    <template v-for="perk in perks">
+      <template v-if="useFullDisplayName">
+        <div class="fw-bold">
+          {{ perk.display_name }}:
+        </div>
+        <p class="p-gap">{{ perk.description }}</p>
+      </template>
+      <template v-else>
+
+        <p class="p-gap">
+          <strong>
+            {{ perk.display_name_short || perk.display_name}}:
+          </strong>
+          {{ perk.description }}
+        </p>
+      </template>
+
+
+    </template>
+  </BPopover>
+</template>

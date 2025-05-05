@@ -47,7 +47,6 @@ export const useSecondaryAgendaStore = defineStore('secondary-agenda', () => {
                 }
             }
         });
-        console.log(result);
         return result;
     });
 

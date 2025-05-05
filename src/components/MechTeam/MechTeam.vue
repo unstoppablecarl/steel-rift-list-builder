@@ -18,7 +18,7 @@ const {teamId} = defineProps({
 const show = ref(false);
 const teamInfo = computed(() => teamStore.getTeamInfo(teamId));
 const teamMechCount = computed(() => teamStore.getTeamMechCount(teamId));
-const teamPerkIdDescription = computed(() => perkId => MECH_TEAM_PERKS[perkId].desc);
+const teamPerkIdInfo = computed(() => perkId => MECH_TEAM_PERKS[perkId]);
 const sizeDisplayNames = computed(() => sizeIds => {
   return sizeIds
       .map((sizeId) => MECH_SIZES[sizeId].display_name)
@@ -109,7 +109,8 @@ const {
         <td>{{ count }}</td>
         <td v-for="teamPerkIds in row">
           <p class="p-gap" v-for="perkId in teamPerkIds">
-            {{ teamPerkIdDescription(perkId) }}
+            <strong>{{ teamPerkIdInfo(perkId).display_name }}: </strong>
+            {{ teamPerkIdInfo(perkId).description }}
           </p>
         </td>
       </tr>

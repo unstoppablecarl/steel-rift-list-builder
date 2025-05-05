@@ -4,7 +4,7 @@ import {MECH_ARMOR_UPGRADES} from '../../../data/mech-armor-upgrades.js';
 import NumberVal from '../../functional/number.vue';
 import {useTeamStore} from '../../../store/team-store.js';
 import {useMechStore} from '../../../store/mech-store.js';
-import IconTeamGroupPerk from '../../UI/IconTeamGroupPerk.vue';
+import IconTeamGroupPerks from '../../UI/IconTeamGroupPerks.vue';
 import IconNotAvailable from '../../UI/IconNotAvailable.vue';
 
 const teamStore = useTeamStore();
@@ -88,9 +88,8 @@ function selectOption(value) {
               <number-val :val="item.cost" :invert-color="true"/>
             </td>
             <td class="notes">
-              <IconTeamGroupPerk
-                  :perk-id="item.team_perk_id"
-                  :perk-desc="item.team_perk_description"
+              <IconTeamGroupPerks
+                  :perks="item.team_perks"
               />
               <IconNotAvailable
                   :valid="item.valid"

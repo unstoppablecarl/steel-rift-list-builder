@@ -7,7 +7,6 @@ import {useTeamStore} from '../../store/team-store.js';
 import {TEAM_GENERAL} from '../../data/mech-teams.js';
 import IconHev from '../UI/IconHEV.vue';
 import {useExpandCollapseAll} from '../functional/expand-collapse.js';
-import {MECH_TEAM_PERKS} from '../../data/mech-team-perks.js';
 
 const teamStore = useTeamStore();
 const {teamId, groupId} = defineProps({
@@ -24,12 +23,9 @@ const groupInfo = computed(() => teamStore.getTeamGroupInfo(teamId, groupId));
 const mechIds = computed(() => teamStore.getTeamGroupMechIds(teamId, groupId));
 const size = computed(() => teamStore.getTeamGroupSizeValidation(teamId, groupId));
 const isGeneralGroup = computed(() => teamId === TEAM_GENERAL);
-
-const teamGroupPerks = computed(() => {
-  return teamStore.getTeamGroupPerkIds(teamId, groupId).map((perkId) => MECH_TEAM_PERKS[perkId].desc).join(' ');
-});
+const teamGroupPerks = computed(() => teamStore.getTeamGroupPerksInfo(teamId, groupId));
 const dragging = ref(false);
-
+const groupPerksOpen = ref(false)
 function onSortableChange(event) {
   let moved = event.moved;
   if (!moved) {
@@ -71,16 +67,37 @@ const {
         >
           Size: {{ size.min_count }}-{{ size.max_count }}
         </span>
-        <span
-            v-if="!isGeneralGroup && teamGroupPerks"
-            class="btn btn-sm btn-outline mx-1 btn-light"
-            v-b-tooltip.hover.top="teamGroupPerks"
+
+        <BPopover
+            v-model="groupPerksOpen"
+            :click="true"
+            :close-on-hide="true"
+            :delay="{show: 0, hide: 0}"
         >
-          Group Perks
-          <span class="material-symbols-outlined">
-            star_rate
-          </span>
-        </span>
+          <template #target>
+            <span
+                v-show="!isGeneralGroup && teamGroupPerks.length"
+                @mouseover="groupPerksOpen = true"
+                @mouseleave="groupPerksOpen = false"
+                class="btn btn-sm btn-outline mx-1 btn-light"
+            >
+              Group Perks
+              <span class="material-symbols-outlined">
+                star_rate
+              </span>
+            </span>
+          </template>
+
+          <template #default>
+            <template v-for="perk in teamGroupPerks">
+              <div class="fw-bold">
+                {{ perk.display_name }}:
+              </div>
+              <p class="p-gap">{{ perk.description }}</p>
+            </template>
+          </template>
+
+        </BPopover>
       </div>
       <div class="text-end">
         <BButton

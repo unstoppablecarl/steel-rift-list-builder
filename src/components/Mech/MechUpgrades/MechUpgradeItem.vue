@@ -1,7 +1,7 @@
 <script setup>
 import {useMechStore} from '../../../store/mech-store.js';
 import {computed} from 'vue';
-import IconTeamGroupPerk from '../../UI/IconTeamGroupPerk.vue';
+import IconTeamGroupPerks from '../../UI/IconTeamGroupPerks.vue';
 import IconRequiredByGroup from '../../UI/IconRequiredByGroup.vue';
 
 const mechStore = useMechStore();
@@ -44,9 +44,8 @@ function remove() {
       <IconRequiredByGroup :required="upgrade.required_by_group"/>
     </td>
     <td>
-      <IconTeamGroupPerk
-          :perk-id="upgrade.team_perk_id"
-          :perk-desc="upgrade.team_perk_description"
+      <IconTeamGroupPerks
+          :perks="upgrade.team_perks"
       />
     </td>
     <td class="text-end">

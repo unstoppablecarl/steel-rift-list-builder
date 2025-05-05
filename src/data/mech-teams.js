@@ -40,15 +40,15 @@ export const TEAM_TACTICAL = 'TEAM_TACTICAL';
 export const MECH_TEAM_SIZES = makeStaticListIds({
     [[TEAM_SIZE_SMALL]]: {
         display_name: 'Small',
-        desc: '2',
+        description: '2',
     },
     [[TEAM_SIZE_MEDIUM]]: {
         display_name: 'Medium',
-        desc: '2-3',
+        description: '2-3',
     },
     [[TEAM_SIZE_LARGE]]: {
         display_name: 'Large',
-        desc: '2-4',
+        description: '2-4',
     },
 });
 

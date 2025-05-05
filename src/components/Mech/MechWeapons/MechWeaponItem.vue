@@ -1,7 +1,7 @@
 <script setup>
 import {useMechStore} from '../../../store/mech-store.js';
 import {computed} from 'vue';
-import IconTeamGroupPerk from '../../UI/IconTeamGroupPerk.vue';
+import IconTeamGroupPerks from '../../UI/IconTeamGroupPerks.vue';
 import IconRequiredByGroup from '../../UI/IconRequiredByGroup.vue';
 
 const mechStore = useMechStore();
@@ -37,10 +37,9 @@ function remove() {
       <span
           class="trait-tooltip"
           v-for="(trait, index) in weapon.traits"
-          v-b-tooltip.hover.top="trait.desc"
+          v-b-tooltip.hover.top="trait.description"
       >
-        {{ trait.display_name }}
-        <template v-if="index !== weapon.traits.length - 1">,</template>
+        {{ trait.display_name }}<template v-if="index !== weapon.traits.length - 1">, </template>
       </span>
     </td>
     <td>
@@ -55,9 +54,8 @@ function remove() {
       <IconRequiredByGroup :required="weapon.required_by_group"/>
     </td>
     <td>
-      <IconTeamGroupPerk
-          :perk-id="weapon.team_perk_id"
-          :perk-desc="weapon.team_perk_description"
+      <IconTeamGroupPerks
+          :perks="weapon.team_perks"
       />
     </td>
     <td class=" text-end">
