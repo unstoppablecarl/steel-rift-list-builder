@@ -3,8 +3,12 @@ import {computed} from 'vue';
 import {MECH_ARMOR_UPGRADES} from '../../../data/mech-armor-upgrades.js';
 import NumberVal from '../../functional/number.vue';
 import {useTeamStore} from '../../../store/team-store.js';
+import {useMechStore} from '../../../store/mech-store.js';
+import IconTeamGroupPerk from '../../UI/IconTeamGroupPerk.vue';
+import IconNotAvailable from '../../UI/IconNotAvailable.vue';
 
 const teamStore = useTeamStore();
+const mechStore = useMechStore();
 
 const {
   label,
@@ -23,7 +27,7 @@ const {
 });
 
 const model = defineModel();
-const options = computed(() => teamStore.getMechArmorUpgradeOptions(mechId));
+const options = computed(() => mechStore.getMechAvailableArmorUpgrades(mechId));
 
 const selectedValueLabel = computed(() => {
   return MECH_ARMOR_UPGRADES[model.value].display_name;
@@ -75,25 +79,23 @@ function selectOption(value) {
               @click="selectOption(item.value)"
           >
             <td>
-              {{ item.text }}
+              {{ item.display_name }}
             </td>
             <td class="text-end">
-              <number-val :val="item.slots" :invert-color="true" :positive-signed="false"/>
+              <number-val :val="item.slots" :invert-color="true"/>
             </td>
             <td class="text-end">
-              <number-val :val="item.cost_by_size[sizeId]" :invert-color="true" :positive-signed="false"/>
+              <number-val :val="item.cost" :invert-color="true"/>
             </td>
             <td class="notes">
-              <span
-                  v-if="!item.valid"
-                  v-b-tooltip.hover.top="item.validation_message"
-              >
-                <span class="btn btn-danger disabled">
-                  <span class="material-symbols-outlined">
-                    block
-                  </span>
-                </span>
-              </span>
+              <IconTeamGroupPerk
+                  :perk-id="item.team_perk_id"
+                  :perk-desc="item.team_perk_description"
+              />
+              <IconNotAvailable
+                  :valid="item.valid"
+                  :validation_message="item.validation_message"
+              />
             </td>
           </tr>
           </tbody>

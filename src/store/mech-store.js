@@ -21,8 +21,10 @@ import {
 import {useTeamStore} from './team-store.js';
 import {
     MECH_TEAM_PERKS,
+    TEAM_PERK_0_SLOT_ARMOR_UPGRADES,
     TEAM_PERK_0_SLOT_ECM,
     TEAM_PERK_0_SLOT_TARGET_DESIGNATORS,
+    TEAM_PERK_0_TON_ARMOR_UPGRADES,
     TEAM_PERK_0_TON_ECM,
     TEAM_PERK_0_TON_TARGET_DESIGNATORS,
     TEAM_PERK_EXTRA_MISSILE_AMMO,
@@ -256,23 +258,69 @@ export const useMechStore = defineStore('mech', {
                 };
             },
             getMechArmorUpgradeInfo(state) {
-                return function (mechId) {
+                return function (mechId, armorUpgradeId) {
+                    const teamStore = useTeamStore();
+
                     let {
-                        armor_upgrade_id,
                         size_id,
                     } = this.getMech(mechId);
 
-                    const {
+                    const {teamId, groupId} = teamStore.getMechTeamAndGroupIds(mechId);
+                    const teamDisplayName = teamStore.getTeamInfo(teamId).display_name;
+                    const groupInfo = teamStore.getTeamGroupInfo(teamId, groupId);
+
+                    let {
                         slots,
                         cost_by_size,
                         display_name,
-                    } = MECH_ARMOR_UPGRADES[armor_upgrade_id];
+                    } = MECH_ARMOR_UPGRADES[armorUpgradeId];
+
+                    let cost = cost_by_size[size_id];
+                    let valid = true;
+                    let validation_message = null;
+
+                    if (groupInfo.limited_armor_upgrade_ids.length) {
+                        if (!groupInfo.limited_armor_upgrade_ids.includes(armorUpgradeId)) {
+                            valid = false;
+                            validation_message = `Not available to ${teamDisplayName} ${groupInfo.display_name}`;
+                        }
+                    }
+
+                    let team_perk_id = null;
+                    let team_perk_description = null;
+
+                    let perkId = TEAM_PERK_0_SLOT_ARMOR_UPGRADES;
+                    if (slots !== 0 && teamStore.getMechHasTeamPerkId(mechId, perkId)) {
+                        slots = 0;
+
+                        const perk = MECH_TEAM_PERKS[perkId];
+                        team_perk_id = perkId;
+                        team_perk_description = perk.desc;
+                    }
+                    perkId = TEAM_PERK_0_TON_ARMOR_UPGRADES;
+                    if (cost !== 0 && teamStore.getMechHasTeamPerkId(mechId, perkId)) {
+                        cost = 0;
+
+                        const perk = MECH_TEAM_PERKS[perkId];
+                        team_perk_id = perkId;
+                        team_perk_description = perk.desc;
+                    }
 
                     return {
-                        cost: cost_by_size[size_id],
+                        id: armorUpgradeId,
+                        cost,
                         slots,
                         display_name,
+                        valid,
+                        validation_message,
+                        team_perk_id,
+                        team_perk_description,
                     };
+                };
+            },
+            getMechAvailableArmorUpgrades(state) {
+                return (mechId) => {
+                    return Object.keys(MECH_ARMOR_UPGRADES).map(armorUpgradeId => this.getMechArmorUpgradeInfo(mechId, armorUpgradeId));
                 };
             },
             getMechInfo(state) {
@@ -284,6 +332,7 @@ export const useMechStore = defineStore('mech', {
                         size_id,
                         structure_mod_id,
                         armor_mod_id,
+                        armor_upgrade_id,
                         weapons,
                         upgrades,
                     } = this.getMech(mechId);
@@ -293,7 +342,7 @@ export const useMechStore = defineStore('mech', {
                     const upgradesInfo = upgrades.map((item) => this.getMechUpgradeAttachmentInfo(mechId, item.id));
                     const weaponsInfo = weapons.map((item) => this.getMechWeaponAttachmentInfo(mechId, item.id));
 
-                    const armorUpgradeInfo = this.getMechArmorUpgradeInfo(mechId);
+                    const armorUpgradeInfo = this.getMechArmorUpgradeInfo(mechId, armor_upgrade_id);
 
                     const size = MECH_SIZES[size_id];
                     const structure_mod = MECH_BODY_MODS[structure_mod_id];
@@ -429,7 +478,7 @@ export const useMechStore = defineStore('mech', {
                     });
                 };
             },
-            getUpgradeInfo(state) {
+            getUpgradeInfo: function (state) {
                 return (mechId, upgradeId) => {
                     const teamStore = useTeamStore();
                     const mech = this.getMech(mechId);
@@ -437,8 +486,7 @@ export const useMechStore = defineStore('mech', {
                     const upgrade = MECH_UPGRADES[upgradeId];
                     let slots = 1;
                     let cost = upgrade.cost_by_size[size_id];
-                    const notes = [];
-                    const validation_messages = [];
+                    let validation_message = null;
                     let team_perk_id = null;
                     let team_perk_description = null;
                     let valid = true;
@@ -446,9 +494,7 @@ export const useMechStore = defineStore('mech', {
                     if (upgrade.prohibited_by_sizes) {
                         valid = !upgrade.prohibited_by_sizes.includes(size_id);
                         if (!valid) {
-                            const message = 'Not available for Light HE-V';
-                            notes.push(message);
-                            validation_messages.push(message);
+                            validation_message = `Not available for ${MECH_SIZES[size_id].display_name} HE-Vs`
                         }
                     }
 
@@ -488,8 +534,7 @@ export const useMechStore = defineStore('mech', {
                         upgrade_id: upgradeId,
                         display_name: upgrade.display_name,
                         valid,
-                        validation_messages,
-                        notes,
+                        validation_message,
                         slots,
                         cost,
                         team_perk_id,

@@ -312,30 +312,6 @@ export const useTeamStore = defineStore('team', () => {
             });
         });
 
-        const getMechArmorUpgradeOptions = getter((mechId) => {
-            const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
-            const teamDisplayName = getTeamInfo.value(teamId).display_name;
-            const groupInfo = getTeamGroupInfo.value(teamId, groupId);
-
-            return MECH_ARMOR_UPGRADES_DROP_DOWN.map((item) => {
-                item = Object.assign({}, item);
-
-                let valid = true;
-                let validation_message = null;
-
-                if (groupInfo.limited_armor_upgrade_ids.length) {
-                    if (!groupInfo.limited_armor_upgrade_ids.includes(item.id)) {
-                        valid = false;
-                        validation_message = `Not available to ${teamDisplayName} ${groupInfo.display_name}`;
-                    }
-                }
-
-                item.valid = valid;
-                item.validation_message = validation_message;
-                return item;
-            });
-        });
-
         const getMechTeamPerkIds = getter((mechId) => {
             const sizeId = mechStore.getMech(mechId).size_id;
             const {teamId} = getMechTeamAndGroupIds.value(mechId);
@@ -514,7 +490,6 @@ export const useTeamStore = defineStore('team', () => {
             getMechSizeValid,
             getMechStructureModOptions,
             getMechArmorModOptions,
-            getMechArmorUpgradeOptions,
             getAtLeastOneOfWeaponsIsRequired,
             getAtLeastOneOfWeaponsIsRequiredMessage,
             getRequiredByTeamGroupMessage,

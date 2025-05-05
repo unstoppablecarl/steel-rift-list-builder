@@ -5,7 +5,7 @@ import MechTeamGroup from './MechTeamGroup.vue';
 import {BButton} from 'bootstrap-vue-next';
 import {MECH_SIZES} from '../../data/mech-sizes.js';
 import {MECH_TEAM_PERKS} from '../../data/mech-team-perks.js';
-import HEVIcon from '../UI/HEVIcon.vue';
+import IconHev from '../UI/IconHEV.vue';
 import {useExpandCollapseAll} from '../functional/expand-collapse.js';
 
 const teamStore = useTeamStore();
@@ -41,7 +41,7 @@ const {
             class="btn btn-sm btn-outline mx-1 btn-light"
             v-b-tooltip.hover.top="'Team Size'"
         >
-          <HEVIcon/>
+          <IconHev/>
           {{ teamMechCount }}
         </span>
       </div>

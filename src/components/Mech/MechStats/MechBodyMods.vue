@@ -1,6 +1,7 @@
 <script setup>
 import {MECH_BODY_MODS} from '../../../data/mech-body.js';
 import {computed} from 'vue';
+import IconNotAvailable from '../../UI/IconNotAvailable.vue';
 
 const {
   formId,
@@ -90,22 +91,15 @@ function selectOption(value) {
               <number :val="item.max_tons" invert invert-color/>
             </td>
             <td class="notes">
-              <span
-                  v-if="!item.valid"
-                  v-b-tooltip.hover.top="item.validation_message"
-              >
-                <span class="btn btn-danger disabled">
-                  <span class="material-symbols-outlined">
-                    block
-                  </span>
-                </span>
-              </span>
+              <IconNotAvailable
+                  :valid="item.valid"
+                  :validation_message="item.validation_message"
+              />
             </td>
           </tr>
           </tbody>
         </table>
       </BDropdown>
-
     </td>
     <td class="col-form-label text-end">
       <number :val="armor" v-if="armor !== null"/>

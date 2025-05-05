@@ -1,7 +1,8 @@
 <script setup>
 import {useMechStore} from '../../../store/mech-store.js';
 import {computed} from 'vue';
-import TeamGroupPerkIcon from '../../UI/TeamGroupPerkIcon.vue';
+import IconTeamGroupPerk from '../../UI/IconTeamGroupPerk.vue';
+import IconNotAvailable from '../../UI/IconNotAvailable.vue';
 
 const {mechId} = defineProps({
   mechId: {
@@ -64,9 +65,12 @@ function addUpgrade(upgradeId, valid) {
           <td class="text-end">
             <number :val="item.cost" :positive-signed="false" :invert-color="true"/>
           </td>
-          <td>
-            {{ item.notes.join(', ') }}
-            <TeamGroupPerkIcon
+          <td class="notes">
+            <IconNotAvailable
+                :valid="item.valid"
+                :validation_message="item.validation_message"
+            />
+            <IconTeamGroupPerk
                 :perk-id="item.team_perk_id"
                 :perk-desc="item.team_perk_description"
             />

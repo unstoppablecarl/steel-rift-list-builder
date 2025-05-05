@@ -1,7 +1,8 @@
 <script setup>
 import {useMechStore} from '../../../store/mech-store.js';
 import {computed} from 'vue';
-import TeamGroupPerkIcon from '../../UI/TeamGroupPerkIcon.vue';
+import IconTeamGroupPerk from '../../UI/IconTeamGroupPerk.vue';
+import IconRequiredByGroup from '../../UI/IconRequiredByGroup.vue';
 
 const mechStore = useMechStore();
 
@@ -51,18 +52,10 @@ function remove() {
       >
         <span class="material-symbols-outlined">delete</span>
       </BButton>
-
-      <span
-          v-if="weapon.required_by_group"
-          v-b-tooltip.hover.top="weapon.required_by_group_reason"
-      >
-        <span class="btn btn-sm btn-danger disabled">
-          <span class="material-symbols-outlined">lock</span>
-        </span>
-      </span>
+      <IconRequiredByGroup :required="weapon.required_by_group"/>
     </td>
     <td>
-      <TeamGroupPerkIcon
+      <IconTeamGroupPerk
           :perk-id="weapon.team_perk_id"
           :perk-desc="weapon.team_perk_description"
       />

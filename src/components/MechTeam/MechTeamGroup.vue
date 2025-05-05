@@ -5,7 +5,7 @@ import draggable from 'vuedraggable';
 import {computed, ref} from 'vue';
 import {useTeamStore} from '../../store/team-store.js';
 import {TEAM_GENERAL} from '../../data/mech-teams.js';
-import HEVIcon from '../UI/HEVIcon.vue';
+import IconHev from '../UI/IconHEV.vue';
 import {useExpandCollapseAll} from '../functional/expand-collapse.js';
 import {MECH_TEAM_PERKS} from '../../data/mech-team-perks.js';
 
@@ -56,7 +56,7 @@ const {
             class="btn btn-sm btn-outline mx-1 btn-light"
             v-b-tooltip.hover.top="'Group Size'"
         >
-          <HEVIcon/>
+          <IconHev/>
           {{ groupCount }}
         </span>
 
@@ -88,7 +88,7 @@ const {
             class="ms-1"
             @click="teamStore.addMechToTeam(teamId, groupId)">
           Add
-          <HEVIcon light/>
+          <IconHev light/>
         </BButton>
         <BButton
             class="ms-1"
