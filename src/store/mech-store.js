@@ -4,10 +4,10 @@ import {MECH_BODY_MODS, MOD_STANDARD} from '../data/mech-body.js';
 import {MECH_ARMOR_UPGRADES, NO_ARMOR_UPGRADE} from '../data/mech-armor-upgrades.js';
 import {findById, updateObject} from '../data/data-helpers.js';
 import {cloneDeep, find, sumBy} from 'lodash';
-import {TRAIT_LIMITED, TRAIT_SMART, traitDisplayName, traitDisplayNames, WEAPON_TRAITS} from '../data/weapon-traits.js';
+import {TRAIT_LIMITED, TRAIT_SMART, traitDisplayName, WEAPON_TRAITS} from '../data/weapon-traits.js';
 import {HOWITZER, MECH_WEAPONS, MISSILES, ROCKET_PACK} from '../data/mech-weapons.js';
 import {readonly} from 'vue';
-import {MECH_UPGRADES, TARGET_DESIGNATOR} from '../data/mech-upgrades.js';
+import {ELECTRONIC_COUNTERMEASURES, MECH_UPGRADES, TARGET_DESIGNATOR} from '../data/mech-upgrades.js';
 import {deleteItemById, findItemIndex, moveItem} from './helpers/collection-helper.js';
 import {useToastStore} from './toast-store.js';
 import {useFactionStore} from './faction-store.js';
@@ -21,7 +21,9 @@ import {
 import {useTeamStore} from './team-store.js';
 import {
     MECH_TEAM_PERKS,
+    TEAM_PERK_0_SLOT_ECM,
     TEAM_PERK_0_SLOT_TARGET_DESIGNATORS,
+    TEAM_PERK_0_TON_ECM,
     TEAM_PERK_0_TON_TARGET_DESIGNATORS,
     TEAM_PERK_EXTRA_MISSILE_AMMO,
     TEAM_PERK_SMART_HOWITZERS,
@@ -413,7 +415,6 @@ export const useMechStore = defineStore('mech', {
 
                     const {traits, team_perk_id, team_perk_description} = this.getWeaponTraitInfo(mechId, weaponId);
 
-
                     return readonly({
                         weapon_id: weaponId,
                         display_name,
@@ -460,6 +461,22 @@ export const useMechStore = defineStore('mech', {
                         }
 
                         perkId = TEAM_PERK_0_TON_TARGET_DESIGNATORS;
+                        if (teamStore.getMechHasTeamPerkId(mechId, perkId)) {
+                            cost = 0;
+                            team_perk_id = perkId;
+                            team_perk_description = MECH_TEAM_PERKS[perkId].desc;
+                        }
+                    }
+
+                    if (upgradeId === ELECTRONIC_COUNTERMEASURES) {
+                        let perkId = TEAM_PERK_0_SLOT_ECM;
+                        if (teamStore.getMechHasTeamPerkId(mechId, perkId)) {
+                            slots = 0;
+                            team_perk_id = perkId;
+                            team_perk_description = MECH_TEAM_PERKS[perkId].desc;
+                        }
+
+                        perkId = TEAM_PERK_0_TON_ECM;
                         if (teamStore.getMechHasTeamPerkId(mechId, perkId)) {
                             cost = 0;
                             team_perk_id = perkId;
