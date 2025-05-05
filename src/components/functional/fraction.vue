@@ -33,10 +33,10 @@ const containerClass = computed(() => {
 </script>
 <template>
   <span :class="containerClass">
-          <span :class="{
+    <span :class="{
             'text-danger': (a > b)
           }">
-          {{ a }}
-          </span>/{{ b }}
+      {{ a }}
+    </span>/{{ b }}
   </span>
 </template>

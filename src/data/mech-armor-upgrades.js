@@ -1,6 +1,5 @@
 import {SIZE_HEAVY, SIZE_LIGHT, SIZE_MEDIUM, SIZE_ULTRA} from './mech-sizes.js';
 import {listToDropDown, makeFrozenStaticListIds} from './data-helpers.js';
-import {MECH_BODY_MODS} from './mech-body.js';
 
 export const NO_ARMOR_UPGRADE = 'NO_ARMOR_UPGRADE';
 export const ABLATIVE_ARMOR_UPGRADE = 'ABLATIVE_ARMOR_UPGRADE';
@@ -40,7 +39,7 @@ export const MECH_ARMOR_UPGRADES = makeFrozenStaticListIds({
     }),
 });
 
-export const MECH_ARMOR_UPGRADES_DROP_DOWN = listToDropDown(MECH_ARMOR_UPGRADES)
+export const MECH_ARMOR_UPGRADES_DROP_DOWN = listToDropDown(MECH_ARMOR_UPGRADES);
 
 function makeArmorUpgrade(item) {
     if (!item.cost_by_size) {

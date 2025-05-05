@@ -1,6 +1,6 @@
 import {SIZE_HEAVY, SIZE_LIGHT, SIZE_MEDIUM, SIZE_ULTRA} from './mech-sizes.js';
 import {SUBMUNITIONS} from './mech-weapons.js';
-import {listToDropDown, makeFrozenStaticListIds} from './data-helpers.js';
+import {makeFrozenStaticListIds} from './data-helpers.js';
 
 export const ANTI_MISSILE_SYSTEM = 'ANTI_MISSILE_SYSTEM';
 export const ELECTRONIC_COUNTERMEASURES = 'ELECTRONIC_COUNTERMEASURES';
@@ -81,7 +81,6 @@ export const MECH_UPGRADES = makeFrozenStaticListIds({
         cost: 1,
     }),
 });
-
 
 function makeArmorUpgrade(item) {
     if (!item.cost_by_size) {

@@ -41,8 +41,8 @@ const {
             class="btn btn-sm btn-outline mx-1 btn-light"
             v-b-tooltip.hover.top="'Team Size'"
         >
-        <HEVIcon/>
-        {{ teamMechCount }}
+          <HEVIcon/>
+          {{ teamMechCount }}
         </span>
       </div>
       <div class="text-end">
@@ -105,7 +105,7 @@ const {
       <tbody>
       <tr
           v-for="(row, count) in teamInfo.team_size_perk_rows"
-        :class="{'table-success': teamMechCount == count}"
+          :class="{'table-success': teamMechCount == count}"
       >
         <td>{{ count }}</td>
         <td v-for="teamPerkIds in row">

@@ -43,8 +43,8 @@ export const BIG_LEAGUE_ORIGINS = 'BIG_LEAGUE_ORIGINS';
 export const BLO_EX_MILITARY_VETERANS = 'BLO_EX_MILITARY_VETERANS';
 export const BLO_POLITICAL_EXTREMISTS = 'BLO_POLITICAL_EXTREMISTS';
 export const BLO_DISGRACED_TRILLIONAIRE = 'BLO_DISGRACED_TRILLIONAIRE';
-export const DWC_TOP_END_HARDWARE_BONUS_TONS = -2
-export const RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS = -1
+export const DWC_TOP_END_HARDWARE_BONUS_TONS = -2;
+export const RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS = -1;
 export const FACTIONS = makeFrozenStaticListIds({
     [[NO_FACTION]]: {
         display_name: 'None',
@@ -199,4 +199,4 @@ export const FACTIONS = makeFrozenStaticListIds({
     },
 });
 
-export const FACTIONS_DROP_DOWN = listToDropDown(FACTIONS)
+export const FACTIONS_DROP_DOWN = listToDropDown(FACTIONS);

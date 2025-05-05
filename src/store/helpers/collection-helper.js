@@ -29,7 +29,6 @@ export function findItemIndexByIdOrFail(items, item) {
     return index;
 }
 
-
 // export function replaceItem(items, item) {
 //     let index = findItemIndexByIdOrFail(items, item);
 //
@@ -59,7 +58,6 @@ export function move(items, fromIndex, toIndex) {
     items.splice(toIndex, 0, item);
     setDisplayOrders(items);
 }
-
 
 // export function copyItem(items, item) {
 //     let index = findItemIndex(items, item);

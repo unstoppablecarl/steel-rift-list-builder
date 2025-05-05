@@ -50,10 +50,4 @@ export default {
       :mech-weapon-attachment-id="weaponAttachment.id"
       :index="weaponAttachment.display_order"
   />
-
-
 </template>
-
-<style scoped>
-
-</style>

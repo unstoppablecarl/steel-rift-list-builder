@@ -241,6 +241,7 @@ export const MECH_WEAPONS = makeFrozenStaticListIds({
         },
     }),
 });
+
 function makeWeapon({
                         display_name,
                         damage,

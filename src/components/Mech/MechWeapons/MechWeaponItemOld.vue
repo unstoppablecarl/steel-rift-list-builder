@@ -41,7 +41,8 @@ export default {
       {{ weapon.range_formatted }}
     </td>
     <td class="cell-pad-top">
-      {{ weapon.trait_display_names }}</td>
+      {{ weapon.trait_display_names }}
+    </td>
     <td>
       <BButton @click="remove()" variant="danger">Remove</BButton>
     </td>

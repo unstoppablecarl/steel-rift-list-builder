@@ -83,9 +83,4 @@ export default {
       <MechWeaponAdd :mech-id="mechId"/>
     </td>
   </tr>
-
 </template>
-
-<style scoped>
-
-</style>

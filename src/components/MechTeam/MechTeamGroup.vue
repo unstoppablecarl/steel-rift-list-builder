@@ -56,8 +56,8 @@ const {
             class="btn btn-sm btn-outline mx-1 btn-light"
             v-b-tooltip.hover.top="'Group Size'"
         >
-        <HEVIcon/>
-        {{ groupCount }}
+          <HEVIcon/>
+          {{ groupCount }}
         </span>
 
         <span
@@ -77,8 +77,8 @@ const {
             v-b-tooltip.hover.top="teamGroupPerks"
         >
           Group Perks
-           <span class="material-symbols-outlined">
-          star_rate
+          <span class="material-symbols-outlined">
+            star_rate
           </span>
         </span>
       </div>

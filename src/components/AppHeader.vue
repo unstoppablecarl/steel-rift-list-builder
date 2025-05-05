@@ -51,21 +51,21 @@ const {used_support_assets, max_support_assets} = storeToRefs(useSupportAssetSto
 
 
             <span class="ms-2">
-        <strong>Support Assets: </strong>
-        <fraction
-            :a="used_support_assets"
-            :b="max_support_assets"
-            success-class="fw-bold"
-        />
-        </span>
+              <strong>Support Assets: </strong>
+              <fraction
+                  :a="used_support_assets"
+                  :b="max_support_assets"
+                  success-class="fw-bold"
+              />
+            </span>
             <span class="ms-2">
-        <strong>Tonnage: </strong>
-        <fraction
-            :a="used_tons"
-            :b="max_tons"
-            success-class="fw-bold"
-        />
-        </span>
+              <strong>Tonnage: </strong>
+              <fraction
+                  :a="used_tons"
+                  :b="max_tons"
+                  success-class="fw-bold"
+              />
+            </span>
           </div>
         </div>
       </div>

@@ -90,7 +90,7 @@ function selectOption(value) {
               >
                 <span class="btn btn-danger disabled">
                   <span class="material-symbols-outlined">
-                  block
+                    block
                   </span>
                 </span>
               </span>

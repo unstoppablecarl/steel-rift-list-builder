@@ -22,9 +22,11 @@ function onSortableChange(event) {
 
   mechStore.moveMech(moved.element, moved.newIndex);
 }
+
 function collapseAll() {
   collapsed.value = Date.now();
 }
+
 function expandAll() {
   expanded.value = Date.now();
 }

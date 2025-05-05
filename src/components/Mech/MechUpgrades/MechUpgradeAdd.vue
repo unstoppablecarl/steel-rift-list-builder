@@ -11,9 +11,7 @@ const {mechId} = defineProps({
 });
 
 const mechStore = useMechStore();
-const options = computed(() => {
-  return mechStore.getMechAvailableUpgradesInfo(mechId)
-});
+const options = computed(() => mechStore.getMechAvailableUpgradesInfo(mechId));
 
 function addUpgrade(upgradeId, valid) {
   if (!valid) {

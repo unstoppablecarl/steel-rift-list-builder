@@ -2,9 +2,10 @@
 .collapse-header {
   padding: $btn-padding-y $btn-padding-x;
 }
+
 //$accordion-button-bg: $accordion-button-active-bg;
 .btn-collapse {
-//$accordion-border-width: 0;
+  //$accordion-border-width: 0;
 
   --#{$prefix}accordion-color: #{$accordion-color};
   --#{$prefix}accordion-bg: #{$accordion-bg};

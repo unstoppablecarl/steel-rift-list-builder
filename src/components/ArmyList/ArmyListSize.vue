@@ -60,13 +60,13 @@ onMounted(() => {
           label-for="list-max-tons"
           class="mb-1"
       >
-      <BFormInput
-          id="list-max-tons"
-          v-model="max_tons"
-          type="number"
-          :disabled="disabled"
-          @blur="syncArmyType"
-      />
+        <BFormInput
+            id="list-max-tons"
+            v-model="max_tons"
+            type="number"
+            :disabled="disabled"
+            @blur="syncArmyType"
+        />
       </BFormFloatingLabel>
     </div>
     <div class="col">

@@ -16,4 +16,4 @@ export const MECH_MOBILITIES = makeFrozenStaticListIds({
     },
 });
 
-export const MECH_MOBILITIES_DROP_DOWN = listToDropDown(MECH_MOBILITIES)
+export const MECH_MOBILITIES_DROP_DOWN = listToDropDown(MECH_MOBILITIES);
