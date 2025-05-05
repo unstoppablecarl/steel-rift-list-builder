@@ -266,7 +266,7 @@ function makeGroup(obj) {
 
     if (obj.size_ids) {
         result.display_name = obj.size_ids.map((sizeId) => MECH_SIZES[sizeId].display_name)
-            .join(' and ') + ' HE-Vs';
+            .join(' & ');
     }
 
     each(result.groups, (group) => {
