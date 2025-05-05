@@ -41,8 +41,8 @@ const {
             class="btn btn-sm btn-outline mx-1 btn-light"
             v-b-tooltip.hover.top="'Team Size'"
         >
-          <IconHev/>
           {{ teamMechCount }}
+          <IconHev/>
         </span>
       </div>
       <div class="text-end">

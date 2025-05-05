@@ -56,8 +56,8 @@ const {
             class="btn btn-sm btn-outline mx-1 btn-light"
             v-b-tooltip.hover.top="'Group Size'"
         >
-          <IconHev/>
           {{ groupCount }}
+          <IconHev/>
         </span>
 
         <span
