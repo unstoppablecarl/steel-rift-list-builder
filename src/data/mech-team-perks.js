@@ -19,11 +19,11 @@ export const TEAM_PERK_DIRECTIONAL_ASSETS = 'TEAM_PERK_DIRECTIONAL_ASSETS';
 export const TEAM_PERK_0_SLOT_ARMOR_UPGRADES = 'TEAM_PERK_0_SLOT_ARMOR_UPGRADES';
 export const TEAM_PERK_0_TON_ARMOR_UPGRADES = 'TEAM_PERK_0_TON_ARMOR_UPGRADES';
 export const TEAM_PERK_EXTRA_TONNAGE = 'TEAM_PERK_EXTRA_TONNAGE';
-export const TEAM_PERK_SIDE_ARMOR = 'TEAM_PERK_SIDE_ARMOR';
-export const TEAM_PERK_DEPLOY_AS_SUPPORT = 'TEAM_PERK_DEPLOY_AS_SUPPORT';
-export const TEAM_PERK_GANG_UP = 'TEAM_PERK_GANG_UP';
+export const TEAM_PERK_SIDE_DEFENSE = 'TEAM_PERK_SIDE_DEFENSE';
+export const TEAM_PERK_FORWARD_DEPLOY_HEVS = 'TEAM_PERK_FORWARD_DEPLOY_HEVS';
+export const TEAM_PERK_MELEE_FLANK = 'TEAM_PERK_MELEE_FLANK';
 export const TEAM_PERK_0_SLOT_DIRECTIONAL_THRUSTERS = 'TEAM_PERK_0_SLOT_DIRECTIONAL_THRUSTERS';
-export const TEAM_PERK_RIPOSTE = 'TEAM_PERK_RIPOSTE';
+export const TEAM_PERK_COUNTER_ATTACK = 'TEAM_PERK_COUNTER_ATTACK';
 export const TEAM_PERK_JUMP_BOOSTER = 'TEAM_PERK_JUMP_BOOSTER';
 export const TEAM_PERK_COMBAT_BUCKLER = 'TEAM_PERK_COMBAT_BUCKLER';
 export const TEAM_PERK_EXTRA_NITRO = 'TEAM_PERK_EXTRA_NITRO';
@@ -47,35 +47,35 @@ export const MECH_TEAM_PERKS = makeTeamPerks({
         description: 'If one or more HE-Vs from this Team is within 18" of an enemy Deployment Edge or Corner, you gain +1 to the Initiative Roll.',
     },
     [[TEAM_PERK_SUPPORT_ASSET_DAMAGE]]: {
-        display_name: 'Improved Support Asset Damage',
+        display_name: 'OT Asset Damage',
         description: 'Off-Table Support Assets gain +1 to their Damage Rating.',
     },
     [[TEAM_PERK_DIRECTIONAL_ASSETS]]: {
-        display_name: 'Mobile Support Assets',
+        display_name: 'Mobile OT Assets',
         description: 'When determining the origin of direction for an Off-Table Support Asset directed by a member of this team, it can be from any direction.',
     },
     [[TEAM_PERK_EXTRA_TONNAGE]]: {
-        display_name: `Extra Tonnage (5)`,
+        display_name: `Objective Tonnage (5)`,
         description: 'Team Units count as 5 Tons heavier for the purpose of the Security Objective.',
     },
-    [[TEAM_PERK_SIDE_ARMOR]]: {
-        display_name: 'Side Armor',
+    [[TEAM_PERK_SIDE_DEFENSE]]: {
+        display_name: 'Side Defense',
         description: 'Enemy Units do not gain bonuses to their Damage Rating for Side Arcs.',
     },
-    [[TEAM_PERK_DEPLOY_AS_SUPPORT]]: {
-        display_name: 'Deploy As Support',
+    [[TEAM_PERK_FORWARD_DEPLOY_HEVS]]: {
+        display_name: 'Forward Deploy HE-Vs',
         description: 'HE-Vs in this Team may deploy as Support Assets.',
     },
-    [[TEAM_PERK_GANG_UP]]: {
-        display_name: 'Gang Up',
+    [[TEAM_PERK_MELEE_FLANK]]: {
+        display_name: 'Melee Flank',
         description: 'Weapons with the Melee Trait targeting opposing HE-Vs that are base to base with 2 or more Units in this Team receive the Frag trait.',
     },
-    [[TEAM_PERK_RIPOSTE]]: {
-        display_name: 'Riposte',
+    [[TEAM_PERK_COUNTER_ATTACK]]: {
+        display_name: 'Counter Attack',
         description: 'When targeted by an Engage or Smash Order, an HE-V in this Team without an Activated Marker may gain an Activated Marker. If they do, they may make a Smash Order before resolving the Opposing Commander’s Order.',
     },
     [[TEAM_PERK_JUMP_BOOSTER]]: {
-        display_name: 'Jump Booster',
+        display_name: 'Jump Boost',
         description: '+1” Jump Distance',
     },
     [[TEAM_PERK_COMBAT_BUCKLER]]: {
@@ -183,5 +183,5 @@ export const SPECIAL_ABILITY_PERK_IDS = [
     TEAM_PERK_SUPPORT_ASSET_DAMAGE,
     TEAM_PERK_DIRECTIONAL_ASSETS,
     TEAM_PERK_EXTRA_TONNAGE,
-    TEAM_PERK_SIDE_ARMOR,
+    TEAM_PERK_SIDE_DEFENSE,
 ];
