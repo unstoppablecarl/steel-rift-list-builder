@@ -5,6 +5,9 @@ export const SA_FIRE_FOR_EFFECT = 'SA_FIRE_FOR_EFFECT';
 export const SA_WILDCARDS = 'SA_WILDCARDS';
 export const SA_ASSET_PROTECTION = 'SA_ASSET_PROTECTION';
 export const SA_TERRITORIAL = 'SA_TERRITORIAL';
+export const SA_TARGET_ELIMINATED = 'SA_TARGET_ELIMINATED';
+export const SA_DRIVE_THEM_OUT = 'SA_DRIVE_THEM_OUT';
+export const SA_TROPHY_TAKERS = 'SA_TROPHY_TAKERS';
 
 export const SECONDARY_AGENDAS = {
     [[SA_MISSION_MOMENTUM]]: {
@@ -34,5 +37,17 @@ export const SECONDARY_AGENDAS = {
     [[SA_TERRITORIAL]]: {
         display_name: 'Territorial',
         description: 'Score 1 VP if there are no active enemy Units within 10” of any of your deployment edges or corners at the end of the Mission.',
+    },
+    [[SA_TARGET_ELIMINATED]]: {
+        display_name: 'Territorial',
+        description: 'At the end of the mission, score 1 VP if the heaviest HE-V deployed by the opposing Commander has been destroyed by a member of this Team. If the Opposing Commander has multiple HE-Vs in that size class, select one and note that secretly after forces are deployed.',
+    },
+    [[SA_DRIVE_THEM_OUT]]: {
+        display_name: 'Drive Them Out',
+        description: 'At the end of the mission, score an additional 1 VP if 40 Tons or more of opposing HE-Vs have been destroyed within 18” of an Opposing Commander’s Deployment edge or corner with a Smash Order.',
+    },
+    [[SA_TROPHY_TAKERS]]: {
+        display_name: 'Trophy Takers',
+        description: 'When any Unit in this Team, that is not within 18” of your deployment edge or corner, destroys an HE-V of weight class Light or heavier, secretly mark a kill for that Unit. If any Units in this Team with a marked kill are alive and within 8” of a friendly deployment edge or corner at the end of the mission, score 1 VP.',
     },
 };

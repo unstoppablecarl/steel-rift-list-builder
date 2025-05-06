@@ -439,7 +439,7 @@ export const useMechStore = defineStore('mech', {
                     const weapon = MECH_WEAPONS[weaponId];
                     const damage = weapon.damage_by_size[size_id];
                     const cost = weapon.cost_by_size[size_id];
-                    const slots = 1;
+                    const slots = weapon.slots;
 
                     const {
                         range,
@@ -472,7 +472,7 @@ export const useMechStore = defineStore('mech', {
                     const mech = this.getMech(mechId);
                     const size_id = mech.size_id;
                     const upgrade = MECH_UPGRADES[upgradeId];
-                    let slots = 1;
+                    let slots = upgrade.slots;
                     let cost = upgrade.cost_by_size[size_id];
                     let validation_message = null;
                     let valid = true;

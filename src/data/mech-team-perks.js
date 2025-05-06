@@ -1,6 +1,12 @@
 import {each} from 'lodash';
 import {value} from 'lodash/seq.js';
 import {deepFreeze} from './data-helpers.js';
+import {
+    DIRECTIONAL_THRUSTER,
+    ELECTRONIC_COUNTERMEASURES,
+    TARGET_DESIGNATOR,
+    upgradeDisplayName,
+} from './mech-upgrades.js';
 
 export const TEAM_PERK_EXTRA_MISSILE_AMMO = 'TEAM_PERK_EXTRA_MISSILE_AMMO';
 export const TEAM_PERK_0_SLOT_TARGET_DESIGNATORS = 'TEAM_PERK_0_SLOT_TARGET_DESIGNATORS';
@@ -15,14 +21,24 @@ export const TEAM_PERK_0_SLOT_ARMOR_UPGRADES = 'TEAM_PERK_0_SLOT_ARMOR_UPGRADES'
 export const TEAM_PERK_0_TON_ARMOR_UPGRADES = 'TEAM_PERK_0_TON_ARMOR_UPGRADES';
 export const TEAM_PERK_EXTRA_TONNAGE = 'TEAM_PERK_EXTRA_TONNAGE';
 export const TEAM_PERK_SIDE_ARMOR = 'TEAM_PERK_SIDE_ARMOR';
+export const TEAM_PERK_DEPLOY_AS_SUPPORT = 'TEAM_PERK_DEPLOY_AS_SUPPORT';
+export const TEAM_PERK_GANG_UP = 'TEAM_PERK_GANG_UP';
+export const TEAM_PERK_0_SLOT_DIRECTIONAL_THRUSTERS = 'TEAM_PERK_0_SLOT_DIRECTIONAL_THRUSTERS';
+export const TEAM_PERK_RIPOSTE = 'TEAM_PERK_RIPOSTE';
+export const TEAM_PERK_JUMP_BOOSTER = 'TEAM_PERK_JUMP_BOOSTER';
+export const TEAM_PERK_COMBAT_BUCKLER = 'TEAM_PERK_COMBAT_BUCKLER';
+export const TEAM_PERK_EXTRA_NITRO = 'TEAM_PERK_EXTRA_NITRO';
+export const TEAM_PERK_QUICKDRAW = 'TEAM_PERK_QUICKDRAW';
+export const TEAM_PERK_BARREL_EXTENSIONS = 'TEAM_PERK_BARREL_EXTENSIONS';
 
 export const MECH_TEAM_PERKS = makeTeamPerks({
-    [[TEAM_PERK_0_SLOT_TARGET_DESIGNATORS]]: makeCompact('Target Designators'),
-    [[TEAM_PERK_0_TON_TARGET_DESIGNATORS]]: makeLightWeight('Target Designators'),
-    [[TEAM_PERK_0_SLOT_ECM]]: makeCompact('Electronic Countermeasures'),
-    [[TEAM_PERK_0_TON_ECM]]: makeLightWeight('Electronic Countermeasures'),
-    [[TEAM_PERK_0_SLOT_ARMOR_UPGRADES]]: makeCompact('Armor Upgrades'),
+    [[TEAM_PERK_0_SLOT_TARGET_DESIGNATORS]]: makeMini(upgradeDisplayName(TARGET_DESIGNATOR)),
+    [[TEAM_PERK_0_TON_TARGET_DESIGNATORS]]: makeLightWeight(upgradeDisplayName(TARGET_DESIGNATOR)),
+    [[TEAM_PERK_0_SLOT_ECM]]: makeMini(upgradeDisplayName(ELECTRONIC_COUNTERMEASURES)),
+    [[TEAM_PERK_0_TON_ECM]]: makeLightWeight(upgradeDisplayName(ELECTRONIC_COUNTERMEASURES)),
+    [[TEAM_PERK_0_SLOT_ARMOR_UPGRADES]]: makeMini('Armor Upgrades'),
     [[TEAM_PERK_0_TON_ARMOR_UPGRADES]]: makeLightWeight('Armor Upgrades'),
+    [[TEAM_PERK_0_SLOT_DIRECTIONAL_THRUSTERS]]: makeMini(upgradeDisplayName(DIRECTIONAL_THRUSTER)),
     [[TEAM_PERK_SMART_HOWITZERS]]: {
         display_name: 'Smart Howitzers',
         description: 'Howitzers gain the Smart Trait.',
@@ -57,12 +73,52 @@ export const MECH_TEAM_PERKS = makeTeamPerks({
         display_name: 'Side Armor',
         description: 'Enemy Units do not gain bonuses to their Damage Rating for Side Arcs.',
     },
+    [[TEAM_PERK_DEPLOY_AS_SUPPORT]]: {
+        display_name: 'Deploy As Support',
+        description: 'HE-Vs in this Team may deploy as Support Assets.',
+    },
+    [[TEAM_PERK_GANG_UP]]: {
+        display_name: 'Gang Up',
+        description: 'Weapons with the Melee Trait targeting opposing HE-Vs that are base to base with 2 or more Units in this Team receive the Frag trait.',
+    },
+    [[TEAM_PERK_RIPOSTE]]: {
+        display_name: 'Riposte',
+        description: 'When targeted by an Engage or Smash Order, an HE-V in this Team without an Activated Marker may gain an Activated Marker. If they do, they may make a Smash Order before resolving the Opposing Commander’s Order.',
+    },
+    [[TEAM_PERK_JUMP_BOOSTER]]: {
+        display_name: 'Jump Booster',
+        description: '+1” Jump Distance',
+    },
+    [[TEAM_PERK_COMBAT_BUCKLER]]: {
+        display_name: 'Combat Buckler',
+        description: 'May purchase a Shield for 3 Tons.',
+    },
+    [[TEAM_PERK_EXTRA_NITRO]]: {
+        display_name: 'Extra Nitro',
+        description: 'Nitro Boost may be used a second time during the game.',
+    },
+    [[TEAM_PERK_QUICKDRAW]]: {
+        display_name: 'Quickdraw',
+        description: 'Returning Fire generates a Redline Marker instead of an Activation Marker.',
+    },
+    [[TEAM_PERK_BARREL_EXTENSIONS]]: {
+        display_name: 'Barrel Extensions',
+        description: 'Short(X) weapons gain +2 to their range.',
+        renderDisplayName(value) {
+            return `Barrel Extensions (${value})`;
+        },
+        renderDesc(value) {
+            return `Short(X) weapons gain +${value}  to their range.`;
+        },
+        value: 2,
+        stackable: true,
+    },
 });
 
-function makeCompact(name) {
+function makeMini(name) {
     return {
-        display_name: `Compact ${name}`,
-        display_name_short: 'Compact',
+        display_name: `Mini ${name}`,
+        display_name_short: 'Mini',
         description: `Cost 0 Slots.`,
     };
 }
@@ -87,7 +143,7 @@ function makeTeamPerks(perks) {
             perk.description = perk.renderDesc(perk.value);
         }
 
-        perk.display_order = display_order++
+        perk.display_order = display_order++;
     });
 
     return deepFreeze(perks);

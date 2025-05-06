@@ -1,5 +1,5 @@
 import {makeFrozenStaticListIds} from './data-helpers.js';
-import {makeTrait, TRAIT_AP, TRAIT_BLAST, TRAIT_KINETIC, TRAIT_LIMITED, TRAIT_MINE_TOKENS} from './weapon-traits.js';
+import {trait, TRAIT_AP, TRAIT_BLAST, TRAIT_KINETIC, TRAIT_LIMITED, TRAIT_MINE_TOKENS} from './weapon-traits.js';
 
 export const ARTILLERY_BARRAGE = 'ARTILLERY_BARRAGE';
 export const MASS_DRIVER = 'MASS_DRIVER';
@@ -12,8 +12,8 @@ export const SUPPORT_ASSETS = makeFrozenStaticListIds({
         cost: 10,
         damage: 4,
         traits: [
-            makeTrait(TRAIT_BLAST, 6),
-            makeTrait(TRAIT_LIMITED, 3),
+            trait(TRAIT_BLAST, 6),
+            trait(TRAIT_LIMITED, 3),
         ],
     },
     [[MASS_DRIVER]]: {
@@ -21,8 +21,8 @@ export const SUPPORT_ASSETS = makeFrozenStaticListIds({
         damage: 6,
         cost: 10,
         traits: [
-            makeTrait(TRAIT_KINETIC),
-            makeTrait(TRAIT_LIMITED, 3),
+            trait(TRAIT_KINETIC),
+            trait(TRAIT_LIMITED, 3),
         ],
     },
     [[MINE_DRONE_BARRAGE]]: {
@@ -30,7 +30,7 @@ export const SUPPORT_ASSETS = makeFrozenStaticListIds({
         damage: 0,
         cost: 10,
         traits: [
-            makeTrait(TRAIT_MINE_TOKENS, 3),
+            trait(TRAIT_MINE_TOKENS, 3),
         ],
     },
     [[ORBITAL_LASER]]: {
@@ -38,8 +38,8 @@ export const SUPPORT_ASSETS = makeFrozenStaticListIds({
         damage: 3,
         cost: 10,
         traits: [
-            makeTrait(TRAIT_AP, 3),
-            makeTrait(TRAIT_LIMITED, 3),
+            trait(TRAIT_AP, 3),
+            trait(TRAIT_LIMITED, 3),
         ],
     },
 });

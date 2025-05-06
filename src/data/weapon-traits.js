@@ -1,28 +1,33 @@
-import {makeStaticListIds} from './data-helpers.js';
-
 export const TRAIT_AP = 'TRAIT_AP';
-export const TRAIT_BLAST = 'BLAST';
-export const TRAIT_DISRUPTIVE = 'DISRUPTIVE';
-export const TRAIT_DRAINING = 'DRAINING';
-export const TRAIT_FLAK = 'FLAK';
-export const TRAIT_FRAG = 'FRAG';
-export const TRAIT_KINETIC = 'KINETIC';
-export const TRAIT_LIGHT = 'LIGHT';
-export const TRAIT_LIMITED = 'LIMITED';
-export const TRAIT_MELEE = 'MELEE';
-export const TRAIT_SHORT = 'SHORT';
-export const TRAIT_SMART = 'SMART';
-export const TRAIT_MINE_TOKENS = 'MINE_TOKENS';
+export const TRAIT_BLAST = 'TRAIT_BLAST';
+export const TRAIT_DISRUPTIVE = 'TRAIT_DISRUPTIVE';
+export const TRAIT_DRAINING = 'TRAIT_DRAINING';
+export const TRAIT_FLAK = 'TRAIT_FLAK';
+export const TRAIT_FRAG = 'TRAIT_FRAG';
+export const TRAIT_KINETIC = 'TRAIT_KINETIC';
+export const TRAIT_LIGHT = 'TRAIT_LIGHT';
+export const TRAIT_LIMITED = 'TRAIT_LIMITED';
+export const TRAIT_MELEE = 'TRAIT_MELEE';
+export const TRAIT_SHORT = 'TRAIT_SHORT';
+export const TRAIT_SMART = 'TRAIT_SMART';
+export const TRAIT_MINE_TOKENS = 'TRAIT_MINE_TOKENS';
+export const TRAIT_BULKY = 'TRAIT_BULKY';
+export const TRAIT_CONCUSSIVE = 'TRAIT_CONCUSSIVE';
+export const TRAIT_DRAG = 'TRAIT_DRAG';
+export const TRAIT_PARRY = 'TRAIT_PARRY';
+export const TRAIT_REACH = 'TRAIT_REACH';
+export const TRAIT_STAGGER = 'TRAIT_STAGGER';
+export const TRAIT_TETHER = 'TRAIT_TETHER';
 
-function numberFormater(name, number) {
+export function numberFormater(name, number) {
     return `${name}(${number})`;
 }
 
-function inchFormater(name, number) {
+export function inchFormater(name, number) {
     return `${name}(${number}")`;
 }
 
-export const WEAPON_TRAITS = makeStaticListIds({
+export const WEAPON_TRAITS = makeWeaponTraits({
     [[TRAIT_AP]]: {
         display_name: 'AP',
         description: 'If any damage is inflicted by this Attack, apply AP(X) damage directly to the target unit\'s Structure',
@@ -77,7 +82,37 @@ export const WEAPON_TRAITS = makeStaticListIds({
     },
     [[TRAIT_MINE_TOKENS]]: {
         display_name: 'Mine Tokens',
+        description: '',
         formatter: numberFormater,
+    },
+    [[TRAIT_BULKY]]: {
+        display_name: 'Bulky',
+        description: 'This upgrade takes two upgrade slots to equip.',
+    },
+    [[TRAIT_CONCUSSIVE]]: {
+        display_name: 'Concussive',
+        description: 'If any damage is inflicted by this attack, roll 1D6. Add +1 to the roll for each Class Size larger that the Active Unit is than the target Unit. Subtract -1 from the roll for each Class Size smaller the Active Unit is than the target Unit. On a result of 4+, move the target Unit up to X” directly away from the Active Unit. If, when the target Unit is moved, it contacts any blocking terrain feature or another Unit, the target Unit stops in base contact with the terrain or Unit. If the target Unit stops in this manner, it receives an additional 1 point of Damage with no additional defense roll. A Unit that is contacted by the Target Unit also receives 1 point of Damage with no defense roll. This trait has no effect on Targets with the “Fortification” trait.',
+    },
+    [[TRAIT_DRAG]]: {
+        display_name: 'Drag',
+        description: 'When an Engage Order selects this weapon, and the target receives any Damage after the Defense Roll, Roll 1D6+4. Add +1 to the roll for each Class Size larger the Active Unit is than the target Unit. Subtract -1 from the roll for each Class Size smaller the Active Unit is than the target Unit. Move the target Unit up to this many inches directly towards the Active Unit. If, when the target is moved, it contacts any blocking terrain feature or another Unit, the target Unit stops in base contact with the terrain or Unit. If the target Unit stops in this manner, it receives an additional 1 point of Damage with no additional defense roll. A Unit that is contacted by the Target Unit also receives 1 point of Damage with no defense roll. This trait has no effect on Targets with the “Fortification” trait.',
+    },
+    [[TRAIT_PARRY]]: {
+        display_name: 'Parry',
+        description: 'Once per Engage or Smash Order, after this Unit makes a Defense Roll for an Attack originating in its Line of Sight, this Unit may re-roll up to 2 dice that did not score a 4+ after modifiers.',
+    },
+    [[TRAIT_REACH]]: {
+        display_name: 'Reach',
+        description: 'When performing a Smash Order, Units within X” of the Active Unit and Line of Sight, count as being in base contact for the purposes of the Smash Order. In addition, during a Smash Order, once the Attack Pool has been determined, you may reduce the pool by 1 die to nominate a secondary Unit in Base Contact and Line of Sight and divide the pool between the primary and secondary target. Defense rolls are made as normal by the target Units based on the number of Damage allocated. Cover bonuses are not applied to Defense Rolls for this attack.',
+        formatter: numberFormater,
+    },
+    [[TRAIT_STAGGER]]: {
+        display_name: 'Stagger',
+        description: 'When a Unit is Targeted by this weapon, the Target Unit receives a Stagger Marker at the end of this Order and is considered Staggered. A Unit with a Stagger Marker applies a -1 modifier to their Defense Roll when targeted by an Engage or Smash Order. After the Engage or Smash Order targeting this unit is completed, the Stagger Marker is removed and the unit is no longer considered Staggered. If a Unit is Staggered when it activates, it may only take one action during that activation, and may not take a Move Order in that activation. At the end of that activation, the unit is no longer Staggered.',
+    },
+    [[TRAIT_TETHER]]: {
+        display_name: 'Tether',
+        description: 'When a Unit is Targeted by this weapon, assign it a Tether Marker and the Attacking Unit an Anchor Marker. Units with a Tether Marker may not make any move that causes the Unit to end further from the Anchor Unit. At the end of an Activation, not a Redline, of a Unit that has a Tether Marker, roll a D6. On a 4+, remove the Tether Marker. If the Anchoring Unit is destroyed, remove any Tether Markers associated with it.',
     },
 });
 
@@ -100,10 +135,21 @@ export function traitDisplayName({id, number}) {
     return trait.display_name;
 }
 
-export function makeTrait(id, number = null) {
+function makeWeaponTraits(items) {
+    Object.keys(items)
+        .forEach((key) => {
+            const item = items[key];
+            item.id = key;
+
+            Object.freeze(item);
+        });
+
+    return Object.freeze(items);
+}
+
+export function trait(id, number = null) {
     return Object.freeze({
         id,
         number,
     });
 }
-
