@@ -320,6 +320,7 @@ export const MECH_WEAPONS = makeFrozenStaticListIds({
     [[IMPACT_HAMMER]]: makeWeapon({
         display_name: 'Impact Hammer',
         damage: 0,
+        slots: 2,
         cost_by_size: {
             [[SIZE_LIGHT]]: 3,
             [[SIZE_MEDIUM]]: 4,
@@ -359,6 +360,7 @@ export const MECH_WEAPONS = makeFrozenStaticListIds({
     [[MASS_TETSUBO]]: makeWeapon({
         display_name: 'Mass Tetsubo',
         damage: 0,
+        slots: 2,
         cost_by_size: {
             [[SIZE_LIGHT]]: 3,
             [[SIZE_MEDIUM]]: 4,
@@ -379,6 +381,7 @@ export const MECH_WEAPONS = makeFrozenStaticListIds({
     [[MEGA_GLAIVE]]: makeWeapon({
         display_name: 'Mega Glaive',
         damage: 0,
+        slots: 2,
         cost_by_size: {
             [[SIZE_LIGHT]]: 4,
             [[SIZE_MEDIUM]]: 5,
@@ -489,9 +492,9 @@ function makeWeapon({
     }
 
     traits_by_size[SIZE_LIGHT] = traits_by_size[SIZE_LIGHT].concat(traits);
-    traits_by_size[SIZE_MEDIUM] = traits_by_size[SIZE_LIGHT].concat(traits);
-    traits_by_size[SIZE_HEAVY] = traits_by_size[SIZE_LIGHT].concat(traits);
-    traits_by_size[SIZE_ULTRA] = traits_by_size[SIZE_LIGHT].concat(traits);
+    traits_by_size[SIZE_MEDIUM] = traits_by_size[SIZE_MEDIUM].concat(traits);
+    traits_by_size[SIZE_HEAVY] = traits_by_size[SIZE_HEAVY].concat(traits);
+    traits_by_size[SIZE_ULTRA] = traits_by_size[SIZE_ULTRA].concat(traits);
 
     if (!damage_by_size) {
         damage_by_size = {
@@ -524,3 +527,5 @@ function makeWeapon({
 }
 
 export const MECH_WEAPONS_DROP_DOWN = listToDropDown(MECH_WEAPONS);
+
+console.log(MECH_WEAPONS[ROCKET_PACK])
