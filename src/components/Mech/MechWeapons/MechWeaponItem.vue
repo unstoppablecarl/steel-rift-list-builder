@@ -35,7 +35,7 @@ function remove() {
     </td>
     <td>
       <span
-          class="trait-tooltip"
+          class="text-tooltip"
           v-for="(trait, index) in weapon.traits"
           v-b-tooltip.hover.top="trait.description"
       >

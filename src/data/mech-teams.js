@@ -465,7 +465,7 @@ function makeGroup(obj) {
     };
     const result = Object.assign(defaults, obj);
 
-    if (obj.size_ids) {
+    if (!obj.display_name) {
         result.display_name = obj.size_ids.map((sizeId) => MECH_SIZES[sizeId].display_name)
             .join(' & ');
     }

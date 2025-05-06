@@ -185,6 +185,8 @@ export const useMechStore = defineStore('mech', {
                         upgrades,
                     } = this.getMech(mechId);
 
+                    console.log(this.getMech(mechId))
+
                     const placeholder_name = ('Mech-' + mechId).padStart(1);
 
                     const upgradesInfo = upgrades.map((item) => this.getMechUpgradeAttachmentInfo(mechId, item.id));
@@ -258,6 +260,7 @@ export const useMechStore = defineStore('mech', {
                         upgrade_used_slots,
                         weapon_used_slots,
                         weapon_used_tons,
+                        armor_upgrade_id,
                         speed,
                         jump,
                     };
@@ -410,14 +413,18 @@ export const useMechStore = defineStore('mech', {
             getUpgradeInfo: function (state) {
                 return (mechId, upgradeId) => {
                     const teamStore = useTeamStore();
-                    const mech = this.getMech(mechId);
-                    const size_id = mech.size_id;
                     const upgrade = MECH_UPGRADES[upgradeId];
-                    let slots = upgrade.slots;
+
+                    let {
+                        max_uses,
+                        slots,
+                        size_id,
+                        description
+                    } = upgrade
+
                     let cost = upgrade.cost_by_size[size_id];
                     let validation_message = null;
                     let valid = true;
-                    let max_uses = upgrade.max_uses;
 
                     if (upgrade.prohibited_by_sizes) {
                         valid = !upgrade.prohibited_by_sizes.includes(size_id);
@@ -492,6 +499,7 @@ export const useMechStore = defineStore('mech', {
                     return readonly({
                         upgrade_id: upgradeId,
                         display_name: upgrade.display_name,
+                        description,
                         valid,
                         validation_message,
                         slots,

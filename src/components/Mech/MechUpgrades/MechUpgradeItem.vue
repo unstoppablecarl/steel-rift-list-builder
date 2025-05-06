@@ -1,6 +1,6 @@
 <script setup>
 import {useMechStore} from '../../../store/mech-store.js';
-import {computed} from 'vue';
+import {computed, ref} from 'vue';
 import IconTeamGroupPerks from '../../UI/IconTeamGroupPerks.vue';
 import IconRequiredByGroup from '../../UI/IconRequiredByGroup.vue';
 
@@ -18,6 +18,9 @@ const {
 
 const upgrade = computed(() => mechStore.getMechUpgradeAttachmentInfo(mechId, mechUpgradeAttachmentId));
 
+const popOverOpen = ref(false);
+
+
 function remove() {
   mechStore.removeMechUpgradeAttachment(mechId, mechUpgradeAttachmentId);
 }
@@ -26,7 +29,29 @@ function remove() {
 <template>
   <tr>
     <td>
-      {{ upgrade.display_name }}
+
+      <BPopover
+          v-model="popOverOpen"
+          :click="true"
+          :close-on-hide="true"
+          :delay="{show: 0, hide: 0}"
+      >
+        <template #target>
+          <span
+              @mouseover="popOverOpen = true"
+              @mouseleave="popOverOpen = false"
+              class="text-tooltip"
+          >
+            {{ upgrade.display_name }}
+          </span>
+        </template>
+
+        <template #default>
+          {{ upgrade.description }}
+        </template>
+      </BPopover>
+
+
     </td>
     <td colspan="3">
 
