@@ -257,7 +257,7 @@ export const useTeamStore = defineStore('team', () => {
             const mechCount = group.mechs.length;
 
             let size_valid = true;
-            let size_validation_message = 'Group Size Valid';
+            let size_validation_message = 'Valid Group Size';
             if (min_count !== false) {
                 if (min_count > mechCount) {
                     size_valid = false;

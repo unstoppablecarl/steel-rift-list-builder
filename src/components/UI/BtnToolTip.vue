@@ -20,11 +20,8 @@ function mouseLeave(){
       :delay="{show: 0, hide: 0}"
   >
     <template #target>
-
         <slot name="target" :mouseover="mouseOver" :mouseleave="mouseLeave"/>
-
     </template>
-
     <template #default>
       <slot name="content"></slot>
     </template>

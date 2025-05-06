@@ -453,14 +453,6 @@ export const useMechStore = defineStore('mech', {
                     const perks = teamStore.getTeamPerksInfoByMech(mechId);
                     const team_perks = [];
 
-                    if (slots !== 0) {
-                        const perk = find(perks, {id: TEAM_PERK_0_SLOT_ARMOR_UPGRADES});
-                        if (perk) {
-                            slots = 0;
-                            team_perks.push(perk);
-                        }
-                    }
-
                     if (upgradeId === TARGET_DESIGNATOR) {
                         let perk = find(perks, {id: TEAM_PERK_0_SLOT_TARGET_DESIGNATORS});
                         if (perk) {

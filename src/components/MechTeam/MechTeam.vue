@@ -7,6 +7,7 @@ import {MECH_SIZES} from '../../data/mech-sizes.js';
 import {MECH_TEAM_PERKS} from '../../data/mech-team-perks.js';
 import IconHev from '../UI/IconHEV.vue';
 import {useExpandCollapseAll} from '../functional/expand-collapse.js';
+import BtnToolTip from '../UI/BtnToolTip.vue';
 
 const teamStore = useTeamStore();
 
@@ -20,6 +21,11 @@ const teamInfo = computed(() => teamStore.getTeamInfo(teamId));
 const teamMechCount = computed(() => teamStore.getTeamMechCount(teamId));
 const teamPerkIdInfo = computed(() => perkId => MECH_TEAM_PERKS[perkId]);
 const sizeDisplayNames = computed(() => sizeIds => {
+
+  if (sizeIds.length === 4) {
+    return 'All';
+  }
+
   return sizeIds
       .map((sizeId) => MECH_SIZES[sizeId].display_name)
       .join('/');
@@ -33,16 +39,26 @@ const {
   <div class="card">
     <div class="card-header d-flex ">
       <div class="flex-grow-1">
-        <span class="d-inline-block py-1 ps-3 pe-1 fw-bold">
+        <span class="d-inline-block py-1 ps-2 pe-1 fw-bold">
+          <img :src="teamInfo.icon" class="team-icon"/>
           {{ teamInfo.display_name }}
         </span>
-        <span
-            class="btn btn-sm btn-outline mx-1 btn-light"
-            v-b-tooltip.hover.top="'Team Size'"
-        >
-          {{ teamMechCount }}
-          <IconHev/>
-        </span>
+        <BtnToolTip>
+          <template #target="{mouseover, mouseleave}">
+            <span
+                @mouseover="mouseover"
+                @mouseleave="mouseleave"
+                class="btn btn-sm btn-outline mx-1 btn-light"
+            >
+              {{ teamMechCount }}
+              <IconHev/>
+            </span>
+          </template>
+          <template #content>
+            Team Size
+          </template>
+        </BtnToolTip>
+
       </div>
       <div class="text-end">
         <BButton

@@ -1,5 +1,4 @@
 <script setup>
-
 import Mech from '../Mech.vue';
 import draggable from 'vuedraggable';
 import {computed, ref} from 'vue';
@@ -19,14 +18,23 @@ const {teamId, groupId} = defineProps({
   },
 });
 
+const teamInfo = computed(() => teamStore.getTeamInfo(teamId));
 const groupCount = computed(() => teamStore.getTeamGroupMechCount(teamId, groupId));
 const groupInfo = computed(() => teamStore.getTeamGroupInfo(teamId, groupId));
 const mechIds = computed(() => teamStore.getTeamGroupMechIds(teamId, groupId));
 const size = computed(() => teamStore.getTeamGroupSizeValidation(teamId, groupId));
 const isGeneralGroup = computed(() => teamId === TEAM_GENERAL);
 const teamGroupPerks = computed(() => teamStore.getTeamGroupPerksInfo(teamId, groupId));
+const teamGroupPerkCount = computed(() => {
+  let count = 0;
+  teamGroupPerks.value.forEach((group) => {
+    count += group.perks.length;
+  });
+
+  return count;
+});
+
 const dragging = ref(false);
-const groupPerksOpen = ref(false);
 
 function onSortableChange(event) {
   let moved = event.moved;
@@ -47,34 +55,61 @@ const {
   <div class="card text-bg-light">
     <div class="card-header d-flex">
       <div class="flex-grow-1">
-        <div class="d-inline-block py-1 ps-3 pe-1 fw-medium">
-          {{ groupInfo.display_name }}
-        </div>
-        <span
-            class="btn btn-sm btn-outline mx-1 btn-light"
-            v-b-tooltip.hover.top="'Group Size'"
-        >
-          {{ groupCount }}
-          <IconHev/>
-        </span>
-
-        <span
-            v-if="!isGeneralGroup"
-            :class="{
-          'btn btn-sm btn-outline mx-1': true,
-          'btn-light': size.size_valid,
-          'btn-outline-danger': !size.size_valid,
-        }"
-            v-b-tooltip.hover.top="{title: size.size_validation_message}"
-        >
-          Size: {{ size.min_count }}-{{ size.max_count }}
-        </span>
+        <BtnToolTip>
+          <template #target="{mouseover, mouseleave}">
+            <div
+                @mouseover="mouseover"
+                @mouseleave="mouseleave"
+                class="btn btn-tertiary d-inline-block py-1 me-1 fw-medium"
+            >
+                <img :src="teamInfo.icon" class="team-icon"/>
+                {{ groupInfo.display_name }}
+              </div>
+          </template>
+          <template #content>
+           {{teamInfo.display_name}} {{ groupInfo.display_name }} HE-Vs
+          </template>
+        </BtnToolTip>
 
         <BtnToolTip>
           <template #target="{mouseover, mouseleave}">
-
             <span
-                v-show="!isGeneralGroup && teamGroupPerks.length"
+                @mouseover="mouseover"
+                @mouseleave="mouseleave"
+                class="btn btn-sm btn-outline mx-1 btn-light"
+            >
+              {{ groupCount }}
+              <IconHev/>
+            </span>
+          </template>
+          <template #content>
+            Group Size
+          </template>
+        </BtnToolTip>
+        <BtnToolTip>
+          <template #target="{mouseover, mouseleave}">
+            <span
+                v-show="!isGeneralGroup"
+                @mouseover="mouseover"
+                @mouseleave="mouseleave"
+                :class="{
+                  'btn btn-sm btn-outline mx-1': true,
+                  'btn-light': size.size_valid,
+                  'btn-outline-danger': !size.size_valid,
+                }"
+            >
+              Size: {{ size.min_count }}-{{ size.max_count }}
+            </span>
+          </template>
+          <template #content>
+           {{size.size_validation_message}}
+          </template>
+        </BtnToolTip>
+
+        <BtnToolTip>
+          <template #target="{mouseover, mouseleave}">
+            <span
+                v-show="!isGeneralGroup && teamGroupPerkCount"
                 @mouseover="mouseover"
                 @mouseleave="mouseleave"
                 class="btn btn-sm btn-outline mx-1 btn-light"
@@ -91,14 +126,12 @@ const {
                   v-if="teamGroupPerks.length > 1"
               >{{ size.display_name }} HE-Vs</h6>
 
-              <div class="mb-2 p-gap">
-                <template v-for="perk in size.perks">
-                  <div class="fw-bold">
-                    {{ perk.display_name }}:
-                  </div>
-                  <p>{{ perk.description }}</p>
-                </template>
-              </div>
+              <template v-for="perk in size.perks">
+                <div class="fw-bold">
+                  {{ perk.display_name }}:
+                </div>
+                <p class="p-gap">{{ perk.description }}</p>
+              </template>
             </template>
           </template>
         </BtnToolTip>
