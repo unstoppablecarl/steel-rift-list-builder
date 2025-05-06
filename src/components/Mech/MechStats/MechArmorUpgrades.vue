@@ -1,13 +1,13 @@
 <script setup>
-import {computed} from 'vue';
+import {computed, ref} from 'vue';
 import {MECH_ARMOR_UPGRADES} from '../../../data/mech-armor-upgrades.js';
 import NumberVal from '../../functional/number.vue';
 import {useTeamStore} from '../../../store/team-store.js';
 import {useMechStore} from '../../../store/mech-store.js';
 import IconTeamGroupPerks from '../../UI/IconTeamGroupPerks.vue';
 import IconNotAvailable from '../../UI/IconNotAvailable.vue';
+import BtnToolTip from '../../UI/BtnToolTip.vue';
 
-const teamStore = useTeamStore();
 const mechStore = useMechStore();
 
 const {
@@ -40,6 +40,8 @@ const selectedValue = computed(() => {
 function selectOption(value) {
   model.value = value;
 }
+
+const open = ref(false);
 </script>
 
 <template>
@@ -50,7 +52,7 @@ function selectOption(value) {
     <td colspan="3">
       <BDropdown
           :id="'mech-input-armor-upgrade-' + mechId"
-          class="dropdown-form dropdown-table"
+          class="dropdown-form dropdown-table d-inline-block"
           :text="selectedValueLabel"
           variant="light"
       >
@@ -88,6 +90,23 @@ function selectOption(value) {
               <number-val :val="item.cost" :invert-color="true"/>
             </td>
             <td class="notes">
+              <BtnToolTip>
+                <template #target="{mouseover, mouseleave}">
+                  <span
+                      v-show="item.description"
+                      @mouseover="mouseover"
+                      @mouseleave="mouseleave"
+                      class="btn btn-sm btn-light"
+                  >
+                    ?
+                  </span>
+                </template>
+                <template #content>
+                  {{ item.description }}
+                </template>
+              </BtnToolTip>
+              </td>
+            <td class="notes">
               <IconTeamGroupPerks
                   :perks="item.team_perks"
               />
@@ -95,20 +114,37 @@ function selectOption(value) {
                   :valid="item.valid"
                   :validation_message="item.validation_message"
               />
+
             </td>
           </tr>
           </tbody>
         </table>
       </BDropdown>
+      <BtnToolTip>
+        <template #target="{mouseover, mouseleave}">
+          <span
+              v-show="selectedValue.description"
+              @mouseover="mouseover"
+              @mouseleave="mouseleave"
+              class="btn btn-light ms-2"
+          >
+            ?
+          </span>
+        </template>
+        <template #content>
+          {{ selectedValue.description }}
+        </template>
+      </BtnToolTip>
     </td>
-    <td class="">
+    <td class="col-form-label text-end">
+      <number-val :val="selectedValue.armor_mod" invert-color/>
     </td>
-    <td class=" col-form-label text-end">
+    <td class="col-form-label text-end">
     </td>
-    <td class=" col-form-label text-end">
+    <td class="col-form-label text-end">
       <number-val :val="selectedValue.slots" invert-color/>
     </td>
-    <td class=" col-form-label text-end">
+    <td class="col-form-label text-end">
       <number-val :val="selectedValue.cost_by_size[sizeId]" invert-color/>
     </td>
     <td></td>

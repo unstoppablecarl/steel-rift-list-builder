@@ -73,7 +73,6 @@ export const MECH_TEAM_PERKS = makeTeamPerks({
     [[TEAM_PERK_RIPOSTE]]: {
         display_name: 'Riposte',
         description: 'When targeted by an Engage or Smash Order, an HE-V in this Team without an Activated Marker may gain an Activated Marker. If they do, they may make a Smash Order before resolving the Opposing Commander’s Order.',
-
     },
     [[TEAM_PERK_JUMP_BOOSTER]]: {
         display_name: 'Jump Booster',

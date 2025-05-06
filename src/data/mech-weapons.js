@@ -3,7 +3,6 @@ import {
     trait,
     TRAIT_AP,
     TRAIT_BLAST,
-    TRAIT_BULKY,
     TRAIT_CONCUSSIVE,
     TRAIT_DISRUPTIVE,
     TRAIT_DRAG,
@@ -21,7 +20,7 @@ import {
     TRAIT_STAGGER,
     TRAIT_TETHER,
 } from './weapon-traits.js';
-import {listToDropDown, makeFrozenStaticListIds} from './data-helpers.js';
+import {makeFrozenStaticListIds} from './data-helpers.js';
 import {find} from 'lodash';
 
 export const AUTO_CANNON = 'AUTO_CANNON';
@@ -328,7 +327,6 @@ export const MECH_WEAPONS = makeFrozenStaticListIds({
             [[SIZE_ULTRA]]: 6,
         },
         traits: [
-            trait(TRAIT_BULKY),
             trait(TRAIT_CONCUSSIVE, 4),
         ],
         traits_by_size: {
@@ -369,7 +367,6 @@ export const MECH_WEAPONS = makeFrozenStaticListIds({
         },
         traits: [
             trait(TRAIT_CONCUSSIVE, 2),
-            trait(TRAIT_BULKY),
         ],
         traits_by_size: {
             [[SIZE_LIGHT]]: [trait(TRAIT_MELEE, 2)],
@@ -388,9 +385,7 @@ export const MECH_WEAPONS = makeFrozenStaticListIds({
             [[SIZE_HEAVY]]: 6,
             [[SIZE_ULTRA]]: 7,
         },
-        traits: [
-            trait(TRAIT_BULKY),
-        ],
+        traits: [],
         traits_by_size: {
             [[SIZE_LIGHT]]: [trait(TRAIT_MELEE, 3), trait(TRAIT_REACH, 1)],
             [[SIZE_MEDIUM]]: [trait(TRAIT_MELEE, 3), trait(TRAIT_REACH, 2)],
@@ -525,4 +520,5 @@ function makeWeapon({
         slots,
     };
 }
+
 // export const MECH_WEAPONS_DROP_DOWN = listToDropDown(MECH_WEAPONS);

@@ -185,8 +185,6 @@ export const useMechStore = defineStore('mech', {
                         upgrades,
                     } = this.getMech(mechId);
 
-                    console.log(this.getMech(mechId))
-
                     const placeholder_name = ('Mech-' + mechId).padStart(1);
 
                     const upgradesInfo = upgrades.map((item) => this.getMechUpgradeAttachmentInfo(mechId, item.id));
@@ -198,7 +196,7 @@ export const useMechStore = defineStore('mech', {
                     const structure_mod = MECH_BODY_MODS[structure_mod_id];
                     const armor_mod = MECH_BODY_MODS[armor_mod_id];
 
-                    const armor_stat = size.armor + armor_mod.modifier;
+                    let armor_stat = size.armor + armor_mod.modifier;
                     const structure_stat = size.structure + structure_mod.modifier;
 
                     let max_tons = size.max_tons;
@@ -241,7 +239,10 @@ export const useMechStore = defineStore('mech', {
                         }
                     } else {
                         jump = 0;
+                    }
 
+                    if (armorUpgradeInfo.armor_mod) {
+                        armor_stat += armorUpgradeInfo.armor_mod;
                     }
 
                     return {
@@ -419,8 +420,8 @@ export const useMechStore = defineStore('mech', {
                         max_uses,
                         slots,
                         size_id,
-                        description
-                    } = upgrade
+                        description,
+                    } = upgrade;
 
                     let cost = upgrade.cost_by_size[size_id];
                     let validation_message = null;
@@ -552,6 +553,9 @@ export const useMechStore = defineStore('mech', {
                         slots,
                         cost_by_size,
                         display_name,
+                        armor_mod,
+                        limited_size_ids,
+                        description,
                     } = MECH_ARMOR_UPGRADES[armorUpgradeId];
 
                     let cost = cost_by_size[size_id];
@@ -563,6 +567,12 @@ export const useMechStore = defineStore('mech', {
                             valid = false;
                             validation_message = `Not available to ${teamDisplayName} ${groupInfo.display_name}`;
                         }
+                    }
+
+                    if (limited_size_ids && !limited_size_ids.includes(size_id)) {
+                        valid = false
+                        const sizeDisplayNames = limited_size_ids.map(sizeId => MECH_SIZES[sizeId].display_name).join(', ')
+                        validation_message = `Only available to HE-V size(s): ${sizeDisplayNames}`
                     }
 
                     const perks = teamStore.getTeamPerksInfoByMech(mechId);
@@ -589,9 +599,11 @@ export const useMechStore = defineStore('mech', {
                         cost,
                         slots,
                         display_name,
+                        description,
                         valid,
                         validation_message,
                         team_perks,
+                        armor_mod,
                     };
                 };
             },

@@ -66,8 +66,6 @@ export const MECH_ARMOR_UPGRADES = makeFrozenStaticListIds({
     }),
 });
 
-// export const MECH_ARMOR_UPGRADES_DROP_DOWN = listToDropDown(MECH_ARMOR_UPGRADES);
-
 function makeArmorUpgrade(item) {
     if (!item.cost_by_size) {
         item.cost_by_size = {
