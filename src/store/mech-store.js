@@ -4,10 +4,18 @@ import {MECH_BODY_MODS, MOD_STANDARD} from '../data/mech-body.js';
 import {MECH_ARMOR_UPGRADES, NO_ARMOR_UPGRADE} from '../data/mech-armor-upgrades.js';
 import {findById, updateObject} from '../data/data-helpers.js';
 import {cloneDeep, find, sumBy} from 'lodash';
-import {TRAIT_LIMITED, TRAIT_SMART, traitDisplayName, WEAPON_TRAITS} from '../data/weapon-traits.js';
+import {TRAIT_LIMITED, TRAIT_SHORT, TRAIT_SMART, traitDisplayName, WEAPON_TRAITS} from '../data/weapon-traits.js';
 import {HOWITZER, MECH_WEAPONS, MISSILES, ROCKET_PACK} from '../data/mech-weapons.js';
 import {readonly} from 'vue';
-import {ELECTRONIC_COUNTERMEASURES, MECH_UPGRADES, TARGET_DESIGNATOR} from '../data/mech-upgrades.js';
+import {
+    COMBAT_SHIELD,
+    DIRECTIONAL_THRUSTER,
+    ELECTRONIC_COUNTERMEASURES,
+    JUMP_JETS,
+    MECH_UPGRADES,
+    NITRO_BOOST,
+    TARGET_DESIGNATOR,
+} from '../data/mech-upgrades.js';
 import {deleteItemById, findItemIndex, moveItem} from './helpers/collection-helper.js';
 import {useToastStore} from './toast-store.js';
 import {useFactionStore} from './faction-store.js';
@@ -20,14 +28,18 @@ import {
 } from '../data/factions.js';
 import {useTeamStore} from './team-store.js';
 import {
-    makePerkItem,
     TEAM_PERK_0_SLOT_ARMOR_UPGRADES,
+    TEAM_PERK_0_SLOT_DIRECTIONAL_THRUSTERS,
     TEAM_PERK_0_SLOT_ECM,
     TEAM_PERK_0_SLOT_TARGET_DESIGNATORS,
     TEAM_PERK_0_TON_ARMOR_UPGRADES,
     TEAM_PERK_0_TON_ECM,
     TEAM_PERK_0_TON_TARGET_DESIGNATORS,
+    TEAM_PERK_BARREL_EXTENSIONS,
+    TEAM_PERK_COMBAT_BUCKLER,
     TEAM_PERK_EXTRA_MISSILE_AMMO,
+    TEAM_PERK_EXTRA_NITRO,
+    TEAM_PERK_JUMP_BOOSTER,
     TEAM_PERK_SMART_HOWITZERS,
 } from '../data/mech-team-perks.js';
 
@@ -158,166 +170,10 @@ export const useMechStore = defineStore('mech', {
             getMech(state) {
                 return (mechId) => findById(state.mechs, mechId);
             },
-            getMechWeaponAttachment(state) {
-                return (mechId, mechWeaponAttachmentId) => {
-                    const mech = findById(state.mechs, mechId);
-                    return findById(mech.weapons, mechWeaponAttachmentId);
-                };
-            },
-            getMechWeaponAttachmentInfo(state) {
-                return (mechId, mechWeaponAttachmentId) => {
-                    const teamStore = useTeamStore();
-
-                    const mech = this.getMech(mechId);
-                    const weaponAttachment = this.getMechWeaponAttachment(mechId, mechWeaponAttachmentId);
-                    const weapon_id = weaponAttachment.weapon_id;
-                    const weaponInfo = this.getWeaponInfo(mechId, weapon_id);
-
-                    const previousWeaponInstances = mech.weapons.filter((item) => {
-                        return item.weapon_id == weapon_id && item.display_order < weaponAttachment.display_order;
-                    }).length;
-
-                    let cost = weaponInfo.cost;
-                    const duplicate_cost = Math.floor(previousWeaponInstances * cost * 0.5);
-                    const {teamId, groupId} = teamStore.getMechTeamAndGroupIds(mechId);
-
-                    let required_by_group = false;
-                    let required_by_group_reason = false;
-
-                    if (previousWeaponInstances === 0) {
-                        let {
-                            required,
-                            required_reason,
-                        } = teamStore.getWeaponIsRequired(teamId, groupId, weapon_id);
-                        if (required) {
-                            required_by_group = true;
-                            required_by_group_reason = required_reason;
-                        }
-                    }
-
-                    const requiredAtLeastOne = teamStore.getAtLeastOneOfWeaponsIsRequired(teamId, groupId);
-
-                    if (requiredAtLeastOne.length) {
-                        const prevInstances = mech.weapons.filter((item) => {
-                            return weaponAttachment.id !== item.id && requiredAtLeastOne.includes(item.weapon_id);
-                        }).length;
-
-                        if (prevInstances === 0) {
-                            required_by_group = true;
-                            required_by_group_reason = teamStore.getAtLeastOneOfWeaponsIsRequiredMessage(teamId, groupId);
-                        }
-                    }
-
-                    const result = Object.assign({}, weaponInfo, {
-                        base_cost: cost,
-                        cost: cost + duplicate_cost,
-                        duplicate_cost,
-                        required_by_group,
-                        required_by_group_reason,
-                        duplicate_percent: previousWeaponInstances * 50,
-                    });
-
-                    return readonly(result);
-                };
-            },
-            getMechAvailableWeaponsInfo(state) {
-                return (mechId) => {
-                    return Object.keys(MECH_WEAPONS)
-                        .map((weaponId) => this.getWeaponInfo(mechId, weaponId));
-                };
-            },
-            getMechAvailableUpgradesInfo(state) {
-                return (mechId) => {
-                    const mech = findById(state.mechs, mechId);
-                    const existingUpgradeIds = mech.upgrades.map((item) => item.upgrade_id);
-
-                    return Object.keys(MECH_UPGRADES)
-                        .filter((upgradeId) => {
-                            return !existingUpgradeIds.includes(upgradeId);
-                        })
-                        .map((upgradeId) => this.getUpgradeInfo(mechId, upgradeId));
-                };
-            },
-            getMechUpgradeAttachment(state) {
-                return (mechId, mechUpgradeAttachmentId) => {
-                    const mech = findById(state.mechs, mechId);
-                    return findById(mech.upgrades, mechUpgradeAttachmentId);
-                };
-            },
-            getMechUpgradeAttachmentInfo(state) {
-                return (mechId, mechUpgradeAttachmentId) => {
-                    const teamStore = useTeamStore();
-                    const upgradeAttachment = this.getMechUpgradeAttachment(mechId, mechUpgradeAttachmentId);
-
-                    const upgrade_id = upgradeAttachment.upgrade_id;
-                    const info = this.getUpgradeInfo(mechId, upgrade_id);
-                    const {teamId, groupId} = teamStore.getMechTeamAndGroupIds(mechId);
-                    const isRequired = teamStore.getUpgradeIsRequired(teamId, groupId, upgrade_id);
-
-                    return Object.assign({}, info, {required_by_group: isRequired});
-                };
-            },
-            getMechArmorUpgradeInfo(state) {
-                return function (mechId, armorUpgradeId) {
-                    const teamStore = useTeamStore();
-
-                    let {
-                        size_id,
-                    } = this.getMech(mechId);
-
-                    const {teamId, groupId} = teamStore.getMechTeamAndGroupIds(mechId);
-                    const teamDisplayName = teamStore.getTeamInfo(teamId).display_name;
-                    const groupInfo = teamStore.getTeamGroupInfo(teamId, groupId);
-
-                    let {
-                        slots,
-                        cost_by_size,
-                        display_name,
-                    } = MECH_ARMOR_UPGRADES[armorUpgradeId];
-
-                    let cost = cost_by_size[size_id];
-                    let valid = true;
-                    let validation_message = null;
-
-                    if (groupInfo.limited_armor_upgrade_ids.length) {
-                        if (!groupInfo.limited_armor_upgrade_ids.includes(armorUpgradeId)) {
-                            valid = false;
-                            validation_message = `Not available to ${teamDisplayName} ${groupInfo.display_name}`;
-                        }
-                    }
-
-                    let team_perks = [];
-
-                    let perkId = TEAM_PERK_0_SLOT_ARMOR_UPGRADES;
-                    if (slots !== 0 && teamStore.getMechHasTeamPerkId(mechId, perkId)) {
-                        slots = 0;
-                        team_perks.push(makePerkItem(perkId));
-                    }
-                    perkId = TEAM_PERK_0_TON_ARMOR_UPGRADES;
-                    if (cost !== 0 && teamStore.getMechHasTeamPerkId(mechId, perkId)) {
-                        cost = 0;
-                        team_perks.push(makePerkItem(perkId));
-                    }
-
-                    return {
-                        id: armorUpgradeId,
-                        cost,
-                        slots,
-                        display_name,
-                        valid,
-                        validation_message,
-                        team_perks,
-                    };
-                };
-            },
-            getMechAvailableArmorUpgrades(state) {
-                return (mechId) => {
-                    return Object.keys(MECH_ARMOR_UPGRADES).map(armorUpgradeId => this.getMechArmorUpgradeInfo(mechId, armorUpgradeId));
-                };
-            },
             getMechInfo(state) {
                 return function (mechId) {
                     const factionStore = useFactionStore();
+                    const teamStore = useTeamStore();
 
                     let {
                         name,
@@ -373,6 +229,19 @@ export const useMechStore = defineStore('mech', {
 
                     let display_name = name || placeholder_name;
 
+                    let {speed, jump} = MECH_SIZES[size_id];
+                    const jumpJets = find(upgrades, {id: JUMP_JETS});
+
+                    if (jumpJets) {
+                        const hasJumpBooster = teamStore.getMechHasTeamPerkId(mechId, TEAM_PERK_JUMP_BOOSTER);
+                        if (hasJumpBooster) {
+                            jump += 1;
+                        }
+                    } else {
+                        jump = 0;
+
+                    }
+
                     return {
                         display_name,
                         placeholder_name,
@@ -389,47 +258,9 @@ export const useMechStore = defineStore('mech', {
                         upgrade_used_slots,
                         weapon_used_slots,
                         weapon_used_tons,
+                        speed,
+                        jump,
                     };
-                };
-            },
-            getWeaponTraitInfo(state) {
-                return (mechId, weaponId) => {
-                    const teamStore = useTeamStore();
-                    const mech = this.getMech(mechId);
-                    const size_id = mech.size_id;
-                    const weapon = MECH_WEAPONS[weaponId];
-                    const traits = cloneDeep(weapon.traits_by_size[size_id]);
-                    const team_perks = [];
-                    const perksInfo = teamStore.getMechTeamPerkInfo(mechId);
-
-                    let perkId = null;
-                    if (weaponId === ROCKET_PACK || weaponId === MISSILES) {
-                        perkId = TEAM_PERK_EXTRA_MISSILE_AMMO;
-                        const perkItem = find(perksInfo, {id: perkId});
-
-                        if (perkItem) {
-                            const match = find(traits, {id: TRAIT_LIMITED});
-                            match.number += perkItem.value;
-                            team_perks.push(perkItem);
-                        }
-                    }
-
-                    perkId = TEAM_PERK_SMART_HOWITZERS;
-                    if (
-                        (weaponId === HOWITZER) &&
-                        teamStore.getMechHasTeamPerkId(mechId, perkId)
-                    ) {
-                        traits.push({id: TRAIT_SMART});
-                        team_perks.push(makePerkItem(perkId));
-                    }
-
-                    traits.forEach(trait => Object.assign(
-                        trait,
-                        WEAPON_TRAITS[trait.id],
-                        {display_name: traitDisplayName(trait)},
-                    ));
-
-                    return {traits, team_perks};
                 };
             },
             getWeaponInfo(state) {
@@ -466,6 +297,116 @@ export const useMechStore = defineStore('mech', {
                     });
                 };
             },
+            getWeaponTraitInfo(state) {
+                return (mechId, weaponId) => {
+                    const teamStore = useTeamStore();
+                    const mech = this.getMech(mechId);
+                    const size_id = mech.size_id;
+                    const weapon = MECH_WEAPONS[weaponId];
+                    const traits = cloneDeep(weapon.traits_by_size[size_id]);
+                    const perks = teamStore.getTeamPerksInfoByMech(mechId);
+
+                    const team_perks = [];
+
+                    if (weaponId === ROCKET_PACK || weaponId === MISSILES) {
+                        const perk = find(perks, {id: TEAM_PERK_EXTRA_MISSILE_AMMO});
+
+                        if (perk) {
+                            const match = find(traits, {id: TRAIT_LIMITED});
+                            match.number += perk.value;
+                            team_perks.push(perk);
+                        }
+                    }
+
+                    const perk = find(perks, {id: TEAM_PERK_BARREL_EXTENSIONS});
+                    if (perk) {
+                        const match = find(traits, {id: TRAIT_SHORT});
+                        if (match) {
+                            match.number += perk.value;
+                            team_perks.push(perk);
+                        }
+                    }
+
+                    if (weaponId === HOWITZER) {
+                        const perk = find(perks, {id: TEAM_PERK_SMART_HOWITZERS});
+                        if (perk) {
+                            traits.push({id: TRAIT_SMART});
+                            team_perks.push(perk);
+                        }
+                    }
+
+                    traits.forEach(trait => Object.assign(
+                        trait,
+                        WEAPON_TRAITS[trait.id],
+                        {display_name: traitDisplayName(trait)},
+                    ));
+
+                    return {traits, team_perks};
+                };
+            },
+            getMechWeaponAttachmentInfo(state) {
+                return (mechId, mechWeaponAttachmentId) => {
+                    const teamStore = useTeamStore();
+
+                    const mech = this.getMech(mechId);
+                    const weaponAttachment = findById(mech.weapons, mechWeaponAttachmentId);
+                    const weapon_id = weaponAttachment.weapon_id;
+                    const weaponInfo = this.getWeaponInfo(mechId, weapon_id);
+
+                    const previousWeaponInstances = mech.weapons.filter((item) => {
+                        return item.weapon_id === weapon_id && item.display_order < weaponAttachment.display_order;
+                    }).length;
+
+                    let cost = weaponInfo.cost;
+                    const duplicate_cost = Math.floor(previousWeaponInstances * cost * 0.5);
+                    const {teamId, groupId} = teamStore.getMechTeamAndGroupIds(mechId);
+
+                    let required_by_group = false;
+                    let required_by_group_reason = false;
+
+                    if (previousWeaponInstances === 0) {
+                        let {
+                            required,
+                            required_reason,
+                        } = teamStore.getWeaponIsRequired(teamId, groupId, weapon_id);
+                        if (required) {
+                            required_by_group = true;
+                            required_by_group_reason = required_reason;
+                        }
+                    }
+
+                    const requiredAtLeastOne = teamStore.getAtLeastOneOfWeaponsIsRequired(teamId, groupId);
+
+                    if (requiredAtLeastOne.length) {
+                        const prevInstances = mech.weapons.filter((item) => {
+                            return weaponAttachment.id !== item.id && requiredAtLeastOne.includes(item.weapon_id);
+                        }).length;
+
+                        if (prevInstances === 0) {
+                            required_by_group = true;
+                            required_by_group_reason = teamStore.getAtLeastOneOfWeaponsIsRequiredMessage(teamId, groupId);
+                        }
+                    }
+
+                    const result = Object.assign({}, weaponInfo, {
+                        base_cost: cost,
+                        cost: cost + duplicate_cost,
+                        duplicate_cost,
+                        required_by_group,
+                        required_by_group_reason,
+                        duplicate_percent: previousWeaponInstances * 50,
+                    });
+
+                    return readonly(result);
+                };
+            },
+            getMechAvailableWeaponsInfo(state) {
+                return (mechId) => {
+                    return Object.keys(MECH_WEAPONS)
+                        .map((weaponId) => this.getWeaponInfo(mechId, weaponId));
+                };
+            },
+
             getUpgradeInfo: function (state) {
                 return (mechId, upgradeId) => {
                     const teamStore = useTeamStore();
@@ -476,6 +417,7 @@ export const useMechStore = defineStore('mech', {
                     let cost = upgrade.cost_by_size[size_id];
                     let validation_message = null;
                     let valid = true;
+                    let max_uses = upgrade.max_uses;
 
                     if (upgrade.prohibited_by_sizes) {
                         valid = !upgrade.prohibited_by_sizes.includes(size_id);
@@ -484,33 +426,66 @@ export const useMechStore = defineStore('mech', {
                         }
                     }
 
-                    let team_perks = [];
+                    const perks = teamStore.getTeamPerksInfoByMech(mechId);
+                    const team_perks = [];
+
+                    if (slots !== 0) {
+                        const perk = find(perks, {id: TEAM_PERK_0_SLOT_ARMOR_UPGRADES});
+                        if (perk) {
+                            slots = 0;
+                            team_perks.push(perk);
+                        }
+                    }
 
                     if (upgradeId === TARGET_DESIGNATOR) {
-                        let perkId = TEAM_PERK_0_SLOT_TARGET_DESIGNATORS;
-                        if (teamStore.getMechHasTeamPerkId(mechId, perkId)) {
+                        let perk = find(perks, {id: TEAM_PERK_0_SLOT_TARGET_DESIGNATORS});
+                        if (perk) {
                             slots = 0;
-                            team_perks.push(makePerkItem(perkId));
+                            team_perks.push(perk);
                         }
 
-                        perkId = TEAM_PERK_0_TON_TARGET_DESIGNATORS;
-                        if (teamStore.getMechHasTeamPerkId(mechId, perkId)) {
+                        perk = find(perks, {id: TEAM_PERK_0_TON_TARGET_DESIGNATORS});
+                        if (perk) {
                             cost = 0;
-                            team_perks.push(makePerkItem(perkId));
+                            team_perks.push(perk);
+                        }
+                    }
+
+                    if (upgradeId === DIRECTIONAL_THRUSTER) {
+                        let perk = find(perks, {id: TEAM_PERK_0_SLOT_DIRECTIONAL_THRUSTERS});
+                        if (perk) {
+                            slots = 0;
+                            team_perks.push(perk);
                         }
                     }
 
                     if (upgradeId === ELECTRONIC_COUNTERMEASURES) {
-                        let perkId = TEAM_PERK_0_SLOT_ECM;
-                        if (teamStore.getMechHasTeamPerkId(mechId, perkId)) {
+                        let perk = find(perks, {id: TEAM_PERK_0_SLOT_ECM});
+                        if (perk) {
                             slots = 0;
-                            team_perks.push(makePerkItem(perkId));
+                            team_perks.push(perk);
                         }
 
-                        perkId = TEAM_PERK_0_TON_ECM;
-                        if (teamStore.getMechHasTeamPerkId(mechId, perkId)) {
+                        perk = find(perks, {id: TEAM_PERK_0_TON_ECM});
+                        if (perk) {
                             cost = 0;
-                            team_perks.push(makePerkItem(perkId));
+                            team_perks.push(perk);
+                        }
+                    }
+
+                    if (upgradeId === COMBAT_SHIELD) {
+                        let perk = find(perks, {id: TEAM_PERK_COMBAT_BUCKLER});
+                        if (perk) {
+                            cost = 3;
+                            team_perks.push(perk);
+                        }
+                    }
+
+                    if (upgradeId === NITRO_BOOST) {
+                        let perk = find(perks, {id: TEAM_PERK_EXTRA_NITRO});
+                        if (perk) {
+                            max_uses += 1;
+                            team_perks.push(perk);
                         }
                     }
 
@@ -522,7 +497,99 @@ export const useMechStore = defineStore('mech', {
                         slots,
                         cost,
                         team_perks,
+                        max_uses,
                     });
+                };
+            },
+            getMechUpgradeAttachmentInfo(state) {
+                return (mechId, mechUpgradeAttachmentId) => {
+                    const teamStore = useTeamStore();
+                    const mech = findById(state.mechs, mechId);
+                    const upgradeAttachment = findById(mech.upgrades, mechUpgradeAttachmentId);
+
+                    const upgrade_id = upgradeAttachment.upgrade_id;
+                    const info = this.getUpgradeInfo(mechId, upgrade_id);
+                    const {teamId, groupId} = teamStore.getMechTeamAndGroupIds(mechId);
+                    const isRequired = teamStore.getUpgradeIsRequired(teamId, groupId, upgrade_id);
+
+                    return Object.assign({}, info, {required_by_group: isRequired});
+                };
+            },
+            getMechAvailableUpgradesInfo(state) {
+                return (mechId) => {
+                    const mech = findById(state.mechs, mechId);
+                    const existingUpgradeIds = mech.upgrades.map((item) => item.upgrade_id);
+
+                    return Object.keys(MECH_UPGRADES)
+                        .filter((upgradeId) => {
+                            return !existingUpgradeIds.includes(upgradeId);
+                        })
+                        .map((upgradeId) => this.getUpgradeInfo(mechId, upgradeId));
+                };
+            },
+
+            getMechArmorUpgradeInfo(state) {
+                return function (mechId, armorUpgradeId) {
+                    const teamStore = useTeamStore();
+
+                    let {
+                        size_id,
+                    } = this.getMech(mechId);
+
+                    const {teamId, groupId} = teamStore.getMechTeamAndGroupIds(mechId);
+                    const teamDisplayName = teamStore.getTeamInfo(teamId).display_name;
+                    const groupInfo = teamStore.getTeamGroupInfo(teamId, groupId);
+
+                    let {
+                        slots,
+                        cost_by_size,
+                        display_name,
+                    } = MECH_ARMOR_UPGRADES[armorUpgradeId];
+
+                    let cost = cost_by_size[size_id];
+                    let valid = true;
+                    let validation_message = null;
+
+                    if (groupInfo.limited_armor_upgrade_ids.length) {
+                        if (!groupInfo.limited_armor_upgrade_ids.includes(armorUpgradeId)) {
+                            valid = false;
+                            validation_message = `Not available to ${teamDisplayName} ${groupInfo.display_name}`;
+                        }
+                    }
+
+                    const perks = teamStore.getTeamPerksInfoByMech(mechId);
+                    const team_perks = [];
+
+                    if (slots !== 0) {
+                        const perk = find(perks, {id: TEAM_PERK_0_SLOT_ARMOR_UPGRADES});
+                        if (perk) {
+                            slots = 0;
+                            team_perks.push(perk);
+                        }
+                    }
+
+                    if (cost !== 0) {
+                        const perk = find(perks, {id: TEAM_PERK_0_TON_ARMOR_UPGRADES});
+                        if (perk) {
+                            cost = 0;
+                            team_perks.push(perk);
+                        }
+                    }
+
+                    return {
+                        id: armorUpgradeId,
+                        cost,
+                        slots,
+                        display_name,
+                        valid,
+                        validation_message,
+                        team_perks,
+                    };
+                };
+            },
+            getMechAvailableArmorUpgrades(state) {
+                return (mechId) => {
+                    return Object.keys(MECH_ARMOR_UPGRADES).map(armorUpgradeId => this.getMechArmorUpgradeInfo(mechId, armorUpgradeId));
                 };
             },
         },

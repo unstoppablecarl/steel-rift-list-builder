@@ -104,7 +104,7 @@ const {
       <tbody>
       <tr
           v-for="(row, count) in teamInfo.team_size_perk_rows"
-          :class="{'table-success': teamMechCount == count}"
+          :class="{'table-success': teamMechCount >= count}"
       >
         <td>{{ count }}</td>
         <td v-for="teamPerkIds in row">

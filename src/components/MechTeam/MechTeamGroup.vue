@@ -90,11 +90,21 @@ const {
           </template>
 
           <template #default>
-            <template v-for="perk in teamGroupPerks">
-              <div class="fw-bold">
-                {{ perk.display_name }}:
+            <template v-for="size in teamGroupPerks">
+              <h6
+              v-if="teamGroupPerks.length > 1"
+              >{{ size.display_name }} HE-Vs</h6>
+
+
+              <div class="mb-2 p-gap">
+
+                <template v-for="perk in size.perks">
+                  <div class="fw-bold">
+                    {{ perk.display_name }}:
+                  </div>
+                  <p>{{perk.description}}</p>
+                </template>
               </div>
-              <p class="p-gap">{{ perk.description }}</p>
             </template>
           </template>
 

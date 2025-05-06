@@ -1,7 +1,14 @@
 import {defineStore} from 'pinia';
 import {computed, ref} from 'vue';
 import {findItemIndexById, move, setDisplayOrders} from './helpers/collection-helper.js';
-import {MECH_TEAM_SIZES, MECH_TEAMS, TEAM_GENERAL} from '../data/mech-teams.js';
+import {
+    MECH_TEAM_SIZES,
+    MECH_TEAMS,
+    TEAM_FIRE_SUPPORT,
+    TEAM_GENERAL,
+    TEAM_RECON,
+    TEAM_SIZE_LARGE,
+} from '../data/mech-teams.js';
 import {useMechStore} from './mech-store.js';
 import {countBy, difference, each, find, findIndex, groupBy, map, max, min, sortBy, sumBy} from 'lodash';
 import {getter} from './helpers/store-helpers.js';
@@ -10,6 +17,7 @@ import {MECH_WEAPONS} from '../data/mech-weapons.js';
 import {useArmyListStore} from './army-list-store.js';
 import {GAME_SIZE_BATTLE, GAME_SIZE_DUEL, GAME_SIZE_RECON, GAME_SIZE_STRIKE, GAME_SIZES} from '../data/game-sizes.js';
 import {MECH_TEAM_PERKS} from '../data/mech-team-perks.js';
+import {MECH_SIZES, SIZE_HEAVY, SIZE_MEDIUM} from '../data/mech-sizes.js';
 
 export const useTeamStore = defineStore('team', () => {
 
@@ -312,78 +320,58 @@ export const useTeamStore = defineStore('team', () => {
             });
         });
 
-        const getMechTeamPerkIds = getter((mechId) => {
+        const getMechHasTeamPerkId = getter((mechId, perkId) => {
             const sizeId = mechStore.getMech(mechId).size_id;
             const {teamId} = getMechTeamAndGroupIds.value(mechId);
-            return getTeamMechSizePerkIds.value(teamId, sizeId);
+            return getTeamPerkIdsByMechSize.value(teamId, sizeId).includes(perkId);
         });
 
-        const getMechTeamPerkInfo = getter((mechId) => {
-            const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
-            return getTeamGroupPerksInfo.value(teamId, groupId);
-        });
-
-        const getTeamGroupPerkIds = getter((teamId, groupId) => {
-            const groupInfo = getTeamGroupInfo.value(teamId, groupId);
-            const sizeId = groupInfo.size_ids?.[0];
-            if (!sizeId) {
-                return [];
-            }
-            return getTeamMechSizePerkIds.value(teamId, sizeId);
+        const getTeamPerksInfoByMech = getter((mechId) => {
+            const sizeId = mechStore.getMech(mechId).size_id;
+            const {teamId} = getMechTeamAndGroupIds.value(mechId);
+            const perkIds = getTeamPerkIdsByMechSize.value(teamId, sizeId);
+            return perkIdsToInfo(perkIds);
         });
 
         const getTeamGroupPerksInfo = getter((teamId, groupId) => {
-            const perkIds = getTeamGroupPerkIds.value(teamId, groupId);
-            const grouped = groupBy(perkIds, (perkId) => perkId);
-
-            let result = map(grouped, (perkIds, perkId) => {
-                const repeatCount = perkIds.length;
-                const perkInfo = MECH_TEAM_PERKS[perkId];
-                let {
-                    id,
-                    display_name,
-                    display_name_short,
-                    description,
-                    stackable,
-                    renderDisplayName,
-                    renderDesc,
-                    value,
-                    display_order,
-                } = perkInfo;
-
-                if (repeatCount > 1) {
-                    if (stackable) {
-                        const newValue = value * repeatCount;
-                        return {
-                            id,
-                            display_name: renderDisplayName(newValue),
-                            display_name_short,
-                            description: renderDesc(newValue),
-                            display_order,
-                            value: newValue
-                        };
-                    } else {
-                        throw new Error(`Multiple instances (${repeatCount}) of non-stackable perk: ${perkId}`);
-                    }
-                }
-
+            const groupInfo = getTeamGroupInfo.value(teamId, groupId);
+            let result = groupInfo.size_ids.map(sizeId => {
+                const perkIds = getTeamPerkIdsByMechSize.value(teamId, sizeId);
                 return {
-                    id,
-                    display_name,
-                    display_name_short,
-                    description,
-                    value,
-                    display_order,
+                    size_id: sizeId,
+                    display_name: MECH_SIZES[sizeId].display_name,
+                    perks: perkIdsToInfo(perkIds),
                 };
             });
 
-            return sortBy(result, 'display_order')
+            if (
+                (teamId === TEAM_RECON ||
+                teamId === TEAM_FIRE_SUPPORT) &&
+                groupId === 'B'
+            ) {
+                const medium = find(result, {size_id: SIZE_MEDIUM});
+                medium.display_name = MECH_SIZES[SIZE_MEDIUM].display_name + '&' + MECH_SIZES[SIZE_HEAVY].display_name;
+                result = result.filter(item => item.size_id !== SIZE_HEAVY);
+            }
+
+            return result;
         });
 
-        const getTeamMechSizePerkIds = getter((teamId, sizeId) => {
+        // internal
+        const getTeamPerkIdsByMechSize = getter((teamId, sizeId) => {
+            if (teamId === TEAM_GENERAL) {
+                return [];
+            }
             const columns = MECH_TEAMS[teamId].team_size_perk_columns;
-            const index = findIndex(columns, (sizeIds) => sizeIds.includes(sizeId));
-            if (index === -1) {
+
+            const indexes = [];
+            columns.forEach((sizeIds, index) => {
+                if (sizeIds.includes(sizeId)) {
+                    indexes.push(index);
+                }
+            });
+
+            if (!indexes.length) {
                 return [];
             }
 
@@ -391,20 +379,15 @@ export const useTeamStore = defineStore('team', () => {
 
             let perkIds = [];
 
-            each(MECH_TEAMS[teamId].team_size_perk_rows, (row, count) => {
-                if (!row) {
-                    return;
-                }
-                if (count <= teamSize) {
-                    perkIds = perkIds.concat(row[index]);
-                }
+            indexes.forEach(index => {
+                each(MECH_TEAMS[teamId].team_size_perk_rows, (row, count) => {
+                    if (count <= teamSize) {
+                        perkIds = perkIds.concat(row[index]);
+                    }
+                });
             });
 
             return perkIds;
-        });
-
-        const getMechHasTeamPerkId = getter((mechId, teamPerkId) => {
-            return getMechTeamPerkIds.value(mechId).includes(teamPerkId);
         });
 
         const used_teams_count = computed(() => teams.value.filter((team) => team.id !== TEAM_GENERAL).length);
@@ -555,10 +538,9 @@ export const useTeamStore = defineStore('team', () => {
             getAtLeastOneOfWeaponsIsRequired,
             getAtLeastOneOfWeaponsIsRequiredMessage,
             getRequiredByTeamGroupMessage,
-            getMechHasTeamPerkId,
-            getTeamGroupPerkIds,
+            getTeamPerksInfoByMech,
             getTeamGroupPerksInfo,
-            getMechTeamPerkInfo,
+            getMechHasTeamPerkId,
 
             addMechToTeam,
             removeMechFromTeam,
@@ -574,3 +556,46 @@ export const useTeamStore = defineStore('team', () => {
         },
     },
 );
+
+function perkIdsToInfo(perkIds) {
+    const grouped = groupBy(perkIds, (perkId) => perkId);
+
+    let result = map(grouped, (perkIds, perkId) => {
+        const repeatCount = perkIds.length;
+        const perkInfo = MECH_TEAM_PERKS[perkId];
+        let {
+            id,
+            display_name,
+            display_name_short,
+            description,
+            stackable,
+            display_order,
+            renderDisplayName,
+            renderDesc,
+            value,
+        } = perkInfo;
+
+        if (repeatCount > 1 && stackable) {
+            const newValue = value * repeatCount;
+            return {
+                id,
+                display_name: renderDisplayName(value, repeatCount),
+                display_name_short,
+                description: renderDesc(value, repeatCount),
+                display_order,
+                value: newValue,
+                repeatCount,
+            };
+        }
+
+        return {
+            id,
+            display_name,
+            display_name_short,
+            description,
+            display_order,
+        };
+    });
+
+    return sortBy(result, 'display_order');
+}

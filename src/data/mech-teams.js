@@ -1,5 +1,5 @@
 import {MECH_SIZES, SIZE_HEAVY, SIZE_LIGHT, SIZE_MEDIUM, SIZE_ULTRA} from './mech-sizes.js';
-import {DIRECTIONAL_THRUSTER, HAPTIC_SUIT, NITRO_BOOST, TARGET_DESIGNATOR} from './mech-upgrades.js';
+import {HAPTIC_SUIT, NITRO_BOOST, TARGET_DESIGNATOR} from './mech-upgrades.js';
 import {HOWITZER, MELEE_WEAPON, MISSILES, ROCKET_PACK} from './mech-weapons.js';
 import {
     TEAM_PERK_0_SLOT_ARMOR_UPGRADES,
@@ -8,13 +8,17 @@ import {
     TEAM_PERK_0_SLOT_TARGET_DESIGNATORS,
     TEAM_PERK_0_TON_ARMOR_UPGRADES,
     TEAM_PERK_0_TON_ECM,
-    TEAM_PERK_0_TON_TARGET_DESIGNATORS, TEAM_PERK_BARREL_EXTENSIONS, TEAM_PERK_COMBAT_BUCKLER,
+    TEAM_PERK_0_TON_TARGET_DESIGNATORS,
+    TEAM_PERK_BARREL_EXTENSIONS,
+    TEAM_PERK_COMBAT_BUCKLER,
     TEAM_PERK_DEPLOY_AS_SUPPORT,
     TEAM_PERK_DIRECTIONAL_ASSETS,
-    TEAM_PERK_EXTRA_MISSILE_AMMO, TEAM_PERK_EXTRA_NITRO,
+    TEAM_PERK_EXTRA_MISSILE_AMMO,
+    TEAM_PERK_EXTRA_NITRO,
     TEAM_PERK_EXTRA_TONNAGE,
     TEAM_PERK_GANG_UP,
-    TEAM_PERK_JUMP_BOOSTER, TEAM_PERK_QUICKDRAW,
+    TEAM_PERK_JUMP_BOOSTER,
+    TEAM_PERK_QUICKDRAW,
     TEAM_PERK_RECON_INITIATIVE,
     TEAM_PERK_RIPOSTE,
     TEAM_PERK_SIDE_ARMOR,
@@ -32,10 +36,12 @@ import {
 import {each} from 'lodash';
 import {
     SA_DEATH_FROM_ABOVE,
-    SA_DONT_GIVE_AN_INCH, SA_DRIVE_THEM_OUT,
+    SA_DONT_GIVE_AN_INCH,
+    SA_DRIVE_THEM_OUT,
     SA_FIRE_FOR_EFFECT,
     SA_MISSION_MOMENTUM,
-    SA_TARGET_ELIMINATED, SA_TROPHY_TAKERS,
+    SA_TARGET_ELIMINATED,
+    SA_TROPHY_TAKERS,
 } from './secondary-agendas.js';
 
 import iconAssassination from '/team-icons/icon-assassination.svg';
@@ -45,7 +51,7 @@ import iconGunslinger from '/team-icons/icon-gunslinger.svg';
 import iconRecon from '/team-icons/icon-recon.svg';
 import iconSecurity from '/team-icons/icon-security.svg';
 import iconTactical from '/team-icons/icon-tactical.svg';
-import {TRAIT_MELEE, TRAIT_REACH} from './weapon-traits.js';
+import {TRAIT_MELEE} from './weapon-traits.js';
 
 export const TEAM_SIZE_SMALL = 'TEAM_SIZE_SMALL';
 export const TEAM_SIZE_MEDIUM = 'TEAM_SIZE_MEDIUM';
@@ -81,6 +87,12 @@ export const MECH_TEAMS = makeStaticListIds({
         groups: makeStaticListIds({
             'A': makeGroup({
                 display_name: 'HE-Vs',
+                size_ids: [
+                    SIZE_LIGHT,
+                    SIZE_MEDIUM,
+                    SIZE_HEAVY,
+                    SIZE_ULTRA,
+                ],
                 min_count: false,
                 max_count: false,
             }),
@@ -298,7 +310,7 @@ export const MECH_TEAMS = makeStaticListIds({
                 max_count: 2,
                 size_ids: [SIZE_HEAVY],
                 required_at_least_one_weapon_with_trait_id: TRAIT_MELEE,
-                required_upgrade_ids: [NITRO_BOOST]
+                required_upgrade_ids: [NITRO_BOOST],
             }),
             'D': makeGroup({
                 min_count: 0,
@@ -318,19 +330,19 @@ export const MECH_TEAMS = makeStaticListIds({
                 [],
                 [TEAM_PERK_0_SLOT_DIRECTIONAL_THRUSTERS],
                 [TEAM_PERK_0_SLOT_DIRECTIONAL_THRUSTERS],
-                []
+                [],
             ],
             3: [
                 [TEAM_PERK_0_SLOT_ARMOR_UPGRADES],
                 [TEAM_PERK_COMBAT_BUCKLER],
                 [],
-                [TEAM_PERK_EXTRA_NITRO]
+                [TEAM_PERK_EXTRA_NITRO],
             ],
             4: [
                 [TEAM_PERK_0_TON_ARMOR_UPGRADES],
                 [],
                 [TEAM_PERK_EXTRA_NITRO],
-                [TEAM_PERK_0_SLOT_DIRECTIONAL_THRUSTERS]
+                [TEAM_PERK_0_SLOT_DIRECTIONAL_THRUSTERS],
             ],
         },
     },
@@ -449,6 +461,7 @@ function makeGroup(obj) {
         limited_structure_mod_ids: [],
         limited_armor_mod_ids: [],
         limited_armor_upgrade_ids: [],
+        required_at_least_one_weapon_with_trait_id: [],
     };
     const result = Object.assign(defaults, obj);
 

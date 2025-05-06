@@ -1,6 +1,5 @@
 import {each} from 'lodash';
 import {value} from 'lodash/seq.js';
-import {deepFreeze} from './data-helpers.js';
 import {
     DIRECTIONAL_THRUSTER,
     ELECTRONIC_COUNTERMEASURES,
@@ -55,16 +54,6 @@ export const MECH_TEAM_PERKS = makeTeamPerks({
         display_name: 'Mobile Support Assets',
         description: 'When determining the origin of direction for an Off-Table Support Asset directed by a member of this team, it can be from any direction.',
     },
-    [[TEAM_PERK_EXTRA_MISSILE_AMMO]]: {
-        renderDisplayName(value) {
-            return `Extra Guided Ammo (x${value})`;
-        },
-        renderDesc(value) {
-            return `All Rocket Packs and Missiles gain +${value} to their Limited Trait`;
-        },
-        value: 1,
-        stackable: true,
-    },
     [[TEAM_PERK_EXTRA_TONNAGE]]: {
         display_name: `Extra Tonnage (5)`,
         description: 'Team Units count as 5 Tons heavier for the purpose of the Security Objective.',
@@ -84,6 +73,7 @@ export const MECH_TEAM_PERKS = makeTeamPerks({
     [[TEAM_PERK_RIPOSTE]]: {
         display_name: 'Riposte',
         description: 'When targeted by an Engage or Smash Order, an HE-V in this Team without an Activated Marker may gain an Activated Marker. If they do, they may make a Smash Order before resolving the Opposing Commander’s Order.',
+
     },
     [[TEAM_PERK_JUMP_BOOSTER]]: {
         display_name: 'Jump Booster',
@@ -101,19 +91,47 @@ export const MECH_TEAM_PERKS = makeTeamPerks({
         display_name: 'Quickdraw',
         description: 'Returning Fire generates a Redline Marker instead of an Activation Marker.',
     },
-    [[TEAM_PERK_BARREL_EXTENSIONS]]: {
-        display_name: 'Barrel Extensions',
-        description: 'Short(X) weapons gain +2 to their range.',
-        renderDisplayName(value) {
-            return `Barrel Extensions (${value})`;
+    [[TEAM_PERK_EXTRA_MISSILE_AMMO]]: {
+        renderDisplayName: makeRenderDisplayName('Extra Guided Ammo'),
+        renderDesc(baseValue, repeatCount = 1) {
+            let repeatStr = renderDescriptionRepeat(baseValue, repeatCount);
+
+            return `All Rocket Packs and Missiles gain +${baseValue}${repeatStr} to their Limited Trait`;
         },
-        renderDesc(value) {
-            return `Short(X) weapons gain +${value}  to their range.`;
+        value: 1,
+        stackable: true,
+    },
+    [[TEAM_PERK_BARREL_EXTENSIONS]]: {
+        renderDisplayName: makeRenderDisplayName('Barrel Extensions'),
+        renderDesc(baseValue, repeatCount = 1) {
+            let repeatStr = renderDescriptionRepeat(baseValue, repeatCount);
+
+            return `Short(X) weapons gain +${baseValue}${repeatStr} to their range.`;
         },
         value: 2,
         stackable: true,
     },
 });
+
+function makeRenderDisplayName(prefix) {
+    return function renderDisplayName(value, repeatCount = 1) {
+
+        let repeatStr = '';
+        if (repeatCount > 1) {
+            repeatStr = ` (x${repeatCount})`;
+        }
+
+        return `${prefix}${repeatStr}`;
+    };
+}
+
+function renderDescriptionRepeat(baseValue, repeatCount = 1) {
+    let value = baseValue * repeatCount;
+    if (repeatCount > 1) {
+        return ` (+${baseValue} x ${repeatCount} = +${value})`;
+    }
+    return '';
+};
 
 function makeMini(name) {
     return {
@@ -144,9 +162,10 @@ function makeTeamPerks(perks) {
         }
 
         perk.display_order = display_order++;
+        Object.freeze(perk);
     });
 
-    return deepFreeze(perks);
+    return Object.freeze(perks);
 }
 
 export function makePerkItem(perkId) {
