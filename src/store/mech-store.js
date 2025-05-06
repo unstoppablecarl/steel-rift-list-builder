@@ -39,9 +39,11 @@ import {
     TEAM_PERK_COMBAT_BUCKLER,
     TEAM_PERK_EXTRA_MISSILE_AMMO,
     TEAM_PERK_EXTRA_NITRO,
+    TEAM_PERK_EXTRA_TONNAGE,
     TEAM_PERK_JUMP_BOOSTER,
     TEAM_PERK_SMART_HOWITZERS,
 } from '../data/mech-team-perks.js';
+import {UPGRADE_TRAITS} from '../data/upgrade-traits.js';
 
 export const useMechStore = defineStore('mech', {
         state() {
@@ -202,8 +204,8 @@ export const useMechStore = defineStore('mech', {
                     let max_tons = size.max_tons;
                     let max_slots = size.max_slots;
 
-                    const weapon_used_tons = sumBy(weaponsInfo, 'cost');
                     const weapon_used_slots = sumBy(weaponsInfo, 'slots');
+                    const weapon_used_tons = sumBy(weaponsInfo, 'cost');
 
                     const upgrade_used_slots = sumBy(upgradesInfo, 'slots');
                     const upgrade_used_tons = sumBy(upgradesInfo, 'cost');
@@ -245,6 +247,12 @@ export const useMechStore = defineStore('mech', {
                         armor_stat += armorUpgradeInfo.armor_mod;
                     }
 
+                    let tonnage_stat = MECH_SIZES[size_id].max_tons;
+                    const extraTonnage = teamStore.getMechHasTeamPerkId(mechId, TEAM_PERK_EXTRA_TONNAGE);
+                    if (extraTonnage) {
+                        tonnage_stat += 5;
+                    }
+
                     return {
                         display_name,
                         placeholder_name,
@@ -264,6 +272,7 @@ export const useMechStore = defineStore('mech', {
                         armor_upgrade_id,
                         speed,
                         jump,
+                        tonnage_stat
                     };
                 };
             },
@@ -416,14 +425,21 @@ export const useMechStore = defineStore('mech', {
                     const teamStore = useTeamStore();
                     const upgrade = MECH_UPGRADES[upgradeId];
 
+                    let {size_id} = this.getMech(mechId)
                     let {
                         max_uses,
                         slots,
-                        size_id,
                         description,
+                        traits,
+                        cost_by_size,
                     } = upgrade;
 
-                    let cost = upgrade.cost_by_size[size_id];
+                    traits = traits || [];
+                    traits = traits.map(trait => {
+                        return Object.assign({}, trait, UPGRADE_TRAITS[trait.id]);
+                    });
+
+                    let cost = cost_by_size[size_id];
                     let validation_message = null;
                     let valid = true;
 
@@ -507,6 +523,7 @@ export const useMechStore = defineStore('mech', {
                         cost,
                         team_perks,
                         max_uses,
+                        traits,
                     });
                 };
             },
@@ -570,9 +587,9 @@ export const useMechStore = defineStore('mech', {
                     }
 
                     if (limited_size_ids && !limited_size_ids.includes(size_id)) {
-                        valid = false
-                        const sizeDisplayNames = limited_size_ids.map(sizeId => MECH_SIZES[sizeId].display_name).join(', ')
-                        validation_message = `Only available to HE-V size(s): ${sizeDisplayNames}`
+                        valid = false;
+                        const sizeDisplayNames = limited_size_ids.map(sizeId => MECH_SIZES[sizeId].display_name).join(', ');
+                        validation_message = `Only available to HE-V size(s): ${sizeDisplayNames}`;
                     }
 
                     const perks = teamStore.getTeamPerksInfoByMech(mechId);

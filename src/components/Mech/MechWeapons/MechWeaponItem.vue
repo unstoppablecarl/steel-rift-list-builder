@@ -3,6 +3,7 @@ import {useMechStore} from '../../../store/mech-store.js';
 import {computed} from 'vue';
 import IconTeamGroupPerks from '../../UI/IconTeamGroupPerks.vue';
 import IconRequiredByGroup from '../../UI/IconRequiredByGroup.vue';
+import TraitList from '../../UI/TraitList.vue';
 
 const mechStore = useMechStore();
 
@@ -34,13 +35,7 @@ function remove() {
       {{ weapon.range_formatted }}
     </td>
     <td>
-      <span
-          class="text-tooltip"
-          v-for="(trait, index) in weapon.traits"
-          v-b-tooltip.hover.top="trait.description"
-      >
-        {{ trait.display_name }}<template v-if="index !== weapon.traits.length - 1">, </template>
-      </span>
+      <TraitList :traits="weapon.traits"/>
     </td>
     <td>
       <BButton

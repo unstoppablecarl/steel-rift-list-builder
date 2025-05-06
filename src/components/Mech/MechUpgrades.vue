@@ -27,7 +27,7 @@ export default {
       Upgrades
     </th>
     <th colspan="3">
-
+      Traits
     </th>
     <td>
       <MechUpgradeAdd :mech-id="mechId"/>

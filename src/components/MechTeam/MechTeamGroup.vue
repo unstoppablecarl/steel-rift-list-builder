@@ -7,6 +7,7 @@ import {useTeamStore} from '../../store/team-store.js';
 import {TEAM_GENERAL} from '../../data/mech-teams.js';
 import IconHev from '../UI/IconHEV.vue';
 import {useExpandCollapseAll} from '../functional/expand-collapse.js';
+import BtnToolTip from '../UI/BtnToolTip.vue';
 
 const teamStore = useTeamStore();
 const {teamId, groupId} = defineProps({
@@ -69,17 +70,13 @@ const {
           Size: {{ size.min_count }}-{{ size.max_count }}
         </span>
 
-        <BPopover
-            v-model="groupPerksOpen"
-            :click="true"
-            :close-on-hide="true"
-            :delay="{show: 0, hide: 0}"
-        >
-          <template #target>
+        <BtnToolTip>
+          <template #target="{mouseover, mouseleave}">
+
             <span
                 v-show="!isGeneralGroup && teamGroupPerks.length"
-                @mouseover="groupPerksOpen = true"
-                @mouseleave="groupPerksOpen = false"
+                @mouseover="mouseover"
+                @mouseleave="mouseleave"
                 class="btn btn-sm btn-outline mx-1 btn-light"
             >
               Group Perks
@@ -88,11 +85,10 @@ const {
               </span>
             </span>
           </template>
-
-          <template #default>
+          <template #content>
             <template v-for="size in teamGroupPerks">
               <h6
-              v-if="teamGroupPerks.length > 1"
+                  v-if="teamGroupPerks.length > 1"
               >{{ size.display_name }} HE-Vs</h6>
 
               <div class="mb-2 p-gap">
@@ -100,13 +96,12 @@ const {
                   <div class="fw-bold">
                     {{ perk.display_name }}:
                   </div>
-                  <p>{{perk.description}}</p>
+                  <p>{{ perk.description }}</p>
                 </template>
               </div>
             </template>
           </template>
-
-        </BPopover>
+        </BtnToolTip>
       </div>
       <div class="text-end">
         <BButton

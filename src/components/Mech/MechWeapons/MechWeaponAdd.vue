@@ -2,6 +2,8 @@
 import {useMechStore} from '../../../store/mech-store.js';
 import {computed} from 'vue';
 import IconTeamGroupPerks from '../../UI/IconTeamGroupPerks.vue';
+import BtnToolTip from '../../UI/BtnToolTip.vue';
+import TraitList from '../../UI/TraitList.vue';
 
 const {mechId} = defineProps({
   mechId: {
@@ -76,13 +78,7 @@ function addWeapon(upgradeId) {
             {{ item.range_formatted }}
           </td>
           <td>
-            <div
-                class="trait-tooltip"
-                v-for="(trait, index) in item.traits"
-                v-b-tooltip.hover.top="trait.description"
-            >
-              {{ trait.display_name }}<span v-if="index !== item.traits.length - 1">, </span>
-            </div>
+            <TraitList :traits="item.traits"/>
           </td>
           <td>
             <IconTeamGroupPerks

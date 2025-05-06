@@ -110,7 +110,7 @@ export const MECH_UPGRADES = makeFrozenStaticListIds({
     }),
     [[DIRECTIONAL_THRUSTER]]: makeUpgrade({
         display_name: 'Directional Thruster',
-        description: '',
+        description: 'This unit gains the Dash Order',
         cost_by_size: {
             [[SIZE_LIGHT]]: 1,
             [[SIZE_MEDIUM]]: 2,

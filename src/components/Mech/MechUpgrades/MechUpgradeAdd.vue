@@ -3,6 +3,8 @@ import {useMechStore} from '../../../store/mech-store.js';
 import {computed} from 'vue';
 import IconTeamGroupPerks from '../../UI/IconTeamGroupPerks.vue';
 import IconNotAvailable from '../../UI/IconNotAvailable.vue';
+import BtnToolTip from '../../UI/BtnToolTip.vue';
+import TraitList from '../../UI/TraitList.vue';
 
 const {mechId} = defineProps({
   mechId: {
@@ -43,6 +45,9 @@ function addUpgrade(upgradeId, valid) {
             Tons
           </td>
           <td>
+            Traits
+          </td>
+          <td>
             Notes
           </td>
         </tr>
@@ -60,10 +65,13 @@ function addUpgrade(upgradeId, valid) {
             {{ item.display_name }}
           </td>
           <td class="text-end">
-            <number :val="item.slots" :positive-signed="false" :invert-color="true"/>
+            <number :val="item.slots" :invert-color="true"/>
           </td>
           <td class="text-end">
-            <number :val="item.cost" :positive-signed="false" :invert-color="true"/>
+            <number :val="item.cost" :invert-color="true"/>
+          </td>
+          <td class="notes">
+            <TraitList :traits="item.traits"/>
           </td>
           <td class="notes">
             <IconNotAvailable

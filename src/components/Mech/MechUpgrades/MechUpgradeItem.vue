@@ -3,6 +3,8 @@ import {useMechStore} from '../../../store/mech-store.js';
 import {computed, ref} from 'vue';
 import IconTeamGroupPerks from '../../UI/IconTeamGroupPerks.vue';
 import IconRequiredByGroup from '../../UI/IconRequiredByGroup.vue';
+import BtnToolTip from '../../UI/BtnToolTip.vue';
+import TraitList from '../../UI/TraitList.vue';
 
 const mechStore = useMechStore();
 
@@ -18,9 +20,6 @@ const {
 
 const upgrade = computed(() => mechStore.getMechUpgradeAttachmentInfo(mechId, mechUpgradeAttachmentId));
 
-const popOverOpen = ref(false);
-
-
 function remove() {
   mechStore.removeMechUpgradeAttachment(mechId, mechUpgradeAttachmentId);
 }
@@ -29,32 +28,23 @@ function remove() {
 <template>
   <tr>
     <td>
-
-      <BPopover
-          v-model="popOverOpen"
-          :click="true"
-          :close-on-hide="true"
-          :delay="{show: 0, hide: 0}"
-      >
-        <template #target>
+      <BtnToolTip>
+        <template #target="{mouseover, mouseleave}">
           <span
-              @mouseover="popOverOpen = true"
-              @mouseleave="popOverOpen = false"
+              @mouseover="mouseover"
+              @mouseleave="mouseleave"
               class="text-tooltip"
           >
             {{ upgrade.display_name }}
           </span>
         </template>
-
-        <template #default>
+        <template #content>
           {{ upgrade.description }}
         </template>
-      </BPopover>
-
-
+      </BtnToolTip>
     </td>
     <td colspan="3">
-
+      <TraitList :traits="upgrade.traits"/>
     </td>
     <td>
       <BButton
