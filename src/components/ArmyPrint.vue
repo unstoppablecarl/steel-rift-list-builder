@@ -1,24 +1,19 @@
 <script setup>
-
 import {useMechStore} from '../store/mech-store.js';
-import {storeToRefs} from 'pinia';
-import HEVCard from './ArmyPrint/HEVCard.vue';
+import PageHevCards from './ArmyPrint/PageHEVCards.vue';
+import {computed} from 'vue';
+import {chunk} from 'lodash';
 
 const mechStore = useMechStore();
-const {mechs} = storeToRefs(mechStore);
 
+const mechPages = computed(() => {
+  return chunk(mechStore.mechs, 9);
+});
 </script>
 <template>
   <div class="page-previews-container" data-bs-theme="light">
     <div class="output-container card-grid-container-to-scale-print">
-
-      <div class="page-preview page-letter "
-           style="background-color:white">
-        <div class="page-card-grid">
-          <HEVCard v-for="mech in mechs" :mech-id="mech.id"/>
-        </div>
-      </div>
-
+      <PageHevCards v-for="mechPage in mechPages" :mech-page="mechPage"/>
     </div>
   </div>
 </template>
