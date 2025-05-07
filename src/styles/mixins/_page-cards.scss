@@ -91,6 +91,7 @@
       font-weight: 400;
       font-size: 1.1rem;
       line-height: 10pt;
+      text-align: left;
 
       &.armor-6-per-row{
         .hp {
@@ -109,6 +110,7 @@
       margin: 1px;
       font-size: .5rem;
       line-height: 10pt;
+      text-align: center;
 
       > span {
         position: relative;

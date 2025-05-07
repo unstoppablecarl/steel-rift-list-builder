@@ -63,7 +63,10 @@ const structureHp = computed(() => {
   ];
 
   chunkCounts.forEach((count, index) => {
-    points = points.concat(Array(count).fill(map[index]));
+    const items = Array(count).fill(0);
+
+    items[items.length - 1] = map[index]
+    points = points.concat(items);
   });
 
   return chunk(points, 5);
@@ -113,7 +116,7 @@ const structureHp = computed(() => {
               (D)mg -1
             </div>
             <div>
-              (O)rders -1
+              (Ø)rders -1
             </div>
           </div>
         </div>
