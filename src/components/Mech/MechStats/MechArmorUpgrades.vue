@@ -135,6 +135,10 @@ const open = ref(false);
           {{ selectedValue.description }}
         </template>
       </BtnToolTip>
+      <IconTeamGroupPerks
+          size="md"
+          :perks="armorUpgrade.team_perks"
+      />
     </td>
     <td class="col-form-label text-end">
       <number-val :val="selectedValue.armor_mod" invert-color/>

@@ -1,8 +1,11 @@
 <script setup>
 
+import IconTeamPerk from './IconTeamPerk.vue';
+
 const {
   perks,
   useFullDisplayName,
+  size,
 } = defineProps({
   perks: {
     type: Array,
@@ -10,6 +13,10 @@ const {
   useFullDisplayName: {
     type: Boolean,
     default: false,
+  },
+  size: {
+    type: String,
+    default: 'sm',
   },
 });
 </script>
@@ -22,18 +29,15 @@ const {
     <template #target>
       <span
           v-show="perks && perks.length"
-          class="btn btn-sm btn-light">
-        <span class="material-symbols-outlined">
-          star_rate
-        </span>
+          :class="`btn btn-${size} btn-light`">
+
+        <IconTeamPerk/>
       </span>
     </template>
 
     <template #title>
       Group Perks
-      <span class="material-symbols-outlined">
-        star_rate
-      </span>
+      <IconTeamPerk/>
     </template>
 
     <template v-for="perk in perks">
@@ -47,12 +51,11 @@ const {
 
         <p class="p-gap">
           <strong>
-            {{ perk.display_name_short || perk.display_name}}:
+            {{ perk.display_name_short || perk.display_name }}:
           </strong>
           {{ perk.description }}
         </p>
       </template>
-
 
     </template>
   </BPopover>

@@ -7,6 +7,7 @@ import {TEAM_GENERAL} from '../../data/mech-teams.js';
 import IconHev from '../UI/IconHEV.vue';
 import {useExpandCollapseAll} from '../functional/expand-collapse.js';
 import BtnToolTip from '../UI/BtnToolTip.vue';
+import IconTeamPerk from '../UI/IconTeamPerk.vue';
 
 const teamStore = useTeamStore();
 const {teamId, groupId} = defineProps({
@@ -115,9 +116,7 @@ const {
                 class="btn btn-sm btn-outline mx-1 btn-light"
             >
               Group Perks
-              <span class="material-symbols-outlined">
-                star_rate
-              </span>
+              <IconTeamPerk/>
             </span>
           </template>
           <template #content>
