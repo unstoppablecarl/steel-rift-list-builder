@@ -9,7 +9,7 @@ import {storeToRefs} from 'pinia';
 import {useTeamStore} from '../store/team-store.js';
 import {useSupportAssetStore} from '../store/support-asset-store.js';
 import {inject} from 'vue';
-import {ROUTE_HOME, ROUTE_PRINT_CARDS, ROUTE_PRINT_REF} from '../routes.js';
+import {ROUTE_HOME, ROUTE_PRINT} from '../routes.js';
 
 const store = useArmyListStore();
 const {used_teams_count, max_teams_count} = storeToRefs(useTeamStore());
@@ -42,19 +42,13 @@ const currentPath = inject('currentPath');
                 }">
                   Edit
                 </a>
-                <a :href="`#${ROUTE_PRINT_CARDS}`" :class="{
+                <a :href="`#${ROUTE_PRINT}`" :class="{
                   'btn btn-sm btn-light': true,
-                  'active': currentPath === `#${ROUTE_PRINT_CARDS}`
+                  'active': currentPath === `#${ROUTE_PRINT}`
                 }">
-                  Print Cards
+                   Print
                 </a>
 
-                <a :href="`#${ROUTE_PRINT_REF}`" :class="{
-                  'btn btn-sm btn-light': true,
-                  'active': currentPath === `#${ROUTE_PRINT_REF}`
-                }">
-                  Print Reference
-                </a>
               </div>
             </div>
           </div>
@@ -67,14 +61,12 @@ const currentPath = inject('currentPath');
             {{ name || 'Not named' }}
           </div>
           <div class="text-sm-end">
-
             <strong>Teams: </strong>
             <fraction
                 :a="used_teams_count"
                 :b="max_teams_count"
                 success-class="fw-bold"
             />
-
 
             <span class="ms-2">
               <strong>Support Assets: </strong>

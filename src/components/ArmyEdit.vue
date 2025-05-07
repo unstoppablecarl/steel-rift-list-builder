@@ -1,7 +1,7 @@
 <script setup>
-import ArmyList from './ArmyList.vue';
-import SecondaryAgendas from './SecondaryAgendas.vue';
-import MechTeamList from './Mech/MechTeamList.vue';
+import ArmyList from './ArmyEdit/ArmyList.vue';
+import SecondaryAgendas from './ArmyEdit/SecondaryAgendas.vue';
+import MechTeamList from './ArmyEdit/Mech/MechTeamList.vue';
 </script>
 <template>
   <div class="container-lg py-1 ">

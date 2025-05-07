@@ -28,6 +28,10 @@ $heading-border-color: #7d8ba2;
   }
 }
 
+.print-settings-container {
+  width: $page-letter-width;
+}
+
 @page {
   margin: 0;
   size: letter portrait;
@@ -35,6 +39,11 @@ $heading-border-color: #7d8ba2;
 }
 
 @media print {
+
+  .print-settings-container {
+    display: none;
+  }
+
   grammarly-desktop-integration {
     display: none;
   }

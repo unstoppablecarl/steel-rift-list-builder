@@ -23,6 +23,5 @@ const currentView = computed(() => {
 <template>
   <Toaster/>
   <AppHeader/>
-
   <component :is="currentView"/>
 </template>
