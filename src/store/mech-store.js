@@ -299,6 +299,12 @@ export const useMechStore = defineStore('mech', {
 
                     const {traits, team_perks} = this.getWeaponTraitInfo(mechId, weaponId);
 
+                    let max_uses = null;
+                    const match = find(traits, {id: TRAIT_LIMITED});
+                    if (match) {
+                        max_uses = match.number;
+                    }
+
                     return readonly({
                         weapon_id: weaponId,
                         display_name,
@@ -309,6 +315,7 @@ export const useMechStore = defineStore('mech', {
                         range_formatted,
                         traits,
                         team_perks,
+                        max_uses,
                     });
                 };
             },
@@ -374,6 +381,7 @@ export const useMechStore = defineStore('mech', {
                     const weaponAttachment = findById(mech.weapons, mechWeaponAttachmentId);
                     const weapon_id = weaponAttachment.weapon_id;
                     const weaponInfo = this.getWeaponInfo(mechId, weapon_id);
+                    let max_uses = null;
 
                     const previousWeaponInstances = mech.weapons.filter((item) => {
                         return item.weapon_id === weapon_id && item.display_order < weaponAttachment.display_order;

@@ -1,8 +1,6 @@
 <script setup>
 import {computed, ref} from 'vue';
-import {MECH_ARMOR_UPGRADES} from '../../../data/mech-armor-upgrades.js';
 import NumberVal from '../../functional/number.vue';
-import {useTeamStore} from '../../../store/team-store.js';
 import {useMechStore} from '../../../store/mech-store.js';
 import IconTeamGroupPerks from '../../UI/IconTeamGroupPerks.vue';
 import IconNotAvailable from '../../UI/IconNotAvailable.vue';
@@ -29,12 +27,9 @@ const {
 const model = defineModel();
 const options = computed(() => mechStore.getMechAvailableArmorUpgrades(mechId));
 
-const selectedValueLabel = computed(() => {
-  return MECH_ARMOR_UPGRADES[model.value].display_name;
-});
-
-const selectedValue = computed(() => {
-  return MECH_ARMOR_UPGRADES[model.value];
+const armorUpgrade = computed(() => {
+  const {armor_upgrade_id} = mechStore.getMech(mechId);
+  return mechStore.getMechArmorUpgradeInfo(mechId, armor_upgrade_id);
 });
 
 function selectOption(value) {
@@ -53,7 +48,7 @@ const open = ref(false);
       <BDropdown
           :id="'mech-input-armor-upgrade-' + mechId"
           class="dropdown-form dropdown-table d-inline-block"
-          :text="selectedValueLabel"
+          :text="armorUpgrade.display_name"
           variant="light"
       >
         <table class="table table-hover table-borderless">
@@ -105,7 +100,7 @@ const open = ref(false);
                   {{ item.description }}
                 </template>
               </BtnToolTip>
-              </td>
+            </td>
             <td class="notes">
               <IconTeamGroupPerks
                   :perks="item.team_perks"
@@ -114,7 +109,6 @@ const open = ref(false);
                   :valid="item.valid"
                   :validation_message="item.validation_message"
               />
-
             </td>
           </tr>
           </tbody>
@@ -123,16 +117,16 @@ const open = ref(false);
       <BtnToolTip>
         <template #target="{mouseover, mouseleave}">
           <span
-              v-show="selectedValue.description"
+              v-show="armorUpgrade.description"
               @mouseover="mouseover"
               @mouseleave="mouseleave"
-              class="btn btn-light ms-2"
+              class="btn btn-light ms-2 me-2"
           >
             ?
           </span>
         </template>
         <template #content>
-          {{ selectedValue.description }}
+          {{ armorUpgrade.description }}
         </template>
       </BtnToolTip>
       <IconTeamGroupPerks
@@ -141,15 +135,15 @@ const open = ref(false);
       />
     </td>
     <td class="col-form-label text-end">
-      <number-val :val="selectedValue.armor_mod" invert-color/>
+      <number-val :val="armorUpgrade.armor_mod" invert-color/>
     </td>
     <td class="col-form-label text-end">
     </td>
     <td class="col-form-label text-end">
-      <number-val :val="selectedValue.slots" invert-color/>
+      <number-val :val="armorUpgrade.slots" invert-color/>
     </td>
     <td class="col-form-label text-end">
-      <number-val :val="selectedValue.cost_by_size[sizeId]" invert-color/>
+      <number-val :val="armorUpgrade.cost" invert-color/>
     </td>
     <td></td>
   </tr>

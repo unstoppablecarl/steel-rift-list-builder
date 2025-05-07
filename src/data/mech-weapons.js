@@ -520,5 +520,3 @@ function makeWeapon({
         slots,
     };
 }
-
-// export const MECH_WEAPONS_DROP_DOWN = listToDropDown(MECH_WEAPONS);
