@@ -6,8 +6,11 @@ import HEVCardWeapons from './HEVCardWeapons.vue';
 import HEVCardUpgrades from './HEVCardUpgrades.vue';
 import HEVCardStats from './HEVCardStats.vue';
 import HEVCardHp from './HEVCardHp.vue';
-
+import {useArmyListStore} from '../../../store/army-list-store.js';
+import {usePrintSettingsStore} from '../../../store/print-settings-store.js';
+const armyStore = useArmyListStore()
 const mechStore = useMechStore();
+const printStore = usePrintSettingsStore()
 
 const {mechId} = defineProps({
   mechId: {
@@ -24,8 +27,15 @@ const info = computed(() => {
   <div class="game-card">
     <div class="card-content-container">
 
-      <div class="card-name">
+
+      <div class="card-name d-flex">
+        <div class="flex-grow-1">
+
         {{ info.display_name }}
+        </div>
+        <div class="flex-shrink-1" v-if="printStore.include_army_name_on_cards">
+          {{armyStore.name || 'Unnamed Army'}}
+        </div>
       </div>
 
       <HEVCardStats :mech-id="mechId"/>

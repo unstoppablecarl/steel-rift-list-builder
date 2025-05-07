@@ -284,6 +284,7 @@ export const useTeamStore = defineStore('team', () => {
             return mechIds;
         });
 
+
         const getTeamGroupMechIds = getter((teamId, groupId) => {
             const group = findGroup.value(teamId, groupId);
             return map(group.mechs, 'mech_id');
@@ -553,6 +554,7 @@ export const useTeamStore = defineStore('team', () => {
             getTeamGroupPerksInfo,
             getMechHasTeamPerkId,
             getUsedTeamAbilityPerksInfo,
+            getTeamMechIds,
 
             addMechToTeam,
             removeMechFromTeam,

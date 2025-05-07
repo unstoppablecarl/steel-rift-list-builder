@@ -3,6 +3,7 @@ import {useFactionStore} from '../faction-store.js';
 import {useTeamStore} from '../team-store.js';
 import {useSupportAssetStore} from '../support-asset-store.js';
 import {useArmyListStore} from '../army-list-store.js';
+import {usePrintSettingsStore} from '../print-settings-store.js';
 
 function getStores() {
     return [
@@ -11,6 +12,7 @@ function getStores() {
         useTeamStore(),
         useSupportAssetStore(),
         useArmyListStore(),
+        usePrintSettingsStore(),
     ];
 }
 
