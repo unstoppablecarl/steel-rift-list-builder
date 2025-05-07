@@ -1,0 +1,40 @@
+$scale: 1;
+
+$card-width: 180pt;
+$card-height: 252pt;
+
+$page-width: 8.5 * 72pt;
+$page-height: 11 * 72pt;
+
+@import 'mixins/page-cards';
+
+.page-card-grid {
+    box-sizing: content-box;
+}
+
+.card-grid-container-to-scale-print {
+    @include pageCards($scale);
+
+    .card {
+        width: $card-width;
+        height: $card-height;
+        border: 0;
+        border-radius: 0;
+    }
+
+    $side-margin: ($page-width - $card-width * 3) * 0.5;
+    $top-margin: ($page-height - $card-height* 3) * 0.5;
+
+    .page-card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 180pt);
+        grid-template-rows: repeat(3, 252pt);
+        justify-content: center;
+        align-content: normal;
+        gap: 1px;
+        width: $card-width * 3;
+        height: $card-height * 3;
+
+        padding: $top-margin $side-margin;
+    }
+}

@@ -44,12 +44,19 @@ $enable-shadows: true;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import '../../node_modules/bootstrap-vue-next/src/styles/styles';
-@import "./bootstrap-vue-component-styles";
+@import "./bootstrap/bootstrap-vue-component-styles";
 
-@import "./icons";
-@import "./dropdown";
-@import "./collapse";
+@import "./fonts/text";
+@import "./fonts/icons";
+@import "./bootstrap/dropdown";
+@import "./bootstrap/collapse";
+@import "./page-cards-print";
+@import "./print-page";
 
+body {
+  font-optical-sizing: auto;
+  font-style: normal;
+}
 
 .btn-tertiary {
   --bs-btn-box-shadow: 0;

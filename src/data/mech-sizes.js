@@ -12,8 +12,9 @@ export const MECH_SIZES = makeFrozenStaticListIds({
         structure: 4,
         max_slots: 4,
         max_tons: 20,
-        speed: 12,
+        move: 12,
         jump: 10,
+        defense: 3,
     },
     [[SIZE_MEDIUM]]: {
         display_name: 'Medium',
@@ -21,8 +22,9 @@ export const MECH_SIZES = makeFrozenStaticListIds({
         structure: 6,
         max_slots: 5,
         max_tons: 30,
-        speed: 10,
+        move: 10,
         jump: 8,
+        defense: 4,
     },
     [[SIZE_HEAVY]]: {
         display_name: 'Heavy',
@@ -30,8 +32,9 @@ export const MECH_SIZES = makeFrozenStaticListIds({
         structure: 8,
         max_slots: 6,
         max_tons: 40,
-        speed: 8,
+        move: 8,
         jump: 6,
+        defense: 5,
     },
     [[SIZE_ULTRA]]: {
         display_name: 'Ultra',
@@ -39,8 +42,9 @@ export const MECH_SIZES = makeFrozenStaticListIds({
         structure: 10,
         max_slots: 7,
         max_tons: 50,
-        speed: 6,
+        move: 6,
         jump: 4,
+        defense: 6,
     },
 });
 

@@ -198,6 +198,7 @@ export const useMechStore = defineStore('mech', {
                     const structure_mod = MECH_BODY_MODS[structure_mod_id];
                     const armor_mod = MECH_BODY_MODS[armor_mod_id];
 
+                    let defense = size.defense;
                     let armor_stat = size.armor + armor_mod.modifier;
                     const structure_stat = size.structure + structure_mod.modifier;
 
@@ -231,7 +232,7 @@ export const useMechStore = defineStore('mech', {
 
                     let display_name = name || placeholder_name;
 
-                    let {speed, jump} = MECH_SIZES[size_id];
+                    let {move, jump} = MECH_SIZES[size_id];
                     const jumpJets = find(upgrades, {id: JUMP_JETS});
 
                     if (jumpJets) {
@@ -270,9 +271,10 @@ export const useMechStore = defineStore('mech', {
                         weapon_used_slots,
                         weapon_used_tons,
                         armor_upgrade_id,
-                        speed,
+                        move,
                         jump,
-                        tonnage_stat
+                        tonnage_stat,
+                        defense,
                     };
                 };
             },
@@ -357,6 +359,13 @@ export const useMechStore = defineStore('mech', {
                     return {traits, team_perks};
                 };
             },
+            getMechWeaponsAttachmentInfo(state) {
+                return (mechId) => {
+                    const mech = this.getMech(mechId);
+
+                    return mech.weapons.map(({id}) => this.getMechWeaponAttachmentInfo(mechId, id));
+                };
+            },
             getMechWeaponAttachmentInfo(state) {
                 return (mechId, mechWeaponAttachmentId) => {
                     const teamStore = useTeamStore();
@@ -425,7 +434,7 @@ export const useMechStore = defineStore('mech', {
                     const teamStore = useTeamStore();
                     const upgrade = MECH_UPGRADES[upgradeId];
 
-                    let {size_id} = this.getMech(mechId)
+                    let {size_id} = this.getMech(mechId);
                     let {
                         max_uses,
                         slots,
@@ -517,6 +526,13 @@ export const useMechStore = defineStore('mech', {
                         max_uses,
                         traits,
                     });
+                };
+            },
+            getMechUpgradesAttachmentInfo(state) {
+                return (mechId) => {
+                    const mech = this.getMech(mechId);
+
+                    return mech.upgrades.map(({id}) => this.getMechUpgradeAttachmentInfo(mechId, id));
                 };
             },
             getMechUpgradeAttachmentInfo(state) {

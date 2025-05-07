@@ -8,12 +8,16 @@ import {useArmyListStore} from '../store/army-list-store.js';
 import {storeToRefs} from 'pinia';
 import {useTeamStore} from '../store/team-store.js';
 import {useSupportAssetStore} from '../store/support-asset-store.js';
+import {inject} from 'vue';
 
 const store = useArmyListStore();
 const {used_teams_count, max_teams_count} = storeToRefs(useTeamStore());
 
 const {used_tons, max_tons, name} = storeToRefs(store);
 const {used_support_assets, max_support_assets} = storeToRefs(useSupportAssetStore());
+
+const currentPath = inject('currentPath');
+
 </script>
 <template>
   <div class="sticky-top text-bg-light border-bottom shadow">
@@ -30,6 +34,22 @@ const {used_support_assets, max_support_assets} = storeToRefs(useSupportAssetSto
               <BtnSave/>&nbsp;
               <BtnLoad/>&nbsp;
               <BtnReset/>
+              <div class="btn-group ms-1" role="group" aria-label="Basic example">
+
+                <a href="#/" :class="{
+                  'btn btn-sm btn-light': true,
+                  'active': currentPath == '#/'
+                }">
+                  Edit
+                </a>
+
+                <a href="#/print" :class="{
+                  'btn btn-sm btn-light': true,
+                  'active': currentPath == '#/print'
+                }">
+                  Print
+                </a>
+              </div>
             </div>
           </div>
         </div>
