@@ -9,7 +9,6 @@ const {secondary_agendas, max_secondary_agendas} = storeToRefs(useSecondaryAgend
   <div class="card" v-if="secondary_agendas.length">
     <div class="card-header">
       <span class="fw-bold">
-
         Secondary Agendas
       </span>
       (Choose {{ max_secondary_agendas }} at game start)
@@ -20,7 +19,6 @@ const {secondary_agendas, max_secondary_agendas} = storeToRefs(useSecondaryAgend
           <span class="fw-bold">
             {{ item.display_name }}
           </span>
-
           (<span class="fw-medium" v-if="item.type !== 'Team'">{{ item.type }}: </span>{{ item.type_display_name }})
         </div>
         <p>{{ item.description }}</p>

@@ -50,8 +50,9 @@ $enable-shadows: true;
 @import "./fonts/icons";
 @import "./bootstrap/dropdown";
 @import "./bootstrap/collapse";
-@import "./page-cards-print";
 @import "./print-page";
+@import "./page-cards-print";
+@import "./page-abilities-print";
 
 body {
   font-optical-sizing: auto;

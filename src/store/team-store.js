@@ -1,14 +1,7 @@
 import {defineStore} from 'pinia';
 import {computed, ref} from 'vue';
 import {findItemIndexById, move, setDisplayOrders} from './helpers/collection-helper.js';
-import {
-    MECH_TEAM_SIZES,
-    MECH_TEAMS,
-    TEAM_FIRE_SUPPORT,
-    TEAM_GENERAL,
-    TEAM_RECON,
-    TEAM_SIZE_LARGE,
-} from '../data/mech-teams.js';
+import {MECH_TEAM_SIZES, MECH_TEAMS, TEAM_FIRE_SUPPORT, TEAM_GENERAL, TEAM_RECON} from '../data/mech-teams.js';
 import {useMechStore} from './mech-store.js';
 import {countBy, difference, each, find, findIndex, groupBy, map, max, min, sortBy, sumBy} from 'lodash';
 import {getter} from './helpers/store-helpers.js';
@@ -52,6 +45,7 @@ export const useTeamStore = defineStore('team', () => {
                 return {
                     id: teamId,
                     display_name: MECH_TEAMS[teamId].display_name,
+                    icon: MECH_TEAMS[teamId].icon,
                 };
             });
         });
@@ -346,15 +340,32 @@ export const useTeamStore = defineStore('team', () => {
 
             if (
                 (teamId === TEAM_RECON ||
-                teamId === TEAM_FIRE_SUPPORT) &&
+                    teamId === TEAM_FIRE_SUPPORT) &&
                 groupId === 'B'
             ) {
                 const medium = find(result, {size_id: SIZE_MEDIUM});
-                medium.display_name = MECH_SIZES[SIZE_MEDIUM].display_name + '&' + MECH_SIZES[SIZE_HEAVY].display_name;
+                medium.display_name = MECH_SIZES[SIZE_MEDIUM].display_name + ' & ' + MECH_SIZES[SIZE_HEAVY].display_name;
                 result = result.filter(item => item.size_id !== SIZE_HEAVY);
             }
 
             return result;
+        });
+
+        const getUsedTeamAbilityPerksInfo = getter((teamId) => {
+            const perkIdsMap = {};
+            const mechIds = getTeamMechIds.value(teamId);
+
+            mechIds.forEach((mechId) => {
+                const sizeId = mechStore.getMech(mechId).size_id;
+                const perkIds = getTeamPerkIdsByMechSize.value(teamId, sizeId);
+                perkIds.forEach(perkId => perkIdsMap[perkId] = true);
+            });
+
+            const perkIds = Object.keys(perkIdsMap);
+
+            return perkIds.filter(perkId => MECH_TEAM_PERKS[perkId].is_ability)
+                .map((perkId) => MECH_TEAM_PERKS[perkId]);
+
         });
 
         // internal
@@ -541,6 +552,7 @@ export const useTeamStore = defineStore('team', () => {
             getTeamPerksInfoByMech,
             getTeamGroupPerksInfo,
             getMechHasTeamPerkId,
+            getUsedTeamAbilityPerksInfo,
 
             addMechToTeam,
             removeMechFromTeam,
@@ -573,6 +585,7 @@ function perkIdsToInfo(perkIds) {
             renderDisplayName,
             renderDesc,
             value,
+            is_ability,
         } = perkInfo;
 
         if (repeatCount > 1 && stackable) {
@@ -585,6 +598,7 @@ function perkIdsToInfo(perkIds) {
                 display_order,
                 value: newValue,
                 repeatCount,
+                is_ability,
             };
         }
 
@@ -594,6 +608,7 @@ function perkIdsToInfo(perkIds) {
             display_name_short,
             description,
             display_order,
+            is_ability,
         };
     });
 

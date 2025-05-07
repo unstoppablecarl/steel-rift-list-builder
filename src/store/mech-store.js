@@ -3,7 +3,7 @@ import {MECH_SIZES, SIZE_MEDIUM} from '../data/mech-sizes.js';
 import {MECH_BODY_MODS, MOD_STANDARD} from '../data/mech-body.js';
 import {MECH_ARMOR_UPGRADES, NO_ARMOR_UPGRADE} from '../data/mech-armor-upgrades.js';
 import {findById, updateObject} from '../data/data-helpers.js';
-import {cloneDeep, find, sumBy} from 'lodash';
+import {cloneDeep, find, map, sumBy} from 'lodash';
 import {TRAIT_LIMITED, TRAIT_SHORT, TRAIT_SMART, traitDisplayName, WEAPON_TRAITS} from '../data/weapon-traits.js';
 import {HOWITZER, MECH_WEAPONS, MISSILES, ROCKET_PACK} from '../data/mech-weapons.js';
 import {readonly} from 'vue';
@@ -381,7 +381,6 @@ export const useMechStore = defineStore('mech', {
                     const weaponAttachment = findById(mech.weapons, mechWeaponAttachmentId);
                     const weapon_id = weaponAttachment.weapon_id;
                     const weaponInfo = this.getWeaponInfo(mechId, weapon_id);
-                    let max_uses = null;
 
                     const previousWeaponInstances = mech.weapons.filter((item) => {
                         return item.weapon_id === weapon_id && item.display_order < weaponAttachment.display_order;
@@ -644,6 +643,26 @@ export const useMechStore = defineStore('mech', {
                 return (mechId) => {
                     return Object.keys(MECH_ARMOR_UPGRADES).map(armorUpgradeId => this.getMechArmorUpgradeInfo(mechId, armorUpgradeId));
                 };
+            },
+            getUsedWeaponTraitIds(state) {
+                const traitIdMap = {};
+                state.mechs.forEach(mech => {
+                    mech.weapons.forEach(weapon => {
+                        const traitInfo = this.getWeaponTraitInfo(mech.id, weapon.weapon_id);
+                        const traitIds = map(traitInfo.traits, 'id');
+                        traitIds.forEach(traitId => traitIdMap[traitId] = true);
+                    });
+                });
+                return Object.keys(traitIdMap);
+            },
+            getUsedUpgradeIds(state) {
+                const idMap = {};
+                state.mechs.forEach(mech => {
+                    mech.upgrades.forEach(upgrade => {
+                        idMap[upgrade.upgrade_id] = true;
+                    });
+                });
+                return Object.keys(idMap);
             },
         },
         persist: true,

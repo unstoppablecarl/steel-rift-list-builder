@@ -1,6 +1,6 @@
 <script setup>
 import {useMechStore} from '../store/mech-store.js';
-import PageHevCards from './ArmyPrint/PageHEVCards.vue';
+import PageHevCards from './ArmyCardsPrint/PageHEVCards.vue';
 import {computed} from 'vue';
 import {chunk} from 'lodash';
 

@@ -20,6 +20,7 @@ export const useSecondaryAgendaStore = defineStore('secondary-agenda', () => {
     const max_secondary_agendas = computed(() => {
         return armyListStore.game_size_info.max_secondary_agendas;
     });
+
     const secondary_agendas = computed(() => {
         const result = [];
         const factionId = factionStore.faction_id;
@@ -40,7 +41,7 @@ export const useSecondaryAgendaStore = defineStore('secondary-agenda', () => {
 
         teamStore.teams.map(team => {
             if (teamStore.getTeamMechCount(team.id)) {
-                const agendaId = MECH_TEAMS[team.id].secondary_agenda_id;
+                const agendaId = MECH_TEAMS[team.id].secondary_agenda;
                 if (agendaId) {
                     result.push(Object.assign({},
                         SECONDARY_AGENDAS[agendaId],

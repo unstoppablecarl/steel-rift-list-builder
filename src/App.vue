@@ -2,7 +2,7 @@
 import Toaster from './components/UI/Toaster.vue';
 import {computed, inject, onMounted, provide, ref} from 'vue';
 import AppHeader from './components/AppHeader.vue';
-import ArmyPrint from './components/ArmyPrint.vue';
+import ArmyCardsPrint from './components/ArmyCardsPrint.vue';
 import ArmyEdit from './components/ArmyEdit.vue';
 
 onMounted(() => {
@@ -11,7 +11,7 @@ onMounted(() => {
 
 const routes = {
   '/': ArmyEdit,
-  '/print': ArmyPrint,
+  '/print': ArmyCardsPrint,
 };
 
 const currentPath = ref(window.location.hash);

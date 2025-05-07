@@ -1,8 +1,8 @@
 <script setup>
 
-import Mech from './Mech.vue';
+import Mech from '../Mech.vue';
 import {storeToRefs} from 'pinia';
-import {useMechStore} from '../store/mech-store.js';
+import {useMechStore} from '../../store/mech-store.js';
 import draggable from 'vuedraggable';
 import {ref} from 'vue';
 
