@@ -9,7 +9,7 @@ const teamStore = useTeamStore();
 
 const {mechId} = defineProps({
   mechId: {
-    type: String,
+    type: Number,
   },
 });
 const info = computed(() => mechStore.getMechInfo(mechId));
@@ -21,9 +21,9 @@ const team = computed(() => {
 
 </script>
 <template>
-  <div class="row g-1 mb-1">
+  <div class="row g-1">
     <div class="col-5">
-      <div class="unit-type px-2 py-1">
+      <div class="unit-info">
         <div class="hev-size">
           {{ info.size.display_name }} HE-V
         </div>
@@ -33,24 +33,24 @@ const team = computed(() => {
       </div>
     </div>
     <div class="col-7">
-      <table class="table-card">
+      <table class="table-card-stats">
         <thead>
-        <tr class="heading-row">
-          <th class="ps-1">Tng</th>
+        <tr>
+          <th>Tng</th>
           <th>Mov</th>
           <th>Jmp</th>
-          <th class="pe-2">Def</th>
+          <th>Def</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-          <td class="ps-1">{{ info.tonnage_stat }}</td>
+          <td>{{ info.tonnage_stat }}</td>
           <td>{{ info.move }}"</td>
           <td>
             <template v-if="info.jump">{{ info.jump }}"</template>
             <template v-else>-</template>
           </td>
-          <td class="pe-2">{{ info.defense }}+</td>
+          <td>{{ info.defense }}+</td>
         </tr>
         </tbody>
       </table>

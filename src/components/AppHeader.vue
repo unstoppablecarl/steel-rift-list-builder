@@ -20,7 +20,7 @@ const currentPath = inject('currentPath');
 
 </script>
 <template>
-  <div class="sticky-top text-bg-light border-bottom shadow">
+  <div class="sticky-top text-bg-light border-bottom shadow app-header">
     <div class="container-lg">
       <div class="px-1 pt-2 pb-3">
         <div class="row">

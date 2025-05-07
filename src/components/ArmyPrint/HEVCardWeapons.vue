@@ -1,21 +1,17 @@
 <script setup>
-
 import {computed} from 'vue';
 import {useMechStore} from '../../store/mech-store.js';
 
 const mechStore = useMechStore();
-
 const {mechId} = defineProps({
   mechId: {
-    type: String,
+    type: Number,
   },
 });
 const weapons = computed(() => mechStore.getMechWeaponsAttachmentInfo(mechId));
-
 </script>
 <template>
-
-  <table class="table-card w-100">
+  <table class="table-card table-weapons">
     <thead>
     <tr>
       <th class="text-start ps-2">Weapon</th>

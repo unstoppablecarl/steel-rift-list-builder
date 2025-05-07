@@ -29,7 +29,7 @@ import {MOD_REINFORCED, MOD_STANDARD, MOD_STRIPPED} from './mech-body.js';
 import {makeStaticListIds} from './data-helpers.js';
 import {
     ABLATIVE_ARMOR_UPGRADE,
-    CERAMIC_ARMOR_UPGRADE,
+    CERAMIC_ARMOR_UPGRADE, CLAYMORE_ARMOR_UPGRADE, EXTRA_PLATING_ARMOR_UPGRADE,
     HEAVY_PLATING_ARMOR_UPGRADE,
     REACTIVE_ARMOR_UPGRADE,
 } from './mech-armor-upgrades.js';
@@ -204,6 +204,9 @@ export const MECH_TEAMS = makeStaticListIds({
                     ABLATIVE_ARMOR_UPGRADE,
                     REACTIVE_ARMOR_UPGRADE,
                     CERAMIC_ARMOR_UPGRADE,
+                    CLAYMORE_ARMOR_UPGRADE,
+                    EXTRA_PLATING_ARMOR_UPGRADE,
+                    HEAVY_PLATING_ARMOR_UPGRADE,
                 ],
                 limited_structure_mod_ids: [MOD_STANDARD, MOD_REINFORCED],
                 limited_armor_mod_ids: [MOD_STANDARD, MOD_REINFORCED],
@@ -216,6 +219,9 @@ export const MECH_TEAMS = makeStaticListIds({
                     ABLATIVE_ARMOR_UPGRADE,
                     REACTIVE_ARMOR_UPGRADE,
                     CERAMIC_ARMOR_UPGRADE,
+                    CLAYMORE_ARMOR_UPGRADE,
+                    EXTRA_PLATING_ARMOR_UPGRADE,
+                    HEAVY_PLATING_ARMOR_UPGRADE,
                 ],
                 limited_structure_mod_ids: [MOD_STANDARD, MOD_REINFORCED],
                 limited_armor_mod_ids: [MOD_STANDARD, MOD_REINFORCED],

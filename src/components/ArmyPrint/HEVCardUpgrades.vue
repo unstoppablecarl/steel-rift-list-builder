@@ -7,7 +7,7 @@ const mechStore = useMechStore();
 
 const {mechId} = defineProps({
   mechId: {
-    type: String,
+    type: Number,
   },
 });
 const upgrades = computed(() => mechStore.getMechUpgradesAttachmentInfo(mechId));
@@ -15,10 +15,10 @@ const upgrades = computed(() => mechStore.getMechUpgradesAttachmentInfo(mechId))
 </script>
 <template>
 
-  <div class="heading px-2 py-1">
+  <div class="upgrades-heading">
     Upgrades
   </div>
-  <div class="py-1 px-2 upgrades">
+  <div class="upgrades">
     <template v-for="(upgrade, index) in upgrades">
       {{ upgrade.display_name }}<span v-if="index !== upgrades.length -1">, </span>
     </template>

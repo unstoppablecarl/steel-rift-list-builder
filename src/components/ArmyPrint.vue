@@ -12,7 +12,7 @@ const mechPages = computed(() => {
 </script>
 <template>
   <div class="page-previews-container" data-bs-theme="light">
-    <div class="output-container card-grid-container-to-scale-print">
+    <div class="output-container">
       <PageHevCards v-for="mechPage in mechPages" :mech-page="mechPage"/>
     </div>
   </div>

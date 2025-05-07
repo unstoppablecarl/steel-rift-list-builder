@@ -3,7 +3,6 @@ $page-letter-height: 11 * 72pt;
 $dividing-line-color: rgba(126, 126, 126, 0.25);
 $footer-bg: #f7f9fc;
 $page-preview-bg: #d0d0d0;
-
 $heading-border-color: #7d8ba2;
 
 .page-previews-container {
@@ -22,11 +21,6 @@ $heading-border-color: #7d8ba2;
     &.page-letter {
         width: $page-letter-width;
         height: $page-letter-height;
-    }
-
-    &.page-letter-landscape {
-        width: $page-letter-height;
-        height: $page-letter-width;
     }
 }
 
@@ -58,7 +52,7 @@ $heading-border-color: #7d8ba2;
         background-color: gray;
     }
 
-    .header,
+    .app-header,
     .no-print {
         display: none;
     }

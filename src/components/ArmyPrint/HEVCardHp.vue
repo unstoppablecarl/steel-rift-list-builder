@@ -9,7 +9,7 @@ const mechStore = useMechStore();
 
 const {mechId} = defineProps({
   mechId: {
-    type: String,
+    type: Number,
   },
 });
 const info = computed(() => mechStore.getMechInfo(mechId));
@@ -65,7 +65,7 @@ const structureHp = computed(() => {
   chunkCounts.forEach((count, index) => {
     const items = Array(count).fill(0);
 
-    items[items.length - 1] = map[index]
+    items[items.length - 1] = map[index];
     points = points.concat(items);
   });
 
@@ -74,25 +74,25 @@ const structureHp = computed(() => {
 
 </script>
 <template>
-  <div class="row g-1 mb-1 px-2 row-hp">
+  <div class="row g-1 row-damage">
     <div class="col-5">
       <div class="hp-heading">
-        Armor
+        ARMOR
       </div>
       <div :class="{'hp-container': true, 'armor-6-per-row': armor6PerRow}">
-        <div v-for="row in armorHp">
+        <div class="hp-row" v-for="row in armorHp">
           <span class="hp" v-for="i in row"></span>
         </div>
       </div>
     </div>
     <div class="col-7">
       <div class="row g-1">
-        <div class="col-8">
+        <div class="col-7 hp-structure">
           <div class="hp-heading">
-            Structure
+            STRUCTURE
           </div>
           <div class="hp-container">
-            <div v-for="row in structureHp">
+            <div class="hp-row" v-for="row in structureHp">
               <span class="hp" v-for="i in row">
                 <span v-if="i">{{ i }}</span>
                 <span v-else>&nbsp;</span>
@@ -103,21 +103,39 @@ const structureHp = computed(() => {
             {{ structureSystem }}
           </div>
         </div>
-        <div class="col-4">
-          <div class="hp-heading">&nbsp;</div>
-          <div class="crit-box">
-            <div class="crit-heading">
-              CRIT
-            </div>
-            <div>
-              (M)ove -1
-            </div>
-            <div>
-              (D)mg -1
-            </div>
-            <div>
-              (Ø)rders -1
-            </div>
+        <div class="col-5 crit-container">
+          <div class="crit-heading">
+            CRIT
+          </div>
+          <div class="crit-content">
+            <table class="table-crit">
+              <tbody>
+              <tr>
+                <td>
+                  <strong>(M)</strong>ove
+                </td>
+                <td class="text-end">
+                  -1
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>(D)</strong>mg
+                </td>
+                <td class="text-end">
+                  -1
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>(Ø)</strong>rders
+                </td>
+                <td class="text-end">
+                  -1
+                </td>
+              </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

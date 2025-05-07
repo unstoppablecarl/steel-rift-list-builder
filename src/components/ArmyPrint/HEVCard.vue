@@ -11,7 +11,7 @@ const mechStore = useMechStore();
 
 const {mechId} = defineProps({
   mechId: {
-    type: String,
+    type: Number,
   },
 });
 
@@ -21,9 +21,10 @@ const info = computed(() => {
 
 </script>
 <template>
-  <div class="card card-unit">
+  <div class="game-card">
     <div class="card-content-container">
-      <div class="px-2 py-1">
+
+      <div class="card-name">
         {{ info.display_name }}
       </div>
 
