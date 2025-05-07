@@ -3,6 +3,7 @@
 import {computed} from 'vue';
 import {useTeamStore} from '../../store/team-store.js';
 import {useMechStore} from '../../store/mech-store.js';
+import {TEAM_GENERAL} from '../../data/mech-teams.js';
 
 const mechStore = useMechStore();
 const teamStore = useTeamStore();
@@ -27,8 +28,9 @@ const team = computed(() => {
         <div class="hev-size">
           {{ info.size.display_name }} HE-V
         </div>
-        <div class="hev-team">
+        <div class="hev-team" v-if="team.id !== TEAM_GENERAL">
           {{ team.display_name }}
+          <img :src="team.icon" class="team-icon"/>
         </div>
       </div>
     </div>

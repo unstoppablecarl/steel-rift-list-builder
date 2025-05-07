@@ -17,6 +17,7 @@ $card-padding-x: 5pt;
 .output-container {
 
   --section-heading-bg: #ddd;
+  --sub-heading-bg: #eee;
   --card-outline-color: #ccc;
   --card-bg: #fff;
 
@@ -60,18 +61,26 @@ $card-padding-x: 5pt;
   }
 
   .unit-info {
-    background: var(--section-heading-bg);
-    font-family: $font-anta;
-    padding: 2pt $card-padding-x 2pt;
 
     .hev-size {
       font-size: 8pt;
       padding-bottom: 2pt;
+      background: var(--section-heading-bg);
+      padding: 2pt $card-padding-x 2pt;
+      font-family: $font-anta;
     }
 
     .hev-team {
-      font-size: 0.6rem;
+      font-size: 7pt;
       line-height: 10pt;
+      padding: 2pt $card-padding-x;
+      background: var(--sub-heading-bg);
+    }
+
+    .team-icon {
+      //height: 8pt;
+      height: .8rem;
+      vertical-align: top;
     }
   }
 
@@ -90,6 +99,10 @@ $card-padding-x: 5pt;
       background: var(--section-heading-bg);
       font-weight: normal;
       font-family: $font-anta;
+    }
+
+    tbody td {
+      padding: 2pt 0;
     }
   }
 
@@ -158,7 +171,6 @@ $card-padding-x: 5pt;
 
       > span {
         position: relative;
-        //top: -1px;
         display: inline-block;
       }
     }
@@ -199,6 +211,7 @@ $card-padding-x: 5pt;
   .table-weapons {
     width: 100%;
   }
+
   .upgrades {
     font-size: 0.7rem;
     padding: $card-padding-x;
