@@ -14,13 +14,15 @@ const upgrades = computed(() => mechStore.getMechUpgradesAttachmentInfo(mechId))
 
 </script>
 <template>
+  <div v-if="upgrades.length">
 
-  <div class="upgrades-heading">
-    Upgrades
-  </div>
-  <div class="upgrades">
-    <template v-for="(upgrade, index) in upgrades">
-      {{ upgrade.display_name }}<span v-if="index !== upgrades.length -1">, </span>
-    </template>
+    <div class="upgrades-heading">
+      Upgrades
+    </div>
+    <div class="upgrades">
+      <template v-for="(upgrade, index) in upgrades">
+        {{ upgrade.display_name }}<span v-if="index !== upgrades.length -1">, </span>
+      </template>
+    </div>
   </div>
 </template>

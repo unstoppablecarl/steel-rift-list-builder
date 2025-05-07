@@ -55,9 +55,9 @@ $card-padding-x: 5pt;
     padding: $padding-y $padding-x;
   }
 
-
   .card-name {
     padding: 0 $card-padding-x 2pt;
+    font-size: 8pt;
   }
 
   .unit-info {
@@ -78,7 +78,6 @@ $card-padding-x: 5pt;
     }
 
     .team-icon {
-      //height: 8pt;
       height: .8rem;
       vertical-align: top;
     }
@@ -201,19 +200,68 @@ $card-padding-x: 5pt;
     }
   }
 
-  .upgrades-heading {
-    background: var(--section-heading-bg);
-    font-weight: bold;
-    font-family: $font-anta;
-    padding: 1pt $card-padding-x 2pt;
-  }
-
   .table-weapons {
     width: 100%;
+    margin: 3px 0;
+
+    thead th {
+      font-family: $font-anta;
+      font-weight: normal;
+      font-size: 8pt;
+      background: var(--section-heading-bg);
+      padding: 1pt 0;
+
+      text-align: center;
+
+      &:first-child {
+        text-align: left;
+        padding-left: $card-padding-x;
+      }
+    }
+
+    tbody td {
+      font-size: 7pt;
+      text-align: center;
+      border-bottom: .1pt solid #000;
+      padding: 1pt 0;
+
+      vertical-align: top;
+
+      &:first-child {
+        text-align: left;
+        padding-left: $card-padding-x;
+      }
+    }
+
+    tbody tr:last-child td {
+      border:0;
+    }
+
+    .weapon-uses {
+      .weapon-use {
+        display: inline-block;
+        width: 10pt;
+        height: 10pt;
+        border: 1.2pt solid #000;
+        border-radius: 1000px;
+        margin: 0 1px 1px 0;
+        font-size: .5rem;
+        line-height: 10pt;
+        text-align: center;
+      }
+    }
+  }
+
+  .upgrades-heading {
+    background: var(--section-heading-bg);
+    font-size: 8pt;
+    font-weight: normal;
+    font-family: $font-anta;
+    padding: 1pt $card-padding-x;
   }
 
   .upgrades {
-    font-size: 0.7rem;
-    padding: $card-padding-x;
+    font-size: 7pt;
+    padding: 0 $card-padding-x;
   }
 }
