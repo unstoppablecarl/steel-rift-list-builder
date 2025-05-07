@@ -10,7 +10,7 @@ const armyListStore = useArmyListStore();
 <template>
   <div class="page-previews-container" data-bs-theme="light">
     <div class="output-container">
-      <div class="page-preview page-letter"
+      <div class="page-preview page-letter-width"
            style="background-color:white">
         <div class="page-army-reference">
           <h6>

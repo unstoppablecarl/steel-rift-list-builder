@@ -5,7 +5,6 @@ import MechTeam from '../MechTeam/MechTeam.vue';
 import {computed} from 'vue';
 import {TEAM_GENERAL} from '../../data/mech-teams.js';
 import MechTeamGroup from '../MechTeam/MechTeamGroup.vue';
-import {BDropdown} from 'bootstrap-vue-next';
 import BtnAddTeam from '../UI/BtnAddTeam.vue';
 
 const teamStore = useTeamStore();
@@ -34,7 +33,7 @@ const nonGeneralTeams = computed(() => {
   <div class="d-flex">
     <div class="flex-grow-1"></div>
     <div class="">
-      <BtnAddTeam/>
+      <BtnAddTeam v-if="nonGeneralTeams.length"/>
     </div>
   </div>
 </template>
