@@ -9,6 +9,7 @@ import {storeToRefs} from 'pinia';
 import {useTeamStore} from '../store/team-store.js';
 import {useSupportAssetStore} from '../store/support-asset-store.js';
 import {inject} from 'vue';
+import {ROUTE_HOME, ROUTE_PRINT_CARDS, ROUTE_PRINT_REF} from '../routes.js';
 
 const store = useArmyListStore();
 const {used_teams_count, max_teams_count} = storeToRefs(useTeamStore());
@@ -35,19 +36,24 @@ const currentPath = inject('currentPath');
               <BtnLoad/>&nbsp;
               <BtnReset/>
               <div class="btn-group ms-1" role="group" aria-label="Basic example">
-
-                <a href="#/" :class="{
+                <a :href="`#${ROUTE_HOME}`" :class="{
                   'btn btn-sm btn-light': true,
-                  'active': currentPath == '#/'
+                  'active': currentPath === `#${ROUTE_HOME}`
                 }">
                   Edit
                 </a>
-
-                <a href="#/print" :class="{
+                <a :href="`#${ROUTE_PRINT_CARDS}`" :class="{
                   'btn btn-sm btn-light': true,
-                  'active': currentPath == '#/print'
+                  'active': currentPath === `#${ROUTE_PRINT_CARDS}`
                 }">
-                  Print
+                  Print Cards
+                </a>
+
+                <a :href="`#${ROUTE_PRINT_REF}`" :class="{
+                  'btn btn-sm btn-light': true,
+                  'active': currentPath === `#${ROUTE_PRINT_REF}`
+                }">
+                  Print Reference
                 </a>
               </div>
             </div>
