@@ -18,10 +18,10 @@ const weapons = computed(() => mechStore.getMechWeaponsAttachmentInfo(mechId));
   <table class="table-card w-100">
     <thead>
     <tr>
-      <th>Weapon</th>
+      <th class="text-start ps-2">Weapon</th>
       <th>Dmg</th>
       <th>Rng</th>
-      <th>Traits</th>
+      <th class="pe-2">Traits</th>
     </tr>
     </thead>
     <tbody>
