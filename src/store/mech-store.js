@@ -23,12 +23,10 @@ import {useToastStore} from './toast-store.js';
 import {useFactionStore} from './faction-store.js';
 import {
     DWC_TOP_END_HARDWARE,
-    DWC_TOP_END_HARDWARE_BONUS_TONS,
     OI_MATERIEL_STOCKPILES,
     RD_ADVANCED_HARDPOINT_DESIGN,
-    RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS,
     UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN,
-} from '../data/factions.js';
+} from '../data/faction-perks.js';
 import {useTeamStore} from './team-store.js';
 import {
     TEAM_PERK_0_SLOT_ARMOR_UPGRADES,
@@ -47,6 +45,7 @@ import {
     TEAM_PERK_SMART_HOWITZERS,
 } from '../data/mech-team-perks.js';
 import {TRAIT_UPGRADE_LIMITED} from '../data/upgrade-traits.js';
+import {DWC_TOP_END_HARDWARE_BONUS_TONS, RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS} from '../data/factions.js';
 
 export const useMechStore = defineStore('mech', {
         state() {

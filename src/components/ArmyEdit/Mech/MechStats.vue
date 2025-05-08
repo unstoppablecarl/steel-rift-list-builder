@@ -3,13 +3,16 @@ import {BFormInput} from 'bootstrap-vue-next';
 import {useMechStore} from '../../../store/mech-store.js';
 import {useFactionStore} from '../../../store/faction-store.js';
 import Number from '../../functional/number.vue';
-import MechStatRow from './MechStats/MechStatRow.vue';
+import MechFactionPerkRow from './MechStats/MechFactionPerkRow.vue';
 import Fraction from '../../functional/fraction.vue';
 import MechWeapons from './MechWeapons.vue';
 import MechUpgrades from './MechUpgrades.vue';
 import {computed} from 'vue';
 import {storeToRefs} from 'pinia';
 import {useTeamStore} from '../../../store/team-store.js';
+import MechArmorUpgrades from './MechStats/MechArmorUpgrades.vue';
+import MechBodyMods from './MechStats/MechBodyMods.vue';
+import MechSizes from './MechStats/MechSizes.vue';
 
 const mechStore = useMechStore();
 const factionStore = useFactionStore();
@@ -22,11 +25,13 @@ const info = computed(() => mechStore.getMechInfo(mechId));
 
 const {
   hasAdvancedHardPoints,
-  advancedHardPointsLabel,
+  advancedHardPointsInfo,
   advancedHardPointsBonusSlots,
+
   topEndHardwareBonusTons,
   hasTopEndHardware,
-  topEndHardwareLabel,
+  topEndHardwareInfo,
+
 } = storeToRefs(factionStore);
 
 const structureModOptions = computed(() => teamStore.getMechStructureModOptions(mechId));
@@ -39,6 +44,7 @@ const armorModOptions = computed(() => teamStore.getMechArmorModOptions(mechId))
       <thead>
       <tr>
         <td>
+
           <label class="col-form-label" :for="'mech-input-name-' + mechId">Name</label>
         </td>
         <td colspan="3">
@@ -93,17 +99,16 @@ const armorModOptions = computed(() => teamStore.getMechArmorModOptions(mechId))
           :size-id="mech.size_id"
           :mech-id="mech.id"
       />
-      <MechStatRow
+      <MechFactionPerkRow
           v-if="hasTopEndHardware"
-          label="Perk"
-          :text="topEndHardwareLabel"
+          :text="topEndHardwareInfo.display_name"
+          :description="topEndHardwareInfo.description"
           :usedTons="topEndHardwareBonusTons"
       />
-
-      <MechStatRow
+      <MechFactionPerkRow
           v-if="hasAdvancedHardPoints"
-          label="Perk"
-          :text="advancedHardPointsLabel"
+          :text="advancedHardPointsInfo.display_name"
+          :description="advancedHardPointsInfo.description"
           :usedSlots="advancedHardPointsBonusSlots"
       />
       <MechUpgrades

@@ -4,17 +4,9 @@ import {indexOf, sumBy} from 'lodash';
 import {SUPPORT_ASSETS} from '../data/support-assets.js';
 import {useArmyListStore} from './army-list-store.js';
 import {useFactionStore} from './faction-store.js';
-import {
-    AUTHORITIES,
-    CORPORATIONS,
-    DEEP_WAR_CHEST,
-    DWC_OUTRAGEOUS_SUPPORT_BUDGET,
-    FACTIONS,
-    OI_ORBITAL_STOCKPILES,
-    OLD_INFRASTRUCTURE,
-} from '../data/factions.js';
 import {TRAIT_LIMITED, traitDisplayName, WEAPON_TRAITS} from '../data/weapon-traits.js';
 import {GAME_SIZES} from '../data/game-sizes.js';
+import {DWC_OUTRAGEOUS_SUPPORT_BUDGET, FACTION_PERKS, OI_ORBITAL_STOCKPILES} from '../data/faction-perks.js';
 
 export const useSupportAssetStore = defineStore('support-asset', () => {
 
@@ -40,20 +32,17 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
 
                     if (factionStore.hasPerk(OI_ORBITAL_STOCKPILES)) {
                         asset.traits.forEach((trait) => {
-                            if (trait.id == TRAIT_LIMITED) {
+                            if (trait.id === TRAIT_LIMITED) {
                                 trait.number += 1;
                             }
                         });
-                        const note = FACTIONS[AUTHORITIES]
-                            .faction_perk_groups[OLD_INFRASTRUCTURE]
-                            .perks[OI_ORBITAL_STOCKPILES]
-                            .display_name;
+                        const note = FACTION_PERKS[OI_ORBITAL_STOCKPILES].display_name;
 
                         asset.notes.push(`${note} Limit(+1)`);
                     }
 
                     if (factionStore.hasPerk(DWC_OUTRAGEOUS_SUPPORT_BUDGET)) {
-                        if (asset.id == outrageous_budget_perk_support_asset_id.value) {
+                        if (asset.id === outrageous_budget_perk_support_asset_id.value) {
                             asset.cost = 0;
                             if (asset.damage > 0) {
                                 asset.damage -= 1;
@@ -65,10 +54,7 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
                                 }
                             });
 
-                            const note = FACTIONS[CORPORATIONS]
-                                .faction_perk_groups[DEEP_WAR_CHEST]
-                                .perks[DWC_OUTRAGEOUS_SUPPORT_BUDGET]
-                                .display_name;
+                            const note = FACTION_PERKS[DWC_OUTRAGEOUS_SUPPORT_BUDGET].display_name;
 
                             asset.notes.push(note);
                         }
@@ -154,8 +140,5 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
     },
     {
         persist: true,
-        afterHydrate() {
-            console.log('after');
-        },
     },
 );

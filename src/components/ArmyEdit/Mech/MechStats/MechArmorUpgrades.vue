@@ -93,9 +93,9 @@ const open = ref(false);
                       v-show="item.description"
                       @mouseover="mouseover"
                       @mouseleave="mouseleave"
-                      class="btn btn-sm btn-light"
+                      class="btn btn-sm btn-light me-1"
                   >
-                    ?
+                    <span class="material-symbols-outlined">shield_question</span>
                   </span>
                 </template>
                 <template #content>
@@ -105,6 +105,7 @@ const open = ref(false);
             </td>
             <td class="notes">
               <IconTeamGroupPerks
+                  class="me-1"
                   :perks="item.team_perks"
               />
             </td>
@@ -124,9 +125,9 @@ const open = ref(false);
               v-show="armorUpgrade.description"
               @mouseover="mouseover"
               @mouseleave="mouseleave"
-              class="btn btn-light ms-2 me-2"
+              class="btn btn-light ms-1 me-1"
           >
-            ?
+            <span class="material-symbols-outlined">shield_question</span>
           </span>
         </template>
         <template #content>

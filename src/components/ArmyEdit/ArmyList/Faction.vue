@@ -1,9 +1,10 @@
 <script setup>
 import {useFactionStore} from '../../../store/faction-store.js';
 import {storeToRefs} from 'pinia';
-import {DWC_OUTRAGEOUS_SUPPORT_BUDGET, FACTIONS_DROP_DOWN, NO_FACTION} from '../../../data/factions.js';
+import {FACTIONS_DROP_DOWN, NO_FACTION} from '../../../data/factions.js';
 import {computed} from 'vue';
 import {useSupportAssetStore} from '../../../store/support-asset-store.js';
+import {DWC_OUTRAGEOUS_SUPPORT_BUDGET} from '../../../data/faction-perks.js';
 
 const store = useFactionStore();
 const supportAssetStore = useSupportAssetStore();
@@ -23,7 +24,7 @@ const {
 
 const factionsDropDown = FACTIONS_DROP_DOWN;
 
-const disabled = computed(() => faction_id.value == NO_FACTION);
+const disabled = computed(() => faction_id.value === NO_FACTION);
 const hasOutrageousSupportBudget = computed(() => store.hasPerk(DWC_OUTRAGEOUS_SUPPORT_BUDGET));
 
 function setFactionId(factionId) {
