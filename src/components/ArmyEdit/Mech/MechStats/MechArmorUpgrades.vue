@@ -64,6 +64,8 @@ const open = ref(false);
               Tons Used
             </td>
             <td></td>
+            <td></td>
+            <td></td>
           </tr>
           </thead>
           <tbody>
@@ -105,6 +107,8 @@ const open = ref(false);
               <IconTeamGroupPerks
                   :perks="item.team_perks"
               />
+            </td>
+            <td class="notes">
               <IconNotAvailable
                   :valid="item.valid"
                   :validation_message="item.validation_message"
