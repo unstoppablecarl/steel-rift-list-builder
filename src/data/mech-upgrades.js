@@ -105,7 +105,9 @@ export const MECH_UPGRADES = makeFrozenStaticListIds({
     [[COOLANT_TANKS]]: makeUpgrade({
         display_name: 'Coolant Tanks',
         description: 'Twice per game, before issuing an Order you may remove a Redline Marker from this HE-V.',
-        max_uses: 2,
+        traits: [
+            trait(TRAIT_UPGRADE_LIMITED, 2),
+        ],
         cost_by_size: {
             [[SIZE_LIGHT]]: 1,
             [[SIZE_MEDIUM]]: 1,
@@ -167,7 +169,9 @@ export const MECH_UPGRADES = makeFrozenStaticListIds({
     [[NITRO_BOOST]]: makeUpgrade({
         display_name: 'Nitro Boost',
         description: 'Once per game, at the beginning of a Move Order, you may move an additional 4”',
-        max_uses: 1,
+        traits: [
+            trait(TRAIT_UPGRADE_LIMITED, 1),
+        ],
         cost_by_size: {
             [[SIZE_LIGHT]]: 1,
             [[SIZE_MEDIUM]]: 1,
@@ -204,6 +208,7 @@ export function getUpgradeTraits(upgradeId, sizeId) {
         traits = upgrade.traits_by_size[sizeId] || [];
     }
 
+    console.log(traits)
     return traits.map(({id, number}) => {
         return Object.assign(
             {},

@@ -1,7 +1,9 @@
 <script setup>
-import {computed, unref} from 'vue';
+import {computed} from 'vue';
 import {useMechStore} from '../../../store/mech-store.js';
 import {TRAIT_LIMITED} from '../../../data/weapon-traits.js';
+import {find} from 'lodash';
+import {MINEFIELD_DRONE_CARRIER_SYSTEM} from '../../../data/mech-upgrades.js';
 
 const mechStore = useMechStore();
 const {mechId} = defineProps({
@@ -9,7 +11,18 @@ const {mechId} = defineProps({
     type: Number,
   },
 });
-const weapons = computed(() => mechStore.getMechWeaponsAttachmentInfo(mechId));
+const weapons = computed(() => {
+  let results = mechStore.getMechWeaponsAttachmentInfo(mechId);
+
+  let mineDroneUpgrade = find(mechStore.getMechUpgradesAttachmentInfo(mechId), {upgrade_id: MINEFIELD_DRONE_CARRIER_SYSTEM});
+
+  if (mineDroneUpgrade) {
+    mineDroneUpgrade.display_name = 'Mine Drones'
+    results.push(mineDroneUpgrade);
+  }
+
+  return results;
+});
 
 function filterLimited(traits) {
   return traits.filter((trait) => trait.id !== TRAIT_LIMITED);

@@ -46,6 +46,7 @@ import {
     TEAM_PERK_JUMP_BOOSTER,
     TEAM_PERK_SMART_HOWITZERS,
 } from '../data/mech-team-perks.js';
+import {TRAIT_UPGRADE_LIMITED} from '../data/upgrade-traits.js';
 
 export const useMechStore = defineStore('mech', {
         state() {
@@ -301,8 +302,13 @@ export const useMechStore = defineStore('mech', {
                         range_formatted = range + '"';
                     }
 
-                    const {traits, team_perks} = this.getWeaponTraitInfo(mechId, weaponId);
+                    const {traits, team_perks, faction_perks} = this.getWeaponTraitInfo(mechId, weaponId);
                     const traitLimited = find(traits, {id: TRAIT_LIMITED});
+
+                    let max_uses = null;
+                    if (traitLimited) {
+                        max_uses = traitLimited.number;
+                    }
 
                     let validation_message = null;
                     let valid = true;
@@ -315,21 +321,6 @@ export const useMechStore = defineStore('mech', {
                         }
                     }
 
-                    if (factionStore.hasPerk(OI_MATERIEL_STOCKPILES)) {
-                        if ([
-                            ROCKET_PACK,
-                            MINEFIELD_DRONE_CARRIER_SYSTEM,
-                            MISSILES,
-                        ].includes(weaponId)) {
-                            traitLimited.number += 1;
-                        }
-                    }
-
-                    let max_uses = null;
-                    if (traitLimited) {
-                        max_uses = traitLimited.number;
-                    }
-
                     return readonly({
                         weapon_id: weaponId,
                         display_name,
@@ -340,6 +331,7 @@ export const useMechStore = defineStore('mech', {
                         range_formatted,
                         traits,
                         team_perks,
+                        faction_perks,
                         max_uses,
                         valid,
                         validation_message,
@@ -349,21 +341,29 @@ export const useMechStore = defineStore('mech', {
             getWeaponTraitInfo(state) {
                 return (mechId, weaponId) => {
                     const teamStore = useTeamStore();
+                    const factionStore = useFactionStore();
+
                     const mech = this.getMech(mechId);
                     const size_id = mech.size_id;
                     const weapon = MECH_WEAPONS[weaponId];
                     const traits = cloneDeep(weapon.traits_by_size[size_id]);
                     const perks = teamStore.getTeamPerksInfoByMech(mechId);
 
+                    const faction_perks = [];
                     const team_perks = [];
 
                     if (weaponId === ROCKET_PACK || weaponId === MISSILES) {
                         const perk = find(perks, {id: TEAM_PERK_EXTRA_MISSILE_AMMO});
+                        const traitLimited = find(traits, {id: TRAIT_LIMITED});
 
                         if (perk) {
-                            const match = find(traits, {id: TRAIT_LIMITED});
-                            match.number += perk.value;
+                            traitLimited.number += perk.value;
                             team_perks.push(perk);
+                        }
+
+                        if (factionStore.hasPerk(OI_MATERIEL_STOCKPILES)) {
+                            traitLimited.number += 1;
+                            faction_perks.push(factionStore.materielStockpilesPerk);
                         }
                     }
 
@@ -390,7 +390,7 @@ export const useMechStore = defineStore('mech', {
                         {display_name: traitDisplayName(trait)},
                     ));
 
-                    return {traits, team_perks};
+                    return {traits, team_perks, faction_perks};
                 };
             },
             getMechWeaponsAttachmentInfo(state) {
@@ -465,11 +465,11 @@ export const useMechStore = defineStore('mech', {
             getUpgradeInfo: function (state) {
                 return (mechId, upgradeId) => {
                     const teamStore = useTeamStore();
-                    const upgrade = MECH_UPGRADES[upgradeId];
+                    const factionStore = useFactionStore();
 
+                    const upgrade = MECH_UPGRADES[upgradeId];
                     let {size_id} = this.getMech(mechId);
                     let {
-                        max_uses,
                         slots,
                         description,
                         cost_by_size,
@@ -479,6 +479,8 @@ export const useMechStore = defineStore('mech', {
                     let cost = cost_by_size[size_id];
                     let validation_message = null;
                     let valid = true;
+
+                    const traitLimited = find(traits, {id: TRAIT_UPGRADE_LIMITED});
 
                     if (upgrade.prohibited_by_sizes) {
                         valid = !upgrade.prohibited_by_sizes.includes(size_id);
@@ -537,9 +539,26 @@ export const useMechStore = defineStore('mech', {
                     if (upgradeId === NITRO_BOOST) {
                         let perk = find(perks, {id: TEAM_PERK_EXTRA_NITRO});
                         if (perk) {
-                            max_uses += 1;
+                            if (traitLimited) {
+                                traitLimited.number += 1;
+                            }
                             team_perks.push(perk);
                         }
+                    }
+
+                    const faction_perks = [];
+                    if (upgradeId === MINEFIELD_DRONE_CARRIER_SYSTEM) {
+                        if (factionStore.hasPerk(OI_MATERIEL_STOCKPILES)) {
+                            if (traitLimited) {
+                                traitLimited.number += 1;
+                            }
+                            faction_perks.push(factionStore.materielStockpilesPerk);
+                        }
+                    }
+
+                    let max_uses = null;
+                    if (traitLimited) {
+                        max_uses = traitLimited.number;
                     }
 
                     return readonly({
@@ -551,6 +570,7 @@ export const useMechStore = defineStore('mech', {
                         slots,
                         cost,
                         team_perks,
+                        faction_perks,
                         max_uses,
                         traits,
                     });

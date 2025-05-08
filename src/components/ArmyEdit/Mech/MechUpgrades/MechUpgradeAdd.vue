@@ -3,8 +3,8 @@ import {useMechStore} from '../../../../store/mech-store.js';
 import {computed} from 'vue';
 import IconTeamGroupPerks from '../../../UI/IconTeamGroupPerks.vue';
 import IconNotAvailable from '../../../UI/IconNotAvailable.vue';
-import BtnToolTip from '../../../UI/BtnToolTip.vue';
 import TraitList from '../../../UI/TraitList.vue';
+import IconFactionPerks from '../../../UI/IconFactionPerks.vue';
 
 const {mechId} = defineProps({
   mechId: {
@@ -81,7 +81,14 @@ function addUpgrade(upgradeId, valid) {
           </td>
           <td class="notes">
             <IconTeamGroupPerks
+                class="ms-1"
                 :perks="item.team_perks"
+            />
+          </td>
+          <td class="notes">
+            <IconFactionPerks
+                class="ms-1"
+                :perks="item.faction_perks"
             />
           </td>
         </tr>

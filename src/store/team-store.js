@@ -621,6 +621,7 @@ function perkIdsToInfo(perkIds) {
             description,
             display_order,
             is_ability,
+            value
         };
     });
 

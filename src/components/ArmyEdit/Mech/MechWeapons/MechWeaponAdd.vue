@@ -4,6 +4,7 @@ import {computed} from 'vue';
 import IconTeamGroupPerks from '../../../UI/IconTeamGroupPerks.vue';
 import TraitList from '../../../UI/TraitList.vue';
 import IconNotAvailable from '../../../UI/IconNotAvailable.vue';
+import IconFactionPerks from '../../../UI/IconFactionPerks.vue';
 
 const {mechId} = defineProps({
   mechId: {
@@ -51,7 +52,7 @@ function addWeapon(upgradeId) {
           <td>
             Traits
           </td>
-          <td>
+          <td colspan="3">
             Notes
           </td>
         </tr>
@@ -80,13 +81,22 @@ function addWeapon(upgradeId) {
           <td>
             <TraitList :traits="item.traits"/>
           </td>
-          <td>
+          <td class="notes">
             <IconNotAvailable
                 :valid="item.valid"
                 :validation_message="item.validation_message"
             />
+          </td>
+          <td class="notes">
             <IconTeamGroupPerks
+                class="ms-1"
                 :perks="item.team_perks"
+            />
+          </td>
+          <td class="notes">
+            <IconFactionPerks
+                class="ms-1"
+                :perks="item.faction_perks"
             />
           </td>
         </tr>

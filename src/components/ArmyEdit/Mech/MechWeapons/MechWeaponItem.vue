@@ -4,6 +4,7 @@ import {computed} from 'vue';
 import IconTeamGroupPerks from '../../../UI/IconTeamGroupPerks.vue';
 import IconRequiredByGroup from '../../../UI/IconRequiredByGroup.vue';
 import TraitList from '../../../UI/TraitList.vue';
+import IconFactionPerks from '../../../UI/IconFactionPerks.vue';
 
 const mechStore = useMechStore();
 
@@ -47,11 +48,17 @@ function remove() {
         <span class="material-symbols-outlined">delete</span>
       </BButton>
       <IconRequiredByGroup :required="weapon.required_by_group"/>
-    </td>
-    <td>
       <IconTeamGroupPerks
           :perks="weapon.team_perks"
+          class="ms-1"
       />
+      <IconFactionPerks
+          :perks="weapon.faction_perks"
+          class="ms-1"
+      />
+    </td>
+    <td>
+
     </td>
     <td class=" text-end">
       <number :val="weapon.slots" :invert-color="true"/>

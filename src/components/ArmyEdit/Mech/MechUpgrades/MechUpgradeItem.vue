@@ -5,6 +5,7 @@ import IconTeamGroupPerks from '../../../UI/IconTeamGroupPerks.vue';
 import IconRequiredByGroup from '../../../UI/IconRequiredByGroup.vue';
 import BtnToolTip from '../../../UI/BtnToolTip.vue';
 import TraitList from '../../../UI/TraitList.vue';
+import IconFactionPerks from '../../../UI/IconFactionPerks.vue';
 
 const mechStore = useMechStore();
 
@@ -55,13 +56,17 @@ function remove() {
       >
         <span class="material-symbols-outlined">delete</span>
       </BButton>
-
       <IconRequiredByGroup :required="upgrade.required_by_group"/>
-    </td>
-    <td>
       <IconTeamGroupPerks
           :perks="upgrade.team_perks"
+          class="ms-1"
       />
+      <IconFactionPerks
+          :perks="upgrade.faction_perks"
+          class="ms-1"
+      />
+    </td>
+    <td>
     </td>
     <td class="text-end">
       <number :val="upgrade.slots" :invert-color="true"/>

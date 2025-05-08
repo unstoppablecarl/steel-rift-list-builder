@@ -1,6 +1,7 @@
 import {defineStore} from 'pinia';
 import {computed, ref} from 'vue';
 import {
+    AUTHORITIES,
     CORPORATIONS,
     DEEP_WAR_CHEST,
     DWC_TOP_END_HARDWARE,
@@ -8,6 +9,8 @@ import {
     FACTIONS,
     FREELANCERS,
     NO_FACTION,
+    OI_MATERIEL_STOCKPILES,
+    OLD_INFRASTRUCTURE,
     RD_ADVANCED_HARDPOINT_DESIGN,
     RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS,
     RESEARCH_AND_DEVELOPMENT,
@@ -123,6 +126,12 @@ export const useFactionStore = defineStore('faction', () => {
         const advancedHardPointsBonusSlots = computed(() => RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS);
         const topEndHardwareBonusTons = computed(() => DWC_TOP_END_HARDWARE_BONUS_TONS);
 
+        const materielStockpilesPerk = computed(() => {
+            return FACTIONS[AUTHORITIES]
+                .faction_perk_groups[OLD_INFRASTRUCTURE]
+                .perks[OI_MATERIEL_STOCKPILES];
+        });
+
         return {
             perk_1_id,
             perk_2_id,
@@ -137,6 +146,7 @@ export const useFactionStore = defineStore('faction', () => {
             topEndHardwareBonusTons,
             hasTopEndHardware,
             topEndHardwareLabel,
+            materielStockpilesPerk,
             hasPerk,
             $reset,
         };

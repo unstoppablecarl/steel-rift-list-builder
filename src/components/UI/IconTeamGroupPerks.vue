@@ -2,11 +2,11 @@
 
 import IconTeamPerk from './IconTeamPerk.vue';
 
-const {
-  perks,
-  useFullDisplayName,
-  size,
-} = defineProps({
+const props = defineProps({
+  class: {
+    type: String,
+    default: '',
+  },
   perks: {
     type: Array,
   },
@@ -19,6 +19,13 @@ const {
     default: 'sm',
   },
 });
+
+const {
+  perks,
+  useFullDisplayName,
+  size,
+} = props;
+
 </script>
 <template>
   <BPopover
@@ -26,14 +33,12 @@ const {
       :close-on-hide="true"
       :delay="{show: 0, hide: 0}"
   >
-    <template #target>
-      <span
-          v-show="perks && perks.length"
-          :class="`btn btn-${size} btn-light`">
+    <template #target><span
+        v-show="perks && perks.length"
+        :class="`btn btn-${size} btn-light ${props.class}`">
 
-        <IconTeamPerk/>
-      </span>
-    </template>
+      <IconTeamPerk/>
+    </span></template>
 
     <template #title>
       Group Perks
