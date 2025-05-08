@@ -1,74 +1,77 @@
 <script setup>
 import {useFactionStore} from '../../../store/faction-store.js';
 import {storeToRefs} from 'pinia';
-import {FACTIONS_DROP_DOWN, NO_FACTION} from '../../../data/factions.js';
-import {computed} from 'vue';
+import {computed, ref} from 'vue';
 import {useSupportAssetStore} from '../../../store/support-asset-store.js';
 import {DWC_OUTRAGEOUS_SUPPORT_BUDGET} from '../../../data/faction-perks.js';
+import FactionPerkGrid from './FactionPerkGrid.vue';
+import BtnToolTip from '../../UI/BtnToolTip.vue';
 
-const store = useFactionStore();
+const factionStore = useFactionStore();
 const supportAssetStore = useSupportAssetStore();
-const {clearInvalidPerks} = useFactionStore();
 const {
-  perk_1_id,
-  perk_2_id,
-  faction_id,
-  perk_1_drop_down,
-  perk_2_drop_down,
-} = storeToRefs(store);
+  perk_1_info,
+  perk_2_info,
+  faction_display_name,
+} = storeToRefs(factionStore);
 
 const {
   support_assets,
   outrageous_budget_perk_support_asset_id,
 } = storeToRefs(supportAssetStore);
 
-const factionsDropDown = FACTIONS_DROP_DOWN;
+const hasOutrageousSupportBudget = computed(() => factionStore.hasPerk(DWC_OUTRAGEOUS_SUPPORT_BUDGET));
 
-const disabled = computed(() => faction_id.value === NO_FACTION);
-const hasOutrageousSupportBudget = computed(() => store.hasPerk(DWC_OUTRAGEOUS_SUPPORT_BUDGET));
-
-function setFactionId(factionId) {
-  faction_id.value = factionId;
-  clearInvalidPerks();
-}
+const modal = ref(false);
 
 </script>
 <template>
-  <div class="form-floating mb-1">
-    <BFormSelect
-        id="faction_id"
-        @update:model-value="setFactionId"
-        :model-value="faction_id"
-        :options="factionsDropDown"
-        value-field="id"
-        text-field="display_name"
-    />
-    <label for="faction_id">Faction</label>
-  </div>
-  <div class="form-floating mb-1">
-    <BFormSelect
-        id="perk_1"
-        :options="perk_1_drop_down"
-        options-field="perks"
-        v-model="perk_1_id"
-        value-field="id"
-        text-field="display_name"
-        :disabled="disabled"
-    />
-    <label for="perk_1">Perk 1</label>
-  </div>
-  <div class="form-floating mb-1">
-    <BFormSelect
-        id="perk_2"
-        :options="perk_2_drop_down"
-        options-field="perks"
-        v-model="perk_2_id"
-        value-field="id"
-        text-field="display_name"
-        :disabled="disabled"
-    />
-    <label for="perk_2">Perk 2</label>
-  </div>
+  <button
+      role="button"
+      class="btn btn-light text-start mb-1 w-100"
+      @click="modal = !modal"
+  >
+    <span class="small text-muted d-block">Faction</span>
+    <span>{{ faction_display_name }}</span>
+  </button>
+
+
+  <BtnToolTip>
+    <template #target="{mouseover, mouseleave}">
+      <button
+          @mouseover="mouseover"
+          @mouseleave="mouseleave"
+          v-show="perk_1_info?.display_name"
+          class="btn btn-light text-start mb-1 w-100"
+      >
+        <span class="small text-muted d-block">Perk 1</span>
+        <span>{{ perk_1_info?.display_name }}</span>
+      </button>
+
+    </template>
+    <template #content>
+      {{perk_1_info?.description}}
+    </template>
+  </BtnToolTip>
+
+  <BtnToolTip>
+    <template #target="{mouseover, mouseleave}">
+      <button
+          @mouseover="mouseover"
+          @mouseleave="mouseleave"
+          v-show="perk_2_info?.display_name"
+          class="btn btn-light text-start mb-1 w-100"
+      >
+        <span class="small text-muted d-block">Perk 2</span>
+        <span>{{ perk_2_info?.display_name }}</span>
+      </button>
+
+    </template>
+    <template #content>
+      {{perk_2_info?.description}}
+    </template>
+  </BtnToolTip>
+
   <div
       v-if="hasOutrageousSupportBudget"
       class="form-floating mb-1"
@@ -82,4 +85,5 @@ function setFactionId(factionId) {
     <label for="perk_2">Apply Outrageous Support Budget</label>
   </div>
 
+  <FactionPerkGrid v-model="modal"/>
 </template>

@@ -76,6 +76,13 @@ body {
   );
 }
 
+.tabs-factions{
+  --bs-nav-link-font-size: 1rem;
+}
+.tab-select-faction {
+  font-weight: $font-weight-medium;
+  --bs-nav-link-disabled-color: #000;
+}
 .team-icon {
   vertical-align: text-top;
 }

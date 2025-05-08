@@ -35,7 +35,7 @@ const currentPath = inject('currentPath');
               <BtnSave/>&nbsp;
               <BtnLoad/>&nbsp;
               <BtnReset/>
-              <div class="btn-group ms-1" role="group" aria-label="Basic example">
+              <div class="btn-group ms-1" role="group">
                 <a :href="`#${ROUTE_HOME}`" :class="{
                   'btn btn-sm btn-light': true,
                   'active': currentPath === `#${ROUTE_HOME}`
