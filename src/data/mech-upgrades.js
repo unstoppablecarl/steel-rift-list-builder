@@ -208,7 +208,6 @@ export function getUpgradeTraits(upgradeId, sizeId) {
         traits = upgrade.traits_by_size[sizeId] || [];
     }
 
-    console.log(traits)
     return traits.map(({id, number}) => {
         return Object.assign(
             {},
