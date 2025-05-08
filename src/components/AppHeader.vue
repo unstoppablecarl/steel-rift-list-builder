@@ -10,6 +10,7 @@ import {useTeamStore} from '../store/team-store.js';
 import {useSupportAssetStore} from '../store/support-asset-store.js';
 import {inject} from 'vue';
 import {ROUTE_HOME, ROUTE_PRINT} from '../routes.js';
+import logoSvg from '/steel-rift-logo.svg';
 
 const store = useArmyListStore();
 const {used_teams_count, max_teams_count} = storeToRefs(useTeamStore());
@@ -27,7 +28,7 @@ const currentPath = inject('currentPath');
         <div class="row g-1">
           <div class="col-sm">
             <div class="fs-5">
-              Steel Rift: Garage
+             <img :src="logoSvg" height="25" class="logo"/> Garage
             </div>
           </div>
           <div class="col-sm">

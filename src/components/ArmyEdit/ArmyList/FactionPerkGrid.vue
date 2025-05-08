@@ -66,10 +66,10 @@ function onChange(index, index2) {
           <div class="row row-cols-1 row-cols-lg-3">
 
             <div
-                class="col pb-1"
+                class="col pb-3"
                 v-for="perk in group.perks"
             >
-              <div class="card h-100">
+              <div :class="{'card card-faction-perk h-100': true, 'border border-primary': hasPerk(perk.id)}">
                 <div class="card-header ps-3 fw-bold">
                   {{ perk.display_name }}
                 </div>

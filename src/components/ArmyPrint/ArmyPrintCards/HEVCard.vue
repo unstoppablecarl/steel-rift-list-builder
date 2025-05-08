@@ -43,6 +43,9 @@ const info = computed(() => {
       <HEVCardWeapons :mech-id="mechId"/>
       <HEVCardUpgrades :mech-id="mechId"/>
 
+      <div class="game-card-footer">
+        SteelRift.com
+      </div>
     </div>
   </div>
 </template>

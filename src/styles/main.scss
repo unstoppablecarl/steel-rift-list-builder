@@ -76,13 +76,23 @@ body {
   );
 }
 
-.tabs-factions{
+.tabs-factions {
   --bs-nav-link-font-size: 1rem;
 }
+
 .tab-select-faction {
   font-weight: $font-weight-medium;
   --bs-nav-link-disabled-color: #000;
 }
+
+.card-faction-perk {
+  .card-body {
+    //font-size: 14px;
+    font-size: 0.8rem;
+    --bs-body-font-size: 0.5rem;
+  }
+}
+
 .team-icon {
   vertical-align: text-top;
 }
@@ -93,6 +103,10 @@ body {
   &:last-child {
     margin-bottom: 0;
   }
+}
+
+.card {
+  --bs-card-box-shadow: #{$box-shadow-sm};
 }
 
 .offcanvas-body {
@@ -130,15 +144,33 @@ body {
   }
 }
 
-.btn-fake {
-  --bs-btn-border-color: rgba(0, 0, 0, 0.3);
-  --bs-btn-hover-color: var(--bs-btn-color);
-  --bs-btn-hover-bg: var(--bs-btn-bg);
-  --bs-btn-hover-border-color: var(--bs-btn-border-color);
-  --bs-btn-active-color: var(--bs-btn-color);
-  --bs-btn-active-bg: var(--bs-btn-bg);
-  --bs-btn-active-border-color: var(--bs-btn-border-color);
-  cursor: default;
+.logo {
+  vertical-align: text-bottom;
+}
+
+.game-card-footer {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  font-size: 7pt;
+}
+
+.card-army-list {
+
+  .form-floating {
+    box-shadow: $box-shadow-sm;
+    border-radius: var(--bs-border-radius);
+
+    .form-control,
+    .form-select {
+      --bs-border-color: var(--bs-border-color-translucent);
+    }
+  }
+}
+
+.btn-white {
+  --bs-btn-bg: #fff;
 }
 
 .card {
