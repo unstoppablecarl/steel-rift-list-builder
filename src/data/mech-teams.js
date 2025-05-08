@@ -231,23 +231,19 @@ export const MECH_TEAMS = makeStaticListIds({
             }),
         }),
         team_size_perk_columns: [
-            [SIZE_LIGHT],
             [SIZE_MEDIUM],
             [SIZE_HEAVY, SIZE_ULTRA],
         ],
         team_size_perk_rows: {
             2: [
-                [],
                 [TEAM_PERK_0_SLOT_ARMOR_UPGRADES],
                 [TEAM_PERK_0_SLOT_ARMOR_UPGRADES, TEAM_PERK_EXTRA_TONNAGE],
             ],
             3: [
-                [],
                 [TEAM_PERK_0_TON_ARMOR_UPGRADES, TEAM_PERK_EXTRA_TONNAGE],
                 [TEAM_PERK_0_TON_ARMOR_UPGRADES, TEAM_PERK_SIDE_DEFENSE],
             ],
             4: [
-                [],
                 [TEAM_PERK_SIDE_DEFENSE],
                 [],
             ],

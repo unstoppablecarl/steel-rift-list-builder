@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia';
-import {computed, ref} from 'vue';
+import {computed, readonly, ref} from 'vue';
 import {findItemIndexById, move, setDisplayOrders} from './helpers/collection-helper.js';
 import {MECH_TEAM_SIZES, MECH_TEAMS, TEAM_FIRE_SUPPORT, TEAM_GENERAL, TEAM_RECON} from '../data/mech-teams.js';
 import {useMechStore} from './mech-store.js';
@@ -42,10 +42,11 @@ export const useTeamStore = defineStore('team', () => {
             const teamIds = Object.keys(MECH_TEAMS);
             const availableTeamIds = difference(teamIds, currentTeamIds);
             return availableTeamIds.map((teamId) => {
+                const {display_name, icon} = MECH_TEAMS[teamId];
                 return {
                     id: teamId,
-                    display_name: MECH_TEAMS[teamId].display_name,
-                    icon: MECH_TEAMS[teamId].icon,
+                    display_name,
+                    icon,
                 };
             });
         });
@@ -76,8 +77,8 @@ export const useTeamStore = defineStore('team', () => {
             });
         }
 
-        const getTeamInfo = getter((teamId) => MECH_TEAMS[teamId]);
-        const getTeamGroupInfo = getter((teamId, groupId) => MECH_TEAMS[teamId].groups[groupId]);
+        const getTeamInfo = getter((teamId) => readonly(MECH_TEAMS[teamId]));
+        const getTeamGroupInfo = getter((teamId, groupId) => readonly(MECH_TEAMS[teamId].groups[groupId]));
 
         const getRequiredByTeamGroupMessage = getter((teamId, groupId) => {
             const teamDisplayName = getTeamInfo.value(teamId).display_name;
@@ -346,6 +347,8 @@ export const useTeamStore = defineStore('team', () => {
                 };
             });
 
+
+            // ugly hack to remove redundant data for table view
             if (
                 (teamId === TEAM_RECON ||
                     teamId === TEAM_FIRE_SUPPORT) &&
@@ -621,7 +624,7 @@ function perkIdsToInfo(perkIds) {
             description,
             display_order,
             is_ability,
-            value
+            value,
         };
     });
 
