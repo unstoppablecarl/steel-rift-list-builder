@@ -13,7 +13,7 @@ import {
     OI_ORBITAL_STOCKPILES,
     OLD_INFRASTRUCTURE,
 } from '../data/factions.js';
-import {TRAIT_LIMITED} from '../data/weapon-traits.js';
+import {TRAIT_LIMITED, traitDisplayName, WEAPON_TRAITS} from '../data/weapon-traits.js';
 import {GAME_SIZES} from '../data/game-sizes.js';
 
 export const useSupportAssetStore = defineStore('support-asset', () => {
@@ -73,6 +73,12 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
                             asset.notes.push(note);
                         }
                     }
+
+                    asset.traits.forEach(trait => Object.assign(
+                        trait,
+                        WEAPON_TRAITS[trait.id],
+                        {display_name: traitDisplayName(trait)},
+                    ));
 
                     return asset;
                 });

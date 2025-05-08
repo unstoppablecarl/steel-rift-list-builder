@@ -7,17 +7,16 @@ const {traits} = defineProps({
     type: Array
   }
 })
-
 </script>
 <template>
   <template v-for="(trait, index) in traits">
-    <BtnToolTip>
+    <BtnToolTip :enabled="!!trait.description">
       <template #target="{mouseover, mouseleave}">
         <span
             v-show="traits.length"
             @mouseover="mouseover"
             @mouseleave="mouseleave"
-            class="text-tooltip"
+            :class="{'text-tooltip': trait.description}"
         >
           {{ trait.display_name }}<span v-if="index !== traits.length - 1">, </span>
         </span>

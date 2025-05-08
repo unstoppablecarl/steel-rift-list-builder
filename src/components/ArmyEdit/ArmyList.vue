@@ -16,13 +16,6 @@ const {name} = storeToRefs(useArmyListStore());
     <div class="card-body">
       <div class="row">
         <div class="col-md-3">
-          <BFormFloatingLabel label="Army Name" label-for="list-name" class="mb-1">
-            <BFormInput
-                id="list-name"
-                v-model="name"
-                placeholder="Army Name"
-            />
-          </BFormFloatingLabel>
           <ArmyListSize/>
           <div class="row g-1">
             <div class="col">

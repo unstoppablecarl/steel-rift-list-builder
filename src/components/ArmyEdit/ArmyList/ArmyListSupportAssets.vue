@@ -2,7 +2,8 @@
 import {storeToRefs} from 'pinia';
 import {useSupportAssetStore} from '../../../store/support-asset-store.js';
 import ArmyListSupportAssetAdd from './ArmyListSupportAssets/ArmyListSupportAssetAdd.vue';
-import {traitDisplayNames} from '../../../data/weapon-traits.js';
+import TraitList from '../../UI/TraitList.vue';
+import BtnToolTip from '../../UI/BtnToolTip.vue';
 
 const store = useSupportAssetStore();
 
@@ -37,7 +38,20 @@ const {
         <tbody>
         <tr v-for="item in support_assets">
           <td>
-            {{ item.display_name }}
+            <BtnToolTip>
+              <template #target="{mouseover, mouseleave}">
+                <span
+                    @mouseover="mouseover"
+                    @mouseleave="mouseleave"
+                    class="text-tooltip"
+                >
+                  {{ item.display_name }}
+                </span>
+              </template>
+              <template #content>
+                {{ item.description }}
+              </template>
+            </BtnToolTip>
           </td>
           <td class="text-end">
             {{ item.damage }}
@@ -46,7 +60,7 @@ const {
             <number :val="item.cost" :positive-signed="false" :invert-color="true"/>
           </td>
           <td>
-            {{ traitDisplayNames(item.traits) }}
+            <TraitList :traits="item.traits"/>
           </td>
           <td>
             <div class="small lh-sm">

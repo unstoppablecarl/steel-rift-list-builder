@@ -16,8 +16,8 @@ const teamPerks = computed(() => {
 });
 </script>
 <template>
-  <div class="">
-    <div v-for="team in teamPerks">
+  <div v-for="team in teamPerks">
+    <div v-if="team.perks.length">
       <div class="divider"></div>
 
       <div class="ref-heading">{{ team.display_name }}</div>

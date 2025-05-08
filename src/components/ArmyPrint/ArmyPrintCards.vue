@@ -11,22 +11,22 @@ const teamStore = useTeamStore();
 const mechStore = useMechStore();
 
 const mechPages = computed(() => {
+
   if (printSettingsStore.one_team_per_page) {
     let pages = [];
 
     teamStore.teams.forEach(team => {
-
       const teamMechIds = teamStore.getTeamMechIds(team.id);
       if (teamMechIds.length) {
-
-        pages.push(teamMechIds);
+        pages = pages.concat(chunk(teamMechIds, 9));
       }
     });
 
     return pages;
   }
 
-  return chunk(mechStore.mechs, 9);
+  const mechIds = mechStore.mechs.map(mech => mech.id);
+  return chunk(mechIds, 9);
 });
 
 </script>

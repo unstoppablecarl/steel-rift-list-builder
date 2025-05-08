@@ -23,8 +23,8 @@ const currentPath = inject('currentPath');
 <template>
   <div class="sticky-top text-bg-light border-bottom shadow app-header">
     <div class="container-lg">
-      <div class="px-1 pt-2 pb-3">
-        <div class="row">
+      <div class="px-4 pt-2 pb-2">
+        <div class="row g-1">
           <div class="col-sm">
             <div class="fs-5">
               Steel Rift: Garage
@@ -46,44 +46,55 @@ const currentPath = inject('currentPath');
                   'btn btn-sm btn-light': true,
                   'active': currentPath === `#${ROUTE_PRINT}`
                 }">
-                   Print
+                  Print
                 </a>
 
               </div>
             </div>
           </div>
         </div>
-        <div class="d-sm-flex pt-2">
-          <div class="flex-sm-grow-1">
-            <strong>
-              Army:
-            </strong>
-            {{ name || 'Not named' }}
+        <div class="row pt-1 g-1">
+          <div class="col-auto flex-sm-shrink-1">
+            <label class="col-form-label fw-bold" for="list-name">
+              Army Name:
+            </label>
           </div>
-          <div class="text-sm-end">
-            <strong>Teams: </strong>
-            <fraction
-                :a="used_teams_count"
-                :b="max_teams_count"
-                success-class="fw-bold"
+          <div class="col-3">
+            <input
+                type="text"
+                v-model="name"
+                id="list-name"
+                class="form-control form-con"
             />
+          </div>
+          <div class="col-auto flex-grow-1 text-sm-end">
+            <div class="col-form-label">
 
-            <span class="ms-2">
-              <strong>Support Assets: </strong>
+
+              <strong>Teams: </strong>
               <fraction
-                  :a="used_support_assets"
-                  :b="max_support_assets"
+                  :a="used_teams_count"
+                  :b="max_teams_count"
                   success-class="fw-bold"
               />
-            </span>
-            <span class="ms-2">
-              <strong>Tonnage: </strong>
-              <fraction
-                  :a="used_tons"
-                  :b="max_tons"
-                  success-class="fw-bold"
-              />
-            </span>
+
+              <span class="ms-2">
+                <strong>Support Assets: </strong>
+                <fraction
+                    :a="used_support_assets"
+                    :b="max_support_assets"
+                    success-class="fw-bold"
+                />
+              </span>
+              <span class="ms-2">
+                <strong>Tonnage: </strong>
+                <fraction
+                    :a="used_tons"
+                    :b="max_tons"
+                    success-class="fw-bold"
+                />
+              </span>
+            </div>
           </div>
         </div>
       </div>

@@ -68,8 +68,8 @@ function print() {
       </div>
 
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" v-model="include_army_name_on_cards" id="one-team-per-page">
-        <label class="form-check-label" for="one-team-per-page">
+        <input class="form-check-input" type="checkbox" v-model="include_army_name_on_cards" id="army-name-on-cards">
+        <label class="form-check-label" for="army-name-on-cards">
           Include army name on cards
         </label>
       </div>
