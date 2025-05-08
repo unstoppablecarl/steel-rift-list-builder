@@ -193,17 +193,3 @@ export function isMatchingPerkOrCopy(equalToPerkId, targetPerkId) {
 
     return equalToPerkId === copied_perk_id;
 }
-//
-// export function getMatchingPerkOrCopyDisplayName(equalToPerkId, targetPerkId) {
-//
-//     if (equalToPerkId === targetPerkId) {
-//         return FACTION_PERKS[equalToPerkId].display_name;
-//     }
-//
-//     const {copied_perk_id} = FACTION_PERKS[targetPerkId];
-//
-//     if (copied_perk_id === equalToPerkId) {
-//
-//         return FACTION_PERKS[targetPerkId].display_name;
-//     }
-// }
