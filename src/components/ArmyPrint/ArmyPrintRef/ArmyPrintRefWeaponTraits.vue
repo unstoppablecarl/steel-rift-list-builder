@@ -18,7 +18,7 @@ const weaponTraits = computed(() => {
 });
 </script>
 <template>
-  <div class="">
+  <div v-if="weaponTraits.length">
     <div class="divider"></div>
     <div class="ref-heading">Weapon Traits</div>
     <div v-for="trait in weaponTraits">

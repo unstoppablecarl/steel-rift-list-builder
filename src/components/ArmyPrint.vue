@@ -1,43 +1,19 @@
 <script setup>
-import {computed, ref} from 'vue';
-import ArmyPrintCards from './ArmyPrint/ArmyPrintCards.vue';
-import ArmyPrintRef from './ArmyPrint/ArmyPrintRef.vue';
-import ArmyPrintAll from './ArmyPrint/ArmyPrintAll.vue';
+import {computed} from 'vue';
 import ArmyPrintSettings from './ArmyPrint/ArmyPrintSettings.vue';
-import {usePrintSettingsStore} from '../store/print-settings-store.js';
+import {PRINT_MODES, usePrintSettingsStore} from '../store/print-settings-store.js';
 import {storeToRefs} from 'pinia';
 
 const printSettingsStore = usePrintSettingsStore();
 
-const {one_team_per_page, include_army_name_on_cards} = storeToRefs(printSettingsStore);
-const PRINT_MODE_CARDS = 'PRINT_MODE_CARDS';
-const PRINT_MODE_REF = 'PRINT_MODE_REF';
-const PRINT_MODE_ALL = 'PRINT_MODE_ALL';
+const {
+  print_mode,
+  print_mode_display_name,
+  one_team_per_page,
+  include_army_name_on_cards,
+} = storeToRefs(printSettingsStore);
 
-const printView = ref(PRINT_MODE_CARDS);
-
-const components = {
-  [[PRINT_MODE_CARDS]]: {
-    display_name: 'Cards',
-    component: ArmyPrintCards,
-  },
-  [[PRINT_MODE_REF]]: {
-    display_name: 'Reference',
-    component: ArmyPrintRef,
-  },
-  [[PRINT_MODE_ALL]]: {
-    display_name: 'All',
-    component: ArmyPrintAll,
-  },
-};
-
-const printDisplayName = computed(() => {
-  return components[printView.value].display_name;
-});
-
-const printComponent = computed(() => {
-  return components[printView.value].component;
-});
+const printComponent = computed(() => printSettingsStore.getPrintModeComponent());
 
 function print() {
   window.print();
@@ -46,13 +22,13 @@ function print() {
 <template>
   <ArmyPrintSettings>
     <template #nav>
-      <template v-for="(item, key) in components">
+      <template v-for="(item, key) in PRINT_MODES">
         <button
             :class="{
                         'btn btn-sm btn-light': true,
-                        'active': printView === key
+                        'active': print_mode === key
                       }"
-            @click="printView = key"
+            @click="print_mode = key"
         >
           {{ item.display_name }}
         </button>
@@ -79,7 +55,7 @@ function print() {
 
     <template #footer>
       <button class="btn btn-sm btn-primary" @click="print">
-        {{ printDisplayName }}
+        {{ print_mode_display_name }}
         <span class="material-symbols-outlined">print</span>
       </button>
     </template>

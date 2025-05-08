@@ -17,7 +17,7 @@ const upgrades = computed(() => {
 });
 </script>
 <template>
-  <div class="">
+  <div v-if="upgrades.length">
     <div class="divider"></div>
     <div class="ref-heading">Upgrades</div>
     <div v-for="item in upgrades">
