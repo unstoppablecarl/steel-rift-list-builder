@@ -173,7 +173,7 @@ export const useTeamStore = defineStore('team', () => {
                 };
             }
 
-            const requiredId = info.required_armor_or_structure_mod_once;
+            const requiredId = info.required_armor_or_structure_mod_id_once;
             if (requiredId) {
                 if (!requiredStructureOrArmorModValid(
                     mech.structure_mod_id,
@@ -207,7 +207,7 @@ export const useTeamStore = defineStore('team', () => {
                 };
             }
 
-            const requiredId = info.required_armor_or_structure_mod_once;
+            const requiredId = info.required_armor_or_structure_mod_id_once;
             if (requiredId) {
                 if (!requiredStructureOrArmorModValid(
                     mech.armor_mod_id,
@@ -490,6 +490,9 @@ export const useTeamStore = defineStore('team', () => {
             }
             if (groupDef?.limited_armor_upgrade_ids?.length) {
                 mechOptions.armor_upgrade_id = groupDef.limited_armor_upgrade_ids[0];
+            }
+            if (groupDef?.required_armor_or_structure_mod_id_once) {
+                mechOptions.structure_mod_id = groupDef.required_armor_or_structure_mod_id_once;
             }
 
             const mech = mechStore.addMech(mechOptions);
