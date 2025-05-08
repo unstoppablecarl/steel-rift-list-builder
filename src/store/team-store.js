@@ -54,17 +54,25 @@ export const useTeamStore = defineStore('team', () => {
             const teamDef = MECH_TEAMS[teamId];
             const groups = [];
 
-            Object.keys(teamDef.groups)
-                .forEach((groupId) => {
-                    groups.push({
-                        id: groupId,
-                        mechs: [],
-                    });
+            const groupIds = Object.keys(teamDef.groups);
+
+            groupIds.forEach((groupId) => {
+                groups.push({
+                    id: groupId,
+                    mechs: [],
                 });
+            });
 
             teams.value.push({
                 id: teamId,
                 groups,
+            });
+
+            groupIds.forEach(groupId => {
+                const min = MECH_TEAMS[teamId].groups[groupId].min_count;
+                if (min > 0) {
+                    addMechToTeam(teamId, groupId);
+                }
             });
         }
 
@@ -283,7 +291,6 @@ export const useTeamStore = defineStore('team', () => {
             });
             return mechIds;
         });
-
 
         const getTeamGroupMechIds = getter((teamId, groupId) => {
             const group = findGroup.value(teamId, groupId);
