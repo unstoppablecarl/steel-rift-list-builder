@@ -4,6 +4,7 @@ import {useMechStore} from '../../../store/mech-store.js';
 import {TRAIT_LIMITED} from '../../../data/weapon-traits.js';
 import {find} from 'lodash';
 import {MINEFIELD_DRONE_CARRIER_SYSTEM} from '../../../data/mech-upgrades.js';
+import {TRAIT_UPGRADE_LIMITED} from '../../../data/upgrade-traits.js';
 
 const mechStore = useMechStore();
 const {mechId} = defineProps({
@@ -17,7 +18,8 @@ const weapons = computed(() => {
   let mineDroneUpgrade = find(mechStore.getMechUpgradesAttachmentInfo(mechId), {upgrade_id: MINEFIELD_DRONE_CARRIER_SYSTEM});
 
   if (mineDroneUpgrade) {
-    mineDroneUpgrade.display_name = 'Mine Drones'
+    mineDroneUpgrade.display_name = 'Mine Drones';
+    mineDroneUpgrade.traits = mineDroneUpgrade.traits.filter(trait => trait.id !== TRAIT_UPGRADE_LIMITED);
     results.push(mineDroneUpgrade);
   }
 

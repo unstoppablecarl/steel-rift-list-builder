@@ -213,6 +213,7 @@ export function getUpgradeTraits(upgradeId, sizeId) {
             {},
             UPGRADE_TRAITS[id],
             {
+                number,
                 display_name: traitDisplayName({id, number}),
             },
         );
