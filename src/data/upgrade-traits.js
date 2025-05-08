@@ -1,7 +1,9 @@
-import {inchFormater} from './weapon-traits.js';
+import {inchFormater, numberFormater} from './weapon-traits.js';
 
 export const TRAIT_COMPACT = 'TRAIT_COMPACT';
 export const TRAIT_DASH = 'TRAIT_DASH';
+export const TRAIT_UPGRADE_LIMITED = 'TRAIT_UPGRADE_LIMITED';
+
 export const UPGRADE_TRAITS = makeUpgradeTraits({
     [[TRAIT_COMPACT]]: {
         display_name: 'Compact',
@@ -12,11 +14,16 @@ export const UPGRADE_TRAITS = makeUpgradeTraits({
         description: 'This Unit may take the Dash order',
         formatter: inchFormater,
     },
+    [[TRAIT_UPGRADE_LIMITED]]: {
+        display_name: 'Limited',
+        description: 'This upgrade may only be used (X) times during a mission.',
+        formatter: numberFormater,
+    }
 });
 
 export function traitDisplayName({id, number}) {
 
-    const trait = WEAPON_TRAITS[id];
+    const trait = UPGRADE_TRAITS[id];
 
     if (!trait) {
         throw new Error('trait not found: '.id);

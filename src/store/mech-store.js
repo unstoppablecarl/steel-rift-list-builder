@@ -10,9 +10,10 @@ import {readonly} from 'vue';
 import {
     COMBAT_SHIELD,
     DIRECTIONAL_THRUSTER,
-    ELECTRONIC_COUNTERMEASURES,
+    ELECTRONIC_COUNTERMEASURES, getUpgradeTraits,
     JUMP_JETS,
     MECH_UPGRADES,
+    MINEFIELD_DRONE_CARRIER_SYSTEM,
     NITRO_BOOST,
     TARGET_DESIGNATOR,
 } from '../data/mech-upgrades.js';
@@ -22,6 +23,7 @@ import {useFactionStore} from './faction-store.js';
 import {
     DWC_TOP_END_HARDWARE,
     DWC_TOP_END_HARDWARE_BONUS_TONS,
+    OI_MATERIEL_STOCKPILES,
     RD_ADVANCED_HARDPOINT_DESIGN,
     RD_ADVANCED_HARDPOINT_DESIGN_BONUS_SLOTS,
     UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN,
@@ -280,6 +282,7 @@ export const useMechStore = defineStore('mech', {
             },
             getWeaponInfo(state) {
                 return (mechId, weaponId) => {
+                    const factionStore = useFactionStore();
                     const mech = this.getMech(mechId);
                     const size_id = mech.size_id;
                     const weapon = MECH_WEAPONS[weaponId];
@@ -298,11 +301,21 @@ export const useMechStore = defineStore('mech', {
                     }
 
                     const {traits, team_perks} = this.getWeaponTraitInfo(mechId, weaponId);
+                    const traitLimited = find(traits, {id: TRAIT_LIMITED});
+
+                    if (factionStore.hasPerk(OI_MATERIEL_STOCKPILES)) {
+                        if ([
+                            ROCKET_PACK,
+                            MINEFIELD_DRONE_CARRIER_SYSTEM,
+                            MISSILES,
+                        ].includes(weaponId)) {
+                            traitLimited.number += 1;
+                        }
+                    }
 
                     let max_uses = null;
-                    const match = find(traits, {id: TRAIT_LIMITED});
-                    if (match) {
-                        max_uses = match.number;
+                    if (traitLimited) {
+                        max_uses = traitLimited.number;
                     }
 
                     return readonly({
@@ -435,7 +448,6 @@ export const useMechStore = defineStore('mech', {
                         .map((weaponId) => this.getWeaponInfo(mechId, weaponId));
                 };
             },
-
             getUpgradeInfo: function (state) {
                 return (mechId, upgradeId) => {
                     const teamStore = useTeamStore();
@@ -446,15 +458,10 @@ export const useMechStore = defineStore('mech', {
                         max_uses,
                         slots,
                         description,
-                        traits,
                         cost_by_size,
                     } = upgrade;
 
-                    traits = traits || [];
-                    traits = traits.map(trait => {
-                        return Object.assign({}, trait, UPGRADE_TRAITS[trait.id]);
-                    });
-
+                    let traits = getUpgradeTraits(upgradeId, size_id)
                     let cost = cost_by_size[size_id];
                     let validation_message = null;
                     let valid = true;

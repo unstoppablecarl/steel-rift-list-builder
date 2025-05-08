@@ -1,7 +1,7 @@
 import {SIZE_HEAVY, SIZE_LIGHT, SIZE_MEDIUM, SIZE_ULTRA} from './mech-sizes.js';
 import {SUBMUNITIONS} from './mech-weapons.js';
 import {makeFrozenStaticListIds} from './data-helpers.js';
-import {TRAIT_COMPACT, TRAIT_DASH} from './upgrade-traits.js';
+import {TRAIT_COMPACT, TRAIT_DASH, TRAIT_UPGRADE_LIMITED, traitDisplayName, UPGRADE_TRAITS} from './upgrade-traits.js';
 import {trait} from './weapon-traits.js';
 
 export const ANTI_MISSILE_SYSTEM = 'ANTI_MISSILE_SYSTEM';
@@ -63,11 +63,16 @@ export const MECH_UPGRADES = makeFrozenStaticListIds({
     }),
     [[MINEFIELD_DRONE_CARRIER_SYSTEM]]: makeUpgrade({
         display_name: 'Minefield Drone Carrier System',
-        description: 'ORDER: Place a Mine Drone token (as per the Support Asset) within 3” of theActive model and not within 6” of another Mine Drone token. This Upgrade has the Limited (*/1/2/2) trait.',
+        description: 'ORDER: Place a Mine Drone token (as per the Support Asset) within 3” of the Active model and not within 6” of another Mine Drone token.',
         cost_by_size: {
             [[SIZE_MEDIUM]]: 3,
             [[SIZE_HEAVY]]: 6,
             [[SIZE_ULTRA]]: 6,
+        },
+        traits_by_size: {
+            [[SIZE_MEDIUM]]: [trait(TRAIT_UPGRADE_LIMITED, 1)],
+            [[SIZE_HEAVY]]: [trait(TRAIT_UPGRADE_LIMITED, 2)],
+            [[SIZE_ULTRA]]: [trait(TRAIT_UPGRADE_LIMITED, 2)],
         },
         prohibited_by_sizes: [SIZE_LIGHT],
     }),
@@ -118,7 +123,7 @@ export const MECH_UPGRADES = makeFrozenStaticListIds({
             [[SIZE_ULTRA]]: 4,
         },
         traits: [
-            trait(TRAIT_DASH),
+            trait(TRAIT_DASH, 2),
         ],
     }),
     [[HAPTIC_SUIT]]: makeUpgrade({
@@ -186,6 +191,28 @@ export const MECH_UPGRADES = makeFrozenStaticListIds({
 
 export function upgradeDisplayName(id) {
     return MECH_UPGRADES[id].display_name;
+}
+
+export function getUpgradeTraits(upgradeId, sizeId) {
+
+    const upgrade = MECH_UPGRADES[upgradeId];
+
+    let traits = [];
+    if (upgrade.traits) {
+        traits = upgrade.traits;
+    } else if (upgrade.traits_by_size) {
+        traits = upgrade.traits_by_size[sizeId] || [];
+    }
+
+    return traits.map(({id, number}) => {
+        return Object.assign(
+            {},
+            UPGRADE_TRAITS[id],
+            {
+                display_name: traitDisplayName({id, number}),
+            },
+        );
+    });
 }
 
 function makeUpgrade(item) {
