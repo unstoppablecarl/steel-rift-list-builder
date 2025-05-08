@@ -189,7 +189,7 @@ export const useMechStore = defineStore('mech', {
                         upgrades,
                     } = this.getMech(mechId);
 
-                    const placeholder_name = ('Mech-' + mechId).padStart(1);
+                    const placeholder_name = ('HE-V-' + mechId).padStart(1);
 
                     const upgradesInfo = upgrades.map((item) => this.getMechUpgradeAttachmentInfo(mechId, item.id));
                     const weaponsInfo = weapons.map((item) => this.getMechWeaponAttachmentInfo(mechId, item.id));
