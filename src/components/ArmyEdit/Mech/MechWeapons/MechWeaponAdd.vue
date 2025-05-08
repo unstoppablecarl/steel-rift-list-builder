@@ -2,8 +2,8 @@
 import {useMechStore} from '../../../../store/mech-store.js';
 import {computed} from 'vue';
 import IconTeamGroupPerks from '../../../UI/IconTeamGroupPerks.vue';
-import BtnToolTip from '../../../UI/BtnToolTip.vue';
 import TraitList from '../../../UI/TraitList.vue';
+import IconNotAvailable from '../../../UI/IconNotAvailable.vue';
 
 const {mechId} = defineProps({
   mechId: {
@@ -81,6 +81,10 @@ function addWeapon(upgradeId) {
             <TraitList :traits="item.traits"/>
           </td>
           <td>
+            <IconNotAvailable
+                :valid="item.valid"
+                :validation_message="item.validation_message"
+            />
             <IconTeamGroupPerks
                 :perks="item.team_perks"
             />

@@ -464,6 +464,7 @@ function makeWeapon({
                         slots,
                         cost,
                         cost_by_size,
+                        limited_size_ids,
                     }) {
 
     traits = traits || [];
@@ -518,5 +519,6 @@ function makeWeapon({
         cost_by_size,
         range,
         slots,
+        limited_size_ids,
     };
 }

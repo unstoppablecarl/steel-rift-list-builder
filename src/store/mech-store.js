@@ -10,7 +10,8 @@ import {readonly} from 'vue';
 import {
     COMBAT_SHIELD,
     DIRECTIONAL_THRUSTER,
-    ELECTRONIC_COUNTERMEASURES, getUpgradeTraits,
+    ELECTRONIC_COUNTERMEASURES,
+    getUpgradeTraits,
     JUMP_JETS,
     MECH_UPGRADES,
     MINEFIELD_DRONE_CARRIER_SYSTEM,
@@ -45,7 +46,6 @@ import {
     TEAM_PERK_JUMP_BOOSTER,
     TEAM_PERK_SMART_HOWITZERS,
 } from '../data/mech-team-perks.js';
-import {UPGRADE_TRAITS} from '../data/upgrade-traits.js';
 
 export const useMechStore = defineStore('mech', {
         state() {
@@ -288,11 +288,12 @@ export const useMechStore = defineStore('mech', {
                     const weapon = MECH_WEAPONS[weaponId];
                     const damage = weapon.damage_by_size[size_id];
                     const cost = weapon.cost_by_size[size_id];
-                    const slots = weapon.slots;
 
                     const {
                         range,
                         display_name,
+                        slots,
+                        limited_size_ids,
                     } = weapon;
 
                     let range_formatted = '-';
@@ -302,6 +303,17 @@ export const useMechStore = defineStore('mech', {
 
                     const {traits, team_perks} = this.getWeaponTraitInfo(mechId, weaponId);
                     const traitLimited = find(traits, {id: TRAIT_LIMITED});
+
+                    let validation_message = null;
+                    let valid = true;
+
+                    if (limited_size_ids) {
+                        valid = limited_size_ids.includes(size_id);
+                        if (!valid) {
+                            const sizeDisplayNames = limited_size_ids.map(sizeId => MECH_SIZES[sizeId].display_name).join('/');
+                            validation_message = `Only available for ${sizeDisplayNames} HE-Vs`;
+                        }
+                    }
 
                     if (factionStore.hasPerk(OI_MATERIEL_STOCKPILES)) {
                         if ([
@@ -329,6 +341,8 @@ export const useMechStore = defineStore('mech', {
                         traits,
                         team_perks,
                         max_uses,
+                        valid,
+                        validation_message,
                     });
                 };
             },
@@ -461,7 +475,7 @@ export const useMechStore = defineStore('mech', {
                         cost_by_size,
                     } = upgrade;
 
-                    let traits = getUpgradeTraits(upgradeId, size_id)
+                    let traits = getUpgradeTraits(upgradeId, size_id);
                     let cost = cost_by_size[size_id];
                     let validation_message = null;
                     let valid = true;
