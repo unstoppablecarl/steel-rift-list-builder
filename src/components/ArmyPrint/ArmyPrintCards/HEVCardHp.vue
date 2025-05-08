@@ -16,7 +16,7 @@ const info = computed(() => mechStore.getMechInfo(mechId));
 
 const structureSystem = computed(() => {
   if (info.value.size.id === SIZE_LIGHT) {
-    return 'Fragile Systems';
+    return 'Fragile Internals';
   }
   if (info.value.size.id === SIZE_ULTRA) {
     return 'Backup Systems';

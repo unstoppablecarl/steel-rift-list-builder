@@ -47,7 +47,7 @@ function addUpgrade(upgradeId, valid) {
           <td>
             Traits
           </td>
-          <td>
+          <td colspan="3">
             Notes
           </td>
         </tr>
@@ -78,6 +78,8 @@ function addUpgrade(upgradeId, valid) {
                 :valid="item.valid"
                 :validation_message="item.validation_message"
             />
+          </td>
+          <td class="notes">
             <IconTeamGroupPerks
                 :perks="item.team_perks"
             />
