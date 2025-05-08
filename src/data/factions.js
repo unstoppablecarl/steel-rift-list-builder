@@ -60,12 +60,15 @@ export const FACTIONS = makeFrozenStaticListIds({
                 perks: makeFrozenStaticListIds({
                     [[MT_COORDINATED_ASSAULTS]]: {
                         display_name: 'Coordinated Assaults',
+                        description: 'Once per Game, after you have activated an HE-V (but not a Support Asset or Unit), you may remain the Active Player and immediately activate a different HE-V that does not have an Activated Marker. They may only complete a single Order. Play then passes as normal.',
                     },
                     [[MT_COVERED_ADVANCES]]: {
                         display_name: 'Covered Advances',
+                        description: 'Once per Game Turn, if you are not the Active Player and an allied HE-V or Support Asset Unit is targeted by an Engage Order, another allied HE-V in Line of Sight of the Active Unit may Return Fire instead of the Target Unit. The targeted unit still makes the Defense Roll and may re-roll dice of 1 as if it were Returning Fire, but it is the covering HE-V which receives the Activated token and may interrupt to Engage the Active Unit once its Engage Order is resolved.',
                     },
                     [[MT_ELITE_PILOT_PROGRAM]]: {
                         display_name: 'Elite Pilot Program',
+                        description: 'Once per Game Turn,after the opposing Commander selects a unit to Activate and declares their Order, you may rotate a single HE-V up to 90°.',
                     },
                 }),
             },
@@ -74,12 +77,15 @@ export const FACTIONS = makeFrozenStaticListIds({
                 perks: makeFrozenStaticListIds({
                     [[PP_EXPANSIONIST]]: {
                         display_name: 'Expansionist',
+                        description: 'In any Mission that requires calculation of Tonnage destroyed during a turn, any destroyed enemy HE-Vs count as 5 Tons more for determining which Commander has destroyed more. In any Mission that requires calculation of Tonnage in a Mission area during a turn, all enemy HE-Vs that have sustained damage are considered to be 5 Tons lighter for determining which Commander achieves the objective.',
                     },
                     [[PP_PROTECTIVIST]]: {
                         display_name: 'Protectivist',
+                        description: 'In any Mission that requires calculation of Tonnage in the Mission area during a turn, all allied HE-V’s are considered to be 5 Tons heavier for determining which Commander achieves the objective. In any Mission that requires calculation of Tonnage destroyed during a mission, any enemy HE-Vs which are more than 12” from all friendly deployment edges which took damage that turn count as 5 Tons destroyed each.',
                     },
                     [[PP_IDEOLOGICAL]]: {
                         display_name: 'Ideological',
+                        description: 'Once per Game, when the Enemy Commander selects a Unit or Support Asset to Activate, you may use faction propaganda to cause them to hesitate. All numerical values of Movement, Jump, Smash and Engage Damage Rating and Traits are halved, rounding up, for the duration of that Order. If the Order does not have any numeric values (such as Lock On), then its effects are simply canceled instead.',
                     },
                 }),
             },
@@ -88,12 +94,15 @@ export const FACTIONS = makeFrozenStaticListIds({
                 perks: makeFrozenStaticListIds({
                     [[OI_ORBITAL_STOCKPILES]]: {
                         display_name: 'Orbital Stockpiles',
+                        description: 'Off-Table Support Assets with the Limited trait have this value increased by 1.',
                     },
                     [[OI_STRATEGIC_ENERGY_RESERVES]]: {
                         display_name: 'Strategic Energy Reserves',
+                        description: 'During the first Game Turn, increase the speed of all allied HE-V’s for the Move or Jump Order by 2”. For the duration of the first turn, the Move order may be taken twice.',
                     },
                     [[OI_MATERIEL_STOCKPILES]]: {
                         display_name: 'Materiel Stockpiles',
+                        description: 'Increase the Limited trait of Mines, Rocket Packs and Missiles by 1 for all allied HE-Vs.',
                     },
                 }),
             },
@@ -108,6 +117,7 @@ export const FACTIONS = makeFrozenStaticListIds({
                 perks: makeFrozenStaticListIds({
                     [[E_EMBEDDED_INFORMANTS]]: {
                         display_name: 'Embedded Informants',
+                        description: 'During Deployment, the enemy Commander must deploy 2 Units or Support Units for every 1 allied Unit your force deploys.',
                     },
                     [[E_PAID_SABOTEURS]]: {
                         display_name: 'Paid Saboteurs',
