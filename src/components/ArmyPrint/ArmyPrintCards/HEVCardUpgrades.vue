@@ -2,15 +2,22 @@
 
 import {computed} from 'vue';
 import {useMechStore} from '../../../store/mech-store.js';
+import {useTeamStore} from '../../../store/team-store.js';
 
 const mechStore = useMechStore();
+const teamStore = useTeamStore();
 
 const {mechId} = defineProps({
   mechId: {
     type: Number,
   },
 });
-const upgrades = computed(() => mechStore.getMechUpgradesAttachmentInfo(mechId));
+const upgrades = computed(() => {
+  return [].concat(
+      mechStore.getMechUpgradesAttachmentInfo(mechId),
+      teamStore.getTeamPerksInfoByMech(mechId).filter(({is_ability}) => is_ability)
+  )
+});
 
 </script>
 <template>

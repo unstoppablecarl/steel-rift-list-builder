@@ -16,7 +16,7 @@ const {
   },
 });
 
-const visible = ref(true);
+const visible = ref(false);
 const info = computed(() => mechStore.getMechInfo(mechId));
 
 const {
