@@ -9,7 +9,6 @@ const {light} = defineProps({
   },
 });
 
-
 </script>
 <template>
   <img :src="light ? svgIconLight: svgIconDark"/>
