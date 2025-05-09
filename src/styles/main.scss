@@ -17,7 +17,7 @@ $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
 
-$primary: shade-color($blue, 20%);
+$primary: #98b1c2;
 //$secondary: #6c757d;
 $success: $green;
 $info: $cyan;
@@ -53,27 +53,13 @@ $enable-shadows: true;
 @import "./print-page";
 @import "./page-cards-print";
 @import "./page-abilities-print";
+@import "./buttons";
+@import "./cards";
 
 body {
+  background-color: #602915;
   font-optical-sizing: auto;
   font-style: normal;
-}
-
-.btn-tertiary {
-  --bs-btn-box-shadow: 0;
-  --bs-btn-active-shadow: 0;
-  --bs-btn-focus-shadow: 0;
-  @include button-variant(
-                  rgba(0, 0, 0, 0),
-                  rgba(0, 0, 0, 0),
-                  $gray-800,
-                  rgba(0, 0, 0, 0.1),
-                  rgba(0, 0, 0, 0),
-                  $gray-800,
-                  rgba(0, 0, 0, 0.2),
-                  rgba(0, 0, 0, 0),
-                  $gray-800
-  );
 }
 
 .tabs-factions {
@@ -85,28 +71,12 @@ body {
   --bs-nav-link-disabled-color: #000;
 }
 
-.card-faction-perk {
-  .card-body {
-    //font-size: 14px;
-    font-size: 0.8rem;
-    --bs-body-font-size: 0.5rem;
-  }
-}
-
-.team-icon {
-  vertical-align: text-top;
-}
-
 .trait-list-p {
   margin-bottom: 1rem;
 
   &:last-child {
     margin-bottom: 0;
   }
-}
-
-.card {
-  --bs-card-box-shadow: #{$box-shadow-sm};
 }
 
 .offcanvas-body {
@@ -118,20 +88,6 @@ body {
     text-decoration: underline;
     cursor: pointer;
   }
-}
-
-.card-mech {
-  .card-body {
-    padding: $card-spacer-y * 0.5 $card-spacer-x * 0.5;
-  }
-}
-
-.btn-light {
-  --bs-btn-border-color: rgba(0, 0, 0, 0.2);
-}
-
-body {
-  background: tint-color($cyan, 80%);
 }
 
 .mech-stats > .row:nth-child(even) {
@@ -156,54 +112,10 @@ body {
   font-size: 7pt;
 }
 
-.card-army-list {
-
-  .form-floating {
-    box-shadow: $box-shadow-sm;
-    border-radius: var(--bs-border-radius);
-
-    .form-control,
-    .form-select {
-      --bs-border-color: var(--bs-border-color-translucent);
-    }
-  }
-}
-
-.btn-white {
-  --bs-btn-bg: #fff;
-}
-
-.card {
-  margin-top: .5rem;
-  margin-bottom: .5rem;
-
-  &:first-child {
-    margin-top: 0;
-  }
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-
 .form-label-top {
   padding: 0 $btn-padding-x;
   margin-bottom: .25rem;
   font-weight: bold;
-}
-
-.card-header-btn-padding {
-  padding-top: $btn-padding-y;
-  font-size: 1rem;
-
-}
-
-.btn-grab {
-  border: 1px solid $gray-300;
-
-  &:hover {
-    cursor: ns-resize;
-  }
 }
 
 .number-cell {

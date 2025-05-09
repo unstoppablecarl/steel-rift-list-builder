@@ -40,7 +40,6 @@ function onSortableChange(event) {
   if (!moved) {
     return;
   }
-
   teamStore.moveGroupMech(teamId, groupId, moved.element, moved.newIndex);
 }
 
@@ -51,7 +50,10 @@ const {
 
 </script>
 <template>
-  <div class="card text-bg-light">
+  <div :class="{
+    'card text-bg-light card-mech-team-group': true,
+    'border-danger': !size.size_valid,
+  }">
     <div class="card-header d-flex text-bg-primary">
       <div class="flex-grow-1">
         <BtnToolTip>
@@ -59,10 +61,9 @@ const {
             <div
                 @mouseover="mouseover"
                 @mouseleave="mouseleave"
-                class="btn btn-tertiary d-inline-block py-1 me-1 fw-medium"
+                class="btn btn-tertiary d-inline-block py-1 me-1 fw-bold"
             >
-              <Icon :name="teamInfo.icon" color="#000"/>
-
+              <Icon v-if="teamInfo.icon" :name="teamInfo.icon" color="#000" class="me-2"/>
               {{ groupInfo.display_name }}
             </div>
           </template>
@@ -93,12 +94,12 @@ const {
                 @mouseover="mouseover"
                 @mouseleave="mouseleave"
                 :class="{
-                  'btn btn-sm btn-outline mx-1': true,
-                  'btn-light': size.size_valid,
-                  'btn-outline-danger': !size.size_valid,
+                  'btn btn-sm btn-light btn-outline mx-1': true,
+                  'btn-outline-danger border-danger': !size.size_valid,
                 }"
             >
               Size: {{ size.min_count }}-{{ size.max_count }}
+              <span class="material-symbols-outlined" v-if="!size.size_valid">warning</span>
             </span>
           </template>
           <template #content>

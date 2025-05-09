@@ -35,23 +35,25 @@ const {
 } = useExpandCollapseAll();
 </script>
 <template>
-  <div class="card text-bg-dark border-black card-mech-team">
+  <div class="card text-bg-dark card-mech-team">
     <div class="card-header d-flex text-bg-dark">
       <div class="flex-grow-1">
         <span class="d-inline-block py-1 ps-2 pe-1 fw-bold">
+
           <Icon :name="teamInfo.icon" color="#fff"/>
+          <span class="ms-2">
           {{ teamInfo.display_name }}
+          </span>
         </span>
         <BtnToolTip>
           <template #target="{mouseover, mouseleave}">
             <span
                 @mouseover="mouseover"
                 @mouseleave="mouseleave"
-                class="btn btn-sm btn-outline mx-1 btn-light"
+                class="btn btn-sm mx-1 btn-light-outline"
             >
               {{ teamMechCount }}
-              <Icon name="hev" color="#000"/>
-
+              <Icon name="hev" color="#fff"/>
             </span>
           </template>
           <template #content>
@@ -62,11 +64,12 @@ const {
       <div class="text-end">
         <BButton
             size="sm"
-            class="ms-1"
-            variant="light"
+            class="ms-1 btn-header-add"
+            variant="primary"
             @click="show = !show"
         >
           Show Team Perks
+          <Icon name="team-perk" color="#fff"/>
         </BButton>
         <BButton
             size="sm"
@@ -94,7 +97,7 @@ const {
         </BButton>
       </div>
     </div>
-    <div class="card-body text-bg-light">
+    <div class="card-body">
       <MechTeamGroup
           v-for="group in teamInfo.groups"
           :team-id="teamId"
