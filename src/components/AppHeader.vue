@@ -28,7 +28,7 @@ const currentPath = inject('currentPath');
         <div class="row g-1">
           <div class="col-sm">
             <div class="fs-5">
-             <img :src="logoSvg" height="25" class="logo"/> Garage
+             <img :src="logoSvg" height="25" class="logo"/> Hangar
             </div>
           </div>
           <div class="col-sm">
