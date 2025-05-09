@@ -29,10 +29,10 @@ export default {
       {{ weapon.display_name }}
     </td>
     <td class="cell-pad-top text-end">
-      <number :val="weapon.slots" :positive-signed="false" :invert-color="true"/>
+      <number :val="weapon.slots" ::invert-color="true"/>
     </td>
     <td class="cell-pad-top text-end">
-      <number :val="weapon.cost" :positive-signed="false" :invert-color="true"/>
+      <number :val="weapon.cost" ::invert-color="true"/>
     </td>
     <td class="cell-pad-top text-end">
       {{ weapon.damage }}

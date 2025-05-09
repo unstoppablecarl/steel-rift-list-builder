@@ -10,7 +10,7 @@ export default {
     invertColor: Boolean,
     positiveSigned: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
 

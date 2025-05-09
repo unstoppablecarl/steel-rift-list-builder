@@ -27,7 +27,6 @@ const info = computed(() => {
   <div class="game-card">
     <div class="card-content-container">
 
-
       <div class="card-name d-flex">
         <div class="flex-grow-1">
 

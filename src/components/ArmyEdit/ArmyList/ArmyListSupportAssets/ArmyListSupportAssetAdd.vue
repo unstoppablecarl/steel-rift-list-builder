@@ -55,7 +55,7 @@ const {
             {{ item.damage }}
           </td>
           <td class="text-end">
-            <number :val="item.cost" :positive-signed="false" :invert-color="true"/>
+            <number :val="item.cost" ::invert-color="true"/>
           </td>
           <td>
             {{ traitDisplayNames(item.traits) }}

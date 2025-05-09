@@ -4,7 +4,6 @@ import {storeToRefs} from 'pinia';
 import {BButton, BModal, BTabs} from 'bootstrap-vue-next';
 
 const model = defineModel();
-
 const store = useFactionStore();
 const {clearInvalidPerks} = useFactionStore();
 

@@ -67,10 +67,10 @@ function addWeapon(upgradeId) {
             {{ item.display_name }}
           </td>
           <td class="text-end">
-            <number :val="item.slots" :positive-signed="false" :invert-color="true"/>
+            <number :val="item.slots" ::invert-color="true"/>
           </td>
           <td class="text-end">
-            <number :val="item.cost" :positive-signed="false" :invert-color="true"/>
+            <number :val="item.cost" ::invert-color="true"/>
           </td>
           <td class="text-end">
             {{ item.damage }}
