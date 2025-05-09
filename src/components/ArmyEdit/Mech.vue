@@ -4,8 +4,10 @@ import Fraction from '../functional/fraction.vue';
 import {computed, ref, watch} from 'vue';
 import {BButton} from 'bootstrap-vue-next';
 import {useExpandCollapseAll} from '../functional/expand-collapse.js';
+import {useValidationStore} from '../../store/validation-store.js';
 
 const mechStore = useMechStore();
+const validationStore = useValidationStore();
 
 const {
   mechId,
@@ -19,6 +21,8 @@ const {
 const visible = ref(false);
 const info = computed(() => mechStore.getMechInfo(mechId));
 
+const invalid_mech_messages = computed(() => validationStore.invalid_mech_messages(mechId));
+
 const {
   collapseSignal,
   expandSignal,
@@ -26,9 +30,15 @@ const {
 
 watch(collapseSignal, () => visible.value = false);
 watch(expandSignal, () => visible.value = true);
+
 </script>
 <template>
-  <div class="card card-mech">
+  <div
+      :class="{
+        'card card-mech': true,
+        'border-danger': invalid_mech_messages?.length
+      }"
+  >
     <div class="card-body">
       <div class="row">
         <div class="col-sm-2">
@@ -37,8 +47,12 @@ watch(expandSignal, () => visible.value = true);
             HE-V {{ info.size.display_name }}
           </div>
         </div>
-        <div class="col-sm-2 py-1">
-          <strong>{{ info.display_name }}</strong>
+        <div class="col-sm-2">
+          <div class="d-inline-block py-1">
+
+            <strong class="pe-1">{{ info.display_name }}</strong>
+          </div>
+          <IconValidationError size="sm" :message-array="invalid_mech_messages"/>
         </div>
         <div class="col-sm">
           <div class="d-flex flex-row-reverse">

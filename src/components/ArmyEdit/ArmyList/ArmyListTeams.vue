@@ -10,8 +10,12 @@ const teamSizeInfo = computed(() => {
 });
 </script>
 <template>
-
-  <div class="card px-2 py-1">
+  <div
+      :class="{
+        'card px-2 py-1': true,
+        'border-danger': !team_size_count_validation.valid,
+      }"
+  >
     <div class="fw-bold">Team Limits</div>
     <div v-for="(item) in teamSizeInfo">
       {{ item.max_instance_count }} team(s) of {{ item.description }}

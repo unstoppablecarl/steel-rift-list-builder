@@ -62,7 +62,7 @@ export const useValidationStore = defineStore('validation', () => {
         if (usedTons > maxTons) {
             return `List uses ${usedTons}/${maxTons} tons`;
         }
-        return false
+        return false;
     });
 
     const invalid_mech_messages = getter(mechId => {
@@ -83,13 +83,15 @@ export const useValidationStore = defineStore('validation', () => {
         return messages;
     });
 
+    const invalid_mech = getter(mechId => invalid_mech_messages.value(mechId).join('. ') + '.');
+
     const invalid_mech_tons = getter(mechId => {
         const {max_tons, used_tons} = mechStore.getMechInfo(mechId);
 
         if (max_tons < used_tons) {
             return `uses ${used_tons}/${max_tons} tons`;
         }
-        return false
+        return false;
     });
 
     const invalid_mech_slots = getter(mechId => {
@@ -98,7 +100,7 @@ export const useValidationStore = defineStore('validation', () => {
         if (max_slots < used_slots) {
             return `uses ${used_slots}/${max_slots} slots`;
         }
-        return false
+        return false;
     });
 
     const invalid_number_of_teams = computed(() => {
@@ -108,7 +110,7 @@ export const useValidationStore = defineStore('validation', () => {
         if (maxTeams < usedTeams) {
             return `List has ${usedTeams} teams but may only have ${maxTeams}`;
         }
-        return false
+        return false;
     });
 
     const invalid_number_of_support_assets = computed(() => {
@@ -118,11 +120,13 @@ export const useValidationStore = defineStore('validation', () => {
             return `List has ${used_support_assets} Support Assets but may only have ${max_support_assets}`;
         }
 
-        return false
+        return false;
     });
 
     return {
         list_validation,
+        invalid_mech,
+        invalid_mech_messages,
         list_is_valid,
         invalid_number_of_support_assets,
         $reset,
