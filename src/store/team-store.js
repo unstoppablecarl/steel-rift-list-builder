@@ -347,7 +347,6 @@ export const useTeamStore = defineStore('team', () => {
                 };
             });
 
-
             // ugly hack to remove redundant data for table view
             if (
                 (teamId === TEAM_RECON ||
