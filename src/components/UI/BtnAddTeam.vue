@@ -10,6 +10,7 @@ const {addable_teams} = storeToRefs(teamStore);
   <BDropdown
       text="Add Team"
       variant="primary"
+      class="d-inline-block"
   >
     <BDropdownItem
         v-for="item in addable_teams"

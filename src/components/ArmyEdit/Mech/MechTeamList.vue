@@ -10,21 +10,32 @@ import BtnAddTeam from '../../UI/BtnAddTeam.vue';
 const teamStore = useTeamStore();
 const {teams} = storeToRefs(teamStore);
 
-const nonGeneralTeams = computed(() => {
-  return teams.value.filter((team) => team.id !== TEAM_GENERAL);
-});
+const nonGeneralTeams = computed(() => teams.value.filter((team) => team.id !== TEAM_GENERAL));
+const generalMechCount = computed(() => teamStore.getTeamMechCount(TEAM_GENERAL));
+
+function addGeneralMech() {
+  teamStore.addMechToTeam(TEAM_GENERAL, 'A');
+}
 
 </script>
 <template>
   <MechTeamGroup
       :team-id="TEAM_GENERAL"
       group-id="A"
+      v-show="generalMechCount"
   />
-  <div class="d-flex">
-    <div class="flex-grow-1"></div>
-    <div class="">
-      <BtnAddTeam/>
-    </div>
+
+  <div class="text-end">
+    <BButton
+        variant="primary"
+        class="me-1"
+        @click="addGeneralMech"
+        v-if="!generalMechCount"
+    >
+      Add
+      <Icon name="hev" color="#000"/>
+    </BButton>
+    <BtnAddTeam/>
   </div>
   <MechTeam
       v-for="team in nonGeneralTeams"

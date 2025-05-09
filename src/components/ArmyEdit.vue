@@ -4,7 +4,7 @@ import SecondaryAgendas from './ArmyEdit/SecondaryAgendas.vue';
 import MechTeamList from './ArmyEdit/Mech/MechTeamList.vue';
 </script>
 <template>
-  <div class="container-lg py-1 ">
+  <div class="container-lg pb-2">
     <ArmyList/>
     <MechTeamList/>
     <SecondaryAgendas/>
