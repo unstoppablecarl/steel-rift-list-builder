@@ -25,7 +25,6 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
 
         const support_assets_info = computed(() => {
             return Object.values(SUPPORT_ASSETS)
-                .filter(({id}) => support_asset_ids.value.includes(id))
                 .map((asset) => {
                     asset = Object.assign({}, asset);
                     asset.notes = [];

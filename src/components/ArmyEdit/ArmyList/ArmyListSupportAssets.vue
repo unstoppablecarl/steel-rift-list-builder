@@ -68,7 +68,7 @@ const {
             </div>
           </td>
           <td>
-            <BButton @click="store.removeSupportAssetId(item.id)" variant="danger" size="sm">X</BButton>
+            <BButton @click="store.removeSupportAssetId(item.id)" variant="danger" size="sm"><span class="material-symbols-outlined">delete</span></BButton>
           </td>
         </tr>
         </tbody>
