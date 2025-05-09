@@ -1,16 +1,18 @@
 <script setup>
-import {storeToRefs} from 'pinia';
 import {useMechStore} from '../../../store/mech-store.js';
 import MechUpgradeItem from './MechUpgrades/MechUpgradeItem.vue';
 import MechUpgradeAdd from './MechUpgrades/MechUpgradeAdd.vue';
+import {computed} from 'vue';
+
+const mechStore = useMechStore();
 
 const {mechId} = defineProps({
   mechId: {
     type: Number,
   },
 });
-const {mech} = storeToRefs(useMechStore());
 
+const mech = computed(() => mechStore.getMech(mechId));
 </script>
 <template>
   <tr class="table-light">

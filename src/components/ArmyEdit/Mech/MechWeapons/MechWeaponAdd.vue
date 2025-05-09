@@ -21,7 +21,6 @@ function addWeapon(upgradeId) {
 }
 
 </script>
-
 <template>
   <BDropdown
       :id="'mech-input-weapons-add-' + mechId"

@@ -3,8 +3,15 @@ import {MECH_SIZES, SIZE_MEDIUM} from '../data/mech-sizes.js';
 import {MECH_BODY_MODS, MOD_STANDARD} from '../data/mech-body.js';
 import {MECH_ARMOR_UPGRADES, NO_ARMOR_UPGRADE} from '../data/mech-armor-upgrades.js';
 import {findById, updateObject} from '../data/data-helpers.js';
-import {cloneDeep, find, map, sumBy} from 'lodash';
-import {TRAIT_LIMITED, TRAIT_SHORT, TRAIT_SMART, traitDisplayName, WEAPON_TRAITS} from '../data/weapon-traits.js';
+import {cloneDeep, find, groupBy, map, sortBy, sumBy} from 'lodash';
+import {
+    TRAIT_LIMITED,
+    TRAIT_MELEE,
+    TRAIT_SHORT,
+    TRAIT_SMART,
+    traitDisplayName,
+    WEAPON_TRAITS,
+} from '../data/weapon-traits.js';
 import {HOWITZER, MECH_WEAPONS, MISSILES, ROCKET_PACK} from '../data/mech-weapons.js';
 import {readonly} from 'vue';
 import {
@@ -456,9 +463,24 @@ export const useMechStore = defineStore('mech', {
                 };
             },
             getMechAvailableWeaponsInfo(state) {
+                const groups = groupBy(Object.keys(MECH_WEAPONS), weaponId => {
+                    const sizes = Object.keys(MECH_WEAPONS[weaponId].traits_by_size);
+                    for (let i = 0; i < sizes.length; i++) {
+                        const sizeId = sizes[i];
+                        const result = find(MECH_WEAPONS[weaponId].traits_by_size[sizeId], {id: TRAIT_MELEE});
+                        if (result) {
+                            return 'melee';
+                        }
+                    }
+
+                    return 'ranged';
+                });
+
                 return (mechId) => {
-                    return Object.keys(MECH_WEAPONS)
-                        .map((weaponId) => this.getWeaponInfo(mechId, weaponId));
+                    return [].concat(
+                        groups.melee.map((weaponId) => sortBy(this.getWeaponInfo(mechId, weaponId)), 'display_name'),
+                        groups.ranged.map((weaponId) => sortBy(this.getWeaponInfo(mechId, weaponId)), 'display_name'),
+                    );
                 };
             },
             getUpgradeInfo: function (state) {
