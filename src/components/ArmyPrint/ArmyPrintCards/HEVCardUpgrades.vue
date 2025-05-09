@@ -21,18 +21,21 @@ const upgrades = computed(() => {
 
         if (item.traits) {
           item.traits = item.traits
-              .filter(trait => trait.id !== TRAIT_COMPACT);
+              .filter(trait => trait.id !== TRAIT_COMPACT && trait.id !== TRAIT_UPGRADE_LIMITED);
         }
+
         return item;
       })
       // shown in weapons row instead
       .filter(item => item.upgrade_id !== MINEFIELD_DRONE_CARRIER_SYSTEM);
 
+  const teamPerks = teamStore.getTeamPerksInfoByMech(mechId).filter(({is_ability}) => is_ability);
+  teamPerks.forEach(item => item.is_team_perk = true);
+
   return [].concat(
       upgradesAttachments,
-      teamStore.getTeamPerksInfoByMech(mechId).filter(({is_ability}) => is_ability),
+      teamPerks,
   );
-
 });
 </script>
 <template>
@@ -41,22 +44,20 @@ const upgrades = computed(() => {
       Upgrades
     </div>
     <div class="upgrades">
-      <template v-for="(upgrade, index) in upgrades">
-        <span>
-          {{ upgrade.display_name }}<template v-if="upgrade.traits?.length">: </template>
-            <template v-for="trait in upgrade.traits">
-              <template v-if="trait.id === TRAIT_UPGRADE_LIMITED">
-                <template v-for="i in Array(trait.number)">
-                <span class="upgrade-use">&nbsp;</span>
-                </template>
-              </template>
-              <template v-else>
-              {{ trait.display_name }}
-              </template>
-            </template>
-          <span v-if="index !== upgrades.length -1">, </span>
-        </span>
-      </template>
+      <span v-for="(upgrade, index) in upgrades">
+        {{ upgrade.display_name }}<Icon v-if="upgrade.is_team_perk" name="team-perk" size="18px"/>
+        <template v-if="upgrade.max_uses">&nbsp;</template>
+        <span
+            v-if="upgrade.max_uses"
+            v-for="i in Array(upgrade.max_uses)"
+            class="upgrade-use"
+        >&nbsp;</span>
+        <template v-if="upgrade.traits?.length">:</template>
+        <template v-for="trait in upgrade.traits">
+          {{ trait.display_name }}
+        </template>
+        <span v-if="index !== upgrades.length -1">, </span>
+      </span>
     </div>
   </div>
 </template>

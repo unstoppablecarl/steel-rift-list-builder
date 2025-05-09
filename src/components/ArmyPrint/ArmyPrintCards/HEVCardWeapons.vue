@@ -13,13 +13,7 @@ const {mechId} = defineProps({
   },
 });
 const weapons = computed(() => {
-  let results = mechStore.getMechWeaponsAttachmentInfo(mechId)
-      // .map(weapon => {
-      //   return Object.assign({}, weapon, {
-      //     traits:  weapon.traits.filter(trait => trait.id !== TRAIT_SHORT);
-      //   })
-      // });
-
+  let results = mechStore.getMechWeaponsAttachmentInfo(mechId);
   let mineDroneUpgrade = find(mechStore.getMechUpgradesAttachmentInfo(mechId), {upgrade_id: MINEFIELD_DRONE_CARRIER_SYSTEM});
 
   if (mineDroneUpgrade) {
@@ -31,8 +25,8 @@ const weapons = computed(() => {
   return results;
 });
 
-function filterLimited(traits) {
-  return traits.filter((trait) => trait.id !== TRAIT_LIMITED);
+function filterTraits(traits) {
+  return traits.filter((trait) => trait.id !== TRAIT_LIMITED && trait.id !== TRAIT_SHORT);
 }
 
 </script>
@@ -59,8 +53,8 @@ function filterLimited(traits) {
       <td>{{ weapon.damage }}</td>
       <td>{{ weapon.range || '-' }}</td>
       <td class="text-start">
-        <div v-for="(trait, index) in filterLimited(weapon.traits)">
-          {{ trait.display_name }}<span v-if="index !== filterLimited(weapon.traits).length - 1">, </span>
+        <div v-for="(trait, index) in filterTraits(weapon.traits)">
+          {{ trait.display_name }}<span v-if="index !== filterTraits(weapon.traits).length - 1">, </span>
         </div>
       </td>
     </tr>
