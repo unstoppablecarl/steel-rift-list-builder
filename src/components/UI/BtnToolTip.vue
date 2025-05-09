@@ -26,8 +26,7 @@ function mouseLeave() {
 </script>
 <template>
   <BPopover
-      v-model="open"
-      :click="true"
+      :hover="true"
       :close-on-hide="true"
       :delay="{show: 0, hide: 0}"
   >
