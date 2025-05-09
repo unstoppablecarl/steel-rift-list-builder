@@ -1,7 +1,5 @@
 <script setup>
 
-import IconTeamPerk from './IconTeamPerk.vue';
-
 const props = defineProps({
   class: {
     type: String,
@@ -37,12 +35,12 @@ const {
         v-show="perks && perks.length"
         :class="`btn btn-${size} btn-light ${props.class}`">
 
-      <IconTeamPerk/>
+      <Icon name="team-perk"/>
     </span></template>
 
     <template #title>
       Group Perks
-      <IconTeamPerk/>
+      <Icon name="team-perk"/>
     </template>
 
     <template v-for="perk in perks">

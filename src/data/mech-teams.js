@@ -44,13 +44,6 @@ import {
     SA_TROPHY_TAKERS,
 } from './secondary-agendas.js';
 
-import iconAssassination from '/team-icons/icon-assassination.svg';
-import iconBerserker from '/team-icons/icon-berserker.svg';
-import iconFireSupport from '/team-icons/icon-fire-support.svg';
-import iconGunslinger from '/team-icons/icon-gunslinger.svg';
-import iconRecon from '/team-icons/icon-recon.svg';
-import iconSecurity from '/team-icons/icon-security.svg';
-import iconTactical from '/team-icons/icon-tactical.svg';
 import {TRAIT_MELEE} from './weapon-traits.js';
 
 export const TEAM_SIZE_SMALL = 'TEAM_SIZE_SMALL';
@@ -100,7 +93,7 @@ export const MECH_TEAMS = makeStaticListIds({
     },
     [[TEAM_FIRE_SUPPORT]]: {
         display_name: 'Fire Support Team',
-        icon: iconFireSupport,
+        icon: 'team-fire-support',
         secondary_agenda_id: SA_FIRE_FOR_EFFECT,
         groups: makeStaticListIds({
             'A': makeGroup({
@@ -141,7 +134,7 @@ export const MECH_TEAMS = makeStaticListIds({
     },
     [[TEAM_RECON]]: {
         display_name: 'Recon Team',
-        icon: iconRecon,
+        icon: 'team-recon',
         secondary_agenda_id: SA_DEATH_FROM_ABOVE,
         groups: makeStaticListIds({
             'A': makeGroup({
@@ -180,7 +173,7 @@ export const MECH_TEAMS = makeStaticListIds({
     },
     [[TEAM_SECURITY]]: {
         display_name: 'Security Team',
-        icon: iconSecurity,
+        icon: 'team-security',
         secondary_agenda_id: SA_DONT_GIVE_AN_INCH,
         groups: makeStaticListIds({
             'A': makeGroup({
@@ -251,7 +244,7 @@ export const MECH_TEAMS = makeStaticListIds({
     },
     [[TEAM_TACTICAL]]: {
         display_name: 'Tactical Team',
-        icon: iconTactical,
+        icon: 'team-tactical',
         secondary_agenda_id: SA_MISSION_MOMENTUM,
         groups: makeStaticListIds({
             'A': makeGroup({
@@ -295,7 +288,7 @@ export const MECH_TEAMS = makeStaticListIds({
     },
     [[TEAM_BERSERKER]]: {
         display_name: 'Berserker Team',
-        icon: iconBerserker,
+        icon: 'team-berserker',
         secondary_agenda: SA_DRIVE_THEM_OUT,
         groups: makeStaticListIds({
             'A': makeGroup({
@@ -353,7 +346,7 @@ export const MECH_TEAMS = makeStaticListIds({
     },
     [[TEAM_GUNSLINGER]]: {
         display_name: 'Gunslinger Team',
-        icon: iconGunslinger,
+        icon: 'team-gunslinger',
         secondary_agenda: SA_TROPHY_TAKERS,
         groups: makeStaticListIds({
             'A': makeGroup({
@@ -401,7 +394,7 @@ export const MECH_TEAMS = makeStaticListIds({
     },
     [[TEAM_ASSASSIN]]: {
         display_name: 'Assassination Team',
-        icon: iconAssassination,
+        icon: 'team-assassination',
         secondary_agenda: SA_TARGET_ELIMINATED,
         groups: makeStaticListIds({
             'A': makeGroup({

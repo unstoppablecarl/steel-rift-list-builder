@@ -5,7 +5,6 @@ import MechTeamGroup from './MechTeamGroup.vue';
 import {BButton} from 'bootstrap-vue-next';
 import {MECH_SIZES} from '../../../data/mech-sizes.js';
 import {MECH_TEAM_PERKS} from '../../../data/mech-team-perks.js';
-import IconHev from '../../UI/IconHEV.vue';
 import {useExpandCollapseAll} from '../../functional/expand-collapse.js';
 import BtnToolTip from '../../UI/BtnToolTip.vue';
 
@@ -36,11 +35,11 @@ const {
 } = useExpandCollapseAll();
 </script>
 <template>
-  <div class="card">
-    <div class="card-header d-flex ">
+  <div class="card text-bg-dark border-black card-mech-team">
+    <div class="card-header d-flex text-bg-dark">
       <div class="flex-grow-1">
         <span class="d-inline-block py-1 ps-2 pe-1 fw-bold">
-          <img :src="teamInfo.icon" class="team-icon"/>
+          <Icon :name="teamInfo.icon" color="#fff"/>
           {{ teamInfo.display_name }}
         </span>
         <BtnToolTip>
@@ -51,14 +50,14 @@ const {
                 class="btn btn-sm btn-outline mx-1 btn-light"
             >
               {{ teamMechCount }}
-              <IconHev/>
+              <Icon name="hev" color="#000"/>
+
             </span>
           </template>
           <template #content>
             Team Size
           </template>
         </BtnToolTip>
-
       </div>
       <div class="text-end">
         <BButton
@@ -95,7 +94,7 @@ const {
         </BButton>
       </div>
     </div>
-    <div class="card-body">
+    <div class="card-body text-bg-light">
       <MechTeamGroup
           v-for="group in teamInfo.groups"
           :team-id="teamId"

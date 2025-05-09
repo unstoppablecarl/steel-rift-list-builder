@@ -4,10 +4,8 @@ import draggable from 'vuedraggable';
 import {computed, ref} from 'vue';
 import {useTeamStore} from '../../../store/team-store.js';
 import {TEAM_GENERAL} from '../../../data/mech-teams.js';
-import IconHev from '../../UI/IconHEV.vue';
 import {useExpandCollapseAll} from '../../functional/expand-collapse.js';
 import BtnToolTip from '../../UI/BtnToolTip.vue';
-import IconTeamPerk from '../../UI/IconTeamPerk.vue';
 
 const teamStore = useTeamStore();
 const {teamId, groupId} = defineProps({
@@ -54,7 +52,7 @@ const {
 </script>
 <template>
   <div class="card text-bg-light">
-    <div class="card-header d-flex">
+    <div class="card-header d-flex text-bg-primary">
       <div class="flex-grow-1">
         <BtnToolTip>
           <template #target="{mouseover, mouseleave}">
@@ -63,12 +61,13 @@ const {
                 @mouseleave="mouseleave"
                 class="btn btn-tertiary d-inline-block py-1 me-1 fw-medium"
             >
-                <img :src="teamInfo.icon" class="team-icon"/>
-                {{ groupInfo.display_name }}
-              </div>
+              <Icon :name="teamInfo.icon" color="#000"/>
+
+              {{ groupInfo.display_name }}
+            </div>
           </template>
           <template #content>
-           {{teamInfo.display_name}} {{ groupInfo.display_name }} HE-Vs
+            {{ teamInfo.display_name }} {{ groupInfo.display_name }} HE-Vs
           </template>
         </BtnToolTip>
 
@@ -80,7 +79,7 @@ const {
                 class="btn btn-sm btn-outline mx-1 btn-light"
             >
               {{ groupCount }}
-              <IconHev/>
+              <Icon name="hev" color="#000"/>
             </span>
           </template>
           <template #content>
@@ -103,7 +102,7 @@ const {
             </span>
           </template>
           <template #content>
-           {{size.size_validation_message}}
+            {{ size.size_validation_message }}
           </template>
         </BtnToolTip>
 
@@ -116,7 +115,7 @@ const {
                 class="btn btn-sm btn-outline mx-1 btn-light"
             >
               Group Perks
-              <IconTeamPerk/>
+              <Icon name="team-perk"/>
             </span>
           </template>
           <template #content>
@@ -136,14 +135,13 @@ const {
         </BtnToolTip>
       </div>
       <div class="text-end">
-        <BButton
-            size="sm"
-            variant="primary"
-            class="ms-1"
-            @click="teamStore.addMechToTeam(teamId, groupId)">
+        <button
+            class="btn btn-sm ms-1 btn-header-add"
+            @click="teamStore.addMechToTeam(teamId, groupId)"
+        >
           Add
-          <IconHev light/>
-        </BButton>
+          <Icon name="hev" color="#fff"/>
+        </button>
         <BButton
             size="sm"
             variant="tertiary"

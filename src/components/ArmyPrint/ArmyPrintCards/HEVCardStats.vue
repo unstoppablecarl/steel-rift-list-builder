@@ -30,7 +30,7 @@ const team = computed(() => {
         </div>
         <div class="hev-team" v-if="team.id !== TEAM_GENERAL">
           {{ team.display_name }}
-          <img :src="team.icon" class="team-icon"/>
+          <Icon :name="team.icon" color="#000"/>
         </div>
       </div>
     </div>
