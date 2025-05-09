@@ -11,9 +11,8 @@ const {
 
 </script>
 <template>
-
   <BDropdown
-      class="dropdown-table"
+      class="dropdown-table d-inline-block"
       text="Add"
       size="sm"
       variant="primary"
@@ -55,7 +54,7 @@ const {
             {{ item.damage }}
           </td>
           <td class="text-end">
-            <number :val="item.cost" ::invert-color="true"/>
+            <number :val="item.cost" :invert-color="true"/>
           </td>
           <td>
             {{ traitDisplayNames(item.traits) }}

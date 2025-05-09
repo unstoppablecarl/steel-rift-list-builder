@@ -28,7 +28,7 @@ const currentPath = inject('currentPath');
         <div class="row g-1">
           <div class="col-sm">
             <div class="fs-5">
-             <img :src="logoSvg" height="25" class="logo" alt="Steel Rift: Hangar logo"/>
+              <img :src="logoSvg" height="25" class="logo" alt="Steel Rift: Hangar logo"/>
             </div>
           </div>
           <div class="col-sm">
@@ -69,9 +69,7 @@ const currentPath = inject('currentPath');
             />
           </div>
           <div class="col-auto flex-grow-1 text-sm-end">
-            <div class="col-form-label">
-
-
+            <div class="col-form-label d-inline-block">
               <strong>Teams: </strong>
               <fraction
                   :a="used_teams_count"
@@ -96,6 +94,7 @@ const currentPath = inject('currentPath');
                 />
               </span>
             </div>
+            <BtnArmyListValidation/>
           </div>
         </div>
       </div>

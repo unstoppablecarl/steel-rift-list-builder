@@ -76,8 +76,8 @@ export const useFactionStore = defineStore('faction', () => {
             }
         }
 
-        const perk_1_info = computed(() => readonly(FACTION_PERKS[perk_1_id.value]));
-        const perk_2_info = computed(() => readonly(FACTION_PERKS[perk_2_id.value]));
+        const perk_1_info = computed(() => FACTION_PERKS[perk_1_id.value]);
+        const perk_2_info = computed(() => FACTION_PERKS[perk_2_id.value]);
 
         const perk_1_group_id = computed(() => findPerkGroupId.value(perk_1_id.value));
         const perk_2_group_id = computed(() => findPerkGroupId.value(perk_2_id.value));

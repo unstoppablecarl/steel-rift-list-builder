@@ -4,9 +4,12 @@ import {useSupportAssetStore} from '../../../store/support-asset-store.js';
 import ArmyListSupportAssetAdd from './ArmyListSupportAssets/ArmyListSupportAssetAdd.vue';
 import TraitList from '../../UI/TraitList.vue';
 import BtnToolTip from '../../UI/BtnToolTip.vue';
+import {useValidationStore} from '../../../store/validation-store.js';
 
 const store = useSupportAssetStore();
+const validationStore = useValidationStore();
 
+const {invalid_number_of_support_assets} = storeToRefs(validationStore);
 const {
   support_assets,
   used_support_assets,
@@ -14,13 +17,23 @@ const {
 
 </script>
 <template>
-  <div class="card">
+  <div
+      :class="{
+        'card': true,
+        'border-danger': invalid_number_of_support_assets
+      }"
+  >
     <div class="card-header" ref="support-asset-drop-down-container">
-      <div class="float-end">
-        <ArmyListSupportAssetAdd/>
-      </div>
-      <div class="py-1 ps-2 fw-bold">
-        Support Assets
+      <div class="d-flex ps-3">
+        <div class="col-form-label flex-shrink-1 pe-2 fw-bold">
+          Support Assets
+        </div>
+        <div class="flex-grow-1">
+          <IconValidationError size="sm" :message="invalid_number_of_support_assets"/>
+        </div>
+        <div class="flex-shrink-1 text-end">
+          <ArmyListSupportAssetAdd/>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -57,7 +70,7 @@ const {
             {{ item.damage }}
           </td>
           <td class="text-end">
-            <number :val="item.cost" ::invert-color="true"/>
+            <number :val="item.cost" :invert-color="true"/>
           </td>
           <td>
             <TraitList :traits="item.traits"/>
@@ -68,7 +81,8 @@ const {
             </div>
           </td>
           <td>
-            <BButton @click="store.removeSupportAssetId(item.id)" variant="danger" size="sm"><span class="material-symbols-outlined">delete</span></BButton>
+            <BButton @click="store.removeSupportAssetId(item.id)" variant="danger" size="sm"><span
+                class="material-symbols-outlined">delete</span></BButton>
           </td>
         </tr>
         </tbody>
