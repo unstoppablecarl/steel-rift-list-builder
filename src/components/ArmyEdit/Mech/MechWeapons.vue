@@ -1,22 +1,14 @@
-<script>
-import {mapStores} from 'pinia';
+<script setup>
 import {useMechStore} from '../../../store/mech-store.js';
-import MechWeaponItem from './MechWeapons/MechWeaponItem.vue';
-import MechWeaponAdd from './MechWeapons/MechWeaponAdd.vue';
-import draggable from 'vuedraggable';
+import {storeToRefs} from 'pinia';
 
-export default {
-  components: {draggable, MechWeaponAdd, MechWeaponItem},
-  props: {
-    mechId: Number,
+const {mechId} = defineProps({
+  mechId: {
+    type: Number,
   },
-  computed: {
-    ...mapStores(useMechStore),
-    mech() {
-      return this.mechStore.getMech(this.mechId);
-    },
-  },
-};
+});
+const {mech} = storeToRefs(useMechStore());
+
 </script>
 <template>
   <tr class="table-light">
