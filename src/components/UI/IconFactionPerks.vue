@@ -47,7 +47,6 @@ const {
         {{ perk.display_name }}:
       </div>
       <p class="p-gap">{{ perk.description }}</p>
-
     </template>
   </BPopover>
 </template>
