@@ -478,8 +478,8 @@ export const useMechStore = defineStore('mech', {
 
                 return (mechId) => {
                     return [].concat(
-                        groups.melee.map((weaponId) => sortBy(this.getWeaponInfo(mechId, weaponId)), 'display_name'),
-                        groups.ranged.map((weaponId) => sortBy(this.getWeaponInfo(mechId, weaponId)), 'display_name'),
+                        sortBy(groups.melee.map((weaponId) => this.getWeaponInfo(mechId, weaponId), ['display_name'])),
+                        sortBy(groups.ranged.map((weaponId) => this.getWeaponInfo(mechId, weaponId), ['display_name'])),
                     );
                 };
             },
