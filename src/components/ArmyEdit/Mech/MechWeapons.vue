@@ -1,6 +1,8 @@
 <script setup>
 import {useMechStore} from '../../../store/mech-store.js';
-import {computed} from 'vue';
+import {computed, ref} from 'vue';
+import MechWeaponItem from './MechWeapons/MechWeaponItem.vue';
+import draggable from 'vuedraggable';
 
 const mechStore = useMechStore();
 
@@ -11,8 +13,18 @@ const {mechId} = defineProps({
 });
 
 const mech = computed(() => mechStore.getMech(mechId));
+function onSortableChange(event) {
+  let moved = event.moved;
+  if (!moved) {
+    return;
+  }
+
+  mechStore.moveMechWeaponAttachment(mechId, moved.element, moved.newIndex);
+}
+
 </script>
 <template>
+  <tbody>
   <tr class="table-light">
     <th>
       Weapons
@@ -38,10 +50,25 @@ const mech = computed(() => mechStore.getMech(mechId));
     </th>
     <th></th>
   </tr>
-  <MechWeaponItem
-      :mech-id="mechId"
-      v-for="weaponAttachment in mech.weapons"
-      :mech-weapon-attachment-id="weaponAttachment.id"
-      :index="weaponAttachment.display_order"
-  />
+  </tbody>
+  <draggable
+      :list="mech.weapons"
+      draggable=".list-item-sortable"
+      tag="tbody"
+      item-key="id"
+      :group="'mech-' + mechId +'-weapons'"
+      handle=".btn-grab"
+      ghost-class="ghost"
+      @change="onSortableChange"
+      :animation="200"
+      :preventOnFilter="false"
+  >
+    <template #item="{ element, index }">
+      <MechWeaponItem
+          :mech-id="mechId"
+          :mech-weapon-attachment-id="element.id"
+          :index="index"
+      />
+    </template>
+  </draggable>
 </template>

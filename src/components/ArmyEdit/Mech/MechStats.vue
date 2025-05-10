@@ -111,13 +111,9 @@ const armorModOptions = computed(() => teamStore.getMechArmorModOptions(mechId))
           :description="advancedHardPointsInfo.description"
           :usedSlots="advancedHardPointsBonusSlots"
       />
-      <MechUpgrades
-          :mech-id="mech.id"
-      />
-      <MechWeapons
-          :mech-id="mech.id"
-      />
       </tbody>
+      <MechUpgrades :mech-id="mech.id"/>
+      <MechWeapons :mech-id="mech.id"/>
       <tfoot>
       <tr>
         <td>

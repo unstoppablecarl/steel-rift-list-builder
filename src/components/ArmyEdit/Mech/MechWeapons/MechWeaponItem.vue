@@ -25,8 +25,9 @@ function remove() {
 }
 </script>
 <template>
-  <tr>
+  <tr class="list-item-sortable">
     <td>
+      <span class="btn btn-sm btn-light btn-grab me-2">:::</span>
       {{ weapon.display_name }}
     </td>
     <td class="text-end">
