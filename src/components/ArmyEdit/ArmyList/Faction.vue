@@ -28,7 +28,7 @@ const modal = ref(false);
 <template>
   <button
       role="button"
-      class="btn btn-light btn-white text-start mb-1 w-100"
+      class="btn btn-primary text-start mb-1 w-100"
       @click="modal = !modal"
   >
     <span class="small text-muted d-block">Faction</span>

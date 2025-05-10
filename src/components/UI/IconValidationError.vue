@@ -4,7 +4,6 @@ import {computed} from 'vue';
 
 const {messageArray, message, size} = defineProps({
   message: {
-    type: String,
     default: '',
   },
   messageArray: {
@@ -16,9 +15,9 @@ const {messageArray, message, size} = defineProps({
   },
 });
 
-const hasMessage = computed(()=> {
-  return message || messageArray?.length
-})
+const hasMessage = computed(() => {
+  return message || messageArray?.length;
+});
 </script>
 <template>
   <BPopover
