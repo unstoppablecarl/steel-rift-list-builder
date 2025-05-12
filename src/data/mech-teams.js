@@ -1,5 +1,5 @@
 import {MECH_SIZES, SIZE_HEAVY, SIZE_LIGHT, SIZE_MEDIUM, SIZE_ULTRA} from './mech-sizes.js';
-import {HAPTIC_SUIT, NITRO_BOOST, TARGET_DESIGNATOR} from './mech-upgrades.js';
+import {DIRECTIONAL_THRUSTER, HAPTIC_SUIT, NITRO_BOOST, TARGET_DESIGNATOR} from './mech-upgrades.js';
 import {HOWITZER, MELEE_WEAPON, MISSILES, ROCKET_PACK} from './mech-weapons.js';
 import {
     TEAM_PERK_0_SLOT_ARMOR_UPGRADES,
@@ -44,7 +44,7 @@ import {
     SA_TROPHY_TAKERS,
 } from './secondary-agendas.js';
 
-import {TRAIT_MELEE} from './weapon-traits.js';
+import {TRAIT_MELEE, TRAIT_REACH, TRAIT_SHORT} from './weapon-traits.js';
 
 export const TEAM_SIZE_SMALL = 'TEAM_SIZE_SMALL';
 export const TEAM_SIZE_MEDIUM = 'TEAM_SIZE_MEDIUM';
@@ -315,6 +315,7 @@ export const MECH_TEAMS = makeStaticListIds({
                 max_count: 1,
                 size_ids: [SIZE_ULTRA],
                 limited_armor_upgrade_ids: [HEAVY_PLATING_ARMOR_UPGRADE],
+                required_upgrade_ids: [NITRO_BOOST],
             }),
         }),
         team_size_perk_columns: [
@@ -354,19 +355,21 @@ export const MECH_TEAMS = makeStaticListIds({
                 max_count: 2,
                 size_ids: [SIZE_LIGHT],
                 required_upgrade_ids: [HAPTIC_SUIT],
-                at_least_one_weapon_with_trait_id: [TRAIT_MELEE],
+                limited_weapons_with_at_least_one_of_trait_ids: [TRAIT_MELEE, TRAIT_SHORT]
             }),
             'B': makeGroup({
                 min_count: 1,
                 max_count: 2,
                 size_ids: [SIZE_MEDIUM],
                 required_upgrade_ids: [HAPTIC_SUIT],
+                limited_weapons_with_at_least_one_of_trait_ids: [TRAIT_MELEE, TRAIT_SHORT]
             }),
             'C': makeGroup({
                 min_count: 1,
                 max_count: 2,
                 size_ids: [SIZE_HEAVY],
                 required_upgrade_ids: [HAPTIC_SUIT],
+                limited_weapons_with_at_least_one_of_trait_ids: [TRAIT_MELEE, TRAIT_SHORT]
             }),
         }),
         team_size_perk_columns: [
@@ -401,31 +404,21 @@ export const MECH_TEAMS = makeStaticListIds({
                 min_count: 1,
                 max_count: 3,
                 size_ids: [SIZE_LIGHT],
+                required_upgrade_ids: [DIRECTIONAL_THRUSTER],
                 at_least_one_weapon_with_trait_id: [TRAIT_MELEE],
+                limited_weapons_without_trait_id: TRAIT_REACH,
             }),
             'B': makeGroup({
                 min_count: 1,
                 max_count: 3,
                 size_ids: [SIZE_MEDIUM],
+                required_upgrade_ids: [DIRECTIONAL_THRUSTER],
                 at_least_one_weapon_with_trait_id: [TRAIT_MELEE],
-            }),
-            'C': makeGroup({
-                min_count: 1,
-                max_count: 2,
-                size_ids: [SIZE_HEAVY],
-                at_least_one_weapon_with_trait_id: [TRAIT_MELEE],
-                required_upgrade_ids: [NITRO_BOOST],
-            }),
-            'D': makeGroup({
-                min_count: 0,
-                max_count: 1,
-                size_ids: [SIZE_ULTRA],
-                limited_armor_upgrade_ids: [HEAVY_PLATING_ARMOR_UPGRADE],
-                required_upgrade_ids: [NITRO_BOOST],
+                limited_weapons_without_trait_id: TRAIT_REACH,
             }),
         }),
         team_size_perk_columns: [
-            [SIZE_LIGHT, SIZE_MEDIUM, SIZE_HEAVY, SIZE_ULTRA],
+            [SIZE_LIGHT, SIZE_MEDIUM],
             [SIZE_LIGHT],
             [SIZE_MEDIUM],
         ],
@@ -455,11 +448,13 @@ function makeGroup(obj) {
         required_weapon_ids: [],
         required_upgrade_ids: [],
         required_at_least_one_of_weapon_ids: [],
+        required_at_least_one_weapon_with_trait_id: [],
         required_armor_or_structure_mod_id_once: null,
+        limited_weapons_without_trait_id: null,
+        limited_weapons_with_at_least_one_of_trait_ids: [],
         limited_structure_mod_ids: [],
         limited_armor_mod_ids: [],
         limited_armor_upgrade_ids: [],
-        required_at_least_one_weapon_with_trait_id: [],
     };
     const result = Object.assign(defaults, obj);
 
