@@ -242,7 +242,7 @@ export const useMechStore = defineStore('mech', {
                     let display_name = name || placeholder_name;
 
                     let {move, jump} = MECH_SIZES[size_id];
-                    const jumpJets = find(upgrades, {id: JUMP_JETS});
+                    const jumpJets = find(upgrades, {upgrade_id: JUMP_JETS});
 
                     if (jumpJets) {
                         const hasJumpBooster = teamStore.getMechHasTeamPerkId(mechId, TEAM_PERK_JUMP_BOOSTER);
