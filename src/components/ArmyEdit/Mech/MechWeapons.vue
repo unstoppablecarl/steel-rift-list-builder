@@ -1,6 +1,6 @@
 <script setup>
 import {useMechStore} from '../../../store/mech-store.js';
-import {computed, ref} from 'vue';
+import {computed} from 'vue';
 import MechWeaponItem from './MechWeapons/MechWeaponItem.vue';
 import draggable from 'vuedraggable';
 
@@ -13,6 +13,7 @@ const {mechId} = defineProps({
 });
 
 const mech = computed(() => mechStore.getMech(mechId));
+
 function onSortableChange(event) {
   let moved = event.moved;
   if (!moved) {
@@ -21,6 +22,9 @@ function onSortableChange(event) {
 
   mechStore.moveMechWeaponAttachment(mechId, moved.element, moved.newIndex);
 }
+
+const weapons = computed(() => mechStore.getMechAvailableWeaponsInfo(mechId));
+
 
 </script>
 <template>
@@ -39,9 +43,19 @@ function onSortableChange(event) {
       Traits
     </th>
     <td>
-      <MechWeaponAdd :mech-id="mechId"/>
+      <MechWeaponAdd
+          :mech-id="mechId"
+          text="Melee"
+          :options="weapons.melee"
+      />
     </td>
-    <th></th>
+    <th>
+      <MechWeaponAdd
+          :mech-id="mechId"
+          text="Ranged"
+          :options="weapons.ranged"
+      />
+   </th>
     <th class="fw-medium">
       Slots
     </th>

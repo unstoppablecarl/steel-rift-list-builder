@@ -477,10 +477,17 @@ export const useMechStore = defineStore('mech', {
                 });
 
                 return (mechId) => {
-                    return [].concat(
-                        sortBy(groups.melee.map((weaponId) => this.getWeaponInfo(mechId, weaponId), ['display_name'])),
-                        sortBy(groups.ranged.map((weaponId) => this.getWeaponInfo(mechId, weaponId), ['display_name'])),
-                    );
+
+                    let melee = groups.melee.map((weaponId) => this.getWeaponInfo(mechId, weaponId));
+                    let ranged = groups.ranged.map((weaponId) => this.getWeaponInfo(mechId, weaponId));
+
+                    melee = sortBy(melee, ['display_name']);
+                    ranged = sortBy(ranged, ['display_name']);
+
+                    return {
+                        melee,
+                        ranged,
+                    };
                 };
             },
             getUpgradeInfo: function (state) {

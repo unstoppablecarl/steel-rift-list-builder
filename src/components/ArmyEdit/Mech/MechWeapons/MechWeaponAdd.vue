@@ -1,20 +1,30 @@
 <script setup>
 import {useMechStore} from '../../../../store/mech-store.js';
-import {computed} from 'vue';
 import IconTeamGroupPerks from '../../../UI/IconTeamGroupPerks.vue';
 import TraitList from '../../../UI/TraitList.vue';
 import IconNotAvailable from '../../../UI/IconNotAvailable.vue';
 import IconFactionPerks from '../../../UI/IconFactionPerks.vue';
 
-const {mechId} = defineProps({
+const {
+  mechId,
+  options,
+  text,
+} = defineProps({
   mechId: {
     type: Number,
+    required: true,
+  },
+  options: {
+    type: Array,
+    required: true,
+  },
+  text: {
+    type: String,
     required: true,
   },
 });
 
 const mechStore = useMechStore();
-const options = computed(() => mechStore.getMechAvailableWeaponsInfo(mechId));
 
 function addWeapon(upgradeId) {
   mechStore.addMechWeaponAttachment(mechId, upgradeId);
@@ -25,7 +35,7 @@ function addWeapon(upgradeId) {
   <BDropdown
       :id="'mech-input-weapons-add-' + mechId"
       class="dropdown-table"
-      text="Add"
+      :text="text"
       size="sm"
       variant="primary"
   >
