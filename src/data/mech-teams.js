@@ -414,7 +414,7 @@ export const MECH_TEAMS = makeStaticListIds({
                 size_ids: [SIZE_LIGHT],
                 required_upgrade_ids: [DIRECTIONAL_THRUSTER],
                 at_least_one_weapon_with_trait_id: [TRAIT_MELEE],
-                limited_weapons_without_trait_id: TRAIT_REACH,
+                prohibited_weapons_with_trait_ids: [TRAIT_REACH],
             }),
             'B': makeGroup({
                 min_count: 1,
@@ -422,7 +422,7 @@ export const MECH_TEAMS = makeStaticListIds({
                 size_ids: [SIZE_MEDIUM],
                 required_upgrade_ids: [DIRECTIONAL_THRUSTER],
                 at_least_one_weapon_with_trait_id: [TRAIT_MELEE],
-                limited_weapons_without_trait_id: TRAIT_REACH,
+                prohibited_weapons_with_trait_ids: [TRAIT_REACH],
             }),
         }),
         team_size_perk_columns: [
@@ -458,7 +458,7 @@ function makeGroup(obj) {
         required_at_least_one_of_weapon_ids: [],
         required_at_least_one_weapon_with_trait_id: [],
         required_armor_or_structure_mod_id_once: null,
-        limited_weapons_without_trait_id: null,
+        prohibited_weapons_with_trait_ids: [],
         limited_weapons_with_at_least_one_of_trait_ids: [],
         limited_structure_mod_ids: [],
         limited_armor_mod_ids: [],

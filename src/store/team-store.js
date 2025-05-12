@@ -11,6 +11,7 @@ import {useArmyListStore} from './army-list-store.js';
 import {GAME_SIZE_BATTLE, GAME_SIZE_DUEL, GAME_SIZE_RECON, GAME_SIZE_STRIKE, GAME_SIZES} from '../data/game-sizes.js';
 import {MECH_TEAM_PERKS} from '../data/mech-team-perks.js';
 import {MECH_SIZES, SIZE_HEAVY, SIZE_MEDIUM} from '../data/mech-sizes.js';
+import {WEAPON_TRAITS} from '../data/weapon-traits.js';
 
 export const useTeamStore = defineStore('team', () => {
 
@@ -117,6 +118,30 @@ export const useTeamStore = defineStore('team', () => {
 
             return `${teamDisplayName} ${groupInfo.display_name} require at least one of the following: ${atLeastOneWeapons.join(', ')}`;
 
+        });
+
+        const getWeaponIsProhibited = getter((mechId, weaponId, traits) => {
+            const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
+            const groupInfo = getTeamGroupInfo.value(teamId, groupId);
+
+            if (groupInfo.prohibited_weapons_with_trait_ids?.length) {
+
+                const prohibited = find(traits, (trait) => groupInfo.prohibited_weapons_with_trait_ids.includes(trait.id));
+                if (prohibited) {
+                    const teamDisplayName = getTeamInfo.value(teamId).display_name;
+
+                    const prohibitedTraits = groupInfo.prohibited_weapons_with_trait_ids.map(traitId => WEAPON_TRAITS[traitId].display_name)
+                    return {
+                        valid: false,
+                        validation_message: `${teamDisplayName} ${groupInfo.display_name} cannot use weapons with the following traits: ${prohibitedTraits.join(', ')}`,
+                    };
+                }
+            }
+
+            return {
+                valid: true,
+                validation_message: null,
+            };
         });
 
         const getUpgradeIsRequired = getter((teamId, groupId, upgradeId) => {
@@ -520,7 +545,7 @@ export const useTeamStore = defineStore('team', () => {
             });
             setDisplayOrders(group.mechs);
 
-            return mech.id
+            return mech.id;
         }
 
         function removeMechFromTeam(mechId) {
@@ -565,6 +590,7 @@ export const useTeamStore = defineStore('team', () => {
             getMechSizeValid,
             getMechStructureModOptions,
             getMechArmorModOptions,
+            getWeaponIsProhibited,
             getAtLeastOneOfWeaponsIsRequired,
             getAtLeastOneOfWeaponsIsRequiredMessage,
             getRequiredByTeamGroupMessage,
@@ -585,6 +611,9 @@ export const useTeamStore = defineStore('team', () => {
     {
         persist: {
             enabled: true,
+            afterHydrate: (ctx) => {
+                console.log(`hydrated '${ctx.store.$id}'`);
+            },
         },
     },
 );

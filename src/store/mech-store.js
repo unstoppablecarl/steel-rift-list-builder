@@ -128,21 +128,21 @@ export const useMechStore = defineStore('mech', {
                     armor_upgrade_id,
                     weapons,
                     upgrades,
-                } = mech
+                } = mech;
 
                 this.updateMech(newMechId, {
                     structure_mod_id,
                     armor_mod_id,
                     armor_upgrade_id,
-                })
+                });
 
                 weapons.forEach(weapon => {
-                    this.addMechWeaponAttachment(newMechId, weapon.weapon_id)
-                })
+                    this.addMechWeaponAttachment(newMechId, weapon.weapon_id);
+                });
 
                 upgrades.forEach(upgrade => {
-                    this.addMechUpgradeAttachment(newMechId, upgrade.upgrade_id)
-                })
+                    this.addMechUpgradeAttachment(newMechId, upgrade.upgrade_id);
+                });
             },
             removeMech(mechId) {
                 const teamStore = useTeamStore();
@@ -322,7 +322,7 @@ export const useMechStore = defineStore('mech', {
             },
             getWeaponInfo(state) {
                 return (mechId, weaponId) => {
-                    const factionStore = useFactionStore();
+                    const teamStore = useTeamStore();
                     const mech = this.getMech(mechId);
                     const size_id = mech.size_id;
                     const weapon = MECH_WEAPONS[weaponId];
@@ -358,6 +358,12 @@ export const useMechStore = defineStore('mech', {
                             const sizeDisplayNames = limited_size_ids.map(sizeId => MECH_SIZES[sizeId].display_name).join('/');
                             validation_message = `Only available for ${sizeDisplayNames} HE-Vs`;
                         }
+                    }
+
+                    if (valid) {
+                        const prohibited = teamStore.getWeaponIsProhibited(mechId, weaponId, traits);
+                        valid = prohibited.valid;
+                        validation_message = prohibited.validation_message;
                     }
 
                     return readonly({
@@ -770,10 +776,8 @@ export const useMechStore = defineStore('mech', {
         persist: {
             enabled: true,
             afterHydrate: (ctx) => {
-                console.log(`just hydrated '${ctx.store.$id}'`)
-                // console.log(ctx.store.mechs)
-
-            }
+                console.log(`hydrated '${ctx.store.$id}'`);
+            },
         },
     },
 );
