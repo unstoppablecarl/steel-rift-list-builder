@@ -74,6 +74,14 @@ watch(expandSignal, () => visible.value = true);
             >
               <span class="material-symbols-outlined">delete</span>
             </BButton>
+            <BButton
+                size="sm"
+                class="mx-1"
+                variant="header-add"
+                @click="mechStore.duplicateMech(mechId)"
+            >
+              <span class="material-symbols-outlined">content_copy</span>
+            </BButton>
 
             <div class="py-1">
               <span class="px-2">

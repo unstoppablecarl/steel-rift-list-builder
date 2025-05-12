@@ -16,7 +16,7 @@ export default defineConfig({
             dir: path.resolve(__dirname, 'public', 'icons'),
         }),
         vue(),
-        // vueDevTools(),
+        vueDevTools(),
         Components({
             resolvers: [BootstrapVueNextResolver()],
         }),

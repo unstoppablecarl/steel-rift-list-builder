@@ -111,6 +111,39 @@ export const useMechStore = defineStore('mech', {
             moveMech(mech, toIndex) {
                 moveItem(this.mechs, mech, toIndex);
             },
+            duplicateMech(mechId) {
+                const teamStore = useTeamStore();
+
+                const mech = this.getMech(mechId);
+                const {
+                    teamId,
+                    groupId,
+                } = teamStore.getMechTeamAndGroupIds(mechId);
+
+                const newMechId = teamStore.addMechToTeam(teamId, groupId, false);
+
+                const {
+                    structure_mod_id,
+                    armor_mod_id,
+                    armor_upgrade_id,
+                    weapons,
+                    upgrades,
+                } = mech
+
+                this.updateMech(newMechId, {
+                    structure_mod_id,
+                    armor_mod_id,
+                    armor_upgrade_id,
+                })
+
+                weapons.forEach(weapon => {
+                    this.addMechWeaponAttachment(newMechId, weapon.weapon_id)
+                })
+
+                upgrades.forEach(upgrade => {
+                    this.addMechUpgradeAttachment(newMechId, upgrade.upgrade_id)
+                })
+            },
             removeMech(mechId) {
                 const teamStore = useTeamStore();
                 teamStore.removeMechFromTeam(mechId);
@@ -734,6 +767,13 @@ export const useMechStore = defineStore('mech', {
                 return Object.keys(idMap);
             },
         },
-        persist: true,
+        persist: {
+            enabled: true,
+            afterHydrate: (ctx) => {
+                console.log(`just hydrated '${ctx.store.$id}'`)
+                // console.log(ctx.store.mechs)
+
+            }
+        },
     },
 );

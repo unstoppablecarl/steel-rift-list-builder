@@ -477,36 +477,40 @@ export const useTeamStore = defineStore('team', () => {
             });
         });
 
-        function addMechToTeam(teamId, groupId) {
+        function addMechToTeam(teamId, groupId, addDefaults = true) {
             const groupDef = MECH_TEAMS[teamId].groups[groupId];
             const mechOptions = {};
 
-            if (groupDef?.size_ids?.length) {
-                mechOptions.size_id = groupDef.size_ids[0];
-            }
-            if (groupDef?.limited_structure_mod_ids?.length) {
-                mechOptions.structure_mod_id = groupDef.limited_structure_mod_ids[0];
-            }
-            if (groupDef?.limited_armor_mod_ids?.length) {
-                mechOptions.armor_mod_id = groupDef.limited_armor_mod_ids[0];
-            }
-            if (groupDef?.limited_armor_upgrade_ids?.length) {
-                mechOptions.armor_upgrade_id = groupDef.limited_armor_upgrade_ids[0];
-            }
-            if (groupDef?.required_armor_or_structure_mod_id_once) {
-                mechOptions.structure_mod_id = groupDef.required_armor_or_structure_mod_id_once;
-            }
+            if (addDefaults) {
 
+                if (groupDef?.size_ids?.length) {
+                    mechOptions.size_id = groupDef.size_ids[0];
+                }
+                if (groupDef?.limited_structure_mod_ids?.length) {
+                    mechOptions.structure_mod_id = groupDef.limited_structure_mod_ids[0];
+                }
+                if (groupDef?.limited_armor_mod_ids?.length) {
+                    mechOptions.armor_mod_id = groupDef.limited_armor_mod_ids[0];
+                }
+                if (groupDef?.limited_armor_upgrade_ids?.length) {
+                    mechOptions.armor_upgrade_id = groupDef.limited_armor_upgrade_ids[0];
+                }
+                if (groupDef?.required_armor_or_structure_mod_id_once) {
+                    mechOptions.structure_mod_id = groupDef.required_armor_or_structure_mod_id_once;
+                }
+            }
             const mech = mechStore.addMech(mechOptions);
 
-            groupDef.required_weapon_ids.forEach((weaponId) => {
-                mechStore.addMechWeaponAttachment(mech.id, weaponId);
-            });
-            groupDef.required_upgrade_ids.forEach((upgradeId) => {
-                mechStore.addMechUpgradeAttachment(mech.id, upgradeId);
-            });
-            if (groupDef?.required_at_least_one_of_weapon_ids.length) {
-                mechStore.addMechWeaponAttachment(mech.id, groupDef?.required_at_least_one_of_weapon_ids[0]);
+            if (addDefaults) {
+                groupDef.required_weapon_ids.forEach((weaponId) => {
+                    mechStore.addMechWeaponAttachment(mech.id, weaponId);
+                });
+                groupDef.required_upgrade_ids.forEach((upgradeId) => {
+                    mechStore.addMechUpgradeAttachment(mech.id, upgradeId);
+                });
+                if (groupDef?.required_at_least_one_of_weapon_ids.length) {
+                    mechStore.addMechWeaponAttachment(mech.id, groupDef?.required_at_least_one_of_weapon_ids[0]);
+                }
             }
 
             const group = findGroup.value(teamId, groupId);
@@ -515,6 +519,8 @@ export const useTeamStore = defineStore('team', () => {
                 mech_id: mech.id,
             });
             setDisplayOrders(group.mechs);
+
+            return mech.id
         }
 
         function removeMechFromTeam(mechId) {
