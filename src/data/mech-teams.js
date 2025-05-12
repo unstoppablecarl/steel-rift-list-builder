@@ -11,16 +11,16 @@ import {
     TEAM_PERK_0_TON_TARGET_DESIGNATORS,
     TEAM_PERK_BARREL_EXTENSIONS,
     TEAM_PERK_COMBAT_BUCKLER,
-    TEAM_PERK_FORWARD_DEPLOY_HEVS,
+    TEAM_PERK_COUNTER_ATTACK,
     TEAM_PERK_DIRECTIONAL_ASSETS,
     TEAM_PERK_EXTRA_MISSILE_AMMO,
     TEAM_PERK_EXTRA_NITRO,
     TEAM_PERK_EXTRA_TONNAGE,
-    TEAM_PERK_MELEE_FLANK,
+    TEAM_PERK_FORWARD_DEPLOY_HEVS,
     TEAM_PERK_JUMP_BOOSTER,
+    TEAM_PERK_MELEE_FLANK,
     TEAM_PERK_QUICKDRAW,
     TEAM_PERK_RECON_INITIATIVE,
-    TEAM_PERK_COUNTER_ATTACK,
     TEAM_PERK_SIDE_DEFENSE,
     TEAM_PERK_SMART_HOWITZERS,
     TEAM_PERK_SUPPORT_ASSET_DAMAGE,
@@ -29,7 +29,9 @@ import {MOD_REINFORCED, MOD_STANDARD, MOD_STRIPPED} from './mech-body.js';
 import {makeStaticListIds} from './data-helpers.js';
 import {
     ABLATIVE_ARMOR_UPGRADE,
-    CERAMIC_ARMOR_UPGRADE, CLAYMORE_ARMOR_UPGRADE, EXTRA_PLATING_ARMOR_UPGRADE,
+    CERAMIC_ARMOR_UPGRADE,
+    CLAYMORE_ARMOR_UPGRADE,
+    EXTRA_PLATING_ARMOR_UPGRADE,
     HEAVY_PLATING_ARMOR_UPGRADE,
     REACTIVE_ARMOR_UPGRADE,
 } from './mech-armor-upgrades.js';
@@ -362,21 +364,21 @@ export const MECH_TEAMS = makeStaticListIds({
                 max_count: 2,
                 size_ids: [SIZE_LIGHT],
                 required_upgrade_ids: [HAPTIC_SUIT],
-                limited_weapons_with_at_least_one_of_trait_ids: [TRAIT_MELEE, TRAIT_SHORT]
+                limited_weapons_with_at_least_one_of_trait_ids: [TRAIT_MELEE, TRAIT_SHORT],
             }),
             'B': makeGroup({
                 min_count: 1,
                 max_count: 2,
                 size_ids: [SIZE_MEDIUM],
                 required_upgrade_ids: [HAPTIC_SUIT],
-                limited_weapons_with_at_least_one_of_trait_ids: [TRAIT_MELEE, TRAIT_SHORT]
+                limited_weapons_with_at_least_one_of_trait_ids: [TRAIT_MELEE, TRAIT_SHORT],
             }),
             'C': makeGroup({
                 min_count: 1,
                 max_count: 2,
                 size_ids: [SIZE_HEAVY],
                 required_upgrade_ids: [HAPTIC_SUIT],
-                limited_weapons_with_at_least_one_of_trait_ids: [TRAIT_MELEE, TRAIT_SHORT]
+                limited_weapons_with_at_least_one_of_trait_ids: [TRAIT_MELEE, TRAIT_SHORT],
             }),
         }),
         team_size_perk_columns: [
@@ -413,7 +415,7 @@ export const MECH_TEAMS = makeStaticListIds({
                 max_count: 3,
                 size_ids: [SIZE_LIGHT],
                 required_upgrade_ids: [DIRECTIONAL_THRUSTER],
-                at_least_one_weapon_with_trait_id: [TRAIT_MELEE],
+                required_at_least_one_weapon_with_trait_id: TRAIT_MELEE,
                 prohibited_weapons_with_trait_ids: [TRAIT_REACH],
             }),
             'B': makeGroup({
@@ -421,7 +423,7 @@ export const MECH_TEAMS = makeStaticListIds({
                 max_count: 3,
                 size_ids: [SIZE_MEDIUM],
                 required_upgrade_ids: [DIRECTIONAL_THRUSTER],
-                at_least_one_weapon_with_trait_id: [TRAIT_MELEE],
+                required_at_least_one_weapon_with_trait_id: TRAIT_MELEE,
                 prohibited_weapons_with_trait_ids: [TRAIT_REACH],
             }),
         }),
@@ -456,7 +458,7 @@ function makeGroup(obj) {
         required_weapon_ids: [],
         required_upgrade_ids: [],
         required_at_least_one_of_weapon_ids: [],
-        required_at_least_one_weapon_with_trait_id: [],
+        required_at_least_one_weapon_with_trait_id: null,
         required_armor_or_structure_mod_id_once: null,
         prohibited_weapons_with_trait_ids: [],
         limited_weapons_with_at_least_one_of_trait_ids: [],

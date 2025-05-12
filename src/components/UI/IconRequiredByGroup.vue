@@ -1,17 +1,37 @@
 <script setup>
-const {required} = defineProps({
+import {computed} from 'vue';
+
+const {required, reason} = defineProps({
   required: {
-    type: Boolean
+    type: Boolean,
+  },
+  reason: {
+    type: String,
+  },
+});
+
+const requiredReason = computed(() => {
+  if (required && !reason) {
+    return 'Required by Group';
   }
-})
+  return reason;
+});
 </script>
 <template>
-  <span v-b-tooltip.hover.top="'Upgrade Required By Group'">
-    <span
-        class="btn btn-sm btn-danger disabled"
-        v-if="required"
-    >
-      <span class="material-symbols-outlined">lock</span>
-    </span>
-  </span>
+  <BPopover
+      :hover="true"
+      :close-on-hide="true"
+      :delay="{show: 100, hide: 0}"
+  >
+    <template #target>
+      <button
+          class="btn btn-sm btn-danger btn-danger-light"
+          v-show="required"
+      >
+        <span class="material-symbols-outlined">lock</span>
+      </button>
+    </template>
+
+    {{ requiredReason }}
+  </BPopover>
 </template>

@@ -11,14 +11,20 @@ const {valid, validation_message} = defineProps({
 });
 </script>
 <template>
-  <span
-      v-if="!valid"
-      v-b-tooltip.hover.top="validation_message"
+  <BPopover
+      :hover="true"
+      :close-on-hide="true"
+      :delay="{show: 100, hide: 0}"
   >
-    <span class="btn btn-sm btn-danger disabled">
-      <span class="material-symbols-outlined">
-        block
-      </span>
-    </span>
-  </span>
+    <template #target>
+      <button
+          class="btn btn-sm btn-danger btn-danger-light"
+          v-show="!valid"
+      >
+        <span class="material-symbols-outlined">block</span>
+      </button>
+    </template>
+
+    {{ validation_message }}
+  </BPopover>
 </template>

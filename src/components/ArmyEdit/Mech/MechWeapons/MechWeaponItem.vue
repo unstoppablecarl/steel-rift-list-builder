@@ -48,7 +48,7 @@ function remove() {
       >
         <span class="material-symbols-outlined">delete</span>
       </BButton>
-      <IconRequiredByGroup :required="weapon.required_by_group"/>
+      <IconRequiredByGroup :required="weapon.required_by_group" :reason="weapon.required_by_group_reason"/>
       <IconTeamGroupPerks
           :perks="weapon.team_perks"
           class="ms-1"

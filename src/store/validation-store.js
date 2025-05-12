@@ -6,6 +6,9 @@ import {getter} from './helpers/store-helpers.js';
 import {useMechStore} from './mech-store.js';
 import {TEAM_GENERAL} from '../data/mech-teams.js';
 import {useSupportAssetStore} from './support-asset-store.js';
+import {MECH_WEAPONS} from '../data/mech-weapons.js';
+import {find} from 'lodash';
+import {WEAPON_TRAITS} from '../data/weapon-traits.js';
 
 export const useValidationStore = defineStore('validation', () => {
 
@@ -66,6 +69,8 @@ export const useValidationStore = defineStore('validation', () => {
     });
 
     const invalid_mech_messages = getter(mechId => {
+        const teamStore = useTeamStore();
+        const mech = mechStore.getMech(mechId);
         const mechDisplayName = mechStore.getMechInfo(mechId).display_name;
 
         const tonsValidation = invalid_mech_tons.value(mechId);
@@ -78,6 +83,24 @@ export const useValidationStore = defineStore('validation', () => {
 
         if (slotsValidation) {
             messages.push(`${mechDisplayName}: ${slotsValidation}`);
+        }
+
+        const {teamId, groupId} = teamStore.getMechTeamAndGroupIds(mechId);
+        const groupInfo = teamStore.getTeamGroupInfo(teamId, groupId);
+
+        const requiredAtLeastOneWithTraitId = groupInfo.required_at_least_one_weapon_with_trait_id;
+        if (requiredAtLeastOneWithTraitId) {
+            const result = find(mech.weapons, (weapon) => {
+                const traitIds = MECH_WEAPONS[weapon.weapon_id].traits_by_size[mech.size_id];
+                return traitIds.includes(requiredAtLeastOneWithTraitId);
+            });
+
+            if (!result) {
+                const teamDisplayName = teamStore.getTeamInfo(teamId).display_name;
+                const traitDisplayName = WEAPON_TRAITS[requiredAtLeastOneWithTraitId].display_name;
+
+                messages.push(`${teamDisplayName} ${groupInfo.display_name} requires at least one weapon with the of the ${traitDisplayName} trait.`);
+            }
         }
 
         return messages;

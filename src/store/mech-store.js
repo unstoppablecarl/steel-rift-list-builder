@@ -465,28 +465,13 @@ export const useMechStore = defineStore('mech', {
                     let required_by_group = false;
                     let required_by_group_reason = false;
 
-                    if (previousWeaponInstances === 0) {
-                        let {
-                            required,
-                            required_reason,
-                        } = teamStore.getWeaponIsRequired(teamId, groupId, weapon_id);
-                        if (required) {
-                            required_by_group = true;
-                            required_by_group_reason = required_reason;
-                        }
-                    }
-
-                    const requiredAtLeastOne = teamStore.getAtLeastOneOfWeaponsIsRequired(teamId, groupId);
-
-                    if (requiredAtLeastOne.length) {
-                        const prevInstances = mech.weapons.filter((item) => {
-                            return weaponAttachment.id !== item.id && requiredAtLeastOne.includes(item.weapon_id);
-                        }).length;
-
-                        if (prevInstances === 0) {
-                            required_by_group = true;
-                            required_by_group_reason = teamStore.getAtLeastOneOfWeaponsIsRequiredMessage(teamId, groupId);
-                        }
+                    let {
+                        required,
+                        required_reason,
+                    } = teamStore.getWeaponIsRequired(teamId, groupId, weaponAttachment, mech);
+                    if (required) {
+                        required_by_group = true;
+                        required_by_group_reason = required_reason;
                     }
 
                     const result = Object.assign({}, weaponInfo, {

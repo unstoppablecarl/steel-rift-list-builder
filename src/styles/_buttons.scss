@@ -62,6 +62,12 @@
   }
 }
 
+.btn-danger-light {
+  --bs-btn-bg: #{tint-color($danger, 40%)};
+  --bs-btn-border-color: #{tint-color($danger, 40%)};
+  --bs-btn-hover-bg: #{tint-color($danger, 20%)};
+  --bs-btn-hover-border-color: #{tint-color($danger, 20%)};
+}
 
 .btn-white {
   --bs-btn-bg: #fff;
