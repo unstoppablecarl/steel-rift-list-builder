@@ -2,7 +2,7 @@
 import Toaster from './components/UI/Toaster.vue';
 import {computed, onMounted, provide, ref} from 'vue';
 import AppHeader from './components/AppHeader.vue';
-import {ROUTE_HOME, routes} from './routes.js';
+import {ROUTE_PRINT} from './routes.js';
 
 onMounted(() => {
   document.getElementById('failsafe-container').remove();
@@ -16,12 +16,13 @@ window.addEventListener('hashchange', () => {
   currentPath.value = window.location.hash;
 });
 
-const currentView = computed(() => {
-  return routes[currentPath.value.slice(1) || ROUTE_HOME];
-});
+const showPrint = computed(() => {
+  return currentPath.value.slice(1) === ROUTE_PRINT
+})
 </script>
 <template>
   <Toaster/>
   <AppHeader/>
-  <component :is="currentView"/>
+  <ArmyPrint v-show="showPrint"/>
+  <ArmyEdit v-show="!showPrint"/>
 </template>

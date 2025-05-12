@@ -26,7 +26,8 @@ const teamPerks = computed(() => {
           <span class="fw-bold">
             {{ perk.display_name }}:
           </span>
-          {{ perk.description }}</p>
+          {{ perk.description }}
+        </p>
       </div>
     </div>
   </div>

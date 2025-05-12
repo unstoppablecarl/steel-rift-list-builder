@@ -66,6 +66,7 @@ const PERKS = makeStaticListIds({
     [[OI_ORBITAL_STOCKPILES]]: {
         display_name: 'Orbital Stockpiles',
         description: 'Off-Table Support Assets with the Limited trait have this value increased by 1.',
+        calculated_on_cards: true,
     },
     [[OI_STRATEGIC_ENERGY_RESERVES]]: {
         display_name: 'Strategic Energy Reserves',
@@ -74,6 +75,7 @@ const PERKS = makeStaticListIds({
     [[OI_MATERIEL_STOCKPILES]]: {
         display_name: 'Materiel Stockpiles',
         description: 'Increase the Limited trait of Mines, Rocket Packs and Missiles by 1 for all allied HE-Vs.',
+        calculated_on_cards: true,
     },
     // Espionage
     [[E_EMBEDDED_INFORMANTS]]: {
@@ -83,6 +85,7 @@ const PERKS = makeStaticListIds({
     [[E_PAID_SABOTEURS]]: {
         display_name: 'Paid Saboteurs',
         description: 'Any Off-Table Support Assets taken by the enemy Commander have their Limited trait reduced by 1, to a minimum of 0.',
+        calculated_on_cards: true,
     },
     [[E_EXHAUSTIVE_INTEL_GATHERING]]: {
         display_name: 'Exhaustive Intel Gathering',
@@ -92,6 +95,7 @@ const PERKS = makeStaticListIds({
     [[RD_ADVANCED_HARDPOINT_DESIGN]]: {
         display_name: 'Advanced Hardpoint Design',
         description: 'During Force Creation, all allied HE-Vs have one additional slot for Weapon Systems and Upgrades',
+        calculated_on_cards: true,
     },
     [[RD_ADVANCED_ENERGY_MANAGEMENT_SYSTEMS]]: {
         display_name: 'Advanced Energy Management Systems',
@@ -100,15 +104,18 @@ const PERKS = makeStaticListIds({
     [[RD_ADVANCED_STRUCTURAL_COMPONENTS]]: {
         display_name: 'Advanced Structural Components',
         description: 'All allied HE-Vs count as having two more additional Structure remaining than they actually do for determining their Critical Damage status.',
+        calculated_on_cards: true,
     },
     // Deep War Chest
     [[DWC_TOP_END_HARDWARE]]: {
         display_name: 'Top End Hardware',
         description: 'During Force Creation, all allied HE-Vs receive 2 additional Tons to spend on Weapon Systems and Upgrades. These Tons do not take them over their Class Tonnage if spent, and are not counted for any other game purpose other than what the HE-V is equipped with.',
+        calculated_on_cards: true,
     },
     [[DWC_OUTRAGEOUS_SUPPORT_BUDGET]]: {
         display_name: 'Outrageous Support Budget',
         description: 'During Force Creation, you may take one Off-Table Support Asset with a cost of up to 10 tons, without having to pay its cost from your budget. Reduce all numerical values of this Asset (Damage Rating, number of Tokens placed and those of Traits) by 1, to a minimum of 1.',
+        calculated_on_cards: true,
     },
     [[DWC_PURCHASED_OUTCOMES]]: {
         display_name: 'Purchased Outcomes',
@@ -150,7 +157,6 @@ export const FACTION_PERKS = makeFrozenStaticListIds(
         {},
         PERKS,
         {
-
             [[UA_TECH_PIRATES_ADVANCED_HARDPOINT_DESIGN]]: makePerkCopy('Tech Pirates', RD_ADVANCED_HARDPOINT_DESIGN),
             [[UA_TECH_PIRATES_ADVANCED_ENERGY_MANAGEMENT_SYSTEM]]: makePerkCopy('Tech Pirates', RD_ADVANCED_ENERGY_MANAGEMENT_SYSTEMS),
             [[UA_TECH_PIRATES_ADVANCED_STRUCTURAL_COMPONENTS]]: makePerkCopy('Tech Pirates', RD_ADVANCED_STRUCTURAL_COMPONENTS),

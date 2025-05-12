@@ -1,8 +1,5 @@
 import {defineStore} from 'pinia';
 import {computed, ref} from 'vue';
-import ArmyPrintCards from '../components/ArmyPrint/ArmyPrintCards.vue';
-import ArmyPrintRef from '../components/ArmyPrint/ArmyPrintRef.vue';
-import ArmyPrintAll from '../components/ArmyPrint/ArmyPrintAll.vue';
 
 export const PRINT_MODE_CARDS = 'PRINT_MODE_CARDS';
 export const PRINT_MODE_REF = 'PRINT_MODE_REF';
@@ -11,22 +8,23 @@ export const PRINT_MODE_ALL = 'PRINT_MODE_ALL';
 export const PRINT_MODES = {
     [[PRINT_MODE_CARDS]]: {
         display_name: 'Cards',
-        component: ArmyPrintCards,
     },
     [[PRINT_MODE_REF]]: {
         display_name: 'Reference',
-        component: ArmyPrintRef,
     },
     [[PRINT_MODE_ALL]]: {
         display_name: 'All',
-        component: ArmyPrintAll,
     },
 };
 export const usePrintSettingsStore = defineStore('print-settings', () => {
 
         const one_team_per_page = ref(false);
         const include_army_name_on_cards = ref(true);
+
         const include_mine_drone_card = ref(true);
+        const include_faction_perk_1_card = ref(false);
+        const include_faction_perk_2_card = ref(false);
+        const separate_reference_cards_page = ref(false);
 
         const print_mode = ref(PRINT_MODE_CARDS);
         const print_mode_display_name = computed(() => PRINT_MODES[print_mode.value].display_name);
@@ -35,10 +33,10 @@ export const usePrintSettingsStore = defineStore('print-settings', () => {
             one_team_per_page.value = false;
             include_army_name_on_cards.value = true;
             include_mine_drone_card.value = false;
-        }
+            include_faction_perk_1_card.value = false;
+            include_faction_perk_2_card.value = false;
+            separate_reference_cards_page.value = false;
 
-        function getPrintModeComponent() {
-            return PRINT_MODES[print_mode.value].component;
         }
 
         return {
@@ -47,7 +45,10 @@ export const usePrintSettingsStore = defineStore('print-settings', () => {
             print_mode,
             print_mode_display_name,
             include_mine_drone_card,
-            getPrintModeComponent,
+            include_faction_perk_1_card,
+            include_faction_perk_2_card,
+            separate_reference_cards_page,
+
             $reset,
         };
     },
@@ -57,6 +58,9 @@ export const usePrintSettingsStore = defineStore('print-settings', () => {
                 'one_team_per_page',
                 'include_army_name_on_cards',
                 'include_mine_drone_card',
+                'include_faction_perk_1_card',
+                'include_faction_perk_1_card',
+                'separate_reference_cards_page',
             ],
         },
     });

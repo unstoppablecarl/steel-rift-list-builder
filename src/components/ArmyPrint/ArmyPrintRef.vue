@@ -5,6 +5,7 @@ import ArmyPrintRefUpgrades from './ArmyPrintRef/ArmyPrintRefUpgrades.vue';
 import ArmyPrintRefWeaponTraits from './ArmyPrintRef/ArmyPrintRefWeaponTraits.vue';
 import ArmyPrintRefHeader from './ArmyPrintRef/ArmyPrintRefHeader.vue';
 import ArmyPrintRefSupportAssets from './ArmyPrintRef/ArmyPrintRefSupportAssets.vue';
+import ArmyPrintRefFaction from './ArmyPrintRef/ArmyPrintRefFaction.vue';
 </script>
 <template>
 
@@ -13,6 +14,7 @@ import ArmyPrintRefSupportAssets from './ArmyPrintRef/ArmyPrintRefSupportAssets.
     <div class="page-army-reference">
 
       <ArmyPrintRefHeader/>
+      <ArmyPrintRefFaction/>
       <ArmyPrintRefTeams/>
       <ArmyPrintRefSecondaryAgendas/>
       <ArmyPrintRefWeaponTraits/>
