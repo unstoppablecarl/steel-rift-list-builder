@@ -5,6 +5,7 @@ import IconTeamGroupPerks from '../../../UI/IconTeamGroupPerks.vue';
 import IconNotAvailable from '../../../UI/IconNotAvailable.vue';
 import TraitList from '../../../UI/TraitList.vue';
 import IconFactionPerks from '../../../UI/IconFactionPerks.vue';
+import BtnToolTip from '../../../UI/BtnToolTip.vue';
 
 const {mechId} = defineProps({
   mechId: {
@@ -62,7 +63,20 @@ function addUpgrade(upgradeId, valid) {
             @click="addUpgrade(item.upgrade_id, item.valid)"
         >
           <td>
-            {{ item.display_name }}
+            <BtnToolTip>
+              <template #target="{mouseover, mouseleave}">
+                <span
+                    @mouseover="mouseover"
+                    @mouseleave="mouseleave"
+                    class="text-tooltip"
+                >
+                  {{ item.display_name }}
+                </span>
+              </template>
+              <template #content>
+                {{ item.description }}
+              </template>
+            </BtnToolTip>
           </td>
           <td class="text-end">
             <number :val="item.slots" :invert-color="true"/>
