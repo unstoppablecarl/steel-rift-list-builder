@@ -11,6 +11,7 @@ const {
   print_mode_display_name,
   one_team_per_page,
   include_army_name_on_cards,
+  include_mine_drone_card,
 } = storeToRefs(printSettingsStore);
 
 const printComponent = computed(() => printSettingsStore.getPrintModeComponent());
@@ -47,6 +48,13 @@ function print() {
         <input class="form-check-input" type="checkbox" v-model="include_army_name_on_cards" id="army-name-on-cards">
         <label class="form-check-label" for="army-name-on-cards">
           Include army name on cards
+        </label>
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" v-model="include_mine_drone_card" id="include-mine-drone-card">
+        <label class="form-check-label" for="include-mine-drone-card">
+          Include Mine Drone Card
         </label>
       </div>
 

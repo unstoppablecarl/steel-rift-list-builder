@@ -10,7 +10,7 @@ const printSettingsStore = usePrintSettingsStore();
 const teamStore = useTeamStore();
 const mechStore = useMechStore();
 
-const mechPages = computed(() => {
+const pages = computed(() => {
 
   if (printSettingsStore.one_team_per_page) {
     let pages = [];
@@ -26,18 +26,37 @@ const mechPages = computed(() => {
   }
 
   const mechIds = mechStore.mechs.map(mech => mech.id);
-  return chunk(mechIds, 9);
+
+  const cards = mechIds.map(mechId => {
+    return {
+      type: 'hev',
+      mechId,
+    };
+  });
+
+  if (printSettingsStore.include_mine_drone_card) {
+    cards.push({
+      type: 'mine_drone',
+    });
+  }
+
+  return chunk(cards, 9);
 });
 
 </script>
 <template>
   <div
-      v-for="mechPage in mechPages"
+      v-for="page in pages"
       class="page-preview page-letter"
       style="background-color:white"
   >
     <div class="page-card-grid">
-      <HEVCard v-for="mechId in mechPage" :mech-id="mechId"/>
+
+      <template v-for="item in page">
+        <HEVCard v-if="item.type === 'hev'" :mech-id="item.mechId"/>
+        <MineDroneCard v-if="item.type === 'mine_drone'"/>
+
+      </template>
     </div>
   </div>
 </template>

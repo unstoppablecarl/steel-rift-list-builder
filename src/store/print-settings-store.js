@@ -26,14 +26,15 @@ export const usePrintSettingsStore = defineStore('print-settings', () => {
 
         const one_team_per_page = ref(false);
         const include_army_name_on_cards = ref(true);
+        const include_mine_drone_card = ref(true);
 
         const print_mode = ref(PRINT_MODE_CARDS);
-
         const print_mode_display_name = computed(() => PRINT_MODES[print_mode.value].display_name);
 
         function $reset() {
             one_team_per_page.value = false;
             include_army_name_on_cards.value = true;
+            include_mine_drone_card.value = false;
         }
 
         function getPrintModeComponent() {
@@ -45,6 +46,7 @@ export const usePrintSettingsStore = defineStore('print-settings', () => {
             include_army_name_on_cards,
             print_mode,
             print_mode_display_name,
+            include_mine_drone_card,
             getPrintModeComponent,
             $reset,
         };
@@ -54,6 +56,7 @@ export const usePrintSettingsStore = defineStore('print-settings', () => {
             pick: [
                 'one_team_per_page',
                 'include_army_name_on_cards',
+                'include_mine_drone_card',
             ],
         },
     });
