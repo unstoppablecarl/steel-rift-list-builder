@@ -20,13 +20,13 @@ const upgrades = computed(() => {
   <div v-if="upgrades.length">
     <div class="divider"></div>
     <div class="ref-heading">Upgrades</div>
-    <div v-for="item in upgrades">
+    <template v-for="item in upgrades">
       <p class="p-gap">
         <span class="fw-bold">
           {{ item.display_name }}:
         </span>
         {{ item.description }}</p>
-    </div>
+    </template>
 
   </div>
 </template>
