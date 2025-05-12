@@ -1,5 +1,4 @@
 <script setup>
-import {MECH_SIZES_DROP_DOWN} from '../../../../data/mech-sizes.js';
 import {useMechStore} from '../../../../store/mech-store.js';
 import Number from '../../../functional/number.vue';
 import {computed} from 'vue';
@@ -11,9 +10,7 @@ const teamStore = useTeamStore();
 const {mechId} = defineProps({
   mechId: Number,
 });
-const options = computed(() => {
-  return MECH_SIZES_DROP_DOWN.filter((size) => teamStore.getMechSizeValid(mechId, size.id));
-});
+const options = computed(() => teamStore.getAvailableMechSizes(mechId));
 
 const mech = computed(() => mechStore.getMech(mechId));
 const info = computed(() => mechStore.getMechInfo(mechId));

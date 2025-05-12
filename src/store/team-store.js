@@ -10,7 +10,7 @@ import {MECH_WEAPONS} from '../data/mech-weapons.js';
 import {useArmyListStore} from './army-list-store.js';
 import {GAME_SIZE_BATTLE, GAME_SIZE_DUEL, GAME_SIZE_RECON, GAME_SIZE_STRIKE, GAME_SIZES} from '../data/game-sizes.js';
 import {MECH_TEAM_PERKS} from '../data/mech-team-perks.js';
-import {MECH_SIZES, SIZE_HEAVY, SIZE_MEDIUM} from '../data/mech-sizes.js';
+import {MECH_SIZES, MECH_SIZES_DROP_DOWN, SIZE_HEAVY, SIZE_MEDIUM} from '../data/mech-sizes.js';
 import {WEAPON_TRAITS} from '../data/weapon-traits.js';
 
 export const useTeamStore = defineStore('team', () => {
@@ -80,13 +80,6 @@ export const useTeamStore = defineStore('team', () => {
 
         const getTeamInfo = getter((teamId) => readonly(MECH_TEAMS[teamId]));
         const getTeamGroupInfo = getter((teamId, groupId) => readonly(MECH_TEAMS[teamId].groups[groupId]));
-
-        const getRequiredByTeamGroupMessage = getter((teamId, groupId) => {
-            const teamDisplayName = getTeamInfo.value(teamId).display_name;
-            const groupDisplayName = getTeamGroupInfo.value(teamId, groupId).display_name;
-
-            return `Required by ${teamDisplayName} ${groupDisplayName}`;
-        });
 
         const getWeaponIsRequired = getter((teamId, groupId, weaponAttachment, mech) => {
             const groupInfo = getTeamGroupInfo.value(teamId, groupId);
@@ -199,7 +192,7 @@ export const useTeamStore = defineStore('team', () => {
             };
         });
 
-        const getMechSizeValid = getter((mechId, sizeId) => {
+        const getAvailableMechSizes = getter((mechId) => {
             const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
             const info = getTeamGroupInfo.value(teamId, groupId);
 
@@ -207,9 +200,10 @@ export const useTeamStore = defineStore('team', () => {
                 return true;
             }
 
-            return info.size_ids.includes(sizeId);
+            return MECH_SIZES_DROP_DOWN.filter((size) => info.size_ids.includes(size.id));
         });
 
+        // internal
         const getMechStructureModValid = getter((mechId, modId) => {
             const mech = mechStore.getMech(mechId);
             const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
@@ -244,6 +238,7 @@ export const useTeamStore = defineStore('team', () => {
             };
         });
 
+        // internal
         const getMechArmorModValid = getter((mechId, modId) => {
             const mech = mechStore.getMech(mechId);
             const {teamId, groupId} = getMechTeamAndGroupIds.value(mechId);
@@ -298,38 +293,8 @@ export const useTeamStore = defineStore('team', () => {
         });
 
         const getTeamGroupMechCount = getter((teamId, groupId) => {
-            let team = find(teams.value, {id: teamId});
-            let group = find(team.groups, {id: groupId});
-            return group.mechs.length;
-        });
-
-        const getTeamGroupSizeValidation = getter((teamId, groupId) => {
-            const {min_count, max_count} = MECH_TEAMS[teamId].groups[groupId];
             const group = findGroup.value(teamId, groupId);
-            const mechCount = group.mechs.length;
-
-            let size_valid = true;
-            let size_validation_message = 'Valid Group Size';
-            if (min_count !== false) {
-                if (min_count > mechCount) {
-                    size_valid = false;
-                    size_validation_message = 'Group has less than the minimum number of HE-V: ' + min_count;
-                }
-            }
-
-            if (max_count !== false) {
-                if (max_count < mechCount) {
-                    size_valid = false;
-                    size_validation_message = 'Group has more than the maximum number of HE-V: ' + max_count;
-                }
-            }
-
-            return {
-                min_count,
-                max_count,
-                size_valid,
-                size_validation_message,
-            };
+            return group.mechs.length;
         });
 
         const getTeamMechIds = getter((teamId) => {
@@ -463,60 +428,6 @@ export const useTeamStore = defineStore('team', () => {
         const used_teams_count = computed(() => teams.value.filter((team) => team.id !== TEAM_GENERAL).length);
         const max_teams_count = computed(() => armyListStore.game_size_info.max_teams);
 
-        const team_size_count_validation = computed(() => {
-            const messageValid = {
-                valid: true,
-                validation_message: '',
-            };
-            const messageMin = (val) => ({
-                valid: false,
-                validation_message: `A team has less than the minimum of ${val} HE-Vs`,
-            });
-            const messageMax = (val) => ({
-                valid: false,
-                validation_message: `A team has more than the maximum of ${val} HE-Vs`,
-            });
-
-            const gameSizeId = armyListStore.game_size_id;
-
-            if (gameSizeId === GAME_SIZE_DUEL) {
-                return messageValid;
-            }
-            const teamCounts = special_teams.value.map((team) => getTeamMechCount.value(team.id));
-            const smallestTeamCount = min(teamCounts);
-            const largestTeamCount = max(teamCounts);
-
-            if (smallestTeamCount < 2) {
-                return messageMin(2);
-            }
-
-            if (gameSizeId === GAME_SIZE_RECON) {
-                if (largestTeamCount > 2) {
-                    return messageMax(2);
-                }
-            }
-
-            if (gameSizeId === GAME_SIZE_STRIKE) {
-                if (largestTeamCount > 3) {
-                    return messageMax(3);
-                }
-            }
-
-            if (gameSizeId === GAME_SIZE_BATTLE) {
-                if (largestTeamCount > 4) {
-                    return messageMax(4);
-                }
-                const instancesOfCount = countBy(teamCounts);
-                if (instancesOfCount[4] > 1) {
-                    return {
-                        valid: false,
-                        validation_message: `There may only be one team with a count of 4 HE-Vs`,
-                    };
-                }
-            }
-            return messageValid;
-        });
-
         const max_team_size_info = computed(() => {
             const sizeId = armyListStore.game_size_id;
             return map(GAME_SIZES[sizeId].max_team_sizes, (count, teamSizeId) => {
@@ -600,22 +511,21 @@ export const useTeamStore = defineStore('team', () => {
             max_team_size_info,
             used_teams_count,
             max_teams_count,
-            team_size_count_validation,
+            special_teams,
 
+            findGroup,
             getTeamMechCount,
             getTeamGroupMechCount,
             getTeamInfo,
             getTeamGroupInfo,
             getTeamGroupMechIds,
-            getTeamGroupSizeValidation,
             getWeaponIsRequired,
             getUpgradeIsRequired,
             getMechTeamAndGroupIds,
-            getMechSizeValid,
+            getAvailableMechSizes,
             getMechStructureModOptions,
             getMechArmorModOptions,
             getWeaponIsProhibited,
-            getRequiredByTeamGroupMessage,
             getTeamPerksInfoByMech,
             getTeamGroupPerksInfo,
             getMechHasTeamPerkId,

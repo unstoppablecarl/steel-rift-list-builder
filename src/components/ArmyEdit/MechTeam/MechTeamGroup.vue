@@ -6,8 +6,11 @@ import {useTeamStore} from '../../../store/team-store.js';
 import {TEAM_GENERAL} from '../../../data/mech-teams.js';
 import {useExpandCollapseAll} from '../../functional/expand-collapse.js';
 import BtnToolTip from '../../UI/BtnToolTip.vue';
+import {useValidationStore} from '../../../store/validation-store.js';
 
 const teamStore = useTeamStore();
+const validationStore = useValidationStore()
+
 const {teamId, groupId} = defineProps({
   teamId: {
     type: String,
@@ -21,7 +24,7 @@ const teamInfo = computed(() => teamStore.getTeamInfo(teamId));
 const groupCount = computed(() => teamStore.getTeamGroupMechCount(teamId, groupId));
 const groupInfo = computed(() => teamStore.getTeamGroupInfo(teamId, groupId));
 const mechIds = computed(() => teamStore.getTeamGroupMechIds(teamId, groupId));
-const size = computed(() => teamStore.getTeamGroupSizeValidation(teamId, groupId));
+const size = computed(() => validationStore.getTeamGroupSizeValidation(teamId, groupId));
 const isGeneralGroup = computed(() => teamId === TEAM_GENERAL);
 const teamGroupPerks = computed(() => teamStore.getTeamGroupPerksInfo(teamId, groupId));
 const teamGroupPerkCount = computed(() => {
