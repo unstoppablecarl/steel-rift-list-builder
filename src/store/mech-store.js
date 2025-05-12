@@ -240,12 +240,15 @@ export const useMechStore = defineStore('mech', {
                     const structure_mod = MECH_BODY_MODS[structure_mod_id];
                     const armor_mod = MECH_BODY_MODS[armor_mod_id];
 
-                    let defense = size.defense;
+                    let {
+                        defense,
+                        max_tons,
+                        max_slots,
+                        smash_damage,
+                    } = size;
+
                     let armor_stat = size.armor + armor_mod.modifier;
                     const structure_stat = size.structure + structure_mod.modifier;
-
-                    let max_tons = size.max_tons;
-                    let max_slots = size.max_slots;
 
                     const weapon_used_slots = sumBy(weaponsInfo, 'slots');
                     const weapon_used_tons = sumBy(weaponsInfo, 'cost');
@@ -296,7 +299,7 @@ export const useMechStore = defineStore('mech', {
                         tonnage_stat += 5;
                     }
 
-                    return {
+                    return readonly({
                         display_name,
                         placeholder_name,
                         size,
@@ -317,7 +320,8 @@ export const useMechStore = defineStore('mech', {
                         jump,
                         tonnage_stat,
                         defense,
-                    };
+                        smash_damage,
+                    });
                 };
             },
             getWeaponInfo(state) {

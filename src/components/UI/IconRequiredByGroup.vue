@@ -5,9 +5,7 @@ const {required, reason} = defineProps({
   required: {
     type: Boolean,
   },
-  reason: {
-    type: String,
-  },
+  reason: {},
 });
 
 const requiredReason = computed(() => {

@@ -1,7 +1,7 @@
 <script setup>
 import {computed} from 'vue';
 import {useMechStore} from '../../../store/mech-store.js';
-import {TRAIT_LIMITED, TRAIT_SHORT} from '../../../data/weapon-traits.js';
+import {TRAIT_LIMITED, TRAIT_MELEE, TRAIT_SHORT} from '../../../data/weapon-traits.js';
 import {find} from 'lodash';
 import {MINEFIELD_DRONE_CARRIER_SYSTEM} from '../../../data/mech-upgrades.js';
 import {TRAIT_UPGRADE_LIMITED} from '../../../data/upgrade-traits.js';
@@ -13,6 +13,7 @@ const {mechId} = defineProps({
   },
 });
 const weapons = computed(() => {
+  let {size} = mechStore.getMechInfo(mechId);
   let results = mechStore.getMechWeaponsAttachmentInfo(mechId);
   let mineDroneUpgrade = find(mechStore.getMechUpgradesAttachmentInfo(mechId), {upgrade_id: MINEFIELD_DRONE_CARRIER_SYSTEM});
 
@@ -22,7 +23,22 @@ const weapons = computed(() => {
     results.push(mineDroneUpgrade);
   }
 
-  return results;
+  return results.map(weapon => {
+    const melee = find(weapon.traits, {id: TRAIT_MELEE});
+
+    if (melee) {
+
+      const base_melee_damage = size.smash_damage + 1;
+      const melee_trait_damage = melee.number;
+      return Object.assign({}, weapon, {
+        base_melee_damage,
+        melee_trait_damage,
+        total_damage: base_melee_damage + melee_trait_damage,
+      });
+    }
+
+    return weapon;
+  });
 });
 
 function filterTraits(traits) {
@@ -50,7 +66,17 @@ function filterTraits(traits) {
           </div>
         </div>
       </td>
-      <td>{{ weapon.damage }}</td>
+      <td>
+        <template v-if="weapon.base_melee_damage">
+          <span class="fw-light">
+            {{ weapon.base_melee_damage }} + {{ weapon.melee_trait_damage }} =
+          </span>
+          {{ weapon.total_damage }}
+        </template>
+        <template v-else>
+          {{ weapon.damage }}
+        </template>
+      </td>
       <td>{{ weapon.range || '-' }}</td>
       <td class="text-start">
         <div v-for="(trait, index) in filterTraits(weapon.traits)">

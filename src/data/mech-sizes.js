@@ -15,6 +15,7 @@ export const MECH_SIZES = makeFrozenStaticListIds({
         move: 12,
         jump: 10,
         defense: 3,
+        smash_damage: 3,
     },
     [[SIZE_MEDIUM]]: {
         display_name: 'Medium',
@@ -25,6 +26,7 @@ export const MECH_SIZES = makeFrozenStaticListIds({
         move: 10,
         jump: 8,
         defense: 4,
+        smash_damage: 4,
     },
     [[SIZE_HEAVY]]: {
         display_name: 'Heavy',
@@ -35,6 +37,7 @@ export const MECH_SIZES = makeFrozenStaticListIds({
         move: 8,
         jump: 6,
         defense: 5,
+        smash_damage: 5,
     },
     [[SIZE_ULTRA]]: {
         display_name: 'Ultra',
@@ -45,6 +48,7 @@ export const MECH_SIZES = makeFrozenStaticListIds({
         move: 6,
         jump: 4,
         defense: 6,
+        smash_damage: 6,
     },
 });
 
