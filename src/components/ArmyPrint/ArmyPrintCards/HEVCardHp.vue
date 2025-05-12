@@ -4,8 +4,11 @@ import {computed} from 'vue';
 import {SIZE_LIGHT, SIZE_ULTRA} from '../../../data/mech-sizes.js';
 import {useMechStore} from '../../../store/mech-store.js';
 import {chunk} from 'lodash';
+import {useFactionStore} from '../../../store/faction-store.js';
+import {RD_ADVANCED_STRUCTURAL_COMPONENTS} from '../../../data/faction-perks.js';
 
 const mechStore = useMechStore();
+const factionStore = useFactionStore();
 
 const {mechId} = defineProps({
   mechId: {
@@ -53,6 +56,7 @@ function splitIntoChunkCounts(total) {
 
 const structureHp = computed(() => {
   const structure = info.value.structure_stat;
+
   const chunkCounts = splitIntoChunkCounts(structure);
 
   let points = [];
@@ -68,6 +72,12 @@ const structureHp = computed(() => {
     items[items.length - 1] = map[index];
     points = points.concat(items);
   });
+
+
+  if (factionStore.hasPerk(RD_ADVANCED_STRUCTURAL_COMPONENTS)) {
+    points = ['-', '-'].concat(points)
+  }
+
 
   return chunk(points, 5);
 });
