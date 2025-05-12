@@ -65,7 +65,6 @@ const open = ref(false);
             </td>
             <td></td>
             <td></td>
-            <td></td>
           </tr>
           </thead>
           <tbody>
@@ -78,30 +77,27 @@ const open = ref(false);
               @click="selectOption(item.id)"
           >
             <td>
-              {{ item.display_name }}
-            </td>
-            <td class="text-end">
-              <number-val :val="item.slots" :invert-color="true"/>
-            </td>
-            <td class="text-end">
-              <number-val :val="item.cost" :invert-color="true"/>
-            </td>
-            <td class="notes">
-              <BtnToolTip>
+              <BtnToolTip
+              :enabled="!!item.description">
                 <template #target="{mouseover, mouseleave}">
                   <span
-                      v-show="item.description"
                       @mouseover="mouseover"
                       @mouseleave="mouseleave"
-                      class="btn btn-sm btn-light me-1"
+                      :class="{'text-tooltip': item.description}"
                   >
-                    <span class="material-symbols-outlined">shield_question</span>
+                    {{ item.display_name }}
                   </span>
                 </template>
                 <template #content>
                   {{ item.description }}
                 </template>
               </BtnToolTip>
+            </td>
+            <td class="text-end">
+              <number-val :val="item.slots" :invert-color="true"/>
+            </td>
+            <td class="text-end">
+              <number-val :val="item.cost" :invert-color="true"/>
             </td>
             <td class="notes">
               <IconTeamGroupPerks
@@ -119,21 +115,6 @@ const open = ref(false);
           </tbody>
         </table>
       </BDropdown>
-      <BtnToolTip>
-        <template #target="{mouseover, mouseleave}">
-          <span
-              v-show="armorUpgrade.description"
-              @mouseover="mouseover"
-              @mouseleave="mouseleave"
-              class="btn btn-light ms-1 me-1"
-          >
-            <span class="material-symbols-outlined">shield_question</span>
-          </span>
-        </template>
-        <template #content>
-          {{ armorUpgrade.description }}
-        </template>
-      </BtnToolTip>
       <IconTeamGroupPerks
           size="md"
           :perks="armorUpgrade.team_perks"

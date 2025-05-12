@@ -56,9 +56,8 @@
     &.disabled {
       --bs-table-hover-bg: #fff;
 
-
-
-      > td:not(.notes) {
+      > td:not(.notes),
+      >td :not(.popover) {
         opacity: 0.6;
       }
     }
