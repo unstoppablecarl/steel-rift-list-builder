@@ -44,13 +44,13 @@ const weapons = computed(() => {
 function filterTraits(traits) {
   return traits.filter((trait) => trait.id !== TRAIT_LIMITED && trait.id !== TRAIT_SHORT);
 }
-
 </script>
 <template>
   <table class="table-weapons">
     <thead>
     <tr>
       <th>Weapon</th>
+      <th class="text-start">Ltd</th>
       <th>Dmg</th>
       <th>Rng</th>
       <th class="text-start">Traits</th>
@@ -61,9 +61,11 @@ function filterTraits(traits) {
       <td>
         <div>
           {{ weapon.display_name }}
-          <div class="weapon-uses" v-if="weapon.max_uses">
-            <div class="weapon-use" v-for="i in Array(weapon.max_uses)">&nbsp;</div>
-          </div>
+        </div>
+      </td>
+      <td class="text-start">
+        <div class="weapon-uses" v-if="weapon.max_uses">
+          <div class="weapon-use" v-for="i in Array(weapon.max_uses)">&nbsp;</div>
         </div>
       </td>
       <td>
