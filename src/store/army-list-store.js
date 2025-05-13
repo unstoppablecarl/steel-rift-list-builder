@@ -42,7 +42,7 @@ export const useArmyListStore = defineStore('army-list', () => {
                 return true;
             }
 
-            return supportAssetStore.hasSupportAssetId(MINE_DRONE_BARRAGE)
+            return supportAssetStore.hasSupportAssetId(MINE_DRONE_BARRAGE);
         });
 
         return {
