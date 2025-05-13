@@ -200,6 +200,19 @@ export const useMechStore = defineStore('mech', {
                         this.removeMechUpgradeAttachment(mechId, upgradeAttachment.id);
                     }
                 });
+
+
+                mech.weapons.forEach((weaponAttachment) => {
+                    const info = this.getMechWeaponAttachmentInfo(mechId, weaponAttachment.id);
+                    if (!info.valid) {
+                        const {toastInfo} = useToastStore();
+
+                        toastInfo(`${mechInfo.size.display_name} HE-V (${mechInfo.display_name})`,
+                            `${info.display_name} removed: (${info.validation_message})`);
+                        this.removeMechWeaponAttachment(mechId, weaponAttachment.id);
+                    }
+                })
+
             },
         },
         getters: {
