@@ -53,13 +53,17 @@
                       rgba(255, 255, 255, 0.05),
                       rgba(255, 255, 255, 0.4),
                       #fff
-
       );
     }
-
-
-
   }
+}
+
+.btn-orange {
+  @include button-variant(
+                  #de4000,
+                  #de4000,
+                  #fff,
+  );
 }
 
 .btn-danger-light {

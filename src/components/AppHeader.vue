@@ -1,75 +1,47 @@
 <script setup>
 
-import Fraction from './functional/fraction.vue';
-import BtnReset from './UI/BtnReset.vue';
 import BtnLoad from './UI/BtnLoad.vue';
 import BtnSave from './UI/BtnSave.vue';
 import {useArmyListStore} from '../store/army-list-store.js';
 import {storeToRefs} from 'pinia';
 import {useTeamStore} from '../store/team-store.js';
 import {useSupportAssetStore} from '../store/support-asset-store.js';
-import {inject} from 'vue';
+import {inject, ref} from 'vue';
 import {ROUTE_HOME, ROUTE_PRINT} from '../routes.js';
-import logoSvg from '/steel-rift-logo.svg';
+import Navbar from './Navbar.vue';
+import Fraction from './functional/fraction.vue';
+import {resetStores} from '../store/helpers/store-save-load.js';
+import {BModal} from 'bootstrap-vue-next';
 
-const store = useArmyListStore();
 const {used_teams_count, max_teams_count} = storeToRefs(useTeamStore());
-
-const {used_tons, max_tons, name} = storeToRefs(store);
 const {used_support_assets, max_support_assets} = storeToRefs(useSupportAssetStore());
+const {used_tons, max_tons, name} = storeToRefs(useArmyListStore());
 
 const currentPath = inject('currentPath');
-
+const resetModal = ref(false);
 </script>
 <template>
   <div class="sticky-top text-bg-light border-bottom shadow app-header">
+    <Navbar/>
     <div class="container-lg">
-      <div class="px-4 pt-2 pb-2">
-        <div class="row g-1">
-          <div class="col-sm">
-            <div class="fs-5">
-              <img :src="logoSvg" height="25" class="logo" alt="Steel Rift: Hangar logo"/>
+      <div class="pt-2 px-3 pb-2">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="d-flex">
+              <label class="col-form-label form-control-sm fw-bold me-2" for="list-name">
+                Army&nbsp;Name:
+              </label>
+              <input
+                  type="text"
+                  v-model="name"
+                  id="list-name"
+                  class="form-control form-control-sm"
+              />
             </div>
           </div>
-          <div class="col-sm">
-            <div class="float-end">
-              <BtnSave/>&nbsp;
-              <BtnLoad/>&nbsp;
-              <BtnReset/>
-              <div class="btn-group ms-1" role="group">
-                <a :href="`#${ROUTE_HOME}`" :class="{
-                  'btn btn-sm btn-light': true,
-                  'active': currentPath === `#${ROUTE_HOME}`
-                }">
-                  Edit
-                </a>
-                <a :href="`#${ROUTE_PRINT}`" :class="{
-                  'btn btn-sm btn-light': true,
-                  'active': currentPath === `#${ROUTE_PRINT}`
-                }">
-                  Print
-                </a>
 
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row pt-1 g-1">
-          <div class="col-auto flex-sm-shrink-1">
-            <label class="col-form-label fw-bold" for="list-name">
-              Army Name:
-            </label>
-          </div>
-          <div class="col-3">
-            <input
-                type="text"
-                v-model="name"
-                id="list-name"
-                class="form-control form-con"
-            />
-          </div>
-          <div class="col-auto flex-grow-1 text-sm-end">
-            <div class="col-form-label d-inline-block">
+          <div class="col-md-6">
+            <div class="col-form-label form-control-sm d-inline-block text-end">
               <strong>Teams: </strong>
               <fraction
                   :a="used_teams_count"
@@ -96,8 +68,45 @@ const currentPath = inject('currentPath');
             </div>
             <BtnArmyListValidation/>
           </div>
+          <div class="col-md-3 text-md-end header-btns">
+            <BtnSave/>
+            <BtnLoad/>
+            <BButton
+                @click="reset_modal = !reset_modal"
+                size="sm"
+                variant="danger"
+                class="ms-1"
+            >
+              Reset
+            </BButton>
+            <div class="btn-group d-inline-block ms-1" role="group">
+              <a :href="`#${ROUTE_HOME}`" :class="{
+                  'btn btn-sm btn-light': true,
+                  'active': currentPath === `#${ROUTE_HOME}`
+                }">
+                Edit
+              </a>
+              <a :href="`#${ROUTE_PRINT}`" :class="{
+                  'btn btn-sm btn-light': true,
+                  'active': currentPath === `#${ROUTE_PRINT}`
+                }">
+                Print
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <BModal
+      v-model="resetModal"
+      centered
+      @ok="resetStores()"
+      ok-variant="danger"
+      title="Reset Army List?"
+  >
+    <div class="lead">
+      Are you sure you want to clear all army list data?
+    </div>
+  </BModal>
 </template>

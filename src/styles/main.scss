@@ -42,8 +42,11 @@ $card-cap-padding-y: $card-spacer-y * .5;
 
 $enable-shadows: true;
 
-$toast-background-color:            #fff !default;
-$toast-header-background-color:     #fff !default;
+$toast-background-color: #fff !default;
+$toast-header-background-color: #fff !default;
+$nav-link-padding-y: 0;
+$navbar-padding-y: 0.6rem;
+$navbar-dark-color: #de4000;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import '../../node_modules/bootstrap-vue-next/src/styles/styles';
@@ -63,6 +66,17 @@ body {
   background-color: #602915;
   font-optical-sizing: auto;
   font-style: normal;
+}
+
+.navbar > .container,
+.navbar > .container-fluid,
+.navbar > .container-sm,
+.navbar > .container-md,
+.navbar > .container-lg,
+.navbar > .container-xl,
+.navbar > .container-xxl {
+  display: block;
+
 }
 
 .tabs-factions {
@@ -103,8 +117,11 @@ body {
   }
 }
 
-.logo {
-  vertical-align: text-bottom;
+.navbar-dark {
+  background-color: #000;
+  .nav-link {
+    font-weight: $font-weight-medium;
+  }
 }
 
 .game-card-footer {

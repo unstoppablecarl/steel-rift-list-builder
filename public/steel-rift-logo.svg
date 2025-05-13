@@ -1,120 +1,49 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="808.4231mm"
-   height="80.274994mm"
-   viewBox="0 0 808.4231 80.274994"
-   version="1.1"
-   id="svg1"
-   xml:space="preserve"
-   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
-   sodipodi:docname="App Logo.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
-     id="namedview1"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="mm"
-     inkscape:zoom="0.26173516"
-     inkscape:cx="1285.6507"
-     inkscape:cy="105.06804"
-     inkscape:window-width="1920"
-     inkscape:window-height="1009"
-     inkscape:window-x="1912"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" /><defs
-     id="defs1"><style
-       id="style1">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="svg1" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version="1.1" viewBox="0 0 2291.6 227.6">
+  <!-- Generator: Adobe Illustrator 29.5.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 137)  -->
+  <defs>
+    <style>
       .st0 {
         fill: #fcb923;
       }
 
-      .st0, .st1 {
+      .st0, .st1, .st2 {
         fill-rule: evenodd;
       }
 
       .st1 {
+        fill: #fff;
+      }
+
+      .st2 {
         fill: #de4000;
       }
-    </style></defs><g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(-286.35399,-68.333622)"><g
-       id="g1"
-       transform="matrix(0.26458333,0,0,0.26458333,283.70816,65.635079)"><polygon
-         class="st1"
-         points="437.4,312.6 437.4,256.4 364.7,256.4 364.7,167.1 437.4,167.1 437.4,111 235.7,111 235.7,167.1 308.4,167.1 308.4,256.4 235.7,256.4 235.7,312.6 "
-         id="polygon1" /><polygon
-         class="st1"
-         points="155.4,183.8 10,183.8 10,240.1 62.3,240.1 133.4,312.7 222,312.7 149.2,240.1 211.6,240.1 211.6,111.1 10,111.1 10,167.3 155.4,167.3 "
-         id="polygon2" /><polygon
-         class="st1"
-         points="816.1,167.3 888.8,167.3 888.8,111.1 687.2,111.1 687.2,167.3 759.9,167.3 759.9,312.7 816.1,312.7 "
-         id="polygon3" /><polygon
-         class="st1"
-         points="517.6,184.7 517.6,168.2 663.1,168.2 663.1,112 461.4,112 461.4,313.6 517.6,313.6 517.6,240.9 663.1,240.9 663.1,184.7 "
-         id="polygon4" /><path
-         class="st1"
-         d="m 62.6,94.4 c 29.1,0 43.9,-9 43.9,-22.9 V 65.2 C 106.5,55.8 102.7,49.4 93.6,46.6 85.8,44.2 78.1,43.6 61.3,43.2 46.9,43 41.9,41.7 41.9,37 v -1.3 c 0,-4.3 3.5,-7.4 21.6,-7.4 18.1,0 17.9,0.5 17.9,3.2 0,4.4 4.5,6 11.3,6 6.8,0 11.9,-1.4 11.9,-6.7 0,-10.9 -14.3,-19.2 -42.5,-19.2 -28.2,0 -43.2,8.1 -43.2,21.4 v 5.1 c 0,9.4 4.9,14.5 12,17 8.2,3.2 19.2,3.2 28,3.5 7.2,0.3 12.7,0.4 17.8,1.3 4.5,0.9 6.6,2.9 6.6,7.4 v 3.3 c 0,4.6 -5.4,7.5 -21.3,7.5 -9.5,0.1 -18.6,-0.1 -20.1,-5.3 0,-4.1 -4.5,-5.6 -11.6,-5.6 -7.1,0 -11.5,1.6 -11.5,5.6 v 3.4 c 0,10 15.7,18.2 43.6,18.2 z"
-         id="path4" /><path
-         class="st1"
-         d="m 120.9,31.7 h 72.7 c 4.8,0 6.6,-3.8 6.6,-9.3 0,-5.5 -1.8,-9.3 -6.6,-9.3 h -72.7 c -4.8,0 -6.6,3.7 -6.6,9.3 0,5.6 1.8,9.3 6.6,9.3 z"
-         id="path5" /><path
-         class="st1"
-         d="m 147,36.9 c -6.9,0 -11.6,2.3 -11.6,8.2 v 21.7 c 0,16.7 9.9,25.8 34.9,25.8 h 3.1 c 4.8,0 6.6,-3.5 6.6,-9.3 0,-5.8 -1.8,-9.2 -6.6,-9.2 h -4 c -7.8,0 -11,-2.4 -11,-7.9 V 45.1 c 0,-5.9 -4.4,-8.2 -11.4,-8.2 z"
-         id="path6" /><path
-         class="st1"
-         d="m 243,41.8 c -4.8,0 -6.6,3.5 -6.6,9.3 0,5.8 1.8,9.2 6.6,9.2 h 23.3 c 4.8,0 6.6,-3.7 6.6,-9.2 0,-5.5 -1.8,-9.3 -6.6,-9.3 z"
-         id="path7" /><path
-         class="st1"
-         d="M 242.8,92.6 H 283 c 4.8,0 6.6,-3.5 6.6,-9.3 0,-5.8 -1.8,-9.2 -6.6,-9.2 h -41.1 c -7.8,0 -11,-2.4 -11,-7.9 V 39.4 c 0,-5.4 3.3,-7.8 11,-7.8 h 40.4 c 4.8,0 6.6,-3.8 6.6,-9.3 0,-5.5 -1.8,-9.3 -6.6,-9.3 h -39.6 c -25.1,0 -34.9,9.2 -34.9,25.8 v 27.9 c 0,16.7 9.7,25.8 34.9,25.8 z"
-         id="path8" /><path
-         class="st1"
-         d="m 332.3,92.6 h 40.2 c 4.8,0 6.6,-3.5 6.6,-9.3 0,-5.8 -1.8,-9.2 -6.6,-9.2 h -41.1 c -7.8,0 -11,-2.4 -11,-7.9 V 39.4 c 0,-5.4 3.2,-7.8 11,-7.8 h 40.4 c 4.8,0 6.6,-3.8 6.6,-9.3 0,-5.5 -1.8,-9.3 -6.6,-9.3 h -39.5 c -25.1,0 -34.9,9.2 -34.9,25.8 v 27.9 c 0,16.7 9.7,25.8 34.9,25.8 z"
-         id="path9" /><path
-         class="st1"
-         d="m 332.4,41.8 c -4.8,0 -6.6,3.5 -6.6,9.3 0,5.8 1.8,9.2 6.6,9.2 h 23.3 c 4.8,0 6.6,-3.7 6.6,-9.2 0,-5.5 -1.8,-9.3 -6.6,-9.3 z"
-         id="path10" /><path
-         class="st1"
-         d="M 456.1,74.1 H 421 c -7.9,0 -11,-2.4 -11,-7.9 V 20.4 c 0,-5.9 -4.5,-8.2 -11.6,-8.2 -7.1,0 -11.4,2.3 -11.4,8.2 v 46.4 c 0,16.7 9.7,25.8 34.7,25.8 h 34.4 c 4.8,0 6.6,-3.5 6.6,-9.3 0,-5.8 -1.8,-9.2 -6.6,-9.2 z"
-         id="path11" /><path
-         class="st0"
-         d="m 685.4,78.2 31.7,14.5 -26.2,-16.5 c 34.5,8.2 66.9,17.5 97.3,27.7 -25.8,-11.7 -52,-22 -79.4,-30.9 l 57,4.7 -66.4,-15 20.9,-20.6 -27.5,9.1 5.2,-41 -18,37.5 -19.1,-21.8 7.5,28.4 -64.8,-20.9 51.1,24.7 C 588.2,42.5 513.9,35.3 424.3,38.6 512.6,44 590.6,54.6 660.2,69.4 L 634,70 l 35.5,3.9 -12.2,14.3 15.6,-8.4 -2.6,21 9.2,-19.2 8.3,14.9 z"
-         id="path12" /></g><g
-       id="g17"
-       transform="matrix(1.5049681,0,0,1.5049681,-278.41973,-73.658356)"
-       style="stroke-width:0.664466"><path
-         id="rect4"
-         style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.175806;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
-         d="m 612.35864,94.348829 v 53.339901 h 14.86989 v -19.23552 h 23.49469 v 19.23552 h 14.86989 V 94.348829 Z m 14.86989,14.869381 h 23.49469 v 4.36563 h -23.49469 z"
-         sodipodi:nodetypes="cccccccccccccc" /><path
-         id="rect8"
-         style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.175806;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
-         d="m 551.36098,94.348829 v 53.339891 h 14.86938 V 128.4532 h 23.4952 v 19.23552 h 14.86938 V 94.348829 h -14.86938 v 19.235001 h -23.4952 V 94.348829 Z" /><path
-         id="rect10"
-         style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.175806;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
-         d="M 726.59077,147.68873 V 94.348839 h -14.86938 v 18.397321 l -17.6475,-18.265031 -20.71708,-0.1323 v 53.339901 h 14.86989 v -35.56217 l 23.49469,25.54263 v 10.01954 z"
-         sodipodi:nodetypes="cccccccccccc" /><path
-         id="rect13"
-         style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.175806;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
-         d="m 734.35447,94.348829 v 53.339891 h 53.23448 v -22.1573 h -5.2e-4 V 113.58383 H 759.4594 v 14.86989 h 13.25966 v 4.36563 H 749.22437 V 109.2182 h 38.36406 V 94.348829 Z"
-         sodipodi:nodetypes="ccccccccccccccc" /><path
-         id="path17"
-         style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.175806;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
-         d="m 795.35264,94.348829 v 53.339891 h 14.86989 V 128.4532 h 23.49469 v 19.23552 h 14.86989 V 94.348829 Z m 14.86989,14.869371 h 23.49469 v 4.36563 h -23.49469 z"
-         sodipodi:nodetypes="cccccccccccccc" /><polygon
-         class="st1"
-         points="62.3,240.1 133.4,312.7 222,312.7 149.2,240.1 211.6,240.1 211.6,111.1 10,111.1 10,167.3 155.4,167.3 155.4,183.8 10,183.8 10,240.1 "
-         id="polygon2-2"
-         style="fill:#000000;fill-rule:evenodd;stroke-width:0.664466"
-         transform="matrix(0.26458333,0,0,0.26458333,853.70498,64.953621)" /></g></g></svg>
+    </style>
+  </defs>
+  <sodipodi:namedview id="namedview1" bordercolor="#000000" borderopacity="0.25" inkscape:current-layer="layer1" inkscape:cx="1285.6507" inkscape:cy="105.06804" inkscape:deskcolor="#d1d1d1" inkscape:document-units="mm" inkscape:pagecheckerboard="0" inkscape:pageopacity="0.0" inkscape:showpageshadow="2" inkscape:window-height="1009" inkscape:window-maximized="1" inkscape:window-width="1920" inkscape:window-x="1912" inkscape:window-y="-8" inkscape:zoom="0.26173516" pagecolor="#ffffff"/>
+  <g id="layer1" inkscape:groupmode="layer" inkscape:label="Layer 1">
+    <g id="g1">
+      <polygon id="polygon1" class="st2" points="320.5 226.8 320.5 184.7 266 184.7 266 117.7 320.5 117.7 320.5 75.6 169.3 75.6 169.3 117.7 223.8 117.7 223.8 184.7 169.3 184.7 169.3 226.8 320.5 226.8"/>
+      <polygon id="polygon2" class="st2" points="109 130.2 0 130.2 0 172.4 39.2 172.4 92.5 226.9 159 226.9 104.4 172.4 151.2 172.4 151.2 75.7 0 75.7 0 117.8 109 117.8 109 130.2"/>
+      <polygon id="polygon3" class="st2" points="604.6 117.8 659.1 117.8 659.1 75.7 507.9 75.7 507.9 117.8 562.4 117.8 562.4 226.9 604.6 226.9 604.6 117.8"/>
+      <polygon id="polygon4" class="st2" points="380.7 130.9 380.7 118.5 489.8 118.5 489.8 76.4 338.5 76.4 338.5 227.6 380.7 227.6 380.7 173 489.8 173 489.8 130.9 380.7 130.9"/>
+      <path id="path4" class="st2" d="M39.4,63.2c21.8,0,32.9-6.8,32.9-17.2v-4.7c0-7-2.9-11.8-9.7-13.9-5.8-1.8-11.6-2.2-24.2-2.5-10.8-.2-14.5-1.1-14.5-4.7v-1c0-3.2,2.6-5.5,16.2-5.5s13.4.4,13.4,2.4c0,3.3,3.4,4.5,8.5,4.5s8.9-1.1,8.9-5c0-8.2-10.7-14.4-31.9-14.4S6.7,7.1,6.7,17.1v3.8c0,7.1,3.7,10.9,9,12.8,6.2,2.4,14.4,2.4,21,2.6,5.4.2,9.5.3,13.3,1,3.4.7,4.9,2.2,4.9,5.5v2.5c0,3.4-4.1,5.6-16,5.6-7.1,0-14,0-15.1-4,0-3.1-3.4-4.2-8.7-4.2s-8.6,1.2-8.6,4.2v2.6c0,7.5,11.8,13.6,32.7,13.6h.1Z"/>
+      <path id="path5" class="st2" d="M83.2,16.1h54.5c3.6,0,5-2.8,5-7s-1.4-7-5-7h-54.5c-3.6,0-4.9,2.8-4.9,7s1.4,7,4.9,7Z"/>
+      <path id="path6" class="st2" d="M102.7,20c-5.2,0-8.7,1.7-8.7,6.2v16.3c0,12.5,7.4,19.4,26.2,19.4h2.3c3.6,0,5-2.6,5-7s-1.4-6.9-5-6.9h-3c-5.9,0-8.2-1.8-8.2-5.9v-15.8c0-4.4-3.3-6.2-8.5-6.1Z"/>
+      <path id="path7" class="st2" d="M174.7,23.7c-3.6,0-5,2.6-5,7s1.4,6.9,5,6.9h17.5c3.6,0,5-2.8,5-6.9s-1.3-7-5-7h-17.5Z"/>
+      <path id="path8" class="st2" d="M174.6,61.8h30.1c3.6,0,5-2.6,5-7s-1.3-6.9-5-6.9h-30.8c-5.9,0-8.2-1.8-8.2-5.9v-20.1c0-4.1,2.5-5.8,8.2-5.8h30.3c3.6,0,5-2.8,5-7s-1.3-7-5-7h-29.7c-18.8,0-26.2,6.9-26.2,19.4v20.9c0,12.5,7.3,19.3,26.2,19.3h0Z"/>
+      <path id="path9" class="st2" d="M241.7,61.8h30.2c3.6,0,5-2.6,5-7s-1.3-6.9-5-6.9h-30.8c-5.8,0-8.2-1.8-8.2-5.9v-20.1c0-4.1,2.4-5.8,8.2-5.8h30.3c3.6,0,5-2.8,5-7s-1.3-7-5-7h-29.6c-18.8,0-26.2,6.9-26.2,19.4v20.9c0,12.5,7.3,19.3,26.2,19.3h0Z"/>
+      <path id="path10" class="st2" d="M241.8,23.7c-3.6,0-5,2.6-5,7s1.3,6.9,5,6.9h17.5c3.6,0,5-2.8,5-6.9s-1.3-7-5-7h-17.5Z"/>
+      <path id="path11" class="st2" d="M334.6,47.9h-26.3c-5.9,0-8.2-1.8-8.2-5.9V7.7c0-4.4-3.4-6.1-8.7-6.1s-8.5,1.7-8.5,6.1v34.8c0,12.5,7.3,19.4,26,19.4h25.8c3.6,0,5-2.6,5-7s-1.3-6.9-5-6.9Z"/>
+      <path id="path12" class="st0" d="M506.5,51l23.8,10.9-19.7-12.4c25.9,6.1,50.2,13.1,73,20.8-19.3-8.8-39-16.5-59.6-23.2l42.8,3.5-49.8-11.2,15.7-15.4-20.6,6.8L516,0l-13.5,28.1-14.3-16.3,5.6,21.3-48.6-15.7,38.3,18.5c-49.9-11.7-105.6-17.1-172.8-14.6,66.2,4.1,124.7,12,176.9,23.1l-19.7.4,26.6,2.9-9.2,10.7,11.7-6.3-1.9,15.8,6.9-14.4,6.2,11.2-1.8-13.7Z"/>
+    </g>
+    <g id="g17">
+      <path id="rect4" class="st1" d="M1011.4,0v227.6h63.4v-82.1h100.2v82.1h63.4V0h-227.1ZM1074.9,63.4h100.2v18.6h-100.2v-18.6Z" sodipodi:nodetypes="cccccccccccccc"/>
+      <path id="rect8" class="st1" d="M751.2,0v227.6h63.4v-82.1h100.2v82.1h63.4V0h-63.4v82.1h-100.2V0h-63.4Z"/>
+      <path id="rect10" class="st1" d="M1498.7,227.6V0h-63.4v78.5L1360,.6,1271.6,0v227.6h63.4V75.8l100.2,109v42.7h63.4Z" sodipodi:nodetypes="cccccccccccc"/>
+      <path id="rect13" class="st1" d="M1531.9,0v227.6h227.1v-94.5h0v-51h-120v63.4h56.6v18.6h-100.2V63.4h163.7V0h-227.1Z" sodipodi:nodetypes="ccccccccccccccc"/>
+      <path id="path17" class="st1" d="M1792.1,0v227.6h63.4v-82.1h100.2v82.1h63.4V0h-227.1ZM1855.5,63.4h100.2v18.6h-100.2v-18.6Z" sodipodi:nodetypes="cccccccccccccc"/>
+      <polygon id="polygon2-2" class="st1" points="2111.3 145.6 2191.6 227.6 2291.6 227.6 2209.4 145.6 2279.9 145.6 2279.9 0 2052.3 0 2052.3 63.4 2216.4 63.4 2216.4 82.1 2052.3 82.1 2052.3 145.6 2111.3 145.6"/>
+    </g>
+  </g>
+</svg>

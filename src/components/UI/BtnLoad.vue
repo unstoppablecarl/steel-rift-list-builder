@@ -32,5 +32,5 @@ function fileChange(event) {
 </script>
 <template>
   <input ref="file-upload" type="file" @change="fileChange" accept="application/json" hidden>
-  <BButton @click="clickFile" size="sm">Load</BButton>
+  <BButton @click="clickFile" size="sm" class="ms-1">Load</BButton>
 </template>
