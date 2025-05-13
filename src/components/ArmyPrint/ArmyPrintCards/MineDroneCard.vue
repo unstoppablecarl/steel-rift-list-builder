@@ -1,25 +1,31 @@
-<script setup>
-
-import {useArmyListStore} from '../../../store/army-list-store.js';
-import {usePrintSettingsStore} from '../../../store/print-settings-store.js';
-
-const armyStore = useArmyListStore();
-const printStore = usePrintSettingsStore();
-
-</script>
+<script setup></script>
 <template>
   <div class="game-card">
     <div class="card-content-container">
-      <div class="card-name d-flex">
-        <div class="flex-grow-1">
-          Mine Drone
+      <CardHeader title="Mine Drone"/>
+
+      <div class="section-heading">Battlefield Asset</div>
+
+      <div class="card-description">
+        <div><strong>Placing:</strong> May not be placed within 6” of another friendly Mine Drone token.</div>
+
+        <div><strong>Triggered:</strong>
+          If an enemy model ends any Order within 4”, the Commander may remove the token to make an Engage Order with an
+          Attack against that model and all other enemy models in range. Line of Sight for this Attack is drawn from the
+          Target Model to itself (therefore it is never obstructed). The token and Active Unit do not require Line of
+          Sight to each other, as the Drones will attack using their sensors. Units may not Return Fire during this
+          attack. Once this Engage Order is resolved remove the token. Once this is complete the Active Player may
+          continue issuing any remaining orders to the Active Model.
         </div>
-        <div class="flex-shrink-1" v-if="printStore.include_army_name_on_cards">
-          {{ armyStore.name || 'Unnamed Army' }}
+
+        <div><strong>Targeted:</strong> When targeted by an attack from <span class="fw-medium">Mine Drone Tracking
+          Submunitions</span> the target Minefield
+          makes a Defense Roll on a 3+. If at least one point of Damage would be inflicted, remove the Token.
         </div>
+
       </div>
 
-      <table class="table-weapons mt-0">
+      <table class="table-weapons">
         <thead>
         <tr>
           <th>Weapon</th>
@@ -45,27 +51,8 @@ const printStore = usePrintSettingsStore();
         </tr>
         </tbody>
       </table>
-      <div class="card-description">
-        <div><strong>Placing:</strong> May not be placed within 6” of another friendly Mine Drone token.</div>
 
-        <div><strong>Triggered:</strong>
-          If an enemy model ends any Order within 4”, the Commander may remove the token to make an Engage Order with an
-          Attack against that model and all other enemy models in range. Line of Sight for this Attack is drawn from the
-          Target Model to itself (therefore it is never obstructed). The token and Active Unit do not require Line of
-          Sight to each other, as the Drones will attack using their sensors. Units may not Return Fire during this
-          attack. Once this Engage Order is resolved remove the token. Once this is complete the Active Player may
-          continue issuing any remaining orders to the Active Model.
-        </div>
-
-        <div><strong>Targeted:</strong> When targeted by an attack from <span class="fw-medium">Mine Drone Tracking Submunitions</span> the target Minefield
-          makes a Defense Roll on a 3+. If at least one point of Damage would be inflicted, remove the Token.
-        </div>
-
-      </div>
-
-      <div class="game-card-footer">
-        SteelRift.com
-      </div>
+      <CardFooter/>
     </div>
   </div>
 </template>

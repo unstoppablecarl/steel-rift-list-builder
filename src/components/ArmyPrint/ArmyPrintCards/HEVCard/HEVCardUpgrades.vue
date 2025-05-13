@@ -1,10 +1,10 @@
 <script setup>
 
 import {computed} from 'vue';
-import {useMechStore} from '../../../store/mech-store.js';
-import {useTeamStore} from '../../../store/team-store.js';
-import {MINEFIELD_DRONE_CARRIER_SYSTEM} from '../../../data/mech-upgrades.js';
-import {TRAIT_COMPACT, TRAIT_UPGRADE_LIMITED} from '../../../data/upgrade-traits.js';
+import {useMechStore} from '../../../../store/mech-store.js';
+import {useTeamStore} from '../../../../store/team-store.js';
+import {MINEFIELD_DRONE_CARRIER_SYSTEM} from '../../../../data/mech-upgrades.js';
+import {TRAIT_COMPACT, TRAIT_UPGRADE_LIMITED} from '../../../../data/upgrade-traits.js';
 
 const mechStore = useMechStore();
 const teamStore = useTeamStore();
@@ -40,7 +40,7 @@ const upgrades = computed(() => {
 </script>
 <template>
   <div v-if="upgrades.length">
-    <div class="upgrades-heading">
+    <div class="section-heading">
       Upgrades
     </div>
     <div class="upgrades">

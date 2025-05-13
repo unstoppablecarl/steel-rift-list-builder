@@ -1,9 +1,9 @@
 <script setup>
 
 import {computed} from 'vue';
-import {useTeamStore} from '../../../store/team-store.js';
-import {useMechStore} from '../../../store/mech-store.js';
-import {TEAM_GENERAL} from '../../../data/mech-teams.js';
+import {useTeamStore} from '../../../../store/team-store.js';
+import {useMechStore} from '../../../../store/mech-store.js';
+import {TEAM_GENERAL} from '../../../../data/mech-teams.js';
 
 const mechStore = useMechStore();
 const teamStore = useTeamStore();

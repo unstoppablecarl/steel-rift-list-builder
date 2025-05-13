@@ -1,11 +1,11 @@
 <script setup>
 
 import {computed} from 'vue';
-import {SIZE_LIGHT, SIZE_ULTRA} from '../../../data/mech-sizes.js';
-import {useMechStore} from '../../../store/mech-store.js';
+import {SIZE_LIGHT, SIZE_ULTRA} from '../../../../data/mech-sizes.js';
+import {useMechStore} from '../../../../store/mech-store.js';
 import {chunk} from 'lodash';
-import {useFactionStore} from '../../../store/faction-store.js';
-import {RD_ADVANCED_STRUCTURAL_COMPONENTS} from '../../../data/faction-perks.js';
+import {useFactionStore} from '../../../../store/faction-store.js';
+import {RD_ADVANCED_STRUCTURAL_COMPONENTS} from '../../../../data/faction-perks.js';
 
 const mechStore = useMechStore();
 const factionStore = useFactionStore();

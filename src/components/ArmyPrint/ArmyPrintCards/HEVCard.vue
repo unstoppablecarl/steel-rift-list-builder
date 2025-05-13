@@ -2,15 +2,13 @@
 
 import {useMechStore} from '../../../store/mech-store.js';
 import {computed} from 'vue';
-import HEVCardWeapons from './HEVCardWeapons.vue';
-import HEVCardUpgrades from './HEVCardUpgrades.vue';
-import HEVCardStats from './HEVCardStats.vue';
-import HEVCardHp from './HEVCardHp.vue';
-import {useArmyListStore} from '../../../store/army-list-store.js';
-import {usePrintSettingsStore} from '../../../store/print-settings-store.js';
-const armyStore = useArmyListStore()
+import HEVCardWeapons from './HEVCard/HEVCardWeapons.vue';
+import HEVCardUpgrades from './HEVCard/HEVCardUpgrades.vue';
+import HEVCardStats from './HEVCard/HEVCardStats.vue';
+import HEVCardHp from './HEVCard/HEVCardHp.vue';
+import CardHeader from './CardParts/CardHeader.vue';
+
 const mechStore = useMechStore();
-const printStore = usePrintSettingsStore()
 
 const {mechId} = defineProps({
   mechId: {
@@ -18,25 +16,14 @@ const {mechId} = defineProps({
   },
 });
 
-const info = computed(() => {
-  return mechStore.getMechInfo(mechId);
-});
+const info = computed(() => mechStore.getMechInfo(mechId));
 
 </script>
 <template>
   <div class="game-card">
     <div class="card-content-container">
 
-      <div class="card-name d-flex">
-        <div class="flex-grow-1">
-
-        {{ info.display_name }}
-        </div>
-        <div class="flex-shrink-1" v-if="printStore.include_army_name_on_cards">
-          {{armyStore.name || 'Unnamed Army'}}
-        </div>
-      </div>
-
+      <CardHeader :title="info.display_name"/>
       <HEVCardStats :mech-id="mechId"/>
       <HEVCardHp :mech-id="mechId"/>
       <HEVCardWeapons :mech-id="mechId"/>

@@ -1,7 +1,7 @@
 import {defineStore, storeToRefs} from 'pinia';
 import {computed, ref, watch} from 'vue';
-import {indexOf, sumBy} from 'lodash';
-import {SUPPORT_ASSETS} from '../data/support-assets.js';
+import {find, indexOf, sumBy} from 'lodash';
+import {SA_TYPE_OT_WEAPON, SUPPORT_ASSETS} from '../data/support-assets.js';
 import {useArmyListStore} from './army-list-store.js';
 import {useFactionStore} from './faction-store.js';
 import {TRAIT_LIMITED, traitDisplayName, WEAPON_TRAITS} from '../data/weapon-traits.js';
@@ -29,43 +29,49 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
                 .map((asset) => {
                     asset = Object.assign({}, asset);
                     asset.notes = [];
-                    asset.traits = asset.traits.map((trait) => Object.assign({}, trait));
 
-                    if (factionStore.hasPerk(OI_ORBITAL_STOCKPILES)) {
-                        asset.traits.forEach((trait) => {
-                            if (trait.id === TRAIT_LIMITED) {
-                                trait.number += 1;
-                            }
-                        });
-                        const note = FACTION_PERKS[OI_ORBITAL_STOCKPILES].display_name;
+                    if (asset.type === SA_TYPE_OT_WEAPON) {
 
-                        asset.notes.push(`${note} Limit(+1)`);
-                    }
+                        const weapon = Object.assign({}, asset.off_table_weapon);
 
-                    if (factionStore.hasPerk(DWC_OUTRAGEOUS_SUPPORT_BUDGET)) {
-                        if (asset.id === outrageous_budget_perk_support_asset_id.value) {
-                            asset.cost = 0;
-                            if (asset.damage > 0) {
-                                asset.damage -= 1;
-                            }
+                        weapon.traits = weapon.traits.map((trait) => Object.assign({}, trait));
 
-                            asset.traits.forEach((trait) => {
-                                if (trait.number) {
-                                    trait.number -= 1;
+                        if (factionStore.hasPerk(OI_ORBITAL_STOCKPILES)) {
+                            weapon.traits.forEach((trait) => {
+                                if (trait.id === TRAIT_LIMITED) {
+                                    trait.number += 1;
                                 }
                             });
+                            const note = FACTION_PERKS[OI_ORBITAL_STOCKPILES].display_name;
 
-                            const note = FACTION_PERKS[DWC_OUTRAGEOUS_SUPPORT_BUDGET].display_name;
-
-                            asset.notes.push(note);
+                            asset.notes.push(`${note} Limit(+1)`);
                         }
-                    }
 
-                    asset.traits.forEach(trait => Object.assign(
-                        trait,
-                        WEAPON_TRAITS[trait.id],
-                        {display_name: traitDisplayName(trait)},
-                    ));
+                        if (factionStore.hasPerk(DWC_OUTRAGEOUS_SUPPORT_BUDGET)) {
+                            if (asset.id === outrageous_budget_perk_support_asset_id.value) {
+                                asset.cost = 0;
+                                if (weapon.damage > 0) {
+                                    weapon.damage -= 1;
+                                }
+
+                                weapon.traits.forEach((trait) => {
+                                    if (trait.number) {
+                                        trait.number -= 1;
+                                    }
+                                });
+
+                                const note = FACTION_PERKS[DWC_OUTRAGEOUS_SUPPORT_BUDGET].display_name;
+
+                                asset.notes.push(note);
+                            }
+                        }
+
+                        weapon.traits.forEach(trait => Object.assign(
+                            trait,
+                            WEAPON_TRAITS[trait.id],
+                            {display_name: traitDisplayName(trait)},
+                        ));
+                    }
 
                     return asset;
                 });
@@ -82,6 +88,8 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
                 return !support_asset_ids.value.includes(item.id);
             });
         });
+
+        const getSupportAssetInfo = getter(supportAssetId => find(support_assets_info.value, {id: supportAssetId}));
 
         const used_tons = computed(() => sumBy(support_assets.value, 'cost'));
         const used_support_assets = computed(() => support_asset_ids.value.length);
@@ -137,6 +145,7 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
             support_assets_info,
             available_support_assets,
             outrageous_budget_perk_support_asset_id,
+            getSupportAssetInfo,
             removeSupportAssetId,
             addSupportAsset,
             hasSupportAssetId,
