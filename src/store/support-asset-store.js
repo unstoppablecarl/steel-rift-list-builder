@@ -7,6 +7,7 @@ import {useFactionStore} from './faction-store.js';
 import {TRAIT_LIMITED, traitDisplayName, WEAPON_TRAITS} from '../data/weapon-traits.js';
 import {GAME_SIZES} from '../data/game-sizes.js';
 import {DWC_OUTRAGEOUS_SUPPORT_BUDGET, FACTION_PERKS, OI_ORBITAL_STOCKPILES} from '../data/faction-perks.js';
+import {getter} from './helpers/store-helpers.js';
 
 export const useSupportAssetStore = defineStore('support-asset', () => {
 
@@ -81,6 +82,7 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
                 return !support_asset_ids.value.includes(item.id);
             });
         });
+
         const used_tons = computed(() => sumBy(support_assets.value, 'cost'));
         const used_support_assets = computed(() => support_asset_ids.value.length);
         const max_support_assets_based_on_tons = computed(() => {
@@ -94,6 +96,8 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
             }
             return max_support_assets_based_on_tons.value;
         });
+
+        const hasSupportAssetId = getter(supportAssetId => support_asset_ids.value.includes(supportAssetId));
 
         function removeSupportAssetId(id) {
             let index = indexOf(support_asset_ids.value, id);
@@ -130,11 +134,12 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
             max_support_assets_based_on_tons,
             max_support_assets,
             custom_max_support_assets,
-            removeSupportAssetId,
-            addSupportAsset,
             support_assets_info,
             available_support_assets,
             outrageous_budget_perk_support_asset_id,
+            removeSupportAssetId,
+            addSupportAsset,
+            hasSupportAssetId,
             $reset,
         };
     },

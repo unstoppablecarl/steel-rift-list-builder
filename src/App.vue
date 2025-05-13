@@ -5,7 +5,7 @@ import AppHeader from './components/AppHeader.vue';
 import {ROUTE_PRINT} from './routes.js';
 
 onMounted(() => {
-  document.getElementById('failsafe-container').remove();
+  document.getElementById('failsafe-container')?.remove();
 });
 
 const currentPath = ref(window.location.hash);

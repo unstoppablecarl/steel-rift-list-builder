@@ -9,6 +9,7 @@ import {
 } from '../store/print-settings-store.js';
 import {storeToRefs} from 'pinia';
 import {useFactionStore} from '../store/faction-store.js';
+import {useArmyListStore} from '../store/army-list-store.js';
 
 const printSettingsStore = usePrintSettingsStore();
 const factionStore = useFactionStore();
@@ -28,6 +29,8 @@ const {
   include_faction_perk_2_card,
   separate_reference_cards_page,
 } = storeToRefs(printSettingsStore);
+
+const {includes_mine_drones} = storeToRefs(useArmyListStore());
 
 function print() {
   window.print();
@@ -81,9 +84,11 @@ function print() {
           <div class="fw-bold">
             Reference Cards
           </div>
+
           <BFormCheckbox
               v-model="include_mine_drone_card"
               id="include_mine_drone_card"
+              :disabled="!includes_mine_drones"
           >
             Include Mine Drone Card
           </BFormCheckbox>
@@ -92,9 +97,8 @@ function print() {
               v-model="include_faction_perk_1_card"
               id="include_faction_perk_1_card"
               :disabled="!perk_1_info"
-
           >
-            Include Faction Perk 1 card
+            Include Faction Perk 1 Card
             <strong v-if="perk_1_info">({{ perk_1_info.display_name }})</strong>
           </BFormCheckbox>
 
@@ -102,9 +106,8 @@ function print() {
               v-model="include_faction_perk_2_card"
               id="include_faction_perk_2_card"
               :disabled="!perk_2_info"
-
           >
-            Include Faction Perk 2 card
+            Include Faction Perk 2 Card
             <strong v-if="perk_2_info">({{ perk_2_info.display_name }})</strong>
           </BFormCheckbox>
 
@@ -112,7 +115,7 @@ function print() {
               v-model="separate_reference_cards_page"
               id="separate_reference_cards_page"
           >
-            Print reference cards on separate page (mine drone and faction perks)
+            Print on separate page
           </BFormCheckbox>
         </div>
 

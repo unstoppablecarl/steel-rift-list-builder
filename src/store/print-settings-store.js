@@ -1,5 +1,7 @@
-import {defineStore} from 'pinia';
-import {computed, ref} from 'vue';
+import {defineStore, storeToRefs} from 'pinia';
+import {computed, ref, watch} from 'vue';
+import {useArmyListStore} from './army-list-store.js';
+import {useFactionStore} from './faction-store.js';
 
 export const PRINT_MODE_CARDS = 'PRINT_MODE_CARDS';
 export const PRINT_MODE_REF = 'PRINT_MODE_REF';
@@ -10,7 +12,7 @@ export const PRINT_MODES = {
         display_name: 'Cards',
     },
     [[PRINT_MODE_REF]]: {
-        display_name: 'Reference',
+        display_name: 'Rules Reference',
     },
     [[PRINT_MODE_ALL]]: {
         display_name: 'All',
@@ -38,6 +40,21 @@ export const usePrintSettingsStore = defineStore('print-settings', () => {
             separate_reference_cards_page.value = false;
 
         }
+
+        const {includes_mine_drones} = storeToRefs(useArmyListStore());
+        const {perk_1_id, perk_2_id} = storeToRefs(useFactionStore());
+
+        watch(includes_mine_drones, () => {
+            include_mine_drone_card.value = includes_mine_drones.value;
+        });
+
+        watch(perk_1_id, () => {
+            include_faction_perk_1_card.value = !!perk_1_id.value;
+        });
+
+        watch(perk_2_id, () => {
+            include_faction_perk_2_card.value = !!perk_2_id.value;
+        });
 
         return {
             one_team_per_page,
