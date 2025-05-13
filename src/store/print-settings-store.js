@@ -38,7 +38,6 @@ export const usePrintSettingsStore = defineStore('print-settings', () => {
             include_faction_perk_1_card.value = false;
             include_faction_perk_2_card.value = false;
             separate_reference_cards_page.value = false;
-
         }
 
         const {includes_mine_drones} = storeToRefs(useArmyListStore());

@@ -26,20 +26,19 @@ const info = computed(() => FACTION_PERKS[perkId]);
     <div class="card-content-container">
       <div class="card-name d-flex">
         <div class="flex-grow-1">
-          Faction Perk: {{ faction_display_name}}
+          Faction Perk: {{ faction_display_name }}
         </div>
         <div class="flex-shrink-1" v-if="printStore.include_army_name_on_cards">
           {{ armyStore.name || 'Unnamed Army' }}
         </div>
       </div>
 
+      <div class="fw-bold section-heading">{{ info.display_name }}</div>
       <div class="card-description">
-        <div class="fw-bold">{{ info.display_name }}</div>
         {{ info.description }}
-        <template v-if="info.calculated_on_cards">
+        <span v-if="info.calculated_on_cards">
           This has already been calculated on generated unit cards.
-        </template>
-
+        </span>
       </div>
 
       <div class="game-card-footer">

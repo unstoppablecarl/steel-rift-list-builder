@@ -258,6 +258,7 @@ $card-padding-x: 5pt;
     text-align: center;
   }
 
+  .section-heading,
   .upgrades-heading {
     background: var(--section-heading-bg);
     font-size: 8pt;
@@ -269,5 +270,11 @@ $card-padding-x: 5pt;
   .upgrades {
     font-size: 7pt;
     padding: 0 $card-padding-x;
+  }
+
+  .card-description {
+    font-size: 7pt;
+    padding: 0 $card-padding-x;
+
   }
 }
