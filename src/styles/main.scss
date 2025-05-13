@@ -42,6 +42,9 @@ $card-cap-padding-y: $card-spacer-y * .5;
 
 $enable-shadows: true;
 
+$toast-background-color:            #fff !default;
+$toast-header-background-color:     #fff !default;
+
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import '../../node_modules/bootstrap-vue-next/src/styles/styles';
 @import "./bootstrap/bootstrap-vue-component-styles";

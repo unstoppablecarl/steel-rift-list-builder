@@ -196,7 +196,7 @@ export const useMechStore = defineStore('mech', {
                         const {toastInfo} = useToastStore();
 
                         toastInfo(`${mechInfo.size.display_name} HE-V (${mechInfo.display_name})`,
-                            `${info.display_name} removed: (${info.validation_messages.join(', ')})`);
+                            `${info.display_name} removed: (${info.validation_message})`);
                         this.removeMechUpgradeAttachment(mechId, upgradeAttachment.id);
                     }
                 });
