@@ -49,13 +49,13 @@ const weapons = computed(() => mechStore.getMechAvailableWeaponsInfo(mechId));
           :options="weapons.melee"
       />
     </td>
-    <th>
+    <td>
       <MechWeaponAdd
           :mech-id="mechId"
           text="Ranged"
           :options="weapons.ranged"
       />
-   </th>
+   </td>
     <th class="fw-medium">
       Slots
     </th>
