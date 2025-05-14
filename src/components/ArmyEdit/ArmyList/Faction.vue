@@ -16,7 +16,7 @@ const {
 } = storeToRefs(factionStore);
 
 const {
-  support_assets,
+  weapon_support_assets,
   outrageous_budget_perk_support_asset_id,
 } = storeToRefs(supportAssetStore);
 
@@ -76,7 +76,7 @@ const modal = ref(false);
       class="form-floating mb-1"
   >
     <BFormSelect
-        :options="support_assets"
+        :options="weapon_support_assets"
         text-field="display_name"
         value-field="id"
         v-model="outrageous_budget_perk_support_asset_id"

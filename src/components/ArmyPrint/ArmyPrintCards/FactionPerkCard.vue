@@ -21,7 +21,7 @@ const info = computed(() => FACTION_PERKS[perkId]);
 <template>
   <div class="game-card">
     <div class="card-content-container">
-      <CardHeader :name="'Faction Perk: ' + faction_display_name"/>
+      <CardHeader :title="'Faction Perk: ' + faction_display_name"/>
 
       <div class="fw-bold section-heading">{{ info.display_name }}</div>
       <div class="card-description">

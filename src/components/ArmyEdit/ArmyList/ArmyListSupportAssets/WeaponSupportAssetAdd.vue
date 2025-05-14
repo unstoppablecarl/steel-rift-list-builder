@@ -6,7 +6,7 @@ import {traitDisplayNames} from '../../../../data/weapon-traits.js';
 const store = useSupportAssetStore();
 
 const {
-  available_support_assets,
+  available_weapon_support_assets,
 } = storeToRefs(store);
 
 </script>
@@ -44,20 +44,20 @@ const {
             :class="{
               'dropdown-row': true,
             }"
-            v-for="item in available_support_assets" :key="item.id"
+            v-for="item in available_weapon_support_assets" :key="item.id"
             @click="store.addSupportAsset(item.id)"
         >
           <td>
             {{ item.display_name }}
           </td>
           <td class="text-end">
-            {{ item.damage }}
+            {{ item.off_table_weapon.damage }}
           </td>
           <td class="text-end">
             <number :val="item.cost" :invert-color="true"/>
           </td>
           <td>
-            {{ traitDisplayNames(item.traits) }}
+            {{ traitDisplayNames(item.off_table_weapon.traits) }}
           </td>
           <td>
             <small>

@@ -1,17 +1,17 @@
 <script setup>
 import {storeToRefs} from 'pinia';
-import {useSupportAssetStore} from '../../../store/support-asset-store.js';
-import ArmyListSupportAssetAdd from './ArmyListSupportAssets/ArmyListSupportAssetAdd.vue';
-import TraitList from '../../UI/TraitList.vue';
-import BtnToolTip from '../../UI/BtnToolTip.vue';
-import {useValidationStore} from '../../../store/validation-store.js';
+import {useSupportAssetStore} from '../../../../store/support-asset-store.js';
+import WeaponSupportAssetAdd from './WeaponSupportAssetAdd.vue';
+import TraitList from '../../../UI/TraitList.vue';
+import BtnToolTip from '../../../UI/BtnToolTip.vue';
+import {useValidationStore} from '../../../../store/validation-store.js';
 
 const store = useSupportAssetStore();
 const validationStore = useValidationStore();
 
 const {invalid_number_of_support_assets} = storeToRefs(validationStore);
 const {
-  support_assets,
+  weapon_support_assets,
   used_support_assets,
 } = storeToRefs(store);
 
@@ -26,13 +26,13 @@ const {
     <div class="card-header" ref="support-asset-drop-down-container">
       <div class="d-flex ps-3">
         <div class="col-form-label flex-shrink-1 pe-2 fw-bold">
-          Support Assets
+          Weapon Support Assets
         </div>
         <div class="flex-grow-1">
           <IconValidationError size="sm" :message="invalid_number_of_support_assets"/>
         </div>
         <div class="flex-shrink-1 text-end">
-          <ArmyListSupportAssetAdd/>
+          <WeaponSupportAssetAdd/>
         </div>
       </div>
     </div>
@@ -49,7 +49,7 @@ const {
         </tr>
         </thead>
         <tbody>
-        <tr v-for="item in support_assets">
+        <tr v-for="item in weapon_support_assets">
           <td>
             <BtnToolTip>
               <template #target="{mouseover, mouseleave}">
@@ -67,13 +67,13 @@ const {
             </BtnToolTip>
           </td>
           <td class="text-end">
-            {{ item.damage }}
+            {{ item.off_table_weapon.damage }}
           </td>
           <td class="text-end">
             <number :val="item.cost" :invert-color="true"/>
           </td>
           <td>
-            <TraitList :traits="item.traits"/>
+            <TraitList :traits="item.off_table_weapon.traits"/>
           </td>
           <td>
             <div class="small lh-sm">
