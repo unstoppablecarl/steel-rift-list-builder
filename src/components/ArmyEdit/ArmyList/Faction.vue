@@ -79,9 +79,10 @@ const modal = ref(false);
         :options="weapon_support_assets"
         text-field="display_name"
         value-field="id"
+        id="outrageous_budget_perk_support_asset_id"
         v-model="outrageous_budget_perk_support_asset_id"
     />
-    <label for="perk_2">Apply Outrageous Support Budget</label>
+    <label for="outrageous_budget_perk_support_asset_id">Apply Outrageous Support Budget</label>
   </div>
 
   <FactionPerkGrid v-model="modal"/>

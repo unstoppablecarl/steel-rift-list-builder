@@ -72,7 +72,7 @@ const resetModal = ref(false);
             <BtnSave/>
             <BtnLoad/>
             <BButton
-                @click="reset_modal = !reset_modal"
+                @click="resetModal = !resetModal"
                 size="sm"
                 variant="danger"
                 class="ms-1"
