@@ -1,17 +1,15 @@
 <script setup>
 import {storeToRefs} from 'pinia';
 import {useSupportAssetStore} from '../../../../store/support-asset-store.js';
-import WeaponSupportAssetAdd from './WeaponSupportAssetAdd.vue';
-import TraitList from '../../../UI/TraitList.vue';
-import BtnToolTip from '../../../UI/BtnToolTip.vue';
 import {useValidationStore} from '../../../../store/validation-store.js';
+import UnitSupportAssetAdd from './UnitSupportAssetAdd.vue';
 
 const store = useSupportAssetStore();
 const validationStore = useValidationStore();
 
 const {invalid_number_of_support_assets} = storeToRefs(validationStore);
 const {
-  weapon_support_assets,
+  unit_support_assets,
 } = storeToRefs(store);
 
 </script>
@@ -25,54 +23,33 @@ const {
     <div class="card-header" ref="support-asset-drop-down-container">
       <div class="d-flex">
         <div class="col-form-label form-control-sm flex-shrink-1 pe-2 fw-bold">
-          Weapon Support Assets
+          Unit Support Assets
         </div>
         <div class="flex-grow-1">
           <IconValidationError size="sm" :message="invalid_number_of_support_assets"/>
         </div>
         <div class="flex-shrink-1 text-end">
-          <WeaponSupportAssetAdd/>
+          <UnitSupportAssetAdd/>
         </div>
       </div>
     </div>
-    <div class="card-body p-2" v-if="weapon_support_assets.length">
+    <div class="card-body p-2" v-if="unit_support_assets.length">
       <table class="table m-0">
         <thead>
         <tr class="table-light">
           <th>Name</th>
-          <th class="text-end pe-1">Damage</th>
-          <th class="text-end pe-1">Tons</th>
-          <th>Traits</th>
+          <th class="text-end">Tons</th>
           <th></th>
           <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr v-for="item in weapon_support_assets">
+        <tr v-for="item in unit_support_assets">
           <td>
-            <BtnToolTip>
-              <template #target="{mouseover, mouseleave}">
-                <span
-                    @mouseover="mouseover"
-                    @mouseleave="mouseleave"
-                    class="text-tooltip"
-                >
-                  {{ item.display_name }}
-                </span>
-              </template>
-              <template #content>
-                {{ item.description }}
-              </template>
-            </BtnToolTip>
-          </td>
-          <td class="text-end">
-            {{ item.off_table_weapon.damage }}
+            {{ item.display_name }}
           </td>
           <td class="text-end">
             <number :val="item.cost" :invert-color="true"/>
-          </td>
-          <td>
-            <TraitList :traits="item.off_table_weapon.traits"/>
           </td>
           <td>
             <div class="small lh-sm">

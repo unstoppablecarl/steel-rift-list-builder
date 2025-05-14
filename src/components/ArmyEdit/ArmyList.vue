@@ -22,6 +22,7 @@ import ArmyListTeams from './ArmyList/ArmyListTeams.vue';
         </div>
         <div class="col-md-6">
           <WeaponSupportAssets/>
+          <UnitSupportAssets/>
         </div>
         <div class="col-md-3">
           <Faction/>

@@ -4,5 +4,5 @@ import {ASSAULT_VEHICLE_SQUADRON_DATA} from './support-assets/assault-vehicle-sq
 
 export const SUPPORT_ASSETS = makeFrozenStaticListIds({
     ...OFF_TABLE_WEAPON_SUPPORT_ASSETS,
-    // ...ASSAULT_VEHICLE_SQUADRON_DATA,
+    ...ASSAULT_VEHICLE_SQUADRON_DATA,
 });

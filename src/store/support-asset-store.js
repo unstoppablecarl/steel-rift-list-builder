@@ -7,7 +7,7 @@ import {useFactionStore} from './faction-store.js';
 import {TRAIT_LIMITED, traitDisplayName, WEAPON_TRAITS} from '../data/weapon-traits.js';
 import {GAME_SIZES} from '../data/game-sizes.js';
 import {DWC_OUTRAGEOUS_SUPPORT_BUDGET, FACTION_PERKS, OI_ORBITAL_STOCKPILES} from '../data/faction-perks.js';
-import {SA_TYPE_OT_WEAPON} from '../data/support-assets/support-asset-types.js';
+import {SA_TYPE_OT_WEAPON, SA_TYPE_UNIT} from '../data/support-assets/support-asset-types.js';
 import {getter} from './helpers/store-helpers.js';
 
 export const useSupportAssetStore = defineStore('support-asset', () => {
@@ -33,9 +33,24 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
             return support_assets.value.filter(item => item.type === SA_TYPE_OT_WEAPON);
         });
 
-        const available_weapon_support_assets = computed(() => {
+        const unit_support_assets = computed(() => {
+            return support_assets.value.filter(item => item.type === SA_TYPE_UNIT);
+        });
+
+        const available_support_asset_ids = computed(() => {
             return Object.keys(SUPPORT_ASSETS)
-                .filter(id => SUPPORT_ASSETS[id].type === SA_TYPE_OT_WEAPON && !support_asset_ids.value.includes(id))
+                .filter(id => !support_asset_ids.value.includes(id));
+        });
+
+        const available_weapon_support_assets = computed(() => {
+            return available_support_asset_ids.value
+                .filter(id => SUPPORT_ASSETS[id].type === SA_TYPE_OT_WEAPON)
+                .map(id => getSupportAssetInfo.value(id));
+        });
+
+        const available_unit_support_assets = computed(() => {
+            return Object.keys(SUPPORT_ASSETS)
+                .filter(id => SUPPORT_ASSETS[id].type === SA_TYPE_UNIT)
                 .map(id => getSupportAssetInfo.value(id));
         });
 
@@ -139,12 +154,14 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
         return {
             support_asset_ids,
             support_assets,
-            weapon_support_assets,
             used_tons,
             used_support_assets,
             max_support_assets,
             custom_max_support_assets,
+            weapon_support_assets,
             available_weapon_support_assets,
+            unit_support_assets,
+            available_unit_support_assets,
             outrageous_budget_perk_support_asset_id,
             getSupportAssetInfo,
             removeSupportAssetId,
