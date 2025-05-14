@@ -30,6 +30,7 @@ function mouseLeave() {
       :click="true"
       :delay="{show: 100, hide: 0}"
       :close-on-hide="true"
+      lazy
   >
     <template #title>
       <slot name="title"></slot>

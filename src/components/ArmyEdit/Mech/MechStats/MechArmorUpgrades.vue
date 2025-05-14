@@ -50,6 +50,7 @@ const open = ref(false);
           class="dropdown-form dropdown-table d-inline-block"
           :text="armorUpgrade.display_name"
           variant="light"
+          lazy
       >
         <table class="table table-hover table-borderless">
           <thead>

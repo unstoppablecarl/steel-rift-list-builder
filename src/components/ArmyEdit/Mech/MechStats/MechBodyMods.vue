@@ -55,6 +55,7 @@ function selectOption(value) {
           class="dropdown-form dropdown-table"
           variant="light"
           :text="selectedValueLabel"
+          lazy
       >
         <table class="table table-hover table-borderless">
           <thead>

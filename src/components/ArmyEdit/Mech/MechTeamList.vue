@@ -8,9 +8,8 @@ import MechTeamGroup from '../MechTeam/MechTeamGroup.vue';
 import BtnAddTeam from '../../UI/BtnAddTeam.vue';
 
 const teamStore = useTeamStore();
-const {teams} = storeToRefs(teamStore);
+const {teams, special_teams} = storeToRefs(teamStore);
 
-const nonGeneralTeams = computed(() => teams.value.filter((team) => team.id !== TEAM_GENERAL));
 const generalMechCount = computed(() => teamStore.getTeamMechCount(TEAM_GENERAL));
 
 function addGeneralMech() {
@@ -38,13 +37,13 @@ function addGeneralMech() {
     <BtnAddTeam/>
   </div>
   <MechTeam
-      v-for="team in nonGeneralTeams"
+      v-for="team in special_teams"
       :team-id="team.id"
   />
   <div class="d-flex">
     <div class="flex-grow-1"></div>
     <div class="">
-      <BtnAddTeam v-if="nonGeneralTeams.length"/>
+      <BtnAddTeam v-if="special_teams.length"/>
     </div>
   </div>
 </template>

@@ -31,6 +31,7 @@ function selectOption(size_id) {
           class="dropdown-form dropdown-table"
           :text="info.size.display_name"
           variant="light"
+          lazy
       >
         <table class="table table-hover table-borderless">
           <thead>

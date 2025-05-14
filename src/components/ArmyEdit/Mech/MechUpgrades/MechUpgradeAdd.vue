@@ -31,6 +31,7 @@ function addUpgrade(upgradeId, valid) {
       text="Add"
       size="sm"
       variant="primary"
+      lazy
   >
     <div class="position-relative">
       <table class="table table-hover table-borderless table-striped">

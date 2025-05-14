@@ -38,6 +38,7 @@ function addWeapon(upgradeId) {
       :text="text"
       size="sm"
       variant="primary"
+      lazy
   >
     <div class="position-relative">
       <table class="table table-hover table-borderless table-striped">
