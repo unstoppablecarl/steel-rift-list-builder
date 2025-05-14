@@ -25,7 +25,6 @@ function onSortableChange(event) {
 
 const weapons = computed(() => mechStore.getMechAvailableWeaponsInfo(mechId));
 
-
 </script>
 <template>
   <tbody>

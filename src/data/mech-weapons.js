@@ -500,13 +500,7 @@ function makeWeapon({
             [[SIZE_ULTRA]]: damage,
         };
     }
-    let range = null;
-    if (traits) {
-        const result = find(traits, {id: TRAIT_SHORT});
-        if (result) {
-            range = result.number;
-        }
-    }
+    let range = getRangeFromShortTrait(traits);
 
     if (slots === undefined) {
         slots = 1;
@@ -521,4 +515,15 @@ function makeWeapon({
         slots,
         limited_size_ids,
     };
+}
+
+export function getRangeFromShortTrait(traits) {
+    let range = null;
+    if (traits) {
+        const result = find(traits, {id: TRAIT_SHORT});
+        if (result) {
+            range = result.number;
+        }
+    }
+    return range;
 }

@@ -1,12 +1,13 @@
 import {defineStore, storeToRefs} from 'pinia';
 import {computed, ref, watch} from 'vue';
 import {indexOf, sumBy} from 'lodash';
-import {SA_TYPE_OT_WEAPON, SUPPORT_ASSETS} from '../data/support-assets.js';
+import {SUPPORT_ASSETS} from '../data/support-assets.js';
 import {useArmyListStore} from './army-list-store.js';
 import {useFactionStore} from './faction-store.js';
 import {TRAIT_LIMITED, traitDisplayName, WEAPON_TRAITS} from '../data/weapon-traits.js';
 import {GAME_SIZES} from '../data/game-sizes.js';
 import {DWC_OUTRAGEOUS_SUPPORT_BUDGET, FACTION_PERKS, OI_ORBITAL_STOCKPILES} from '../data/faction-perks.js';
+import {SA_TYPE_OT_WEAPON} from '../data/support-assets/support-asset-types.js';
 import {getter} from './helpers/store-helpers.js';
 
 export const useSupportAssetStore = defineStore('support-asset', () => {

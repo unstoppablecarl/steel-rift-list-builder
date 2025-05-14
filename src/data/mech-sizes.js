@@ -1,5 +1,7 @@
 import {listToDropDown, makeFrozenStaticListIds} from './data-helpers.js';
 
+export const SIZE_ULTRA_LIGHT = 'SIZE_ULTRA_LIGHT';
+
 export const SIZE_LIGHT = 'SIZE_LIGHT';
 export const SIZE_MEDIUM = 'SIZE_MEDIUM';
 export const SIZE_HEAVY = 'SIZE_HEAVY';

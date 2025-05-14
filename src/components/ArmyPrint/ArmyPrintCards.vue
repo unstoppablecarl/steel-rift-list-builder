@@ -7,7 +7,9 @@ import {usePrintSettingsStore} from '../../store/print-settings-store.js';
 import {useTeamStore} from '../../store/team-store.js';
 import {useFactionStore} from '../../store/faction-store.js';
 import {useSupportAssetStore} from '../../store/support-asset-store.js';
-import {SA_TYPE_OT_WEAPON, SUPPORT_ASSETS} from '../../data/support-assets.js';
+import {SUPPORT_ASSETS} from '../../data/support-assets.js';
+
+import {SA_TYPE_OT_WEAPON} from '../../data/support-assets/support-asset-types.js';
 
 const printSettingsStore = usePrintSettingsStore();
 const teamStore = useTeamStore();

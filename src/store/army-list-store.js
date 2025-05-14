@@ -5,7 +5,7 @@ import {useSupportAssetStore} from './support-asset-store.js';
 import {GAME_SIZES, getGameSizeId} from '../data/game-sizes.js';
 import {find} from 'lodash';
 import {MINEFIELD_DRONE_CARRIER_SYSTEM} from '../data/mech-upgrades.js';
-import {MINE_DRONE_BARRAGE} from '../data/support-assets.js';
+import {MINE_DRONE_BARRAGE} from '../data/support-assets/off-table-weapons.js';
 
 export const useArmyListStore = defineStore('army-list', () => {
         const supportAssetStore = useSupportAssetStore();

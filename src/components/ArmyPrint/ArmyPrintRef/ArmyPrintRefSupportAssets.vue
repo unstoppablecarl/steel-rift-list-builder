@@ -1,7 +1,7 @@
 <script setup>
 import {useSupportAssetStore} from '../../../store/support-asset-store.js';
 import {storeToRefs} from 'pinia';
-import {SA_TYPE_OT_WEAPON} from '../../../data/support-assets.js';
+import {SA_TYPE_OT_WEAPON} from '../../../data/support-assets/support-asset-types.js';
 
 const supportAssetStore = useSupportAssetStore();
 const {support_assets} = storeToRefs(supportAssetStore);

@@ -18,6 +18,7 @@ export const TRAIT_PARRY = 'TRAIT_PARRY';
 export const TRAIT_REACH = 'TRAIT_REACH';
 export const TRAIT_STAGGER = 'TRAIT_STAGGER';
 export const TRAIT_TETHER = 'TRAIT_TETHER';
+export const TRAIT_ANTI_AIR = 'TRAIT_ANTI_AIR';
 
 export function numberFormater(name, number) {
     return `${name}(${number})`;
@@ -113,6 +114,10 @@ export const WEAPON_TRAITS = makeWeaponTraits({
     [[TRAIT_TETHER]]: {
         display_name: 'Tether',
         description: 'When a Unit is Targeted by this weapon, assign it a Tether Marker and the Attacking Unit an Anchor Marker. Units with a Tether Marker may not make any move that causes the Unit to end further from the Anchor Unit. At the end of an Activation, not a Redline, of a Unit that has a Tether Marker, roll a D6. On a 4+, remove the Tether Marker. If the Anchoring Unit is destroyed, remove any Tether Markers associated with it.',
+    },
+    [[TRAIT_ANTI_AIR]]: {
+        display_name: 'Anti-Air',
+        description: 'When targeting a unit with the Flying Trait, the target is at -2 to Defense Rolls from weapons with this trait. (I.e., if the target until would normally remove damage from the Attack Pool on a 2+, it avoids damage from this weapon on a 4+). If a Weapon with this trait destroys the Target Model, you may apply remaining damage to another Model of the Squadron as if the Squadron was not a Flying Squadron. ',
     },
 });
 
