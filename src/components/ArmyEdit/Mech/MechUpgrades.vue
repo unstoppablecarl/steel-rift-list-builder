@@ -25,23 +25,24 @@ function onSortableChange(event) {
 
 </script>
 <template>
-  <tbody>
+  <tbody class="tbody-btn">
   <tr class="table-light">
+    <th></th>
     <th>
       Upgrades
     </th>
     <th colspan="3">
       Traits
     </th>
-    <td>
+    <td class="table-btn-cell">
       <MechUpgradeAdd :mech-id="mechId"/>
     </td>
     <th>
     </th>
-    <th class="fw-medium">
+    <th class="fw-medium text-end">
       Slots
     </th>
-    <th class="fw-medium">
+    <th class="fw-medium text-end">
       Tons
     </th>
     <th></th>

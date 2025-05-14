@@ -1,6 +1,6 @@
 <script setup>
 import {useMechStore} from '../../../../store/mech-store.js';
-import {computed, ref} from 'vue';
+import {computed} from 'vue';
 import IconTeamGroupPerks from '../../../UI/IconTeamGroupPerks.vue';
 import IconRequiredByGroup from '../../../UI/IconRequiredByGroup.vue';
 import BtnToolTip from '../../../UI/BtnToolTip.vue';
@@ -27,10 +27,11 @@ function remove() {
 
 </script>
 <template>
-  <tr class="list-item-sortable">
-    <td>
+  <tr class="list-item-sortable tr-btn">
+    <td class="table-btn-cell">
       <span class="btn btn-sm btn-light btn-grab me-2">:::</span>
-
+    </td>
+    <td>
       <BtnToolTip>
         <template #target="{mouseover, mouseleave}">
           <span
@@ -49,7 +50,7 @@ function remove() {
     <td colspan="3">
       <TraitList :traits="upgrade.traits"/>
     </td>
-    <td>
+    <td class="table-btn-cell">
       <BButton
           v-if="!upgrade.required_by_group"
           @click="remove()"

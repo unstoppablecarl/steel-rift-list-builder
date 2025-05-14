@@ -25,9 +25,11 @@ function remove() {
 }
 </script>
 <template>
-  <tr class="list-item-sortable">
-    <td>
+  <tr class="list-item-sortable tr-btn">
+    <td class="table-btn-cell">
       <span class="btn btn-sm btn-light btn-grab me-2">:::</span>
+    </td>
+    <td>
       {{ weapon.display_name }}
     </td>
     <td class="text-end">
@@ -39,7 +41,7 @@ function remove() {
     <td>
       <TraitList :traits="weapon.traits"/>
     </td>
-    <td>
+    <td class="table-btn-cell">
       <BButton
           v-if="!weapon.required_by_group"
           @click="remove()"

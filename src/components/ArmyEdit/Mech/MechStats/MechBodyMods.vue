@@ -46,6 +46,7 @@ function selectOption(value) {
 </script>
 <template>
   <tr>
+    <td></td>
     <td>
       <label class="col-form-label" :for="formId">{{ label }}</label>
     </td>
@@ -102,15 +103,22 @@ function selectOption(value) {
         </table>
       </BDropdown>
     </td>
-    <td class="col-form-label text-end">
-      <number :val="armor" v-if="armor !== null"/>
+    <td class="text-end">
+      <div class="col-form-label">
+        <number :val="armor" v-if="armor !== null"/>
+      </div>
     </td>
-    <td class="col-form-label text-end">
-      <number :val="structure" v-if="structure !== null"/>
+    <td class="text-end">
+      <div class="col-form-label">
+
+        <number :val="structure" v-if="structure !== null"/>
+      </div>
     </td>
     <td></td>
-    <td class="col-form-label text-end">
-      <number :val="tonnage" :invert-color="true"/>
+    <td class="text-end">
+      <div class="col-form-label">
+        <number :val="tonnage" :invert-color="true"/>
+      </div>
     </td>
     <td></td>
   </tr>

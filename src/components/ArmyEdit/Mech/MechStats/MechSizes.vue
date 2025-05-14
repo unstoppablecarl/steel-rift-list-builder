@@ -22,6 +22,7 @@ function selectOption(size_id) {
 </script>
 <template>
   <tr>
+    <td></td>
     <td>
       <label class="col-form-label" :for="'mech-input-size-' + mechId">Size</label>
     </td>
@@ -82,17 +83,23 @@ function selectOption(size_id) {
         </table>
       </BDropdown>
     </td>
-    <td class="col-form-label text-end">
-      {{ info.size.armor }}
+    <td class="text-end">
+      <div class="col-form-label">
+        {{ info.size.armor }}
+      </div>
     </td>
-    <td class="col-form-label text-end">
-      {{ info.size.structure }}
+    <td class="text-end">
+      <div class="col-form-label">
+        {{ info.size.structure }}
+      </div>
     </td>
-    <td class="col-form-label text-end">
+    <td class="text-end">
 
     </td>
-    <td class="col-form-label text-end">
-      <number :val="info.size.armor + info.size.structure" :invert-color="true"/>
+    <td class="text-end">
+      <div class="col-form-label">
+        <number :val="info.size.armor + info.size.structure" :invert-color="true"/>
+      </div>
     </td>
     <td></td>
   </tr>

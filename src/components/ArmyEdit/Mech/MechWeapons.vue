@@ -27,8 +27,9 @@ const weapons = computed(() => mechStore.getMechAvailableWeaponsInfo(mechId));
 
 </script>
 <template>
-  <tbody>
+  <tbody class="tbody-btn">
   <tr class="table-light">
+    <th></th>
     <th>
       Weapons
     </th>
@@ -41,24 +42,24 @@ const weapons = computed(() => mechStore.getMechAvailableWeaponsInfo(mechId));
     <th>
       Traits
     </th>
-    <td>
+    <td class="table-btn-cell">
       <MechWeaponAdd
           :mech-id="mechId"
           text="Melee"
           :options="weapons.melee"
       />
     </td>
-    <td>
+    <td class="table-btn-cell">
       <MechWeaponAdd
           :mech-id="mechId"
           text="Ranged"
           :options="weapons.ranged"
       />
    </td>
-    <th class="fw-medium">
+    <th class="fw-medium text-end">
       Slots
     </th>
-    <th class="fw-medium">
+    <th class="fw-medium text-end">
       Tons
     </th>
     <th></th>

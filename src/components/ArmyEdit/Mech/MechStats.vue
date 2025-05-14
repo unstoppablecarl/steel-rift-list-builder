@@ -41,10 +41,10 @@ const armorModOptions = computed(() => teamStore.getMechArmorModOptions(mechId))
 <template>
   <div class="mech-stats px-2 table-responsive">
     <table class="table w-auto">
-      <thead>
+      <thead class="thead-compact">
       <tr>
+        <td></td>
         <td>
-
           <label class="col-form-label" :for="'mech-input-name-' + mechId">Name</label>
         </td>
         <td colspan="3">
@@ -69,7 +69,7 @@ const armorModOptions = computed(() => teamStore.getMechArmorModOptions(mechId))
         <td></td>
       </tr>
       </thead>
-      <tbody>
+      <tbody class="tbody-compact">
       <MechSizes
           :mech-id="mechId"
       />

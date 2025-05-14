@@ -61,6 +61,7 @@ $navbar-dark-color: #de4000;
 @import "page-reference-print";
 @import "./buttons";
 @import "./cards";
+@import "table";
 
 body {
   background-color: #602915;
@@ -78,7 +79,6 @@ body {
   display: block;
 
 }
-
 .tabs-factions {
   --bs-nav-link-font-size: 1rem;
 }
@@ -119,6 +119,7 @@ body {
 
 .navbar-dark {
   background-color: #000;
+
   .nav-link {
     font-weight: $font-weight-medium;
   }

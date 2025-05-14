@@ -34,7 +34,7 @@ const {
       </div>
     </div>
     <div class="card-body p-2" v-if="unit_support_assets.length">
-      <table class="table m-0">
+      <table class="table table-btn-sm m-0">
         <thead>
         <tr class="table-light">
           <th>Name</th>
@@ -56,7 +56,7 @@ const {
               {{ item.notes.join(', ') }}
             </div>
           </td>
-          <td class="text-end">
+          <td class="table-btn-cell text-end">
             <BButton @click="store.removeSupportAssetId(item.id)" variant="danger" size="sm"><span
                 class="material-symbols-outlined">delete</span></BButton>
           </td>

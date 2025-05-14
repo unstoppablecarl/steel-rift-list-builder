@@ -38,6 +38,7 @@ const {
 </script>
 <template>
   <tr>
+    <td></td>
     <td>
       <label class="col-form-label">{{ label }}</label>
     </td>
@@ -54,7 +55,7 @@ const {
           </span>
         </template>
         <template #content>
-          <div class="fw-bold">{{text}}</div>
+          <div class="fw-bold">{{ text }}</div>
           {{ description }}
         </template>
         <template #title>
@@ -64,16 +65,24 @@ const {
       </BtnToolTip>
     </td>
     <td class="text-end">
-      <number v-if="armor" :val="armor"/>
+      <div class="col-form-label">
+        <number v-if="armor" :val="armor"/>
+      </div>
     </td>
     <td class="text-end">
-      <number v-if="structure" :val="structure"/>
+      <div class="col-form-label">
+        <number v-if="structure" :val="structure"/>
+      </div>
     </td>
     <td class="text-end">
-      <number v-if="usedSlots" :val="usedSlots" invert-color/>
+      <div class="col-form-label">
+        <number v-if="usedSlots" :val="usedSlots" invert-color/>
+      </div>
     </td>
     <td class="text-end">
-      <number v-if="usedTons" :val="usedTons" invert-color/>
+      <div class="col-form-label">
+        <number v-if="usedTons" :val="usedTons" invert-color/>
+      </div>
     </td>
     <td></td>
   </tr>

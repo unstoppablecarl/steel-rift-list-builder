@@ -49,7 +49,7 @@ export const useSupportAssetStore = defineStore('support-asset', () => {
         });
 
         const available_unit_support_assets = computed(() => {
-            return Object.keys(SUPPORT_ASSETS)
+            return available_support_asset_ids.value
                 .filter(id => SUPPORT_ASSETS[id].type === SA_TYPE_UNIT)
                 .map(id => getSupportAssetInfo.value(id));
         });

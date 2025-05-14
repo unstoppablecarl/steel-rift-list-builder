@@ -41,6 +41,7 @@ const open = ref(false);
 
 <template>
   <tr>
+    <td></td>
     <td>
       <label class="col-form-label" :for="'mech-input-armor-upgrade-' + mechId">{{ label }}</label>
     </td>
@@ -79,7 +80,7 @@ const open = ref(false);
           >
             <td>
               <BtnToolTip
-              :enabled="!!item.description">
+                  :enabled="!!item.description">
                 <template #target="{mouseover, mouseleave}">
                   <span
                       @mouseover="mouseover"
@@ -121,16 +122,22 @@ const open = ref(false);
           :perks="armorUpgrade.team_perks"
       />
     </td>
-    <td class="col-form-label text-end">
-      <number-val :val="armorUpgrade.armor_mod" invert-color/>
+    <td class="text-end">
+      <div class="col-form-label">
+        <number-val :val="armorUpgrade.armor_mod" invert-color/>
+      </div>
     </td>
-    <td class="col-form-label text-end">
+    <td class="text-end">
     </td>
-    <td class="col-form-label text-end">
-      <number-val :val="armorUpgrade.slots" invert-color/>
+    <td class="text-end">
+      <div class="col-form-label">
+        <number-val :val="armorUpgrade.slots" invert-color/>
+      </div>
     </td>
-    <td class="col-form-label text-end">
-      <number-val :val="armorUpgrade.cost" invert-color/>
+    <td class="text-end">
+      <div class="col-form-label">
+        <number-val :val="armorUpgrade.cost" invert-color/>
+      </div>
     </td>
     <td></td>
   </tr>
