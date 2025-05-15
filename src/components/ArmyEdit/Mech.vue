@@ -41,22 +41,21 @@ watch(expandSignal, () => visible.value = true);
   >
     <div class="card-body">
       <div class="row">
-        <div class="col-sm-2">
+        <div class="col-auto col-md-auto col-lg-2 ">
           <span class="btn btn-sm btn-light btn-grab">:::</span>
           <div class="d-inline-block py-1 ps-3">
             HE-V {{ info.size.display_name }}
           </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-auto col-md-auto col-lg-4">
           <div class="d-inline-block py-1">
-
             <strong class="pe-1">{{ info.display_name }}</strong>
           </div>
           <IconValidationError size="sm" :message-array="invalid_mech_messages"/>
         </div>
-        <div class="col-sm-6 d-flex">
+        <div class="col-sm-12 col-md-auto col-lg-6 d-flex">
           <div class="py-1 d-inline-block ms-auto">
-            <span class="px-2">
+            <span class="pe-2">
               <strong>Arm:</strong>
               {{ info.armor_stat }}
             </span>
