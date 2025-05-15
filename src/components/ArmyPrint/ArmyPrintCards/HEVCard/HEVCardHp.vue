@@ -73,11 +73,9 @@ const structureHp = computed(() => {
     points = points.concat(items);
   });
 
-
   if (factionStore.hasPerk(RD_ADVANCED_STRUCTURAL_COMPONENTS)) {
-    points = ['-', '-'].concat(points)
+    points = ['-', '-'].concat(points);
   }
-
 
   return chunk(points, 5);
 });
