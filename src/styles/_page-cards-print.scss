@@ -56,7 +56,7 @@ $card-padding-x: 5pt;
   }
 
   .card-name {
-    padding: 0 $card-padding-x 2pt;
+    margin: 0 $card-padding-x 2pt;
     font-size: 8pt;
   }
 
@@ -189,7 +189,7 @@ $card-padding-x: 5pt;
 
   .table-stats {
     width: 100%;
-    margin: 0.25rem 0;
+    margin: 2pt 0;
 
     thead th {
       font-family: $font-anta;

@@ -1,7 +1,7 @@
 <script setup>
 import {computed} from 'vue';
 import {useSupportAssetUnitsStore} from '../../../store/support-asset-units-store.js';
-import {BButton} from 'bootstrap-vue-next';
+import SquadronVehicleItem from './SquadronVehicleItem.vue';
 
 const {supportAssetAttachmentId} = defineProps({
   supportAssetAttachmentId: {
@@ -39,41 +39,11 @@ const unit = computed(() => unitStore.getUnitAttachmentInfo(supportAssetAttachme
     </tr>
     </thead>
     <tbody>
-    <tr
+    <SquadronVehicleItem
         v-for="item in unit.vehicles" :key="item.id"
-    >
-      <td class="text-nowrap">
-        {{ item.display_name }}
-      </td>
-      <td class="text-end">
-        {{ item.move }}"
-      </td>
-      <td class="text-end">
-        {{ item.armor }}
-      </td>
-      <td class="text-end">
-        {{ item.structure }}
-      </td>
-      <td>
-        <template v-if="item.weapons">
-
-        {{ item.weapons.map(w => w.display_name).join(', ') }}
-        </template>
-      </td>
-      <td>
-        <TraitList :traits="item.traits"/>
-      </td>
-      <td>
-        <BButton
-            size="sm"
-            class="ms-1"
-            variant="danger"
-            @click="unitStore.removeVehicle(supportAssetAttachmentId, item.id)"
-        >
-          <span class="material-symbols-outlined">delete</span>
-        </BButton>
-      </td>
-    </tr>
+        :support-asset-attachment-id="supportAssetAttachmentId"
+        :support-asset-vehicle-attachment-id="item.id"
+    />
     </tbody>
   </table>
 </template>

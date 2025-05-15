@@ -4,7 +4,7 @@ import {SUPPORT_ASSET_UNITS} from '../data/support-asset-units.js';
 import {TRAIT_LIMITED, TRAIT_SHORT, WEAPON_TRAITS, weaponTraitDisplayName} from '../data/weapon-traits.js';
 import {getter} from './helpers/store-helpers.js';
 import {VEHICLE_WEAPONS} from '../data/vehicle-weapons.js';
-import {countBy, find, sumBy} from 'lodash';
+import {countBy, each, find, sumBy} from 'lodash';
 import {findItemIndexById} from './helpers/collection-helper.js';
 import {findById} from '../data/data-helpers.js';
 import {UNIT_TRAITS, unitTraitDisplayName} from '../data/unit-traits.js';
@@ -58,7 +58,7 @@ export const useSupportAssetUnitsStore = defineStore('support-asset-units', () =
                 max_duplicate_vehicles,
             } = _getUnitInfo.value(supportAssetId);
 
-            vehicles = vehicles.map(vehicleAttachment => _getUnitAttachmentVehicleInfo(unitAttachmentId, vehicleAttachment));
+            vehicles = vehicles.map(vehicleAttachment => getUnitAttachmentVehicleInfo.value(unitAttachmentId, vehicleAttachment.id));
             return readonly({
                 id,
                 support_asset_unit_id,
@@ -84,6 +84,34 @@ export const useSupportAssetUnitsStore = defineStore('support-asset-units', () =
             return readonly(asset);
         });
 
+        const getUnitVehicleAttachmentRequiredWeaponsInfo = getter((unitAttachmentId, vehicleAttachmentId) => {
+            const vehicleDef = getUnitAttachmentVehicleDef.value(unitAttachmentId, vehicleAttachmentId);
+            if (!vehicleDef.weapon_ids) {
+                return [];
+            }
+            return vehicleDef.weapon_ids.map(weaponId => _getVehicleWeaponInfo(weaponId));
+        });
+
+        const getUnitAttachmentAvailableWeaponChoicesInfo = getter((unitAttachmentId, vehicleAttachmentId) => {
+            const vehicleDef = getUnitAttachmentVehicleDef.value(unitAttachmentId, vehicleAttachmentId);
+
+            if (!vehicleDef.weapon_choice_ids) {
+                return [];
+            }
+
+            return Object.keys(vehicleDef.weapon_choice_ids).map(key => {
+                const weaponIds = vehicleDef.weapon_choice_ids[key];
+                return {
+                    id: key,
+                    weapons: weaponIds.map(weaponId => {
+                        const {display_name, id} = _getVehicleWeaponInfo(weaponId);
+
+                        return {display_name, id};
+                    }),
+                };
+            });
+        });
+
         function _getVehicleTraitsInfo(traits) {
             return traits.map(trait => Object.assign({},
                 trait,
@@ -93,7 +121,7 @@ export const useSupportAssetUnitsStore = defineStore('support-asset-units', () =
         }
 
         function _getUnitVehicleInfo(unitId, vehicleId) {
-            let asset = SUPPORT_ASSET_UNITS[unitId];
+            const asset = SUPPORT_ASSET_UNITS[unitId];
             let vehicle = asset.vehicles[vehicleId];
             vehicle = Object.assign({}, vehicle);
 
@@ -107,9 +135,7 @@ export const useSupportAssetUnitsStore = defineStore('support-asset-units', () =
                 });
             }
 
-            let traits = vehicle.traits || [];
-
-            vehicle.traits = _getVehicleTraitsInfo(traits);
+            vehicle.traits = _getVehicleTraitsInfo(vehicle.traits || []);
 
             return readonly(vehicle);
         }
@@ -127,55 +153,109 @@ export const useSupportAssetUnitsStore = defineStore('support-asset-units', () =
             return readonly(weapon);
         }
 
-        function _getUnitAttachmentVehicleInfo(unitAttachmentId, vehicleAttachment) {
-            let supportAssetUnitId = getUnitAttachment.value(unitAttachmentId).support_asset_unit_id;
-            let vehicle = SUPPORT_ASSET_UNITS[supportAssetUnitId].vehicles[vehicleAttachment.vehicle_id];
+        const getUnitAttachmentVehicleInfo = getter((unitAttachmentId, vehicleAttachmentId) => {
+            const vehicleAttachment = getUnitVehicleAttachment.value(unitAttachmentId, vehicleAttachmentId);
+            const vehicleDef = getUnitAttachmentVehicleDef.value(unitAttachmentId, vehicleAttachmentId);
 
-            vehicle = Object.assign({}, vehicle);
-            if (vehicle.weapon_ids) {
-                vehicle.weapons = vehicle.weapon_ids.map(weaponId => _getVehicleWeaponInfo(weaponId));
-            } else if (vehicle.weapon_choice_ids) {
-                const weaponChoiceKey = vehicleAttachment.weapon_choice;
-                const weaponIds = vehicle.weapon_choice_ids[weaponChoiceKey];
-                vehicle.weapons = weaponIds.map(weaponId => _getVehicleWeaponInfo(weaponId));
+            let weapons = [];
+            if (vehicleDef.weapon_ids) {
+                weapons = vehicleDef.weapon_ids.map(weaponId => _getVehicleWeaponInfo(weaponId));
+            } else if (vehicleDef.weapon_choice_ids) {
+                Object.keys(vehicleDef.weapon_choice_ids).forEach(key => {
+                    const weaponId = vehicleAttachment.weapon_choices[key];
+                    weapons.push(_getVehicleWeaponInfo(weaponId));
+                });
             }
 
-            let traits = vehicle.traits || [];
-            vehicle.traits = _getVehicleTraitsInfo(traits);
+            const {
+                id,
+                support_asset_unit_id,
+            } = vehicleAttachment;
 
-            return readonly(vehicle);
-        }
+            const {
+                display_name,
+                move,
+                armor,
+                structure,
+            } = vehicleDef;
+
+            return readonly({
+                id,
+                support_asset_unit_id,
+                weapons,
+                display_name,
+                move,
+                armor,
+                structure,
+                traits: _getVehicleTraitsInfo(vehicleDef.traits || []),
+            });
+        });
 
         const hasUnitId = getter(unitId => support_asset_unit_ids.value.includes(unitId));
         const getUnitVehicleCount = getter(unitAttachmentId => getUnitAttachment.value(unitAttachmentId).vehicles.length);
         const getUnitAttachment = getter(unitAttachmentId => findById(support_asset_units.value, unitAttachmentId));
+        const getUnitAndVehicleAttachments = getter((unitAttachmentId, vehicleAttachmentId) => {
+            const unitAttachment = getUnitAttachment.value(unitAttachmentId);
+            const vehicleAttachment = find(unitAttachment.vehicles, {id: vehicleAttachmentId});
+            return {
+                unitAttachment,
+                vehicleAttachment,
+            };
+        });
+
+        const getUnitVehicleAttachment = getter((unitAttachmentId, vehicleAttachmentId) => {
+            const unitAttachment = getUnitAttachment.value(unitAttachmentId);
+            return find(unitAttachment.vehicles, {id: vehicleAttachmentId});
+        });
 
         const getUnitAttachmentWeaponsCardInfo = getter(unitAttachmentId => {
             const unit = getUnitAttachmentInfo.value(unitAttachmentId);
-            let weapons = [];
+            const weapons = [];
             unit.vehicles.forEach(vehicle => {
                 vehicle.weapons?.forEach(weapon => {
                     const prevCopy = find(weapons, {id: weapon.id});
                     const limitedTrait = find(weapon.traits, {id: TRAIT_LIMITED});
+                    weapon = Object.assign({}, weapon);
+                    if (limitedTrait) {
+                        weapon.max_uses = limitedTrait.number;
+                    }
                     if (!prevCopy || limitedTrait) {
                         weapons.push(weapon);
                     }
                 });
             });
-            return weapons;
+            return readonly(weapons);
+        });
+
+        const getUnitAttachmentDef = getter(unitAttachmentId => {
+            const unitAttachment = getUnitAttachment.value(unitAttachmentId);
+            return SUPPORT_ASSET_UNITS[unitAttachment.support_asset_unit_id];
+        });
+
+        const getUnitAttachmentVehicleDef = getter((unitAttachmentId, vehicleAttachmentId) => {
+            const {
+                unitAttachment,
+                vehicleAttachment,
+            } = getUnitAndVehicleAttachments.value(unitAttachmentId, vehicleAttachmentId);
+
+            return SUPPORT_ASSET_UNITS[unitAttachment.support_asset_unit_id].vehicles[vehicleAttachment.vehicle_id];
         });
 
         const getUnitAllWeaponsInfo = getter(unitAttachmentId => {
-            const supportAssetId = getUnitAttachment.value(unitAttachmentId).support_asset_unit_id;
-            const unitInfo = _getUnitInfo.value(supportAssetId);
-            let weaponIdMap = {};
-            Object.keys(unitInfo.vehicles).forEach((vehicle_id) => {
-                const vehicle = _getUnitVehicleInfo(supportAssetId, vehicle_id);
-                vehicle.weapons?.forEach(weapon => {
-                    weaponIdMap[weapon.id] = weapon;
+            const vehicleDefs = getUnitAttachmentDef.value(unitAttachmentId).vehicles;
+
+            const weaponIdMap = {};
+            each(vehicleDefs, (vehicleDef) => {
+                vehicleDef.weapon_ids?.forEach(weaponId => {
+                    weaponIdMap[weaponId] = true;
+                });
+
+                each(vehicleDef.weapon_choice_ids, weaponIds => {
+                    weaponIds.forEach(weaponId => weaponIdMap[weaponId] = true);
                 });
             });
-            return Object.values(weaponIdMap);
+
+            return Object.keys(weaponIdMap).map(weaponId => _getVehicleWeaponInfo(weaponId));
         });
 
         const getAttachmentVehicleIdCounts = getter(unitAttachmentId => {
@@ -232,17 +312,36 @@ export const useSupportAssetUnitsStore = defineStore('support-asset-units', () =
         }
 
         function addVehicle(unitAttachmentId, vehicleId) {
-            const supportAssetUnit = findById(support_asset_units.value, unitAttachmentId);
-            supportAssetUnit.vehicles.push({
+            const supportAssetUnit = getUnitAttachment.value(unitAttachmentId);
+            const supportAssetUnitId = supportAssetUnit.support_asset_unit_id;
+            const vehicleDef = SUPPORT_ASSET_UNITS[supportAssetUnitId].vehicles[vehicleId];
+
+            const vehicleAttachment = {
                 id: supportAssetUnit.vehicles_id_increment++,
                 vehicle_id: vehicleId,
-            });
+            };
+
+            if (vehicleDef.weapon_choice_ids) {
+
+                const weaponChoices = {};
+                Object.keys(vehicleDef.weapon_choice_ids).forEach(key => {
+                    weaponChoices[key] = vehicleDef.weapon_choice_ids[key][0];
+                });
+                vehicleAttachment.weapon_choices = weaponChoices;
+            }
+
+            supportAssetUnit.vehicles.push(vehicleAttachment);
+        }
+
+        function setUnitVehicleWeaponChoice(unitAttachmentId, vehicleAttachmentId, choiceId, weaponId) {
+            const vehicleAttachment = getUnitVehicleAttachment.value(unitAttachmentId, vehicleAttachmentId);
+            vehicleAttachment.weapon_choices[choiceId] = weaponId;
         }
 
         function removeVehicle(unitAttachmentId, vehicleAttachmentId) {
-            const supportAssetUnit = findById(support_asset_units.value, unitAttachmentId);
-            let index = findItemIndexById(supportAssetUnit.vehicles, vehicleAttachmentId);
-            supportAssetUnit.vehicles.splice(index, 1);
+            const unitAttachment = getUnitAttachment.value(unitAttachmentId);
+            const index = findItemIndexById(unitAttachment.vehicles, vehicleAttachmentId);
+            unitAttachment.vehicles.splice(index, 1);
         }
 
         return {
@@ -255,10 +354,16 @@ export const useSupportAssetUnitsStore = defineStore('support-asset-units', () =
 
             getAvailableVehiclesInfo,
             getUnitVehicleCount,
-
+            getUnitVehicleAttachment,
             getUnitAllWeaponsInfo,
+            getUnitAndVehicleAttachments,
             getUnitAttachmentInfo,
+            getUnitAttachmentVehicleInfo,
             getUnitAttachmentWeaponsCardInfo,
+            getUnitAttachmentAvailableWeaponChoicesInfo,
+            getUnitVehicleAttachmentRequiredWeaponsInfo,
+
+            setUnitVehicleWeaponChoice,
             addVehicle,
             removeVehicle,
             removeSupportAssetId,
