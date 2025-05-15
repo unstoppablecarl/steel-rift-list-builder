@@ -77,10 +77,11 @@ body {
 .navbar > .container-xl,
 .navbar > .container-xxl {
   display: block;
-
 }
-.tabs-factions {
+
+.nav-tabs-factions {
   --bs-nav-link-font-size: 1rem;
+  --bs-nav-link-padding-y: 0.5rem;
 }
 
 .tab-select-faction {

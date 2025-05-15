@@ -33,7 +33,7 @@ function setFactionId(factionId) {
       size="xl"
       cl
   >
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs nav-tabs-factions">
       <button class="nav-link disabled tab-select-faction" role="tab" tabindex="-1">Select Faction:</button>
       <li class="nav-item" v-for="faction in factions_info">
         <button :class="{'nav-link': true, 'active': faction.id === faction_id}" @click="setFactionId(faction.id)">{{ faction.display_name }}</button>
@@ -42,7 +42,7 @@ function setFactionId(factionId) {
 
     <div v-for="faction in factions_info" v-show="faction.id === faction_id">
       <div
-          class="mb-4"
+          class="my-4"
           v-for="group in perk_grid"
       >
         <h4 class="fw-bold ps-3">
