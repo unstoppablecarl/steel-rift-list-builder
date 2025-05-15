@@ -89,7 +89,7 @@ const structureHp = computed(() => {
       <div class="hp-heading">
         ARMOR
       </div>
-      <div :class="{'hp-container': true, 'armor-6-per-row': armor6PerRow}">
+      <div class="hp-container">
         <div class="hp-row" v-for="row in armorHp">
           <span class="hp" v-for="i in row"></span>
         </div>
