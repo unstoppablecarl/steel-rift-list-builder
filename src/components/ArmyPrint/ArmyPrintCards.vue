@@ -6,16 +6,14 @@ import HEVCard from './ArmyPrintCards/HEVCard.vue';
 import {usePrintSettingsStore} from '../../store/print-settings-store.js';
 import {useTeamStore} from '../../store/team-store.js';
 import {useFactionStore} from '../../store/faction-store.js';
-import {useSupportAssetStore} from '../../store/support-asset-store.js';
-import {SUPPORT_ASSETS} from '../../data/support-assets.js';
-
-import {SA_TYPE_OT_WEAPON} from '../../data/support-assets/support-asset-types.js';
+import {useSupportAssetWeaponsStore} from '../../store/support-asset-weapons-store.js';
+import {SUPPORT_ASSET_WEAPONS} from '../../data/support-asset-weapons.js';
 
 const printSettingsStore = usePrintSettingsStore();
 const teamStore = useTeamStore();
 const mechStore = useMechStore();
 const factionStore = useFactionStore();
-const supportAssetStore = useSupportAssetStore();
+const supportAssetWeaponsStore = useSupportAssetWeaponsStore();
 
 const pages = computed(() => {
 
@@ -84,10 +82,10 @@ const referenceCards = computed(() => {
     }
   }
 
-  supportAssetStore.support_asset_ids.forEach(supportAssetId => {
+  supportAssetWeaponsStore.support_asset_weapon_ids.forEach(supportAssetId => {
     cards.push({
       type: 'support_asset',
-      support_asset_type: SUPPORT_ASSETS[supportAssetId].type,
+      support_asset_type: SUPPORT_ASSET_WEAPONS[supportAssetId].type,
       supportAssetId,
     });
   });
@@ -107,7 +105,7 @@ const referenceCards = computed(() => {
         <HEVCard v-if="item.type === 'hev'" :mech-id="item.mechId"/>
         <MineDroneCard v-if="item.type === 'mine_drone'"/>
         <FactionPerkCard v-if="item.type === 'faction_perk'" :perk-id="item.perkId"/>
-        <SupportAssetOffTableCard
+        <SupportAssetWeaponCard
             v-if="item.type === 'support_asset' && item.support_asset_type === SA_TYPE_OT_WEAPON"
             :support-asset-id="item.supportAssetId"
         />

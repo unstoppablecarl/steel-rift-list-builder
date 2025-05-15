@@ -1,11 +1,11 @@
 <script setup>
 import {storeToRefs} from 'pinia';
-import {useSupportAssetStore} from '../../../../store/support-asset-store.js';
+import {useSupportAssetUnitsStore} from '../../../../store/support-asset-units-store.js';
 
-const store = useSupportAssetStore();
+const store = useSupportAssetUnitsStore();
 
 const {
-  available_unit_support_assets,
+  available_support_asset_units_info,
 } = storeToRefs(store);
 
 </script>
@@ -27,7 +27,6 @@ const {
           <td class="text-end">
             Tons
           </td>
-          <td></td>
         </tr>
         </thead>
         <tbody>
@@ -35,7 +34,7 @@ const {
             :class="{
               'dropdown-row': true,
             }"
-            v-for="item in available_unit_support_assets" :key="item.id"
+            v-for="item in available_support_asset_units_info" :key="item.id"
             @click="store.addSupportAsset(item.id)"
         >
           <td class="text-nowrap">
@@ -44,11 +43,6 @@ const {
 
           <td class="text-end">
             <number :val="item.cost" :invert-color="true"/>
-          </td>
-          <td>
-            <small>
-              {{ item.notes.join(', ') }}
-            </small>
           </td>
         </tr>
         </tbody>

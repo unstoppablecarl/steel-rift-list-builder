@@ -2,7 +2,7 @@
 import Faction from './ArmyList/Faction.vue';
 import ArmyListSize from './ArmyList/ArmyListSize.vue';
 import ArmyListSupportAssetCount from './ArmyList/ArmyListSupportAssetCount.vue';
-import WeaponSupportAssets from './ArmyList/ArmyListSupportAssets/WeaponSupportAssets.vue';
+import SupportAssetWeapons from './ArmyList/ArmyListSupportAssets/SupportAssetWeapons.vue';
 import ArmyListTeams from './ArmyList/ArmyListTeams.vue';
 </script>
 <template>
@@ -21,8 +21,8 @@ import ArmyListTeams from './ArmyList/ArmyListTeams.vue';
           </div>
         </div>
         <div class="col-md-6">
-          <WeaponSupportAssets/>
-          <UnitSupportAssets/>
+          <SupportAssetWeapons/>
+          <SupportAssetUnits/>
         </div>
         <div class="col-md-3">
           <Faction/>

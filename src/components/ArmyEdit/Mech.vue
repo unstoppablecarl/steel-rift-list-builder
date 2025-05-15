@@ -63,8 +63,7 @@ watch(expandSignal, () => visible.value = true);
                 :aria-expanded="visible ? 'true' : 'false'"
                 :aria-controls="'collapse-' + mechId"
                 @click="visible = !visible"
-            >
-            </BButton>
+            />
 
             <BButton
                 size="sm"

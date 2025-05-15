@@ -119,15 +119,16 @@ export const WEAPON_TRAITS = makeWeaponTraits({
         display_name: 'Anti-Air',
         description: 'When targeting a unit with the Flying Trait, the target is at -2 to Defense Rolls from weapons with this trait. (I.e., if the target until would normally remove damage from the Attack Pool on a 2+, it avoids damage from this weapon on a 4+). If a Weapon with this trait destroys the Target Model, you may apply remaining damage to another Model of the Squadron as if the Squadron was not a Flying Squadron. ',
     },
+
 });
 
 export function traitDisplayNames(traits) {
-    return traits.map((trait) => traitDisplayName(trait))
+    return traits.map((trait) => weaponTraitDisplayName(trait))
         .join(', ');
 
 }
 
-export function traitDisplayName({id, number}) {
+export function weaponTraitDisplayName({id, number}) {
 
     const trait = WEAPON_TRAITS[id];
 

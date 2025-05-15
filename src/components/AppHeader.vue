@@ -5,7 +5,7 @@ import BtnSave from './UI/BtnSave.vue';
 import {useArmyListStore} from '../store/army-list-store.js';
 import {storeToRefs} from 'pinia';
 import {useTeamStore} from '../store/team-store.js';
-import {useSupportAssetStore} from '../store/support-asset-store.js';
+import {useSupportAssetCountsStore} from '../store/support-asset-count-store.js';
 import {inject, ref} from 'vue';
 import {ROUTE_HOME, ROUTE_PRINT} from '../routes.js';
 import Navbar from './Navbar.vue';
@@ -14,7 +14,7 @@ import {resetStores} from '../store/helpers/store-save-load.js';
 import {BModal} from 'bootstrap-vue-next';
 
 const {used_teams_count, max_teams_count} = storeToRefs(useTeamStore());
-const {used_support_assets, max_support_assets} = storeToRefs(useSupportAssetStore());
+const {used_support_assets, max_support_assets} = storeToRefs(useSupportAssetCountsStore());
 const {used_tons, max_tons, name} = storeToRefs(useArmyListStore());
 
 const currentPath = inject('currentPath');

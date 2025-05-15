@@ -109,6 +109,7 @@ const {
       v-model="show"
       placement="bottom"
       :title="teamInfo.display_name + ' Perks'"
+      lazy
   >
     <table class="table table-sm table-striped">
       <thead>

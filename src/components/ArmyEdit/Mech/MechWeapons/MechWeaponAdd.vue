@@ -26,7 +26,10 @@ const {
 
 const mechStore = useMechStore();
 
-function addWeapon(upgradeId) {
+function addWeapon(upgradeId, valid) {
+  if (!valid) {
+    return;
+  }
   mechStore.addMechWeaponAttachment(mechId, upgradeId);
 }
 
@@ -69,9 +72,12 @@ function addWeapon(upgradeId) {
         </thead>
         <tbody>
         <tr
-            class="dropdown-row"
+            :class="{
+              'dropdown-row': true,
+              'disabled': !item.valid
+            }"
             v-for="item in options" :key="item.weapon_id"
-            @click="addWeapon(item.weapon_id)"
+            @click="addWeapon(item.weapon_id, item.valid)"
         >
           <td>
             {{ item.display_name }}

@@ -4,9 +4,9 @@ import BtnToolTip from './BtnToolTip.vue';
 
 const {traits} = defineProps({
   traits: {
-    type: Array
-  }
-})
+    type: Array,
+  },
+});
 </script>
 <template>
   <template v-for="(trait, index) in traits">
@@ -18,8 +18,10 @@ const {traits} = defineProps({
             @mouseleave="mouseleave"
             :class="{'text-tooltip': trait.description}"
         >
-          {{ trait.display_name }}<span v-if="index !== traits.length - 1">, </span>
+          <span class="text-nowrap">{{ trait.display_name }}</span>
         </span>
+        <span v-if="index !== traits.length - 1">, </span>
+
       </template>
       <template #content>
         {{ trait.description }}

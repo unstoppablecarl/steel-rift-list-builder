@@ -3,12 +3,12 @@ import {computed, readonly, ref} from 'vue';
 import {findItemIndexById, move, setDisplayOrders} from './helpers/collection-helper.js';
 import {MECH_TEAM_SIZES, MECH_TEAMS, TEAM_FIRE_SUPPORT, TEAM_GENERAL, TEAM_RECON} from '../data/mech-teams.js';
 import {useMechStore} from './mech-store.js';
-import {countBy, difference, each, find, findIndex, groupBy, map, max, min, sortBy, sumBy} from 'lodash';
+import {difference, each, find, findIndex, groupBy, map, sortBy, sumBy} from 'lodash';
 import {getter} from './helpers/store-helpers.js';
 import {MECH_BODY_MODS_DROP_DOWN} from '../data/mech-body.js';
 import {MECH_WEAPONS} from '../data/mech-weapons.js';
 import {useArmyListStore} from './army-list-store.js';
-import {GAME_SIZE_BATTLE, GAME_SIZE_DUEL, GAME_SIZE_RECON, GAME_SIZE_STRIKE, GAME_SIZES} from '../data/game-sizes.js';
+import {GAME_SIZES} from '../data/game-sizes.js';
 import {MECH_TEAM_PERKS} from '../data/mech-team-perks.js';
 import {MECH_SIZES, MECH_SIZES_DROP_DOWN, SIZE_HEAVY, SIZE_MEDIUM} from '../data/mech-sizes.js';
 import {WEAPON_TRAITS} from '../data/weapon-traits.js';
@@ -544,7 +544,7 @@ export const useTeamStore = defineStore('team', () => {
         persist: {
             enabled: true,
             afterHydrate: (ctx) => {
-                console.log(`hydrated '${ctx.store.$id}'`);
+                // console.log(`hydrated '${ctx.store.$id}'`);
             },
         },
     },

@@ -1,13 +1,14 @@
 <script setup>
 import {storeToRefs} from 'pinia';
-import {useSupportAssetStore} from '../../../../store/support-asset-store.js';
 import {traitDisplayNames} from '../../../../data/weapon-traits.js';
+import {useSupportAssetWeaponsStore} from '../../../../store/support-asset-weapons-store.js';
 
-const store = useSupportAssetStore();
+const store = useSupportAssetWeaponsStore();
 
 const {
-  available_weapon_support_assets,
+  available_support_asset_weapons_info,
 } = storeToRefs(store);
+
 
 </script>
 <template>
@@ -34,9 +35,6 @@ const {
           <td>
             Traits
           </td>
-          <td>
-            Notes
-          </td>
         </tr>
         </thead>
         <tbody>
@@ -44,7 +42,7 @@ const {
             :class="{
               'dropdown-row': true,
             }"
-            v-for="item in available_weapon_support_assets" :key="item.id"
+            v-for="item in available_support_asset_weapons_info" :key="item.id"
             @click="store.addSupportAsset(item.id)"
         >
           <td>
@@ -58,11 +56,6 @@ const {
           </td>
           <td>
             {{ traitDisplayNames(item.off_table_weapon.traits) }}
-          </td>
-          <td>
-            <small>
-              {{ item.notes.join(', ') }}
-            </small>
           </td>
         </tr>
         </tbody>

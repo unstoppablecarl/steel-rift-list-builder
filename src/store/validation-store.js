@@ -5,7 +5,7 @@ import {useTeamStore} from './team-store.js';
 import {getter} from './helpers/store-helpers.js';
 import {useMechStore} from './mech-store.js';
 import {MECH_TEAMS, TEAM_GENERAL} from '../data/mech-teams.js';
-import {useSupportAssetStore} from './support-asset-store.js';
+import {useSupportAssetCountsStore} from './support-asset-count-store.js';
 import {MECH_WEAPONS} from '../data/mech-weapons.js';
 import {countBy, find, max, min} from 'lodash';
 import {WEAPON_TRAITS} from '../data/weapon-traits.js';
@@ -16,7 +16,7 @@ export const useValidationStore = defineStore('validation', () => {
     const armyListStore = useArmyListStore();
     const teamStore = useTeamStore();
     const mechStore = useMechStore();
-    const supportAssetStore = useSupportAssetStore();
+    const supportAssetCountStore = useSupportAssetCountsStore();
 
     function $reset() {
 
@@ -138,7 +138,7 @@ export const useValidationStore = defineStore('validation', () => {
     });
 
     const invalid_number_of_support_assets = computed(() => {
-        const {used_support_assets, max_support_assets} = supportAssetStore;
+        const {used_support_assets, max_support_assets} = supportAssetCountStore;
 
         if (max_support_assets < used_support_assets) {
             return `List has ${used_support_assets} Support Assets but may only have ${max_support_assets}`;

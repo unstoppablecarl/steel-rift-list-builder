@@ -1,14 +1,15 @@
 import {defineStore} from 'pinia';
 import {computed, ref} from 'vue';
 import {useMechStore} from './mech-store.js';
-import {useSupportAssetStore} from './support-asset-store.js';
 import {GAME_SIZES, getGameSizeId} from '../data/game-sizes.js';
 import {find} from 'lodash';
 import {MINEFIELD_DRONE_CARRIER_SYSTEM} from '../data/mech-upgrades.js';
-import {MINE_DRONE_BARRAGE} from '../data/support-assets/off-table-weapons.js';
+import {MINE_DRONE_BARRAGE} from '../data/support-asset-weapons.js';
+import {useSupportAssetWeaponsStore} from './support-asset-weapons-store.js';
+import {useSupportAssetCountsStore} from './support-asset-count-store.js';
 
 export const useArmyListStore = defineStore('army-list', () => {
-        const supportAssetStore = useSupportAssetStore();
+        const supportAssetWeaponsStore = useSupportAssetWeaponsStore();
 
         const defaultArmyName = '';
         const defaultMaxTons = 100;
@@ -22,14 +23,14 @@ export const useArmyListStore = defineStore('army-list', () => {
         }
 
         const mechStore = useMechStore();
-        const supportAssets = useSupportAssetStore();
+        const supportAssetCounts = useSupportAssetCountsStore();
 
         const game_size_id = computed(() => getGameSizeId(max_tons.value));
         const game_size_info = computed(() => GAME_SIZES[game_size_id.value]);
 
         const used_tons = computed(() => {
             return mechStore.totalTons +
-                supportAssets.used_tons;
+                supportAssetCounts.used_tons;
         });
 
         const includes_mine_drones = computed(() => {
@@ -42,7 +43,7 @@ export const useArmyListStore = defineStore('army-list', () => {
                 return true;
             }
 
-            return supportAssetStore.hasSupportAssetId(MINE_DRONE_BARRAGE);
+            return supportAssetWeaponsStore.hasSupportAssetId(MINE_DRONE_BARRAGE);
         });
 
         return {

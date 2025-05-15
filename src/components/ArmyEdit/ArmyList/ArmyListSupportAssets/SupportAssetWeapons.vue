@@ -1,17 +1,17 @@
 <script setup>
 import {storeToRefs} from 'pinia';
-import {useSupportAssetStore} from '../../../../store/support-asset-store.js';
-import WeaponSupportAssetAdd from './WeaponSupportAssetAdd.vue';
+import SupportAssetWeaponAdd from './SupportAssetWeaponAdd.vue';
 import TraitList from '../../../UI/TraitList.vue';
 import BtnToolTip from '../../../UI/BtnToolTip.vue';
 import {useValidationStore} from '../../../../store/validation-store.js';
+import {useSupportAssetWeaponsStore} from '../../../../store/support-asset-weapons-store.js';
 
-const store = useSupportAssetStore();
+const store = useSupportAssetWeaponsStore();
 const validationStore = useValidationStore();
 
 const {invalid_number_of_support_assets} = storeToRefs(validationStore);
 const {
-  weapon_support_assets,
+  support_asset_weapons_info,
 } = storeToRefs(store);
 
 </script>
@@ -31,11 +31,11 @@ const {
           <IconValidationError size="sm" :message="invalid_number_of_support_assets"/>
         </div>
         <div class="flex-shrink-1 text-end">
-          <WeaponSupportAssetAdd/>
+          <SupportAssetWeaponAdd/>
         </div>
       </div>
     </div>
-    <div class="card-body p-2" v-if="weapon_support_assets.length">
+    <div class="card-body p-2" v-if="support_asset_weapons_info.length">
       <table class="table table-btn-sm m-0">
         <thead>
         <tr class="table-light">
@@ -44,11 +44,10 @@ const {
           <th class="text-end pe-1">Tons</th>
           <th>Traits</th>
           <th></th>
-          <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr v-for="item in weapon_support_assets">
+        <tr v-for="item in support_asset_weapons_info">
           <td>
             <BtnToolTip>
               <template #target="{mouseover, mouseleave}">
@@ -73,11 +72,6 @@ const {
           </td>
           <td>
             <TraitList :traits="item.off_table_weapon.traits"/>
-          </td>
-          <td>
-            <div class="small lh-sm">
-              {{ item.notes.join(', ') }}
-            </div>
           </td>
           <td class="table-btn-cell text-end">
             <BButton @click="store.removeSupportAssetId(item.id)" variant="danger" size="sm"><span

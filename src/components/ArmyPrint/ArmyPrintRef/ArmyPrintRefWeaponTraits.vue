@@ -1,7 +1,7 @@
 <script setup>
 import {computed} from 'vue';
 import {useMechStore} from '../../../store/mech-store.js';
-import {traitDisplayName, WEAPON_TRAITS} from '../../../data/weapon-traits.js';
+import {weaponTraitDisplayName, WEAPON_TRAITS} from '../../../data/weapon-traits.js';
 import {sortBy} from 'lodash';
 
 const mechStore = useMechStore();
@@ -9,7 +9,7 @@ const mechStore = useMechStore();
 const weaponTraits = computed(() => {
   const result= mechStore.getUsedWeaponTraitIds.map(traitId => {
     return {
-      display_name: traitDisplayName({id: traitId, number: 'X'}),
+      display_name: weaponTraitDisplayName({id: traitId, number: 'X'}),
       description: WEAPON_TRAITS[traitId].description,
     };
   });

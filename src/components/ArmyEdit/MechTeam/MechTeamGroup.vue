@@ -54,7 +54,7 @@ const {
 </script>
 <template>
   <div :class="{
-    'card text-bg-light card-mech-team-group': true,
+    'card text-bg-light card-dark-border': true,
     'border-danger': !size.size_valid,
   }">
     <div class="card-header d-flex text-bg-primary">

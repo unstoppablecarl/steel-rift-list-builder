@@ -15,19 +15,30 @@ import {makeFrozenStaticListIds} from './data-helpers.js';
 import {getRangeFromShortTrait} from './mech-weapons.js';
 
 export const VEH_AUTO_CANNON = 'VEH_AUTO_CANNON';
+export const VEH_LES_AUTO_CANNON = 'VEH_LES_AUTO_CANNON';
 export const AA_ARRAY = 'AA_ARRAY';
 export const DOZER_BLADE = 'DOZER_BLADE';
 export const VEH_HOWITZER = 'VEH_HOWITZER';
 export const HEAVY_INCINERATORS = 'HEAVY_INCINERATORS';
 export const MISSILE_PACK = 'MISSILE_PACK';
 export const VEH_SUBMUNITIONS = 'VEH_SUBMUNITIONS';
+export const VEH_ROTARY_CANNON = 'VEH_ROTARY_CANNON';
+export const VEH_AGM_MISSILES = 'VEH_AGM_MISSILES';
+export const VEH_BARRAGE_ROCKETS = 'VEH_BARRAGE_ROCKETS';
 
 export const VEHICLE_WEAPONS = makeFrozenStaticListIds({
     [[VEH_AUTO_CANNON]]: makeWeapon({
         display_name: 'Veh. Auto-Cannon',
         damage: 2,
         traits: [
-            trait(TRAIT_KINETIC, 'M'),
+            trait(TRAIT_KINETIC),
+        ],
+    }),
+    [[VEH_LES_AUTO_CANNON]]: makeWeapon({
+        display_name: 'Veh. Auto-Cannon',
+        damage: 2,
+        traits: [
+            trait(TRAIT_KINETIC, 'UL'),
         ],
     }),
     [[AA_ARRAY]]: makeWeapon({
@@ -79,6 +90,31 @@ export const VEHICLE_WEAPONS = makeFrozenStaticListIds({
         traits: [
             trait(TRAIT_SHORT, 6),
             trait(TRAIT_FLAK),
+        ],
+    }),
+    [[VEH_ROTARY_CANNON]]: makeWeapon({
+        display_name: 'Rotary Cannon',
+        damage: 5,
+        traits: [
+            trait(TRAIT_SHORT, 12),
+            trait(TRAIT_LIGHT),
+        ],
+    }),
+    [[VEH_AGM_MISSILES]]: makeWeapon({
+        display_name: 'AGM Missiles',
+        damage: 5,
+        traits: [
+            trait(TRAIT_SHORT, 18),
+            trait(TRAIT_LIMITED, 2),
+        ],
+    }),
+    [[VEH_BARRAGE_ROCKETS]]: makeWeapon({
+        display_name: 'Barrage Rockets',
+        damage: 7,
+        traits: [
+            trait(TRAIT_LIGHT),
+            trait(TRAIT_BLAST, 3),
+            trait(TRAIT_LIMITED, 2),
         ],
     }),
 });

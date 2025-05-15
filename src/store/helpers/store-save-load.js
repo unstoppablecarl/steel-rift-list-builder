@@ -1,16 +1,20 @@
 import {useMechStore} from '../mech-store.js';
 import {useFactionStore} from '../faction-store.js';
 import {useTeamStore} from '../team-store.js';
-import {useSupportAssetStore} from '../support-asset-store.js';
+import {useSupportAssetCountsStore} from '../support-asset-count-store.js';
 import {useArmyListStore} from '../army-list-store.js';
 import {usePrintSettingsStore} from '../print-settings-store.js';
+import {useSupportAssetWeaponsStore} from '../support-asset-weapons-store.js';
+import {useSupportAssetUnitsStore} from '../support-asset-units-store.js';
 
 function getStores() {
     return [
         useMechStore(),
         useFactionStore(),
         useTeamStore(),
-        useSupportAssetStore(),
+        useSupportAssetCountsStore(),
+        useSupportAssetWeaponsStore(),
+        useSupportAssetUnitsStore(),
         useArmyListStore(),
         usePrintSettingsStore(),
     ];

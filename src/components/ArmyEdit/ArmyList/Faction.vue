@@ -2,13 +2,13 @@
 import {useFactionStore} from '../../../store/faction-store.js';
 import {storeToRefs} from 'pinia';
 import {computed, ref} from 'vue';
-import {useSupportAssetStore} from '../../../store/support-asset-store.js';
 import {DWC_OUTRAGEOUS_SUPPORT_BUDGET} from '../../../data/faction-perks.js';
 import FactionPerkGrid from './FactionPerkGrid.vue';
 import BtnToolTip from '../../UI/BtnToolTip.vue';
+import {useSupportAssetWeaponsStore} from '../../../store/support-asset-weapons-store.js';
 
 const factionStore = useFactionStore();
-const supportAssetStore = useSupportAssetStore();
+const supportAssetWeaponsStore = useSupportAssetWeaponsStore();
 const {
   perk_1_info,
   perk_2_info,
@@ -18,7 +18,7 @@ const {
 const {
   weapon_support_assets,
   outrageous_budget_perk_support_asset_id,
-} = storeToRefs(supportAssetStore);
+} = storeToRefs(supportAssetWeaponsStore);
 
 const hasOutrageousSupportBudget = computed(() => factionStore.hasPerk(DWC_OUTRAGEOUS_SUPPORT_BUDGET));
 

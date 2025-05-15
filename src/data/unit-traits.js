@@ -14,6 +14,9 @@ export const TRAIT_SUPPORT_ORDER_COMBAT_SUPPLIES = 'TRAIT_SUPPORT_ORDER_COMBAT_S
 export const TRAIT_SUPPORT_GUIDANCE_SUITE = 'TRAIT_SUPPORT_GUIDANCE_SUITE';
 export const TRAIT_SUPPORT_MINE_DRONE_LAYER = 'TRAIT_SUPPORT_MINE_DRONE_LAYER';
 export const TRAIT_SUPPORT_MOED = 'TRAIT_SUPPORT_MOED';
+export const TRAIT_MSOE_LAUNCHER = 'TRAIT_MSOE_LAUNCHER';
+export const TRAIT_SCRAMBLERS = 'TRAIT_SCRAMBLERS';
+export const TRAIT_INFERNO_GEAR = 'TRAIT_INFERNO_GEAR';
 
 export const UNIT_TRAITS = makeUnitTraits({
     [[TRAIT_ALL_TERRAIN]]: {
@@ -67,8 +70,20 @@ export const UNIT_TRAITS = makeUnitTraits({
     [[TRAIT_SUPPORT_MINE_DRONE_LAYER]]: {
         display_name: 'Support: Mine Drone Layer',
         description: '',
-    },[[TRAIT_SUPPORT_MOED]]: {
+    }, [[TRAIT_SUPPORT_MOED]]: {
         display_name: 'Support: Multi-spectral Obscuration Emitter Deployer',
+        description: '',
+    },
+    [[TRAIT_MSOE_LAUNCHER]]: {
+        display_name: 'MSOE Launcher',
+        description: 'When targeting a unit with the Flying Trait, the target is at -2 to Defense Rolls from weapons with this trait. (I.e., if the target until would normally remove damage from the Attack Pool on a 2+, it avoids damage from this weapon on a 4+). If a Weapon with this trait destroys the Target Model, you may apply remaining damage to another Model of the Squadron as if the Squadron was not a Flying Squadron. ',
+    },
+    [[TRAIT_SCRAMBLERS]]: {
+        display_name: 'Scramblers',
+        description: 'No Unit within 6” of a model equipped with a Scrambler may be targeted by an Off-Table Support Asset, nor may they have Line of Sight drawn to them by a Target Designator. They may not be the target of Lock Orders.',
+    },
+    [[TRAIT_INFERNO_GEAR]]: {
+        display_name: 'Inferno Gear',
         description: '',
     },
     //
@@ -77,6 +92,19 @@ export const UNIT_TRAITS = makeUnitTraits({
     //     description: '',
     // },
 });
+
+export function unitTraitDisplayName({id, number}) {
+
+    const trait = UNIT_TRAITS[id];
+
+    if (!trait) {
+        throw new Error('trait not found: '.id);
+    }
+    if (trait.formatter) {
+        return trait.formatter(trait.display_name, number);
+    }
+    return trait.display_name;
+}
 
 function makeUnitTraits(items) {
     Object.keys(items)

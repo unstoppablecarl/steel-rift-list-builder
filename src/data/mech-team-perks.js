@@ -1,5 +1,4 @@
 import {each} from 'lodash';
-import {value} from 'lodash/seq.js';
 import {
     DIRECTIONAL_THRUSTER,
     ELECTRONIC_COUNTERMEASURES,

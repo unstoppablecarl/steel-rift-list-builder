@@ -9,7 +9,7 @@ import {
     TRAIT_MELEE,
     TRAIT_SHORT,
     TRAIT_SMART,
-    traitDisplayName,
+    weaponTraitDisplayName,
     WEAPON_TRAITS,
 } from '../data/weapon-traits.js';
 import {HOWITZER, MECH_WEAPONS, MISSILES, ROCKET_PACK} from '../data/mech-weapons.js';
@@ -449,7 +449,7 @@ export const useMechStore = defineStore('mech', {
                     traits.forEach(trait => Object.assign(
                         trait,
                         WEAPON_TRAITS[trait.id],
-                        {display_name: traitDisplayName(trait)},
+                        {display_name: weaponTraitDisplayName(trait)},
                     ));
 
                     return {traits, team_perks, faction_perks};
@@ -778,7 +778,7 @@ export const useMechStore = defineStore('mech', {
         persist: {
             enabled: true,
             afterHydrate: (ctx) => {
-                console.log(`hydrated '${ctx.store.$id}'`);
+                // console.log(`hydrated '${ctx.store.$id}'`);
             },
         },
     },

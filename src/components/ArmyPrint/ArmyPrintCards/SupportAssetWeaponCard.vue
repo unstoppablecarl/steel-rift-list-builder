@@ -4,9 +4,9 @@ import {TRAIT_LIMITED, traitDisplayNames} from '../../../data/weapon-traits.js';
 import {find} from 'lodash';
 import CardHeader from './CardParts/CardHeader.vue';
 import CardFooter from './CardParts/CardFooter.vue';
-import {useSupportAssetStore} from '../../../store/support-asset-store.js';
+import {useSupportAssetWeaponsStore} from '../../../store/support-asset-weapons-store.js';
 
-const supportAssetStore = useSupportAssetStore();
+const supportAssetStore = useSupportAssetWeaponsStore();
 
 const {supportAssetId} = defineProps({
   supportAssetId: {

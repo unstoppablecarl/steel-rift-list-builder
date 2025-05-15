@@ -1,9 +1,9 @@
 <script setup>
 import {BFormInput} from 'bootstrap-vue-next';
 import {storeToRefs} from 'pinia';
-import {useSupportAssetStore} from '../../../store/support-asset-store.js';
+import {useSupportAssetCountsStore} from '../../../store/support-asset-count-store.js';
 
-const store = useSupportAssetStore();
+const store = useSupportAssetCountsStore();
 
 const {
   max_support_assets,

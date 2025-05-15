@@ -3,7 +3,7 @@ import {useArmyListStore} from '../../../store/army-list-store.js';
 import Fraction from '../../functional/fraction.vue';
 import {storeToRefs} from 'pinia';
 import {useTeamStore} from '../../../store/team-store.js';
-import {useSupportAssetStore} from '../../../store/support-asset-store.js';
+import {useSupportAssetCountsStore} from '../../../store/support-asset-count-store.js';
 
 const armyListStore = useArmyListStore();
 
@@ -11,7 +11,7 @@ const store = useArmyListStore();
 const {used_teams_count, max_teams_count} = storeToRefs(useTeamStore());
 
 const {used_tons, max_tons} = storeToRefs(store);
-const {used_support_assets, max_support_assets} = storeToRefs(useSupportAssetStore());
+const {used_support_assets, max_support_assets} = storeToRefs(useSupportAssetCountsStore());
 
 </script>
 <template>

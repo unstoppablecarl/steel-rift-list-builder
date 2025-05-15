@@ -52,15 +52,6 @@
       padding-left: 0;
       padding-right: 0;
     }
-
-    &.disabled {
-      --bs-table-hover-bg: #fff;
-
-      > td:not(.notes),
-      >td :not(.popover) {
-        opacity: 0.6;
-      }
-    }
   }
 
   &.dropdown-block {
