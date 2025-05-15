@@ -25,7 +25,7 @@
 
       </div>
 
-      <table class="table-weapons">
+      <table class="table-stats">
         <thead>
         <tr>
           <th>Weapon</th>
