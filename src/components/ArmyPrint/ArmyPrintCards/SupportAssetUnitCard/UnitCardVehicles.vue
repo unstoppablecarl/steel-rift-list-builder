@@ -1,34 +1,33 @@
 <script setup>
+import {useSupportAssetUnitsStore} from '../../../../store/support-asset-units-store.js';
 import {computed} from 'vue';
-import {useSupportAssetUnitsStore} from '../../../store/support-asset-units-store.js';
-import {BButton} from 'bootstrap-vue-next';
+import {unitTraitDisplayName} from '../../../../data/unit-traits.js';
 
-const {supportAssetAttachmentId} = defineProps({
-  supportAssetAttachmentId: {
+const {unitAttachmentId} = defineProps({
+  unitAttachmentId: {
     type: Number,
     required: true,
   },
 });
 
 const unitStore = useSupportAssetUnitsStore();
-const unit = computed(() => unitStore.getUnitAttachmentInfo(supportAssetAttachmentId));
-
+const unit = computed(() => unitStore.getUnitAttachmentInfo(unitAttachmentId));
 </script>
 <template>
-  <table class="table table-striped">
+  <table class="table-stats">
     <thead>
     <tr>
       <th>
-        Vehicles
+        Type
       </th>
       <th class="text-end">
-        Move
+        Mov
       </th>
       <th class="text-end">
-        Armor
+        Arm
       </th>
       <th class="text-end">
-        Structure
+        Str
       </th>
       <th>
         Weapons
@@ -42,7 +41,7 @@ const unit = computed(() => unitStore.getUnitAttachmentInfo(supportAssetAttachme
     <tr
         v-for="item in unit.vehicles" :key="item.id"
     >
-      <td class="text-nowrap">
+      <td class="small">
         {{ item.display_name }}
       </td>
       <td class="text-end">
@@ -54,24 +53,13 @@ const unit = computed(() => unitStore.getUnitAttachmentInfo(supportAssetAttachme
       <td class="text-end">
         {{ item.structure }}
       </td>
-      <td>
+      <td class="text-start small">
         <template v-if="item.weapons">
-
-        {{ item.weapons.map(w => w.display_name).join(', ') }}
+          {{ item.weapons.map(w => w.display_name).join(', ') }}
         </template>
       </td>
-      <td>
-        <TraitList :traits="item.traits"/>
-      </td>
-      <td>
-        <BButton
-            size="sm"
-            class="ms-1"
-            variant="danger"
-            @click="unitStore.removeVehicle(supportAssetAttachmentId, item.id)"
-        >
-          <span class="material-symbols-outlined">delete</span>
-        </BButton>
+      <td class="text-start small">
+      {{ item.traits.map(t => unitTraitDisplayName(t)).join(', ')}}
       </td>
     </tr>
     </tbody>

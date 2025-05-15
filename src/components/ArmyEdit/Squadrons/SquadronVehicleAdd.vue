@@ -16,7 +16,6 @@ const {disabled} = defineProps({
 const emit = defineEmits(['selected']);
 
 function select(id, valid) {
-  console.log(id, valid)
   if (!valid) {
     return;
   }

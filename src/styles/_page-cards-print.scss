@@ -214,6 +214,10 @@ $card-padding-x: 5pt;
 
       vertical-align: top;
 
+      &.small {
+        font-size: 6pt;
+      }
+
       &:first-child {
         text-align: left;
         padding-left: $card-padding-x;

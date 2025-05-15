@@ -7,13 +7,14 @@ import {usePrintSettingsStore} from '../../store/print-settings-store.js';
 import {useTeamStore} from '../../store/team-store.js';
 import {useFactionStore} from '../../store/faction-store.js';
 import {useSupportAssetWeaponsStore} from '../../store/support-asset-weapons-store.js';
-import {SUPPORT_ASSET_WEAPONS} from '../../data/support-asset-weapons.js';
+import {useSupportAssetUnitsStore} from '../../store/support-asset-units-store.js';
 
 const printSettingsStore = usePrintSettingsStore();
 const teamStore = useTeamStore();
 const mechStore = useMechStore();
 const factionStore = useFactionStore();
 const supportAssetWeaponsStore = useSupportAssetWeaponsStore();
+const supportAssetUnitsStore = useSupportAssetUnitsStore();
 
 const pages = computed(() => {
 
@@ -85,8 +86,14 @@ const referenceCards = computed(() => {
   supportAssetWeaponsStore.support_asset_weapon_ids.forEach(supportAssetId => {
     cards.push({
       type: 'support_asset_weapon',
-      support_asset_type: SUPPORT_ASSET_WEAPONS[supportAssetId].type,
       supportAssetId,
+    });
+  });
+
+  supportAssetUnitsStore.support_asset_units.forEach(unit => {
+    cards.push({
+      type: 'support_asset_unit',
+      unitAttachmentId: unit.id,
     });
   });
 
@@ -108,6 +115,10 @@ const referenceCards = computed(() => {
         <SupportAssetWeaponCard
             v-if="item.type === 'support_asset_weapon'"
             :support-asset-id="item.supportAssetId"
+        />
+        <SupportAssetUnitCard
+            v-if="item.type === 'support_asset_unit'"
+            :unit-attachment-id="item.unitAttachmentId"
         />
       </template>
     </div>

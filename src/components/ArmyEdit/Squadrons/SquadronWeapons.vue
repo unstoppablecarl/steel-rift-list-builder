@@ -10,7 +10,7 @@ const {supportAssetAttachmentId} = defineProps({
 });
 
 const unitStore = useSupportAssetUnitsStore();
-const weapons = computed(() => unitStore.getUnitWeaponsInfo(supportAssetAttachmentId));
+const weapons = computed(() => unitStore.getUnitAllWeaponsInfo(supportAssetAttachmentId));
 
 </script>
 <template>

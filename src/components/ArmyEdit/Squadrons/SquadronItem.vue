@@ -22,6 +22,7 @@ const max_vehicles = computed(() => info.value.max_vehicles);
 const add_disabled = computed(() => used_vehicles.value >= max_vehicles.value);
 const visible = ref(false);
 
+const unit_count_valid = computed(() => used_vehicles.value === max_vehicles.value)
 function addVehicle(id) {
   unitStore.addVehicle(supportAssetAttachmentId, id);
 }
@@ -38,9 +39,19 @@ function addVehicle(id) {
             <span
                 @mouseover="mouseover"
                 @mouseleave="mouseleave"
-                class="btn btn-sm btn-outline mx-1 btn-light"
+                :class="{
+                  'btn btn-sm mx-1': true,
+                  'btn-light': unit_count_valid,
+                  'btn-danger': !unit_count_valid
+                }"
             >
               {{ used_vehicles }}/{{ max_vehicles }}
+              <template v-if="unit_count_valid">
+                <span class="material-symbols-outlined text-success-emphasis">check</span>
+              </template>
+              <template v-else>
+                <span class="material-symbols-outlined">warning</span>
+              </template>
             </span>
           </template>
           <template #content>
@@ -59,7 +70,10 @@ function addVehicle(id) {
           <span class="material-symbols-outlined">delete</span>
         </BButton>
         <BButton
-            :class="'btn-sm btn-collapse ' + (visible ? null : 'collapsed')"
+            :class="{
+              'btn-sm btn-collapse ms-1': true,
+              'collapsed': !visible
+            }"
             variant="tertiary"
             :aria-expanded="visible ? 'true' : 'false'"
             :aria-controls="'collapse-support-asset-unit-' + supportAssetAttachmentId"
