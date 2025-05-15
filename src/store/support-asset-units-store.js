@@ -148,7 +148,7 @@ export const useSupportAssetUnitsStore = defineStore('support-asset-units', () =
                 trait,
                 WEAPON_TRAITS[trait.id],
                 {display_name: weaponTraitDisplayName(trait)},
-            )).filter(weapon => weapon.id !== TRAIT_SHORT);
+            )).filter(weapon => weapon.id !== TRAIT_SHORT) || [];
 
             return readonly(weapon);
         }

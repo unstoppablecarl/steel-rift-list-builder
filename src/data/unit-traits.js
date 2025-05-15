@@ -1,4 +1,5 @@
 import {MECH_UPGRADES, TARGET_DESIGNATOR} from './mech-upgrades.js';
+import {numberFormater} from './weapon-traits.js';
 
 export const TRAIT_ALL_TERRAIN = 'TRAIT_ALL_TERRAIN';
 export const TRAIT_CLOSE_SUPPORT = 'TRAIT_CLOSE_SUPPORT';
@@ -29,6 +30,7 @@ export const UNIT_TRAITS = makeUnitTraits({
     },
     [[TRAIT_GARRISON]]: {
         display_name: 'Garrison',
+        formatter: (name, number)=> `${name}(${number} Infantry Squads)`,
         description: '',
     },
     [[TRAIT_GROUP_COMMAND]]: {

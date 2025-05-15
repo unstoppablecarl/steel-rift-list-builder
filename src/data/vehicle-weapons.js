@@ -1,5 +1,6 @@
 import {
     trait,
+    TRAIT_AP,
     TRAIT_BLAST,
     TRAIT_CONCUSSIVE,
     TRAIT_DISRUPTIVE,
@@ -25,6 +26,11 @@ export const VEH_SUBMUNITIONS = 'VEH_SUBMUNITIONS';
 export const VEH_ROTARY_CANNON = 'VEH_ROTARY_CANNON';
 export const VEH_AGM_MISSILES = 'VEH_AGM_MISSILES';
 export const VEH_BARRAGE_ROCKETS = 'VEH_BARRAGE_ROCKETS';
+export const TANK_LASER = 'TANK_LASER';
+export const TANK_AUTOCANNON = 'TANK_AUTOCANNON';
+export const VEH_ROCKET_PACK = 'VEH_ROCKET_PACK';
+export const TANK_MISSILES = 'TANK_MISSILES';
+export const TANK_HOWITZER = 'TANK_HOWITZER';
 
 export const VEHICLE_WEAPONS = makeFrozenStaticListIds({
     [[VEH_AUTO_CANNON]]: makeWeapon({
@@ -113,6 +119,45 @@ export const VEHICLE_WEAPONS = makeFrozenStaticListIds({
         damage: 7,
         traits: [
             trait(TRAIT_LIGHT),
+            trait(TRAIT_BLAST, 3),
+            trait(TRAIT_LIMITED, 2),
+        ],
+    }),
+    [[TANK_LASER]]: makeWeapon({
+        display_name: 'Tank Laser',
+        damage: 4,
+        traits: [
+            trait(TRAIT_AP, 1),
+        ],
+    }),
+    [[TANK_AUTOCANNON]]: makeWeapon({
+        display_name: 'Tank Auto-Cannon',
+        damage: 4,
+        traits: [
+            trait(TRAIT_KINETIC),
+        ],
+    }),
+    [[TANK_MISSILES]]: makeWeapon({
+        display_name: 'Tank Missiles',
+        damage: 4,
+        traits: [
+            trait(TRAIT_SMART),
+            trait(TRAIT_LIMITED, 2),
+        ],
+    }),
+    [[TANK_HOWITZER]]: makeWeapon({
+        display_name: 'Tank Howitzer',
+        damage: 4,
+        traits: [
+            trait(TRAIT_BLAST, 2),
+            trait(TRAIT_KINETIC),
+        ],
+    }),
+    [[VEH_ROCKET_PACK]]: makeWeapon({
+        display_name: 'Veh. Rocket Pack',
+        damage: 4,
+        traits: [
+            trait(TRAIT_SMART),
             trait(TRAIT_BLAST, 3),
             trait(TRAIT_LIMITED, 2),
         ],

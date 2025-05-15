@@ -40,7 +40,7 @@ function setWeaponChoice(choiceId, weaponId) {
     <td class="text-end">
       {{ unitInfo.structure }}
     </td>
-    <td class="table-btn-cell">
+    <td :class="{'table-btn-cell': weaponChoices.length}">
       <template v-if="weaponChoices.length">
         <span v-for="(item) in weaponChoices">
           <BFormSelect
