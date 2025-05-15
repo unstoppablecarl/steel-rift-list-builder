@@ -84,7 +84,7 @@ const referenceCards = computed(() => {
 
   supportAssetWeaponsStore.support_asset_weapon_ids.forEach(supportAssetId => {
     cards.push({
-      type: 'support_asset',
+      type: 'support_asset_weapon',
       support_asset_type: SUPPORT_ASSET_WEAPONS[supportAssetId].type,
       supportAssetId,
     });
@@ -106,7 +106,7 @@ const referenceCards = computed(() => {
         <MineDroneCard v-if="item.type === 'mine_drone'"/>
         <FactionPerkCard v-if="item.type === 'faction_perk'" :perk-id="item.perkId"/>
         <SupportAssetWeaponCard
-            v-if="item.type === 'support_asset' && item.support_asset_type === SA_TYPE_OT_WEAPON"
+            v-if="item.type === 'support_asset_weapon'"
             :support-asset-id="item.supportAssetId"
         />
       </template>

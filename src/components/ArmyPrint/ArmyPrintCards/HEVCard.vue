@@ -13,6 +13,7 @@ const mechStore = useMechStore();
 const {mechId} = defineProps({
   mechId: {
     type: Number,
+    required: true,
   },
 });
 
@@ -29,9 +30,7 @@ const info = computed(() => mechStore.getMechInfo(mechId));
       <HEVCardWeapons :mech-id="mechId"/>
       <HEVCardUpgrades :mech-id="mechId"/>
 
-      <div class="game-card-footer">
-        SteelRift.com
-      </div>
+      <CardFooter/>
     </div>
   </div>
 </template>
