@@ -47,60 +47,59 @@ watch(expandSignal, () => visible.value = true);
             HE-V {{ info.size.display_name }}
           </div>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-4">
           <div class="d-inline-block py-1">
 
             <strong class="pe-1">{{ info.display_name }}</strong>
           </div>
           <IconValidationError size="sm" :message-array="invalid_mech_messages"/>
         </div>
-        <div class="col-sm">
-          <div class="d-flex flex-row-reverse">
-
-            <BButton
-                :class="'btn-sm btn-collapse ' + (visible ? null : 'collapsed')"
-                variant="tertiary"
-                :aria-expanded="visible ? 'true' : 'false'"
-                :aria-controls="'collapse-' + mechId"
-                @click="visible = !visible"
-            />
-
-            <BButton
-                size="sm"
-                class="mx-1"
-                variant="danger"
-                @click="mechStore.removeMech(mechId)"
-            >
-              <span class="material-symbols-outlined">delete</span>
-            </BButton>
-            <BButton
-                size="sm"
-                class="mx-1"
-                variant="header-add"
-                @click="mechStore.duplicateMech(mechId)"
-            >
-              <span class="material-symbols-outlined">content_copy</span>
-            </BButton>
-
-            <div class="py-1">
-              <span class="px-2">
-                <strong>Arm:</strong>
-                {{ info.armor_stat }}
-              </span>
-              <span class="px-2">
-                <strong>Str:</strong>
-                {{ info.structure_stat }}
-              </span>
-              <span class="px-2">
-                <strong>Slots: </strong>
-                <fraction :a="info.used_slots" :b="info.max_slots"/>
-              </span>
-              <span class="px-2">
-                <strong>Tons: </strong>
-                <fraction :a="info.used_tons" :b="info.max_tons"/>
-              </span>
-            </div>
+        <div class="col-sm-6 d-flex">
+          <div class="py-1 d-inline-block ms-auto">
+            <span class="px-2">
+              <strong>Arm:</strong>
+              {{ info.armor_stat }}
+            </span>
+            <span class="px-2">
+              <strong>Str:</strong>
+              {{ info.structure_stat }}
+            </span>
+            <span class="px-2">
+              <strong>Slots: </strong>
+              <fraction :a="info.used_slots" :b="info.max_slots"/>
+            </span>
+            <span class="px-2">
+              <strong>Tons: </strong>
+              <fraction :a="info.used_tons" :b="info.max_tons"/>
+            </span>
           </div>
+
+          <BButton
+              size="sm"
+              class="mx-1"
+              variant="header-add"
+              @click="mechStore.duplicateMech(mechId)"
+          >
+            <span class="material-symbols-outlined">content_copy</span>
+          </BButton>
+
+          <BButton
+              size="sm"
+              class="mx-1"
+              variant="danger"
+              @click="mechStore.removeMech(mechId)"
+          >
+            <span class="material-symbols-outlined">delete</span>
+          </BButton>
+
+          <BButton
+              :class="'btn-collapse ' + (visible ? null : 'collapsed')"
+              size="sm"
+              variant="tertiary"
+              :aria-expanded="visible ? 'true' : 'false'"
+              :aria-controls="'collapse-' + mechId"
+              @click="visible = !visible"
+          />
         </div>
       </div>
       <BCollapse
